@@ -73,7 +73,7 @@ public class Meny extends javax.swing.JFrame {
 
         lblHandlaggare.setText("Handläggare");
 
-        btProjekt.setText("Se mina projekt");
+        btProjekt.setText("Mina projekt");
 
         btAvdelning.setText("Min avdelning");
 
@@ -96,7 +96,7 @@ public class Meny extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblInloggadAnvandare)
                             .addComponent(btProjekt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btProfil)
                             .addComponent(lblHandlaggare))

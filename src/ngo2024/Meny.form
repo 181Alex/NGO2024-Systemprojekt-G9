@@ -70,7 +70,7 @@
                           <Component id="lblInloggadAnvandare" min="-2" max="-2" attributes="0"/>
                           <Component id="btProjekt" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="327" max="32767" attributes="0"/>
+                      <EmptySpace pref="346" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btProfil" min="-2" max="-2" attributes="0"/>
                           <Component id="lblHandlaggare" min="-2" max="-2" attributes="0"/>
@@ -124,7 +124,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btProjekt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Se mina projekt"/>
+        <Property name="text" type="java.lang.String" value="Mina projekt"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btAvdelning">
