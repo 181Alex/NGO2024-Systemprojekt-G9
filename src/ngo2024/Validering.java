@@ -34,9 +34,15 @@ public class Validering {
     
     public boolean arChef(String ePost){
         boolean isChef=false;
+        try{
         String sqlFraga="SELECT projektchef FROM projekt WHERE projektchef IN(SELECT aid FROM anstalld where epost = '"+ePost+ "')";
-        if(sqlFraga!=null){
+        String behorighet = idb.fetchSingle(sqlFraga);
+        if(behorighet!=null){
             isChef=true;
+        }
+        }
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
         }
         return isChef;
     }
