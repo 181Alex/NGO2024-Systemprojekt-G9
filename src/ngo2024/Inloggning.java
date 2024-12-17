@@ -115,13 +115,18 @@ public class Inloggning extends javax.swing.JFrame {
     private void btnLoggaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoggaInActionPerformed
        String ePost=tfEpost.getText();
        String losen=tfLosenord.getText();
+       Validering validering = new Validering();
        
        try{
            String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost + "'";
           // System.out.println(sqlFraga);
           String dbLosen = idb.fetchSingle(sqlFraga);
-          if(losen.equals(dbLosen)){
+          if(losen.equals(dbLosen) && !validering.arAdmin(ePost)){
               new Meny(idb, ePost).setVisible(true);
+              this.setVisible(false);
+          }
+          else if(losen.equals(dbLosen) && validering.arAdmin(ePost)){
+              new AdminMeny(idb, ePost).setVisible(true);
               this.setVisible(false);
           }
           else{
