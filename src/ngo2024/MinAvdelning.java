@@ -78,7 +78,7 @@ public class MinAvdelning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MinAvdelning().setVisible(true);
+                //new MinAvdelning().setVisible(true);
             }
         });
     }

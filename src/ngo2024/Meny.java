@@ -76,6 +76,11 @@ public class Meny extends javax.swing.JFrame {
         btProjekt.setText("Mina projekt");
 
         btAvdelning.setText("Min avdelning");
+        btAvdelning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAvdelningActionPerformed(evt);
+            }
+        });
 
         btMal.setText("Se globala mål");
 
@@ -124,8 +129,12 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
-        // TODO add your handling code here:
+       new MinProfil(idb).setVisible(true);
     }//GEN-LAST:event_btProfilActionPerformed
+
+    private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
+        new MinAvdelning(idb).setVisible(true);
+    }//GEN-LAST:event_btAvdelningActionPerformed
 
     /**
      * @param args the command line arguments
