@@ -5,6 +5,7 @@
 package ngo2024;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.Random;
 
 /**
  *
@@ -13,6 +14,7 @@ import oru.inf.InfException;
 public class LaggTillAnstalld extends javax.swing.JFrame {
 private InfDB idb;
 private boolean created;
+private Random randomizer;
 
     /**
      * Creates new form LaggTillAnstalld
@@ -23,6 +25,7 @@ private boolean created;
         created=false;
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
+        randomizer=new Random();
     }
     
     
@@ -52,16 +55,12 @@ private boolean created;
         tfEfternamn = new javax.swing.JTextField();
         tfFornamn = new javax.swing.JTextField();
         tfLosenord = new javax.swing.JTextField();
-        lblFornamnBad = new javax.swing.JLabel();
-        lblEfternamnBad = new javax.swing.JLabel();
-        lblAdressBad = new javax.swing.JLabel();
         lblEpostBad = new javax.swing.JLabel();
-        lblTelefonBad = new javax.swing.JLabel();
-        lblTelefonBad1 = new javax.swing.JLabel();
         cbAvdelning = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         lblLyckades = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
+        btnRandom = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,23 +116,8 @@ private boolean created;
             }
         });
 
-        lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblFornamnBad.setText("!");
-
-        lblEfternamnBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblEfternamnBad.setText("!");
-
-        lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblAdressBad.setText("!");
-
         lblEpostBad.setForeground(new java.awt.Color(255, 0, 51));
         lblEpostBad.setText("!");
-
-        lblTelefonBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblTelefonBad.setText("!");
-
-        lblTelefonBad1.setForeground(new java.awt.Color(255, 0, 51));
-        lblTelefonBad1.setText("!");
 
         cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Klimat", "Samhälle", "Teknik" }));
 
@@ -149,6 +133,13 @@ private boolean created;
 
         lblError.setForeground(new java.awt.Color(255, 0, 51));
         lblError.setText("Error!");
+
+        btnRandom.setText("Random");
+        btnRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRandomActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,6 +160,7 @@ private boolean created;
                             .addComponent(lblAvdelning))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tfAnstallDatum)
@@ -180,23 +172,20 @@ private boolean created;
                                     .addComponent(tfFornamn))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFornamnBad)
-                                    .addComponent(lblEfternamnBad)
-                                    .addComponent(lblAdressBad)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblEpostBad)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton2))
-                                    .addComponent(lblTelefonBad)
-                                    .addComponent(lblTelefonBad1)))
-                            .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(btnRandom))))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(32, 32, 32)
                         .addComponent(lblLyckades)
                         .addGap(72, 72, 72)
                         .addComponent(lblError)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,21 +197,15 @@ private boolean created;
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblFornamn)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblFornamnBad)))
+                                    .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblEfternamn)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblEfternamnBad)))
+                                    .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblAdress)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblAdressBad)))
+                                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(12, 12, 12)
                                 .addComponent(lblEpost))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -236,21 +219,19 @@ private boolean created;
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblAnstallDatum))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTelefonBad))
+                                .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfAnstallDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTelefonBad1))))
+                                .addComponent(tfAnstallDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLosenord, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tfLosenord, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnRandom)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblAvdelning))
                     .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(lblLyckades)
@@ -348,6 +329,21 @@ private int getAvdelning(){
        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public String randomPassword(){
+        String losen="";
+        for(int i=0; i<11; i++){
+            int ny=randomizer.nextInt(9);
+            String nya=Integer.toString(ny);
+            losen+=nya;
+        }
+        return losen;
+    }
+    
+    
+    private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
+       tfLosenord.setText(randomPassword());
+    }//GEN-LAST:event_btnRandomActionPerformed
+
 
 
     /**
@@ -387,25 +383,21 @@ private int getAvdelning(){
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRandom;
     private javax.swing.JComboBox<String> cbAvdelning;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel lblAdress;
-    private javax.swing.JLabel lblAdressBad;
     private javax.swing.JLabel lblAnstallDatum;
     private javax.swing.JLabel lblAvdelning;
     private javax.swing.JLabel lblEfternamn;
-    private javax.swing.JLabel lblEfternamnBad;
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblEpostBad;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFornamn;
-    private javax.swing.JLabel lblFornamnBad;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblTelefon;
-    private javax.swing.JLabel lblTelefonBad;
-    private javax.swing.JLabel lblTelefonBad1;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfAnstallDatum;
     private javax.swing.JTextField tfEfternamn;

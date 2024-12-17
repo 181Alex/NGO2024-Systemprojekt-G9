@@ -39,7 +39,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Component id="cbAvdelning" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="tfAnstallDatum" max="32767" attributes="0"/>
                                   <Component id="tfLosenord" alignment="0" max="32767" attributes="0"/>
@@ -51,19 +52,17 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFornamnBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEfternamnBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblAdressBad" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="lblEpostBad" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="lblTelefonBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTelefonBad1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="btnRandom" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <Component id="cbAvdelning" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -74,7 +73,7 @@
                       <Component id="lblError" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,26 +87,17 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lblFornamn" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="tfFornamn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblFornamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="tfFornamn" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lblEfternamn" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="tfEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblEfternamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="tfEfternamn" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="lblAdress" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblAdressBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="tfAdress" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="lblEpost" min="-2" max="-2" attributes="0"/>
@@ -126,28 +116,25 @@
                               <Component id="lblAnstallDatum" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="tfTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTelefonBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="tfTelefon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="tfAnstallDatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTelefonBad1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="tfAnstallDatum" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblLosenord" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfLosenord" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                              <Component id="tfLosenord" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRandom" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblAvdelning" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="cbAvdelning" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="13" max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLyckades" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -251,47 +238,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFornamnBad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEfternamnBad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAdressBad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblEpostBad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblTelefonBad">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblTelefonBad1">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="0" red="ff" type="rgb"/>
@@ -332,6 +279,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Error!"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRandom">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Random"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRandomActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
