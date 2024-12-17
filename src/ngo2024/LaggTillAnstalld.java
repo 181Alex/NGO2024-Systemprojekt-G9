@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024;
-import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -22,6 +21,8 @@ private boolean created;
         this.idb=idb;
         initComponents();
         created=false;
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
     }
     
     
@@ -59,6 +60,8 @@ private boolean created;
         lblTelefonBad1 = new javax.swing.JLabel();
         cbAvdelning = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        lblLyckades = new javax.swing.JLabel();
+        lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +144,12 @@ private boolean created;
             }
         });
 
+        lblLyckades.setForeground(new java.awt.Color(51, 204, 0));
+        lblLyckades.setText("Lyckades!");
+
+        lblError.setForeground(new java.awt.Color(255, 0, 51));
+        lblError.setText("Error!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,7 +190,12 @@ private boolean created;
                                     .addComponent(lblTelefonBad)
                                     .addComponent(lblTelefonBad1)))
                             .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(32, 32, 32)
+                        .addComponent(lblLyckades)
+                        .addGap(72, 72, 72)
+                        .addComponent(lblError)))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -237,7 +251,10 @@ private boolean created;
                         .addComponent(lblAvdelning))
                     .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(lblLyckades)
+                    .addComponent(lblError))
                 .addContainerGap())
         );
 
@@ -317,13 +334,14 @@ private int getAvdelning(){
                     + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '" + tfTelefon.getText() + "', '" 
                     + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
             idb.insert(sqlFråga);
+            lblLyckades.setVisible(true);
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
                 }
         }
         else{
-            
+            lblError.setVisible(true);
             
         }
         
@@ -380,9 +398,11 @@ private int getAvdelning(){
     private javax.swing.JLabel lblEfternamnBad;
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblEpostBad;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFornamn;
     private javax.swing.JLabel lblFornamnBad;
     private javax.swing.JLabel lblLosenord;
+    private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblTelefon;
     private javax.swing.JLabel lblTelefonBad;
     private javax.swing.JLabel lblTelefonBad1;
