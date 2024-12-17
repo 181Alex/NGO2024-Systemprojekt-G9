@@ -47,9 +47,17 @@ public class Validering {
         return isChef;
     }
     
+    public boolean checkEpost(String ePost){
+        boolean matches=false;
+        String checker="^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$";
+        if(ePost.matches(checker)){
+            matches=true;
+        }
+        return matches;
+        }
+    }
     
     
     
     
-    
-}
+
