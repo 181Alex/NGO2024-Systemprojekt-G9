@@ -12,15 +12,29 @@ import oru.inf.InfException;
  * @author linneagottling
  */
 public class MinAvdelning extends javax.swing.JFrame {
-    
+
     private InfDB idb;
 
     /**
      * Creates new form MinAvdelning
      */
-    public MinAvdelning(InfDB idb) {
+    public MinAvdelning(InfDB idb, String ePost) {
         this.idb = idb;
         initComponents();
+        lblAvdNamn.setText(avdNamn(ePost));
+    }
+
+    private String avdNamn(String ePost){
+        String avdelning=" ";
+        try{
+            String sqlFraga = "SELECT namn FROM avdelning WHERE avdid = "
+                + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
+        avdelning = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex){
+           System.out.println(ex.getMessage());
+        }
+
+        return avdelning;
     }
 
     /**
@@ -32,17 +46,46 @@ public class MinAvdelning extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblAvdelning = new javax.swing.JLabel();
+        lblAvdNamn = new javax.swing.JLabel();
+        btSeProjekt = new javax.swing.JButton();
+        btSeAnstallda = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblAvdelning.setText("Min avdelning");
+
+        lblAvdNamn.setText("Avd");
+
+        btSeProjekt.setText("Se projekt");
+
+        btSeAnstallda.setText("Se anst�llda");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAvdNamn)
+                    .addComponent(btSeAnstallda)
+                    .addComponent(btSeProjekt)
+                    .addComponent(lblAvdelning))
+                .addContainerGap(271, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lblAvdelning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSeProjekt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSeAnstallda)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addComponent(lblAvdNamn)
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -55,7 +98,7 @@ public class MinAvdelning extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -78,11 +121,15 @@ public class MinAvdelning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new MinAvdelning().setVisible(true);
+                //new MinAvdelning().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSeAnstallda;
+    private javax.swing.JButton btSeProjekt;
+    private javax.swing.JLabel lblAvdNamn;
+    private javax.swing.JLabel lblAvdelning;
     // End of variables declaration//GEN-END:variables
 }
