@@ -43,6 +43,9 @@ public class Meny extends javax.swing.JFrame {
         lblInloggadAnvandare = new javax.swing.JLabel();
         btProfil = new javax.swing.JButton();
         lblHandlaggare = new javax.swing.JLabel();
+        btProjekt = new javax.swing.JButton();
+        btAvdelning = new javax.swing.JButton();
+        btMal = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,6 +73,12 @@ public class Meny extends javax.swing.JFrame {
 
         lblHandlaggare.setText("Handläggare");
 
+        btProjekt.setText("Se mina projekt");
+
+        btAvdelning.setText("Min avdelning");
+
+        btMal.setText("Se globala mål");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,13 +87,20 @@ public class Meny extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btProfil)
+                        .addComponent(btMal)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btAvdelning)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblInloggadAnvandare)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
-                        .addComponent(lblHandlaggare)
-                        .addGap(41, 41, 41))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInloggadAnvandare)
+                            .addComponent(btProjekt))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 327, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btProfil)
+                            .addComponent(lblHandlaggare))
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,9 +109,15 @@ public class Meny extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblInloggadAnvandare)
                     .addComponent(lblHandlaggare))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btProfil)
-                .addContainerGap(357, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btProfil)
+                    .addComponent(btProjekt))
+                .addGap(18, 18, 18)
+                .addComponent(btAvdelning)
+                .addGap(18, 18, 18)
+                .addComponent(btMal)
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,7 +163,10 @@ public class Meny extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAvdelning;
+    private javax.swing.JButton btMal;
     private javax.swing.JButton btProfil;
+    private javax.swing.JButton btProjekt;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
