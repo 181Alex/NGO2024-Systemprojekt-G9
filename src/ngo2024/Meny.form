@@ -126,6 +126,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Mina projekt"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btProjektActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btAvdelning">
       <Properties>
@@ -139,6 +142,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Se globala m&#xe5;l"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btMalActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

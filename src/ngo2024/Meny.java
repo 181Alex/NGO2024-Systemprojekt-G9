@@ -74,6 +74,11 @@ public class Meny extends javax.swing.JFrame {
         lblHandlaggare.setText("Handläggare");
 
         btProjekt.setText("Mina projekt");
+        btProjekt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProjektActionPerformed(evt);
+            }
+        });
 
         btAvdelning.setText("Min avdelning");
         btAvdelning.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +88,11 @@ public class Meny extends javax.swing.JFrame {
         });
 
         btMal.setText("Se globala mål");
+        btMal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,8 +143,16 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
-        new MinAvdelning(idb).setVisible(true);
+        new MinAvdelning(idb,inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btAvdelningActionPerformed
+
+    private void btMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMalActionPerformed
+         new GlobalaMal(idb).setVisible(true);
+    }//GEN-LAST:event_btMalActionPerformed
+
+    private void btProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProjektActionPerformed
+        new MinaProjekt(idb).setVisible(true);
+    }//GEN-LAST:event_btProjektActionPerformed
 
     /**
      * @param args the command line arguments
