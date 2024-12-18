@@ -14,7 +14,7 @@ import oru.inf.InfException;
 public class MinAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String avdNamn;
+    private int avdNmr;
 
     /**
      * Creates new form MinAvdelning
@@ -23,6 +23,7 @@ public class MinAvdelning extends javax.swing.JFrame {
         this.idb = idb;
         initComponents();
         lblAvdNamn.setText(avdNamn(ePost));
+        setAvdNummer(ePost);
     }
 
     private String avdNamn(String ePost){
@@ -36,6 +37,20 @@ public class MinAvdelning extends javax.swing.JFrame {
         }
 
         return avdelning;
+    }
+    
+    private void setAvdNummer(String ePost){
+        int nmr = 0;
+        try{
+            String sqlFraga = "SELECT avdid FROM avdelning WHERE avdid = "
+                + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
+        String svar = idb.fetchSingle(sqlFraga);
+        nmr = Integer.parseInt(svar);
+        } catch (InfException ex){
+           System.out.println(ex.getMessage());
+        }
+
+        avdNmr = nmr;
     }
 
     /**
@@ -103,11 +118,11 @@ public class MinAvdelning extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSeAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeAnstalldaActionPerformed
-      new AvdAnstallda(idb, avdNamn).setVisible(true);       
+      new AvdAnstallda(idb, avdNmr).setVisible(true);       
     }//GEN-LAST:event_btSeAnstalldaActionPerformed
 
     private void btSeProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeProjektActionPerformed
-      new AvdProjekt(idb, avdNamn).setVisible(true);
+      new AvdProjekt(idb, avdNmr).setVisible(true);
     }//GEN-LAST:event_btSeProjektActionPerformed
 
     /**

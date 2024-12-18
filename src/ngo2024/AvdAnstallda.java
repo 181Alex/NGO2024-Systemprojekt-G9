@@ -4,9 +4,9 @@
  */
 package ngo2024;
 
+import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,20 +15,55 @@ import java.util.ArrayList;
 public class AvdAnstallda extends javax.swing.JFrame {
     
     private InfDB idb;
-    private String avdNamn;
+    private int avdNmr;
 
     /**
      * Creates new form AvdAnstallda
      */
-    public AvdAnstallda(InfDB idb, String avdNamn) {
+    public AvdAnstallda(InfDB idb, int avdNmr) {
         this.idb=idb;
-        this.avdNamn = avdNamn;
+        this.avdNmr = avdNmr;
         initComponents();
+        anstalldTabell();
     }
     
-    public void anstalldTabell(){
+    public void anstalldTabell(){ 
+        
+        DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
+        model.setRowCount(0);
+        
+        try{
+        Validering enValidering = new Validering(idb);
+        
+        int antalRader = 0;
+        
+        String sqlRad = "SELECT COUNT(*) FROM anstalld";
+        
+        String svar = idb.fetchSingle(sqlRad);
+        antalRader = Integer.parseInt(svar);   
+ 
+        
+        for(int aid = 1; aid <= antalRader; aid++){
+        String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn"
+                + "FROM anstalld WHERE aid = '" + aid + "'";     
+        
+        String namn = idb.fetchSingle(sqlFragaNamn);
+        
+            if(enValidering.tillhorAvdelning(avdNmr, aid)){
+                model.addRow(new Object[]{namn, null, null, null});
+               
+            } else {
+                System.out.println("inget namn");
+            }
+         
+            
+        }
         
         
+        } 
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
         
     }
 
@@ -41,12 +76,23 @@ public class AvdAnstallda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        spPanel = new javax.swing.JScrollPane();
+        tblAnstallda = new javax.swing.JTable();
         lblHeader = new javax.swing.JLabel();
         tfSokruta = new javax.swing.JTextField();
-        spPanel = new javax.swing.JScrollPane();
-        tblAnstalld = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblAnstallda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Namn", "Epost", "Telefon", "Mentor"
+            }
+        ));
+        spPanel.setViewportView(tblAnstallda);
 
         lblHeader.setText("Anställda på avdelning");
 
@@ -56,26 +102,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
             }
         });
 
-        tblAnstalld.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Namn", "Epost", "Telefon", "Nummer"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        spPanel.setViewportView(tblAnstalld);
+        jTextField1.setText("jTextField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,9 +111,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -96,9 +123,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 .addComponent(lblHeader)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,9 +171,10 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblHeader;
     private javax.swing.JScrollPane spPanel;
-    private javax.swing.JTable tblAnstalld;
+    private javax.swing.JTable tblAnstallda;
     private javax.swing.JTextField tfSokruta;
     // End of variables declaration//GEN-END:variables
 }

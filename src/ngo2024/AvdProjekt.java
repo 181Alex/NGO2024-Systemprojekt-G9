@@ -18,7 +18,7 @@ public class AvdProjekt extends javax.swing.JFrame {
     /**
      * Creates new form AvdProjekt
      */
-    public AvdProjekt(InfDB idb, String avdNamn) {
+    public AvdProjekt(InfDB idb, int avdNmr) {
         this.idb=idb;
         initComponents();
     }
