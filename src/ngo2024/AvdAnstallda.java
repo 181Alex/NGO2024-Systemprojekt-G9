@@ -46,23 +46,29 @@ public class AvdAnstallda extends javax.swing.JFrame {
         for(int aid = 1; aid <= antalRader-1; aid++){
         String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
                 + "FROM anstalld WHERE aid = " + aid;     
-        System.out.println(sqlFragaNamn);
+        
+        String sqlFragaEpost = "SELECT epost "
+                + "FROM anstalld WHERE aid = " + aid;  
+        
+        String sqlFragaTelefon =  "SELECT telefon "
+                + "FROM anstalld WHERE aid = " + aid;
+        
+        String sqlFragaMentor = "SELECT CONCAT(b.fornamn, ' ', b.efternamn) "
+                + "AS m_namn FROM handlaggare h "
+                + "LEFT JOIN anstalld b ON h.mentor = b.aid "
+                + "WHERE h.aid = " + aid;
+        
         String namn = idb.fetchSingle(sqlFragaNamn);
+        String epost = idb.fetchSingle(sqlFragaEpost);
+        String telefon = idb.fetchSingle(sqlFragaTelefon);
+        String mentor = idb.fetchSingle(sqlFragaMentor);
+       
         
-            if (namn != null) {
-        if (enValidering.tillhorAvdelning(avdNmr, aid)) {
-            model.addRow(new Object[]{namn, null, null, null});
-        } else {
-            System.out.println("inget namn");
-        }
-    } else {
-        System.out.println("Error: Could not fetch name for aid " + aid);
-    }
-         
+            if (enValidering.tillhorAvdelning(avdNmr, aid)) {
+            model.addRow(new Object[]{namn, epost, telefon, mentor});
+            }       
             
-        }
-        
-        
+        }       
         } 
         catch(InfException ex){
             System.out.println(ex.getMessage());
