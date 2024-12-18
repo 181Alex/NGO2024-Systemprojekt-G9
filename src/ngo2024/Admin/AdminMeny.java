@@ -39,7 +39,7 @@ public class AdminMeny extends javax.swing.JFrame {
         lblAdmin = new javax.swing.JLabel();
         btnMinProfil = new javax.swing.JButton();
         btnLaggTillAnstalld = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnTaBortAnstalld = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,10 +61,10 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Ändra behörigheter");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnTaBortAnstalld.setText("Ta bort anställd");
+        btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnTaBortAnstalldActionPerformed(evt);
             }
         });
 
@@ -86,7 +86,7 @@ public class AdminMeny extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnLaggTillAnstalld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnTaBortAnstalld, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -101,7 +101,7 @@ public class AdminMeny extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLaggTillAnstalld)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnTaBortAnstalld)
                 .addContainerGap(190, Short.MAX_VALUE))
         );
 
@@ -112,9 +112,10 @@ public class AdminMeny extends javax.swing.JFrame {
         new MinProfil(idb).setVisible(true);
     }//GEN-LAST:event_btnMinProfilActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
+        new TaBortAnstalld(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
        new LaggTillAnstalld(idb, inloggadAnvandare).setVisible(true);
@@ -158,7 +159,7 @@ public class AdminMeny extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaggTillAnstalld;
     private javax.swing.JButton btnMinProfil;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblEpost;
     // End of variables declaration//GEN-END:variables
