@@ -108,10 +108,15 @@ public class Validering {
     
     public boolean tillhorAvdelning(int avdNummer, int aid){
         int hämtadI=0;
-        String sqlFraga="SELECT aid FROM anstalld where avdelning ='" + avdNummer + "' AND aid= '" + aid + "'";
+        String sqlFraga="SELECT aid FROM anstalld where avdelning =" + avdNummer + " AND aid= " + aid;
          try{
              String hämtadS=idb.fetchSingle(sqlFraga);
+             if(hämtadS==null){
+                 return false;
+             }
+             else{
              hämtadI=Integer.parseInt(hämtadS);
+             }
          }
          catch(InfException ex){
              System.out.println(ex.getMessage());

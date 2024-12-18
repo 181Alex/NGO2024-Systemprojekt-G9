@@ -43,18 +43,21 @@ public class AvdAnstallda extends javax.swing.JFrame {
         antalRader = Integer.parseInt(svar);   
  
         
-        for(int aid = 1; aid <= antalRader; aid++){
-        String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn"
-                + "FROM anstalld WHERE aid = '" + aid + "'";     
-        
+        for(int aid = 1; aid <= antalRader-1; aid++){
+        String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
+                + "FROM anstalld WHERE aid = " + aid;     
+        System.out.println(sqlFragaNamn);
         String namn = idb.fetchSingle(sqlFragaNamn);
         
-            if(enValidering.tillhorAvdelning(avdNmr, aid)){
-                model.addRow(new Object[]{namn, null, null, null});
-               
-            } else {
-                System.out.println("inget namn");
-            }
+            if (namn != null) {
+        if (enValidering.tillhorAvdelning(avdNmr, aid)) {
+            model.addRow(new Object[]{namn, null, null, null});
+        } else {
+            System.out.println("inget namn");
+        }
+    } else {
+        System.out.println("Error: Could not fetch name for aid " + aid);
+    }
          
             
         }
