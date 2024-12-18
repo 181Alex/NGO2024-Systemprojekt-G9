@@ -99,23 +99,28 @@ boolean kontrollOk;
 
         lblAvdelning.setText("Avdelning");
 
-        tfAnstallDatum.setText("Anställningsdatum");
+        tfAnstallDatum.setText("yyyy-mm-dd");
+        tfAnstallDatum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAnstallDatumActionPerformed(evt);
+            }
+        });
 
-        tfTelefon.setText("Telefon");
+        tfTelefon.setText("123-123-1234");
         tfTelefon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfTelefonActionPerformed(evt);
             }
         });
 
-        tfEpost.setText("Epost");
+        tfEpost.setText("example@mail.com");
         tfEpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEpostActionPerformed(evt);
             }
         });
 
-        tfAdress.setText("Adress");
+        tfAdress.setText("123 blabla, bobla");
 
         tfEfternamn.setText("Efternamn");
 
@@ -207,7 +212,7 @@ boolean kontrollOk;
                         .addComponent(lblLyckades)
                         .addGap(72, 72, 72)
                         .addComponent(lblError)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +297,7 @@ boolean kontrollOk;
         if(kontrollOk==true){
             try{
             String sqlFraga="INSERT INTO anstalld VALUES(" + hogstaAid(idb) + ", '" + tfFornamn.getText() +"', '" 
-                    + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '" + tfTelefon.getText() + "', '" 
+                    + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '"+tfEpost.getText() + "', '" + tfTelefon.getText() + "', '" 
                     + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
             System.out.println(sqlFraga);
             idb.insert(sqlFraga);
@@ -432,7 +437,7 @@ boolean kontrollOk;
             System.out.println(ex.getMessage());
         }
         System.out.println(hogsta);
-        return hogsta+2;
+        return hogsta+1;
     }
 private int getAvdelning(){
     int avdelning=0;
@@ -468,6 +473,10 @@ private int getAvdelning(){
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
        tfLosenord.setText(randomPassword());
     }//GEN-LAST:event_btnRandomActionPerformed
+
+    private void tfAnstallDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAnstallDatumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAnstallDatumActionPerformed
 
 
 
