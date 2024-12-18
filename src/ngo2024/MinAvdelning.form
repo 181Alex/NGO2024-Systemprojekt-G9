@@ -66,11 +66,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Se projekt"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeProjektActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btSeAnstallda">
       <Properties>
         <Property name="text" type="java.lang.String" value="Se anst&#xe4;llda"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeAnstalldaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
