@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.Admin;
+import ngo2024.Admin.AdminMeny;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.Random;
+import ngo2024.Validering;
 
 /**
  *

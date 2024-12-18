@@ -4,6 +4,7 @@
  */
 package ngo2024;
 
+import ngo2024.Admin.AdminMeny;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**

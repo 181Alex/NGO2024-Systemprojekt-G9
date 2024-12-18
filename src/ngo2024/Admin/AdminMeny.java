@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ngo2024;
+package ngo2024.Admin;
 
+import ngo2024.MinProfil;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**
@@ -60,7 +61,7 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Ta bort anställd");
+        jButton2.setText("Ändra behörigheter");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
