@@ -286,7 +286,8 @@ private Random randomizer;
         catch(Exception ex){
             System.out.println(ex.getMessage());
         }
-        return hogsta+1;
+        System.out.println(hogsta);
+        return hogsta+2;
     }
 private int getAvdelning(){
     int avdelning=0;
@@ -316,6 +317,7 @@ private int getAvdelning(){
                     + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
             idb.insert(sqlFråga);
             lblLyckades.setVisible(true);
+            lblError.setVisible(false);
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
