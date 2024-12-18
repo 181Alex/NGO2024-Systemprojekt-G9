@@ -14,6 +14,7 @@ import oru.inf.InfException;
 public class MinAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
+    private String avdNamn;
 
     /**
      * Creates new form MinAvdelning
@@ -48,8 +49,8 @@ public class MinAvdelning extends javax.swing.JFrame {
 
         lblAvdelning = new javax.swing.JLabel();
         lblAvdNamn = new javax.swing.JLabel();
-        btSeProjekt = new javax.swing.JButton();
         btSeAnstallda = new javax.swing.JButton();
+        btSeProjekt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,9 +58,19 @@ public class MinAvdelning extends javax.swing.JFrame {
 
         lblAvdNamn.setText("Avd");
 
-        btSeProjekt.setText("Se projekt");
+        btSeAnstallda.setText("Se anställda");
+        btSeAnstallda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSeAnstalldaActionPerformed(evt);
+            }
+        });
 
-        btSeAnstallda.setText("Se anstï¿½llda");
+        btSeProjekt.setText("Se projekt");
+        btSeProjekt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSeProjektActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,9 +79,9 @@ public class MinAvdelning extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAvdNamn)
-                    .addComponent(btSeAnstallda)
                     .addComponent(btSeProjekt)
+                    .addComponent(btSeAnstallda)
+                    .addComponent(lblAvdNamn)
                     .addComponent(lblAvdelning))
                 .addContainerGap(271, Short.MAX_VALUE))
         );
@@ -81,7 +92,7 @@ public class MinAvdelning extends javax.swing.JFrame {
                 .addComponent(lblAvdelning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btSeProjekt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(btSeAnstallda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
                 .addComponent(lblAvdNamn)
@@ -90,6 +101,14 @@ public class MinAvdelning extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSeAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeAnstalldaActionPerformed
+      new AvdAnstallda(idb, avdNamn).setVisible(true);       
+    }//GEN-LAST:event_btSeAnstalldaActionPerformed
+
+    private void btSeProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeProjektActionPerformed
+      new AvdProjekt(idb, avdNamn).setVisible(true);
+    }//GEN-LAST:event_btSeProjektActionPerformed
 
     /**
      * @param args the command line arguments

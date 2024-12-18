@@ -26,9 +26,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblAvdNamn" min="-2" max="-2" attributes="0"/>
+                  <Component id="btSeProjekt" min="-2" max="-2" attributes="0"/>
                   <Component id="btSeAnstallda" min="-2" max="-2" attributes="0"/>
-                  <Component id="btSeProjekt" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAvdNamn" min="-2" max="-2" attributes="0"/>
                   <Component id="lblAvdelning" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="271" max="32767" attributes="0"/>
@@ -42,7 +42,7 @@
               <Component id="lblAvdelning" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btSeProjekt" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="btSeAnstallda" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="170" max="32767" attributes="0"/>
               <Component id="lblAvdNamn" min="-2" max="-2" attributes="0"/>
@@ -62,20 +62,20 @@
         <Property name="text" type="java.lang.String" value="Avd"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btSeProjekt">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Se projekt"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeProjektActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btSeAnstallda">
       <Properties>
         <Property name="text" type="java.lang.String" value="Se anst&#xe4;llda"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeAnstalldaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btSeProjekt">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Se projekt"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeProjektActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
