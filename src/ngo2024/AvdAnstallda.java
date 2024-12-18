@@ -94,7 +94,15 @@ public class AvdAnstallda extends javax.swing.JFrame {
             new String [] {
                 "Namn", "Epost", "Telefon", "Mentor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         spPanel.setViewportView(tblAnstallda);
 
         lblHeader.setText("Anställda på avdelning");
