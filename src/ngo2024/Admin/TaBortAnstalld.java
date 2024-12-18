@@ -8,6 +8,7 @@ import ngo2024.Validering;
 import ngo2024.Admin.AdminMeny;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,7 +26,63 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
+        lblBorttagen.setVisible(false);
+        fyllCb();
     }
+    
+    public void fyllCb(){
+        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) AS namn FROM anstalld";
+        
+        ArrayList<String> namnLista=new ArrayList<>();
+        
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+            
+            for(String namn:namnLista){
+                cbValjAnstalld.addItem(namn);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public String getFirstName(String fullName) {
+        String[] nameParts = fullName.split(" ");
+        if (nameParts.length > 0) {
+            return nameParts[0];
+        } else {
+            return "";
+        }
+    }
+
+    public String getLastName(String fullName) {
+        String[] nameParts = fullName.split(" ");
+        if (nameParts.length > 1) {
+            return nameParts[nameParts.length - 1];
+        } else {
+            return "";
+        }
+    }
+    
+    
+    public String selectAid(String namn){
+        String fNamn=getFirstName(namn);
+        String eNamn=getLastName(namn);
+        String sAid="111";
+        try{
+            String sqlFraga="SELECT aid FROM anstalld where fornamn='" + fNamn + "' AND efternamn ='" + eNamn + "'";
+            sAid=idb.fetchSingle(sqlFraga);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return sAid;
+    }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,21 +93,115 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblAid = new javax.swing.JLabel();
+        lblNamn = new javax.swing.JLabel();
+        cbValjAnstalld = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        btnTaBort = new javax.swing.JButton();
+        lblBorttagen = new javax.swing.JLabel();
+        btnValj = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblAid.setText("Aid");
+
+        lblNamn.setText("Namn");
+
+        cbValjAnstalld.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+
+        jLabel3.setText("Välj anställd att ta bort");
+
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
+        lblBorttagen.setForeground(new java.awt.Color(0, 204, 0));
+        lblBorttagen.setText("Användare borttagen");
+        lblBorttagen.setBorder(new javax.swing.border.MatteBorder(null));
+        lblBorttagen.setMaximumSize(new java.awt.Dimension(211, 17));
+        lblBorttagen.setSize(new java.awt.Dimension(100, 17));
+
+        btnValj.setText("Välj");
+        btnValj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValjActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblBorttagen, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnTaBort)
+                                .addGap(26, 26, 26)
+                                .addComponent(lblAid)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbValjAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnValj))
+                            .addComponent(jLabel3))
+                        .addContainerGap(111, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbValjAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValj))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAid)
+                    .addComponent(lblNamn)
+                    .addComponent(btnTaBort))
+                .addGap(18, 18, 18)
+                .addComponent(lblBorttagen, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
+       String namn=cbValjAnstalld.getSelectedItem().toString();
+       
+       lblNamn.setText(namn);
+       lblAid.setText(selectAid(namn));   
+       
+    }//GEN-LAST:event_btnValjActionPerformed
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+       String namn=cbValjAnstalld.getSelectedItem().toString();
+       String sAid=selectAid(namn);
+       
+       int aid=Integer.parseInt(sAid);
+       String sql="DELETE FROM anstalld WHERE aid=" + aid;
+       
+       try{
+           idb.delete(sql);
+       }
+       catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+       lblBorttagen.setVisible(true);
+       
+    }//GEN-LAST:event_btnTaBortActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,5 +239,12 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnValj;
+    private javax.swing.JComboBox<String> cbValjAnstalld;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblAid;
+    private javax.swing.JLabel lblBorttagen;
+    private javax.swing.JLabel lblNamn;
     // End of variables declaration//GEN-END:variables
 }
