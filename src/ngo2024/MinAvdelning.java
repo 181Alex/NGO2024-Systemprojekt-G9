@@ -14,7 +14,6 @@ import oru.inf.InfException;
 public class MinAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String avdNamn;
 
     /**
      * Creates new form MinAvdelning
@@ -26,17 +25,16 @@ public class MinAvdelning extends javax.swing.JFrame {
     }
 
     private String avdNamn(String ePost){
+        String avdelning=" ";
         try{
             String sqlFraga = "SELECT namn FROM avdelning WHERE avdid = "
                 + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
-        avdNamn = idb.fetchSingle(sqlFraga);
+        avdelning = idb.fetchSingle(sqlFraga);
         } catch (InfException ex){
            System.out.println(ex.getMessage());
         }
 
-        
-        return avdNamn;
-
+        return avdelning;
     }
 
     /**
@@ -60,22 +58,8 @@ public class MinAvdelning extends javax.swing.JFrame {
         lblAvdNamn.setText("Avd");
 
         btSeProjekt.setText("Se projekt");
-        btSeProjekt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSeProjektActionPerformed(evt);
-            }
-        });
 
-<<<<<<< Updated upstream
         btSeAnstallda.setText("Se anstï¿½llda");
-=======
-        btSeAnstallda.setText("Se anställda");
-        btSeAnstallda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSeAnstalldaActionPerformed(evt);
-            }
-        });
->>>>>>> Stashed changes
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,14 +90,6 @@ public class MinAvdelning extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btSeProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeProjektActionPerformed
-       new AvdProjekt(idb, avdNamn).setVisible(true);
-    }//GEN-LAST:event_btSeProjektActionPerformed
-
-    private void btSeAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeAnstalldaActionPerformed
-       new AvdAnstallda(idb, avdNamn).setVisible(true);
-    }//GEN-LAST:event_btSeAnstalldaActionPerformed
 
     /**
      * @param args the command line arguments
