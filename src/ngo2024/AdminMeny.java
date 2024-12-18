@@ -116,7 +116,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
-       new LaggTillAnstalld(idb).setVisible(true);
+       new LaggTillAnstalld(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     /**
