@@ -55,9 +55,56 @@ public class Validering {
         }
         return matches;
         }
-    }
-    
-    
-    
     
 
+    public boolean checkDatum(String datum){
+        boolean matches=false;
+        String checker="^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
+        if(datum.matches(checker)){
+            matches=true;
+        }
+        return matches;
+        }
+    
+    public boolean checkAdress(String adress) {
+        boolean matches = false;
+        // Adress: "123 Gatunamn, Stad" (tre siffror, gatunamn, kommatecken, stad).
+        String checker = "^\\d{3}\\s[A-Za-zåäöÅÄÖ]+,\\s[A-Za-zåäöÅÄÖ]+$";
+        if (adress.matches(checker)) {
+        matches = true;
+        }
+        return matches;
+}
+
+    public boolean checkEfternamn(String efternamn) {
+        boolean matches = false;
+        //alla bokstäver ok inga siffror
+        String checker = "^[A-Za-zåäöÅÄÖ]+$";
+        if (efternamn.matches(checker)) {
+        matches = true;
+        }
+     return matches;
+}
+
+   public boolean checkTelefon(String telefon) {
+        boolean matches = false;
+        //7-15 siffror med binder streck efter 3 siffror, sen igen efter 3 siffror sen fyra i slutet
+        String checker = "^\\d{3}-\\d{3}-\\d{4}$";
+        if (telefon.matches(checker)) {
+        matches = true;
+        }
+        return matches;
+}
+ 
+    public boolean checkFornamn(String fornamn) {
+    boolean matches = false;
+    // alla bokstäver ok inga siffror
+    String checker = "^[A-ZÅÄÖ][a-zåäö]+(?:[- ][A-ZÅÄÖ][a-zåäö]+)?$";
+    if (fornamn.matches(checker)) {
+        matches = true;
+    }
+    return matches;
+}
+    
+    
+}

@@ -15,6 +15,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
 private InfDB idb;
 private boolean created;
 private Random randomizer;
+boolean kontrollOk;
 
     /**
      * Creates new form LaggTillAnstalld
@@ -23,8 +24,15 @@ private Random randomizer;
         this.idb=idb;
         initComponents();
         created=false;
+        kontrollOk=false;
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
+        lblDatumBad1.setVisible(false);
+        lblEpostBad.setVisible(false);
+        lblTelefonBad.setVisible(false);
+        lblAdressBad.setVisible(false);
+        lblEfternamnBad.setVisible(false);
+        lblFornamnBad.setVisible(false);
         randomizer=new Random();
     }
     
@@ -39,7 +47,7 @@ private Random randomizer;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnSkapa = new javax.swing.JButton();
         lblFornamn = new javax.swing.JLabel();
         lblEfternamn = new javax.swing.JLabel();
         lblAdress = new javax.swing.JLabel();
@@ -57,17 +65,21 @@ private Random randomizer;
         tfLosenord = new javax.swing.JTextField();
         lblEpostBad = new javax.swing.JLabel();
         cbAvdelning = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
         lblLyckades = new javax.swing.JLabel();
         lblError = new javax.swing.JLabel();
         btnRandom = new javax.swing.JButton();
+        lblDatumBad1 = new javax.swing.JLabel();
+        lblTelefonBad = new javax.swing.JLabel();
+        lblAdressBad = new javax.swing.JLabel();
+        lblEfternamnBad = new javax.swing.JLabel();
+        lblFornamnBad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Skapa");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSkapa.setText("Skapa");
+        btnSkapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSkapaActionPerformed(evt);
             }
         });
 
@@ -121,13 +133,6 @@ private Random randomizer;
 
         cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Klimat", "Samhälle", "Teknik" }));
 
-        jButton2.setText("Kontroll");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         lblLyckades.setForeground(new java.awt.Color(51, 204, 0));
         lblLyckades.setText("Lyckades!");
 
@@ -140,6 +145,21 @@ private Random randomizer;
                 btnRandomActionPerformed(evt);
             }
         });
+
+        lblDatumBad1.setForeground(new java.awt.Color(255, 0, 51));
+        lblDatumBad1.setText("!");
+
+        lblTelefonBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblTelefonBad.setText("!");
+
+        lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblAdressBad.setText("!");
+
+        lblEfternamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblEfternamnBad.setText("!");
+
+        lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblFornamnBad.setText("!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,15 +192,17 @@ private Random randomizer;
                                     .addComponent(tfFornamn))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblEpostBad)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton2))
+                                    .addComponent(lblEpostBad)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
-                                        .addComponent(btnRandom))))))
+                                        .addComponent(btnRandom))
+                                    .addComponent(lblDatumBad1)
+                                    .addComponent(lblTelefonBad)
+                                    .addComponent(lblAdressBad)
+                                    .addComponent(lblEfternamnBad)
+                                    .addComponent(lblFornamnBad)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnSkapa)
                         .addGap(32, 32, 32)
                         .addComponent(lblLyckades)
                         .addGap(72, 72, 72)
@@ -197,21 +219,26 @@ private Random randomizer;
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblFornamn)
-                                    .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tfFornamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblFornamnBad)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblEfternamn)
-                                    .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tfEfternamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblEfternamnBad)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(lblAdress)
-                                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblAdressBad)))
                                 .addGap(12, 12, 12)
                                 .addComponent(lblEpost))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblEpostBad)
-                                .addComponent(jButton2)))
+                                .addComponent(lblEpostBad)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -219,9 +246,13 @@ private Random randomizer;
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblAnstallDatum))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblTelefonBad))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfAnstallDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tfAnstallDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblDatumBad1))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLosenord, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -233,7 +264,7 @@ private Random randomizer;
                     .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnSkapa)
                     .addComponent(lblLyckades)
                     .addComponent(lblError))
                 .addContainerGap())
@@ -256,10 +287,124 @@ private Random randomizer;
         // TODO add your handling code here:
     }//GEN-LAST:event_tfLosenordActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
+            totalKontroll(idb);
+        if(kontrollOk==true){
+            try{
+            String sqlFraga="INSERT INTO anstalld VALUES(" + hogstaAid(idb) + ", '" + tfFornamn.getText() +"', '" 
+                    + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '" + tfTelefon.getText() + "', '" 
+                    + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
+            System.out.println(sqlFraga);
+            idb.insert(sqlFraga);
+            
+         
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                }
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+            }
+        
+        else if (kontrollOk==false){
+            lblError.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_btnSkapaActionPerformed
 
+    private void totalKontroll(InfDB idb){
+        Boolean totOk=true;
+        if(kontroll(idb)==false){
+            totOk=false;
+        }
+        else if(!datumKontroll(idb)){
+            totOk=false;
+        }
+        else if(!fornamnKontroll(idb)) {
+        totOk = false;
+        }
+        else if(!efternamnKontroll(idb)) {
+        totOk = false;
+        }
+        else if(!adressKontroll(idb)) {
+        totOk = false;
+        }
+        else if(!telefonKontroll(idb)) {
+        totOk = false;
+        }
+        
+        kontrollOk=totOk;
+    }
+    
+    
+    
+    
+    
+    
+    public boolean datumKontroll(InfDB idb){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String datum = tfAnstallDatum.getText(); 
+    
+    // Kontrollera om e-postadressen är giltig
+    if (valid.checkDatum(datum)) {
+        lblDatumBad1.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblDatumBad1.setVisible(true); // Visa varning
+        return false;
+    }
+    }
+    
+    public boolean fornamnKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String fornamn = tfFornamn.getText();
+    if (valid.checkFornamn(fornamn)) {
+        lblFornamnBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblFornamnBad.setVisible(true); // Visa varning
+        return false;
+    }
+    }
+    
+    public boolean efternamnKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String efternamn = tfEfternamn.getText();
+    if (valid.checkEfternamn(efternamn)) {
+            lblEfternamnBad.setVisible(false);
+            return true;
+    } else {
+            lblEfternamnBad.setVisible(true);
+            return false;
+        }
+    }
+    
+    public boolean adressKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String adress = tfAdress.getText();
+        if (valid.checkAdress(adress)) {
+            lblAdressBad.setVisible(false);
+            return true;
+        } else {
+            lblAdressBad.setVisible(true);
+            return false;
+        }}
+    
+        
+     public boolean telefonKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String telefon = tfTelefon.getText();
+    if (valid.checkTelefon(telefon)) {
+            lblTelefonBad.setVisible(false);
+            return true;
+    } else {
+            lblTelefonBad.setVisible(true);
+            return false;
+    }
+    }
+    
     public boolean kontroll(InfDB idb){
     Validering valid = new Validering(idb); 
     
@@ -308,28 +453,6 @@ private int getAvdelning(){
    return avdelning;
 }
 
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(kontroll(idb)){
-            try{
-            String sqlFråga="INSERT INTO anstalld VALUES(" + hogstaAid(idb) + ", '" + tfFornamn.getText() +"', '" 
-                    + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '" + tfTelefon.getText() + "', '" 
-                    + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
-            idb.insert(sqlFråga);
-            lblLyckades.setVisible(true);
-            lblError.setVisible(false);
-            }
-            catch(Exception ex){
-                System.out.println(ex.getMessage());
-                }
-        }
-        else{
-            lblError.setVisible(true);
-            
-        }
-        
-       
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     public String randomPassword(){
         String losen="";
@@ -386,20 +509,24 @@ private int getAvdelning(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRandom;
+    private javax.swing.JButton btnSkapa;
     private javax.swing.JComboBox<String> cbAvdelning;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel lblAdress;
+    private javax.swing.JLabel lblAdressBad;
     private javax.swing.JLabel lblAnstallDatum;
     private javax.swing.JLabel lblAvdelning;
+    private javax.swing.JLabel lblDatumBad1;
     private javax.swing.JLabel lblEfternamn;
+    private javax.swing.JLabel lblEfternamnBad;
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblEpostBad;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFornamn;
+    private javax.swing.JLabel lblFornamnBad;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblTelefon;
+    private javax.swing.JLabel lblTelefonBad;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfAnstallDatum;
     private javax.swing.JTextField tfEfternamn;
