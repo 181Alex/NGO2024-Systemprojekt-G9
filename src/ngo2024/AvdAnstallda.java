@@ -22,7 +22,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private ArrayList<String> telefonLista = new ArrayList<>();
     private ArrayList<String> mentorLista = new ArrayList<>();
     private DefaultTableModel model;
-    
 
     /**
      * Creates new form AvdAnstallda
@@ -247,7 +246,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
         String sokOrd = tfSokruta.getText().toLowerCase();
-        Validering enValidering = new Validering(idb);
         lblFelmeddelande.setVisible(false);
 
         boolean hittad = false;
