@@ -4,6 +4,8 @@
  */
 package ngo2024;
 
+import TabellDesign.MultiLineCellRenderer;
+import java.awt.Component;
 import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -41,6 +43,28 @@ public class AvdAnstallda extends javax.swing.JFrame {
         model.setRowCount(0);
         lblFelmeddelande.setVisible(false);
         btSeAlla.setVisible(false);
+        tabellDesign();
+    }
+    
+    private void tabellDesign() {
+        tblAnstallda.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tblAnstallda.getColumnModel().getColumn(1).setPreferredWidth(168);
+        tblAnstallda.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblAnstallda.getColumnModel().getColumn(3).setPreferredWidth(100);
+
+        tblAnstallda.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
+        tblAnstallda.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+        tblAnstallda.getColumnModel().getColumn(2).setCellRenderer(new MultiLineCellRenderer());
+        tblAnstallda.getColumnModel().getColumn(3).setCellRenderer(new MultiLineCellRenderer());
+
+        for (int row = 0; row < tblAnstallda.getRowCount(); row++) {
+            int rowHeight = tblAnstallda.getRowHeight();
+            for (int column = 0; column < tblAnstallda.getColumnCount(); column++) {
+                Component comp = tblAnstallda.prepareRenderer(tblAnstallda.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+            tblAnstallda.setRowHeight(row, rowHeight);
+        }
     }
    
     private void anstalldTabell() {
@@ -121,6 +145,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblAnstallda.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         spPanel.setViewportView(tblAnstallda);
 
         lblHeader.setText("Anställda på avdelning");

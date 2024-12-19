@@ -4,22 +4,88 @@
  */
 package ngo2024;
 
+import TabellDesign.MultiLineCellRenderer;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
 /**
  *
- * @author 
+ * @author linneagottling
  */
 public class GlobalaMal extends javax.swing.JFrame {
 
     private InfDB idb;
+    private DefaultTableModel model;
+
     /**
      * Creates new form GlobalaMal
      */
     public GlobalaMal(InfDB idb) {
         this.idb = idb;
         initComponents();
+        konstrueraTabell();
+        malTabell();
+    }
+
+    private void konstrueraTabell() {
+        model = (DefaultTableModel) tblGlobalaMal.getModel();
+        model.setRowCount(0);
+        tabellDesign();
+    }
+
+    private void tabellDesign() {
+        //fixar tabellens bredd
+        tblGlobalaMal.getColumnModel().getColumn(0).setPreferredWidth(138);  // För kort text
+        tblGlobalaMal.getColumnModel().getColumn(1).setPreferredWidth(138); // För längre text
+        tblGlobalaMal.getColumnModel().getColumn(2).setPreferredWidth(300); 
+        tblGlobalaMal.getColumnModel().getColumn(3).setPreferredWidth(138); 
+
+        tblGlobalaMal.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
+        tblGlobalaMal.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+        tblGlobalaMal.getColumnModel().getColumn(2).setCellRenderer(new MultiLineCellRenderer());
+        tblGlobalaMal.getColumnModel().getColumn(3).setCellRenderer(new MultiLineCellRenderer());
+
+        for (int row = 0; row < tblGlobalaMal.getRowCount(); row++) {
+            int rowHeight = tblGlobalaMal.getRowHeight();
+            for (int column = 0; column < tblGlobalaMal.getColumnCount(); column++) {
+                Component comp = tblGlobalaMal.prepareRenderer(tblGlobalaMal.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+            tblGlobalaMal.setRowHeight(row, rowHeight);
+        }
+    }
+
+    private void laggTillNyRad(String mal, String malnummer,
+            String beskrivning, String prioritet) {
+        model.addRow(new Object[]{mal, malnummer, beskrivning, prioritet});
+    }
+
+    private void malTabell() {
+
+        try {
+            String sqlFraga = "SELECT namn, malnummer, beskrivning, prioritet "
+                    + "FROM hallbarhetsmal";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String mal = rad.get("namn");
+                String malnummer = rad.get("malnummer");
+                String beskrivning = rad.get("beskrivning");
+                String prioritet = rad.get("prioritet");
+
+                //lägger till rad i tabellen
+                laggTillNyRad(mal, malnummer, beskrivning, prioritet);
+
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     /**
@@ -31,21 +97,75 @@ public class GlobalaMal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblGlobalaMal = new javax.swing.JLabel();
+        btClose = new javax.swing.JButton();
+        spPanel = new javax.swing.JScrollPane();
+        tblGlobalaMal = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblGlobalaMal.setText("Globala målen:");
+
+        btClose.setText("X");
+        btClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCloseActionPerformed(evt);
+            }
+        });
+
+        tblGlobalaMal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mål", "Målnummer", "Beskrivning", "Prioritet"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblGlobalaMal.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        spPanel.setViewportView(tblGlobalaMal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(spPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+                        .addGap(38, 38, 38))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblGlobalaMal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btClose)
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblGlobalaMal)
+                    .addComponent(btClose))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btCloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,5 +203,9 @@ public class GlobalaMal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btClose;
+    private javax.swing.JLabel lblGlobalaMal;
+    private javax.swing.JScrollPane spPanel;
+    private javax.swing.JTable tblGlobalaMal;
     // End of variables declaration//GEN-END:variables
 }
