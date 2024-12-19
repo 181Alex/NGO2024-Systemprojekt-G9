@@ -26,6 +26,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="btSeAlla" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="spPanel" min="-2" pref="468" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -79,7 +83,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="spPanel" min="-2" pref="254" max="-2" attributes="0"/>
-              <EmptySpace pref="185" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btSeAlla" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -179,6 +185,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Felmeddelande"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btSeAlla">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Se alla"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSeAllaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -40,11 +40,11 @@ public class AvdAnstallda extends javax.swing.JFrame {
         model = (DefaultTableModel) tblAnstallda.getModel();
         model.setRowCount(0);
         lblFelmeddelande.setVisible(false);
+        btSeAlla.setVisible(false);
     }
    
     private void anstalldTabell() {
-        Validering enValidering = new Validering(idb);
-        
+
         try {
             String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn, "
                          + "a.epost, a.telefon, CONCAT(b.fornamn, ' ', b.efternamn) AS mentor "
@@ -61,10 +61,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 String telefon = rad.get("telefon");
                 String mentor = rad.get("mentor");
 
-                if (enValidering.tillhorAvdelning(avdNmr, Integer.parseInt(rad.get("aid")))) {
                     laggTillNyRad(namn, epost, telefon, mentor);
                     laggTillRadInfo(namn, epost, telefon, mentor);
-                }
 
             }
         } catch (InfException ex) {
@@ -103,6 +101,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
         cbNamn = new javax.swing.JCheckBox();
         cbEpost = new javax.swing.JCheckBox();
         lblFelmeddelande = new javax.swing.JLabel();
+        btSeAlla = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,6 +162,13 @@ public class AvdAnstallda extends javax.swing.JFrame {
         lblFelmeddelande.setForeground(new java.awt.Color(255, 51, 51));
         lblFelmeddelande.setText("Felmeddelande");
 
+        btSeAlla.setText("Se alla");
+        btSeAlla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSeAllaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,6 +176,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btSeAlla)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -210,7 +219,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
                         .addComponent(btBack)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btSeAlla)
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         pack();
@@ -226,6 +237,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
         boolean hittad = false;
         model.setRowCount(0);
+        
+        btSeAlla.setVisible(true);
 
         if (cbEpost.isSelected()) {
 
@@ -291,6 +304,11 @@ public class AvdAnstallda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbNamnActionPerformed
 
+    private void btSeAllaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeAllaActionPerformed
+        konstrueraTabell();
+        anstalldTabell();
+    }//GEN-LAST:event_btSeAllaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -328,6 +346,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBack;
+    private javax.swing.JButton btSeAlla;
     private javax.swing.JButton btSok;
     private javax.swing.JCheckBox cbEpost;
     private javax.swing.JCheckBox cbNamn;
