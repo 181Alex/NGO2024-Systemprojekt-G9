@@ -1,9 +1,13 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024;
 
+import javax.swing.table.DefaultTableModel;
+import ngo2024.Meny;
+import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**
@@ -25,6 +29,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         //epost = "john.smith@example.com"; // Sparar den inloggade anv?ndarens e-post
         initComponents();
         //fyllProjektTabell(); // Fyll tabellen med data
+        tblLedarProj.setVisible(false);
     }
 
     /**
@@ -40,14 +45,17 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblMinaProj = new javax.swing.JLabel();
         lblProjekt = new javax.swing.JLabel();
         lblLedareProj = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLedarProj = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 204));
 
+        btnReturn.setBackground(new java.awt.Color(212, 214, 231));
         btnReturn.setIcon(new javax.swing.ImageIcon("C:\\Users\\frida.selin\\Documents\\arrowImg2.png")); // NOI18N
         btnReturn.setText("tillbaka");
+        btnReturn.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createCompoundBorder()));
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturnActionPerformed(evt);
@@ -72,22 +80,24 @@ public class MinaProjekt extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblLedarProj);
 
+        jScrollPane2.setViewportView(jScrollPane1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblLedareProj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblLedareProj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(354, 354, 354))))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,11 +108,11 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(lblMinaProj)
                 .addGap(28, 28, 28)
                 .addComponent(lblLedareProj)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126)
                 .addComponent(lblProjekt)
-                .addContainerGap(295, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,10 +123,51 @@ public class MinaProjekt extends javax.swing.JFrame {
     
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         btnReturn.setBorderPainted(false);
-        new Meny(InfDB idb, String inloggadAnvandare).setVisible(true); //kanske inte m?ste vara new
+        new Meny(idb, anvandarEpost).setVisible(true); //kanske inte m?ste vara new
         this.dispose(); 
     }//GEN-LAST:event_btnReturnActionPerformed
 
+    public void tblLedarProjModel() {
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblLedarProj.getModel();
+        tblModel.setRowCount(0);
+
+        try {
+            Validering enValidKlass = new Validering(idb);
+
+            int antalRader = 0;
+
+            String sqlRad = "SELECT COUNT (*) FROM projekt";
+
+            String svar = idb.fetchSingle(sqlRad);
+            antalRader = Integer.parseInt(svar);
+
+            for (int pid = 1; pid <= antalRader; pid++) {
+
+                if (enValidKlass.arChef(anvandarEpost)) {
+                    tblLedarProj.setVisible(true);
+
+                    String sqlFragaProjNamn = "SELECT projektnamn"
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String sqlFragaStatus = "SELECT status"
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
+                    String projektStatus = idb.fetchSingle(sqlFragaStatus);
+
+                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
+                }
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -152,12 +203,12 @@ public class MinaProjekt extends javax.swing.JFrame {
         });
     }
     
-      
-    
 
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblLedareProj;
     private javax.swing.JLabel lblMinaProj;
     private javax.swing.JLabel lblProjekt;
