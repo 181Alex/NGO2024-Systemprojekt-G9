@@ -4,6 +4,9 @@
  */
 package ngo2024;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -12,16 +15,69 @@ import oru.inf.InfException;
  * @author linneagottling
  */
 public class AvdProjekt extends javax.swing.JFrame {
-    
+
     private InfDB idb;
+    private int avdNmr;
+    private DefaultTableModel model;
 
     /**
      * Creates new form AvdProjekt
      */
     public AvdProjekt(InfDB idb, int avdNmr) {
-        this.idb=idb;
+        this.idb = idb;
+        this.avdNmr = avdNmr;
         initComponents();
+        konstrueraTabell();
+        projektTabell();
     }
+
+    private void konstrueraTabell() {
+        model = (DefaultTableModel) tblProjekt.getModel();
+        model.setRowCount(0);
+    }
+
+    private void projektTabell() {
+        Validering enValidering = new Validering(idb);
+
+        try {
+            String sqlFraga = "SELECT p.projektnamn, p.startdatum, p.slutdatum, "
+                    + "p.status, p.prioritet, "
+                    + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS helanamnet, l.namn "
+                    + "FROM projekt p "
+                    + "JOIN land l ON p.land = l.lid "
+                    + "JOIN ans_proj ap ON ap.pid = p.pid "
+                    + "JOIN anstalld a ON ap.aid = a.aid "
+                    + "JOIN avdelning avd ON a.avdelning = avd.avdid "
+                    + "JOIN anstalld pc ON p.projektchef = pc.aid "
+                    + "WHERE avd.avdid = " + avdNmr;
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                
+                    String projekt = rad.get("projektnamn");
+                    String status = rad.get("status");
+                    String chef = rad.get("helanamnet");
+                    String land = rad.get("namn");
+                    String prioritet = rad.get("prioritet");
+                    String startdatum = rad.get("startdatum");
+                    String slutdatum = rad.get("slutdatum");                 
+
+           
+                    laggTillNyRad(projekt, status, chef, land, prioritet, startdatum, slutdatum);
+                    //laggTillRadInfo
+                
+
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    private void laggTillNyRad(String projekt, String status, String chef, String land,
+            String prioritet, String startdatum, String slutdatum){
+        model.addRow(new Object[]{projekt, status, chef, land, prioritet, startdatum, slutdatum});
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,21 +88,92 @@ public class AvdProjekt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblAvdProjekt = new javax.swing.JLabel();
+        tfSokruta = new javax.swing.JTextField();
+        spPanel = new javax.swing.JScrollPane();
+        tblProjekt = new javax.swing.JTable();
+        btReturn = new javax.swing.JButton();
+        btSok = new javax.swing.JButton();
+        cbxStatus = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblAvdProjekt.setText("Projekt på avdelning");
+
+        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Projekt", "Status", "Chef", "Land", "Prioritet", "Startdatum", "Slutdatum"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        spPanel.setViewportView(tblProjekt);
+
+        btReturn.setText("X");
+        btReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btReturnActionPerformed(evt);
+            }
+        });
+
+        btSok.setText("Sök");
+
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAvdProjekt)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(spPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btSok)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btReturn)))
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblAvdProjekt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btReturn)
+                    .addComponent(btSok)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReturnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btReturnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -84,5 +211,12 @@ public class AvdProjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btReturn;
+    private javax.swing.JButton btSok;
+    private javax.swing.JComboBox<String> cbxStatus;
+    private javax.swing.JLabel lblAvdProjekt;
+    private javax.swing.JScrollPane spPanel;
+    private javax.swing.JTable tblProjekt;
+    private javax.swing.JTextField tfSokruta;
     // End of variables declaration//GEN-END:variables
 }
