@@ -96,13 +96,17 @@ public class Validering {
      return matches;
 }
     public boolean checkMentor(String mentor) {
+        if (mentor==null){
+            return true;
+        }
+        else{
         boolean matches = false;
         //endast siffror
         String checker = "^\\d+$";
         if (mentor.matches(checker)) {
         matches = true;
         }
-     return matches;
+     return matches;}
     
     }
 
