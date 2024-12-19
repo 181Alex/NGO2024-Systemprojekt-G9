@@ -77,7 +77,12 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
-        btnAndraLand.setText("Ändra land");
+        btnAndraLand.setText("Ändra och ta bort land");
+        btnAndraLand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraLandActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,6 +148,11 @@ public class AdminMeny extends javax.swing.JFrame {
        new LaggTillLand(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillLandActionPerformed
+
+    private void btnAndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLandActionPerformed
+        new AndraLand(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAndraLandActionPerformed
 
     /**
      * @param args the command line arguments

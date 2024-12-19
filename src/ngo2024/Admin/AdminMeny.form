@@ -117,8 +117,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAndraLand">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#xc4;ndra land"/>
+        <Property name="text" type="java.lang.String" value="&#xc4;ndra och ta bort land"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAndraLandActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
