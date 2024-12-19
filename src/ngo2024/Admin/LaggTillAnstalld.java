@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024.Admin;
-import ngo2024.Admin.AdminMeny;
 import oru.inf.InfDB;
-import oru.inf.InfException;
 import java.util.Random;
 import ngo2024.Validering;
 
@@ -388,16 +386,19 @@ String inloggadAnvandare;
                 
             }
             else if(admin==false){
+                if(getMentor()>=1){
                 sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', " + getMentor() + ")";
                 idb.insert(sqlFraga);
                 idb.insert(sqlH);
-                System.out.println(sqlH);
+                System.out.println(sqlH);}
+                else if(getMentor()==0){
+                    sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', null)";
+                idb.insert(sqlFraga);
+                idb.insert(sqlH);
+                System.out.println(sqlH);}
+                }
             }
-            
-
-
-                
-            }
+        
             catch(Exception ex){
                 System.out.println(ex.getMessage());
                 }
@@ -598,15 +599,36 @@ private int getAvdelning(){
         return losen;
     }
     
+    private boolean arMentor(String mentor){
+        int mentors=Integer.parseInt(mentor);
+        String sqlFraga="SELECT mentor FROM handlaggare WHERE aid=" + mentors;
+        String svar=null;
+        try{
+            svar=idb.fetchSingle(sqlFraga);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        if(svar==null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 public int getMentor(){
     String st=tfMentor.getText();
     int it=0;
     if(st.isBlank()){
         it=0;
     }
+    else if(arMentor(st)){
+        it=Integer.parseInt(st);
+        return it;}
     else{
-    it=Integer.parseInt(st);}
     return it;
+} return it;
 }
 
 
