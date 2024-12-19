@@ -205,11 +205,35 @@ public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, Stri
         }
         return inomIntervall;   
 }
+public boolean checkAvslutad(String status){
+    boolean avslutad = false;
+    if(status.equals("Avslutat")){
+        avslutad = true;
+    }
+    return avslutad;
+}
+public boolean checkPlanerade(String status){
+    boolean planerade = false;
+    if(status.equals("Planerat")){
+        planerade = true;
+    }
+    return planerade;
+}
+
+public boolean checkPagaende(String status){
+    boolean pagaende = false;
+    if(status.equals("Pågående")){
+        pagaende = true;
+    }
+        return pagaende;
+}
+
 public boolean checkAktiv(String status){
     boolean aktiv = true;
     if(status.equals("Avslutat")){
         aktiv = false;
     }
-    return aktiv;
+        return aktiv;
 }
+
 }

@@ -28,7 +28,9 @@ public class AvdProjekt extends javax.swing.JFrame {
     private ArrayList<String> prioritetLista = new ArrayList<>();
     private ArrayList<String> startdatumLista = new ArrayList<>();
     private ArrayList<String> slutdatumLista = new ArrayList<>();
-
+    private ArrayList<Integer> pidLista = new ArrayList<>();
+    
+    
     /**
      * Creates new form AvdProjekt
      */
@@ -49,7 +51,7 @@ public class AvdProjekt extends javax.swing.JFrame {
     private void projektTabell() {
 
         try {
-            String sqlFraga = "SELECT p.projektnamn, p.startdatum, p.slutdatum, "
+            String sqlFraga = "SELECT p.projektnamn, p.startdatum, p.slutdatum, p.pid, "
                     + "p.status, p.prioritet, "
                     + "CONCAT(pc.fornamn, ' ', pc.efternamn) AS helanamnet, l.namn "
                     + "FROM projekt p "
@@ -70,13 +72,15 @@ public class AvdProjekt extends javax.swing.JFrame {
                     String land = rad.get("namn");
                     String prioritet = rad.get("prioritet");
                     String startdatum = rad.get("startdatum");
-                    String slutdatum = rad.get("slutdatum");                 
+                    String slutdatum = rad.get("slutdatum");  
+                    String p_id = rad.get("pid");
+                    int pid = Integer.parseInt(p_id);
 
                     //lägger till rad i tabellen
                     laggTillNyRad(projekt, status, chef, land, prioritet, startdatum, slutdatum);
                     
                     //lägger till infon i separata listor
-                    laggTillRadInfo(projekt, status, chef, land, prioritet, startdatum, slutdatum);               
+                    laggTillRadInfo(projekt, status, chef, land, prioritet, startdatum, slutdatum, pid);               
 
             }
         } catch (InfException ex) {
@@ -88,7 +92,7 @@ public class AvdProjekt extends javax.swing.JFrame {
         model.addRow(new Object[]{projekt, status, chef, land, prioritet, startdatum, slutdatum});
     }
     private void laggTillRadInfo(String projekt, String status, String chef, String land,
-            String prioritet, String startdatum, String slutdatum){
+            String prioritet, String startdatum, String slutdatum, int pid){
         projektLista.add(projekt);
         statusLista.add(status);
         chefLista.add(chef);
@@ -96,6 +100,7 @@ public class AvdProjekt extends javax.swing.JFrame {
         prioritetLista.add(prioritet);
         startdatumLista.add(startdatum);
         slutdatumLista.add(slutdatum);
+        pidLista.add(pid);
     }
     
 
@@ -157,7 +162,7 @@ public class AvdProjekt extends javax.swing.JFrame {
             }
         });
 
-        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "      ", "Planerade", "Pågående", "Avslutade", " " }));
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Planerade", "Pågående", "Avslutade", "Aktiva" }));
         cbxStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxStatusActionPerformed(evt);
@@ -246,68 +251,82 @@ public class AvdProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btReturnActionPerformed
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
-        String sokFran = tfSokFran.getText();
-        String sokTill = tfSokTill.getText();
-        konstrueraTabell();
- 
-        lblFelmeddelande.setVisible(false);
-        
-        Validering enValidering = new Validering(idb);
-        
-        if(!sokFran.isEmpty() && !enValidering.checkDatum(sokFran) ||
-                !sokTill.isEmpty() && !enValidering.checkDatum(sokTill)){
-            lblFelmeddelande.setText("Vänligen ange datum i formatet yyyy-mm-dd");
-            lblFelmeddelande.setVisible(true);
-            return;
-        }
-        
-        if(sokFran.isEmpty() && sokTill.isEmpty()){
-            lblFelmeddelande.setText("Ange minst ett datum för sökning.");
-            lblFelmeddelande.setVisible(true);
-            return;
-        }
-        
-        if(!sokFran.isEmpty() && !sokTill.isEmpty() &&
-                !enValidering.checkDatumSkillnad(sokFran, sokTill)){
-            lblFelmeddelande.setText("Slutdatum måste vara senare än startdatum");
-            lblFelmeddelande.setVisible(true);
-            return;
-        }
-        
-        for(int i = 0; i<projektLista.size(); i++){
-            String startdatum = startdatumLista.get(i);
-            String slutdatum = slutdatumLista.get(i);
-            String status = statusLista.get(i);
-            
-            if (!sokFran.isEmpty() && !sokTill.isEmpty()){
-                if(enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, sokTill) 
-                        && enValidering.checkAktiv(status)){
-                     laggTillNyRad(projektLista.get(i), status, chefLista.get(i),
-                        landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
-                }
-            } else if(!sokFran.isEmpty() && sokTill.isEmpty() && 
-                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null)
-                    && enValidering.checkAktiv(status)) {
-            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
-                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
-                         
-            } else if(sokFran.isEmpty() && !sokTill.isEmpty() && 
-                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill) 
-                    && enValidering.checkAktiv(status)) {
-            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
-                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
-                
-            } 
-           
-        }
-            
-     
+       filtreraTabell();
     }//GEN-LAST:event_btSokActionPerformed
 
     private void cbxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusActionPerformed
-             
+       filtreraTabell();
     }//GEN-LAST:event_cbxStatusActionPerformed
 
+    private void filtreraTabell() {
+    String sokFran = tfSokFran.getText();
+    String sokTill = tfSokTill.getText();
+    String selectedItem = (String) cbxStatus.getSelectedItem();
+
+    konstrueraTabell();
+    lblFelmeddelande.setVisible(false);
+    
+    Validering enValidering = new Validering(idb);
+
+    // Validera datum
+    if ((!sokFran.isEmpty() && !enValidering.checkDatum(sokFran)) ||
+        (!sokTill.isEmpty() && !enValidering.checkDatum(sokTill))) {
+        lblFelmeddelande.setText("Vänligen ange datum i formatet yyyy-mm-dd");
+        lblFelmeddelande.setVisible(true);
+        return;
+    }
+
+    if (!sokFran.isEmpty() && !sokTill.isEmpty() &&
+        !enValidering.checkDatumSkillnad(sokFran, sokTill)) {
+        lblFelmeddelande.setText("Slutdatum måste vara senare än startdatum");
+        lblFelmeddelande.setVisible(true);
+        return;
+    }
+
+    for (int i = 0; i < pidLista.size(); i++) {
+        String startdatum = startdatumLista.get(i);
+        String slutdatum = slutdatumLista.get(i);
+        String status = statusLista.get(i);
+        
+        boolean datumMatchar = true;
+        
+        //villkor för att statusMatchar = true om selectedItem "Alla" är vald
+        boolean statusMatchar = "Alla".equals(selectedItem);
+
+        // Kontrollera datumfilter
+        if (!sokFran.isEmpty() && !sokTill.isEmpty()) {
+            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran,  sokTill);
+        } else if(!sokFran.isEmpty() && sokTill.isEmpty()){
+            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null); 
+        } else if(sokFran.isEmpty() && !sokTill.isEmpty()){
+            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill);
+        }
+
+        // Kontrollera statusfilter
+        if (!"Alla".equals(selectedItem)) {
+            switch (selectedItem) {
+                case "Planerade":
+                    statusMatchar = enValidering.checkPlanerade(status);
+                    break;
+                case "Pågående":
+                    statusMatchar = enValidering.checkPagaende(status);
+                    break;
+                case "Avslutade":
+                    statusMatchar = enValidering.checkAvslutad(status);
+                    break;
+                case "Aktiva":
+                    statusMatchar = enValidering.checkAktiv(status);
+                    break;
+            }
+        }
+
+        // Lägg till rad om både datum och status matchar
+        if (datumMatchar && statusMatchar) {
+            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
+                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
+        }
+    }
+}    
     /**
      * @param args the command line arguments
      */
