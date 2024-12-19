@@ -43,6 +43,7 @@ public class AvdProjekt extends javax.swing.JFrame {
     private void konstrueraTabell() {
         model = (DefaultTableModel) tblProjekt.getModel();
         model.setRowCount(0);
+        lblFelmeddelande.setVisible(false);
     }
 
     private void projektTabell() {
@@ -89,13 +90,14 @@ public class AvdProjekt extends javax.swing.JFrame {
     private void laggTillRadInfo(String projekt, String status, String chef, String land,
             String prioritet, String startdatum, String slutdatum){
         projektLista.add(projekt);
-        projektLista.add(status);
-        projektLista.add(chef);
-        projektLista.add(land);
-        projektLista.add(prioritet);
-        projektLista.add(startdatum);
-        projektLista.add(slutdatum);
+        statusLista.add(status);
+        chefLista.add(chef);
+        landLista.add(land);
+        prioritetLista.add(prioritet);
+        startdatumLista.add(startdatum);
+        slutdatumLista.add(slutdatum);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,6 +118,7 @@ public class AvdProjekt extends javax.swing.JFrame {
         lblFranDat = new javax.swing.JLabel();
         lblTillDat = new javax.swing.JLabel();
         tfSokFran = new javax.swing.JTextField();
+        lblFelmeddelande = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,6 +169,9 @@ public class AvdProjekt extends javax.swing.JFrame {
         lblTillDat.setForeground(new java.awt.Color(102, 102, 102));
         lblTillDat.setText("Till datum:");
 
+        lblFelmeddelande.setForeground(new java.awt.Color(255, 51, 51));
+        lblFelmeddelande.setText("Felmeddelande");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,14 +191,16 @@ public class AvdProjekt extends javax.swing.JFrame {
                                     .addComponent(tfSokFran, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfSokTill, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblTillDat))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(tfSokTill, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btSok)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblTillDat)
+                                        .addComponent(lblFelmeddelande)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btReturn)))))
                         .addGap(30, 30, 30))))
@@ -207,7 +215,8 @@ public class AvdProjekt extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFranDat)
-                            .addComponent(lblTillDat)))
+                            .addComponent(lblTillDat)
+                            .addComponent(lblFelmeddelande)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(btReturn)))
@@ -230,7 +239,58 @@ public class AvdProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btReturnActionPerformed
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
+        String sokFran = tfSokFran.getText();
+        String sokTill = tfSokTill.getText();
+        konstrueraTabell();
+ 
+        lblFelmeddelande.setVisible(false);
         
+        Validering enValidering = new Validering(idb);
+        
+        if(!sokFran.isEmpty() && !enValidering.checkDatum(sokFran) ||
+                !sokTill.isEmpty() && !enValidering.checkDatum(sokTill)){
+            lblFelmeddelande.setText("Vänligen ange datum i formatet yyyy-mm-dd");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+        
+        if(sokFran.isEmpty() && sokTill.isEmpty()){
+            lblFelmeddelande.setText("Ange minst ett datum för sökning.");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+        
+        if(!sokFran.isEmpty() && !sokTill.isEmpty() &&
+                !enValidering.checkDatumSkillnad(sokFran, sokTill)){
+            lblFelmeddelande.setText("Slutdatum måste vara senare än eller lika med startdatum");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+        
+        for(int i = 0; i<projektLista.size(); i++){
+            String startdatum = startdatumLista.get(i);
+            String slutdatum = slutdatumLista.get(i);
+            
+            if (!sokFran.isEmpty() && !sokTill.isEmpty()){
+                if(enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, sokTill)){
+                     laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i),
+                        landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
+                }
+            } else if(!sokFran.isEmpty() && sokTill.isEmpty() && 
+                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null)) {
+            laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i), 
+                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
+                         
+            } else if(sokFran.isEmpty() && !sokTill.isEmpty() && 
+                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill)) {
+            laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i), 
+                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
+                
+            } 
+           
+        }
+            
+     
     }//GEN-LAST:event_btSokActionPerformed
 
     private void cbxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusActionPerformed
@@ -277,6 +337,7 @@ public class AvdProjekt extends javax.swing.JFrame {
     private javax.swing.JButton btSok;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel lblAvdProjekt;
+    private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblFranDat;
     private javax.swing.JLabel lblTillDat;
     private javax.swing.JScrollPane spPanel;

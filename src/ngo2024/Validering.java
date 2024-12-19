@@ -191,6 +191,9 @@ public boolean checkDatumSkillnad(String franDatum, String tillDatum){
 }
 
 public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, String franSok, String tillSok){
+    if (franSok == null) franSok = "1000-01-01";
+    if (tillSok == null) tillSok = "9999-01-01";
+    
     int startInt = Integer.parseInt(franDatum.replace("-", ""));
     int slutInt = Integer.parseInt(tillDatum.replace("-", ""));
     int fSokInt = Integer.parseInt(franSok.replace("-", ""));
