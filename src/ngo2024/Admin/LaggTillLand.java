@@ -34,17 +34,24 @@ public class LaggTillLand extends javax.swing.JFrame {
 
     if (!valutaKontroll()) {
         totOk = false;
+        lblValutaBad.setVisible(true);
     } else if (!namnKontroll()) {
         totOk = false;
+        lblNamnBad.setVisible(true);
     } else if (!sprakKontroll()) {
         totOk = false;
+        lblSprakBad.setVisible(true);
     } else if (!politikKontroll()) {
         totOk = false;
+        lblPolitikBad.setVisible(true);
     } else if (!ekonomiKontroll()) {
         totOk = false;
+        lblEkonomiBad.setVisible(true);
     } else if (!tidzonKontroll()) {
         totOk = false;
+        lblTidzonBad.setVisible(true);
     }else if (sammaNamnKontroll()) {
+        lblNamnBad.setVisible(true);
         totOk = false;
     }
 

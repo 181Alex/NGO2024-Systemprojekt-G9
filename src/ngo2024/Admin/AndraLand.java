@@ -78,6 +78,30 @@ public class AndraLand extends javax.swing.JFrame {
     
     
     
+    public String selectLid(){
+        String lid="111";
+        try{
+            String sqlFraga="SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
+            lid=idb.fetchSingle(sqlFraga);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return lid;
+        }
+    
+    public void taBortLand(int lid){
+        
+        String sqlFraga="DELETE FROM land WHERE lid=" + lid;
+        try{
+            idb.delete(sqlFraga);
+            lblBorttagen.setVisible(true);
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
     
     
     
@@ -118,6 +142,7 @@ public class AndraLand extends javax.swing.JFrame {
         lblLid = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         btnAndra = new javax.swing.JButton();
+        btnValj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -210,6 +235,13 @@ public class AndraLand extends javax.swing.JFrame {
 
         btnAndra.setText("Ändra");
 
+        btnValj.setText("Välj");
+        btnValj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValjActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,20 +259,6 @@ public class AndraLand extends javax.swing.JFrame {
                                 .addComponent(btnTillbaka))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblNamnBad))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnTaBort)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblLid)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -261,30 +279,51 @@ public class AndraLand extends javax.swing.JFrame {
                                             .addComponent(lblValutaBad)
                                             .addComponent(lblTidzonBad)
                                             .addComponent(lblPolitikBad)
-                                            .addComponent(lblEkonomiBad))))
-                                .addGap(0, 180, Short.MAX_VALUE)))
-                        .addContainerGap(8, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblBorttagen, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(lblEkonomiBad)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnValj)
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnTaBort)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblLid)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 26, Short.MAX_VALUE)))
+                        .addContainerGap(168, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAndra)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBorttagen, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNamnBad)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbhAndra)
-                    .addComponent(cbhTaBort)
-                    .addComponent(btnTillbaka))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbhAndra)
+                            .addComponent(cbhTaBort)
+                            .addComponent(btnTillbaka)))
+                    .addComponent(btnTaBort))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLid)
                     .addComponent(lblNamn)
-                    .addComponent(btnTaBort)
-                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValj))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblBorttagen, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
@@ -330,6 +369,9 @@ public class AndraLand extends javax.swing.JFrame {
     }//GEN-LAST:event_tfNamnActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+    String stringInt=lblLid.getText();
+    int iInt=Integer.parseInt(stringInt);
+    taBortLand(iInt);
     
     }//GEN-LAST:event_btnTaBortActionPerformed
 
@@ -370,7 +412,6 @@ public class AndraLand extends javax.swing.JFrame {
         // så att man kan se de som tillhör ta bort
         lblLid.setVisible(true);
         lblNamn.setVisible(true);
-        lblBorttagen.setVisible(true);
         btnTaBort.setVisible(true);
         cbValjLand.setVisible(true);
     }
@@ -414,6 +455,16 @@ public class AndraLand extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbhAndraActionPerformed
 
+    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
+      if(cbhTaBort.isSelected()){
+          lblLid.setText(selectLid());
+          int i=cbValjLand.getSelectedIndex();
+          lblNamn.setText(cbValjLand.getItemAt(i));
+      }
+        
+      
+    }//GEN-LAST:event_btnValjActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -453,6 +504,7 @@ public class AndraLand extends javax.swing.JFrame {
     private javax.swing.JButton btnAndra;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JButton btnValj;
     private javax.swing.JComboBox<String> cbValjLand;
     private javax.swing.JCheckBox cbhAndra;
     private javax.swing.JCheckBox cbhTaBort;
