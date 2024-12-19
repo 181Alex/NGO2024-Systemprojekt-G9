@@ -188,7 +188,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
         try {
          
 
-        } catch (InfException ex) {
+        } catch(Exception ex){
+                System.out.println(ex.getMessage());
+                }
 
         }
 

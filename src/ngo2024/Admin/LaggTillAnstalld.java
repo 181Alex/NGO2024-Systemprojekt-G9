@@ -411,7 +411,7 @@ String inloggadAnvandare;
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
 
-    private void totalKontroll(InfDB idb){
+    public void totalKontroll(InfDB idb){
         Boolean totOk=true;
         if(kontroll(idb)==false){
             totOk=false;
@@ -434,7 +434,7 @@ String inloggadAnvandare;
         else if(!AnsvarKontroll(idb)){
             totOk=false;
         }
-        else if(!mentorKontroll(idb)){
+        else if(mentorKontroll(idb)==false){
             totOk=false;
         }
         
@@ -528,7 +528,10 @@ String inloggadAnvandare;
     
     public boolean mentorKontroll(InfDB idb){
     Validering valid = new Validering(idb); 
-    
+    if(chbAdmin.isSelected()==true){
+        return true;
+    }
+    else{
     // Hämta text från textfältet
     String mentor = tfMentor.getText(); 
     
@@ -537,7 +540,7 @@ String inloggadAnvandare;
         return true;
     } else {
         return false;
-        
+    }
     }}
     
     public boolean AnsvarKontroll(InfDB idb){
