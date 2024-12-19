@@ -165,7 +165,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
 
-}
+
     
     
     /**
@@ -203,7 +203,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         });
     }
     
-}
+
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
@@ -214,4 +214,4 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblProjekt;
     private javax.swing.JTable tblLedarProj;
     // End of variables declaration//GEN-END:variables
-
+}
