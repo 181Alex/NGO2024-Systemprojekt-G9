@@ -81,6 +81,64 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         return sAid;
     }
     
+    public String getEpost(){
+       String namn=cbValjAnstalld.getSelectedItem().toString();
+       String sAid=selectAid(namn);
+       String epost=" ";
+       
+       int aid=Integer.parseInt(sAid);
+       String sqlFraga="SELECT epost FROM anstalld WHERE aid=" + aid;
+       try{
+           epost=idb.fetchSingle(sqlFraga);
+       }
+       catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+       return epost;
+    }
+    
+    
+    
+    public String vilkenBehorighet(){
+         Validering valid = new Validering(idb);
+         boolean arAdmin=valid.arAdmin(getEpost());
+         String behorighet=" ";
+         if(arAdmin==true){
+            behorighet="admin";
+         }
+         else{
+             behorighet="hlr"; //hlr=handläggare
+         }
+         return behorighet;
+        
+    }
+    
+    
+    public void taBortAdmin(int aid){
+        
+        String sqlFraga="DELETE FROM admin WHERE aid=" + aid;
+        try{
+            idb.delete(sqlFraga);
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    public void taBortHandlaggare(int aid){
+        
+        String sqlFraga="DELETE FROM handlaggare WHERE aid=" + aid;
+        try{
+            idb.delete(sqlFraga);
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     
     
     
@@ -205,8 +263,17 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
        String namn=cbValjAnstalld.getSelectedItem().toString();
        String sAid=selectAid(namn);
-       
        int aid=Integer.parseInt(sAid);
+       String val=vilkenBehorighet();
+       // tar bort behöriogheterna innan personen tas bort, går annars ej att ta bort person.
+       if(val.equals("admin")){
+           taBortAdmin(aid);
+       }
+       else{
+           taBortHandlaggare(aid);
+       }
+       
+       //tar bort själva personen
        String sql="DELETE FROM anstalld WHERE aid=" + aid;
        
        try{

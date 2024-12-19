@@ -104,7 +104,7 @@ public class Validering {
         }
      return matches;
     
-    
+    }
 
    public boolean checkTelefon(String telefon) {
         boolean matches = false;
