@@ -19,6 +19,15 @@ public class AvdProjekt extends javax.swing.JFrame {
     private InfDB idb;
     private int avdNmr;
     private DefaultTableModel model;
+    
+    //Listor för att spara värdena i tabellen
+    private ArrayList<String> projektLista = new ArrayList<>();
+    private ArrayList<String> statusLista = new ArrayList<>();
+    private ArrayList<String> chefLista = new ArrayList<>();
+    private ArrayList<String> landLista = new ArrayList<>();
+    private ArrayList<String> prioritetLista = new ArrayList<>();
+    private ArrayList<String> startdatumLista = new ArrayList<>();
+    private ArrayList<String> slutdatumLista = new ArrayList<>();
 
     /**
      * Creates new form AvdProjekt
@@ -37,7 +46,6 @@ public class AvdProjekt extends javax.swing.JFrame {
     }
 
     private void projektTabell() {
-        Validering enValidering = new Validering(idb);
 
         try {
             String sqlFraga = "SELECT p.projektnamn, p.startdatum, p.slutdatum, "
@@ -63,10 +71,11 @@ public class AvdProjekt extends javax.swing.JFrame {
                     String startdatum = rad.get("startdatum");
                     String slutdatum = rad.get("slutdatum");                 
 
-           
+                    //lägger till rad i tabellen
                     laggTillNyRad(projekt, status, chef, land, prioritet, startdatum, slutdatum);
-                    //laggTillRadInfo
-                
+                    
+                    //lägger till infon i separata listor
+                    laggTillRadInfo(projekt, status, chef, land, prioritet, startdatum, slutdatum);               
 
             }
         } catch (InfException ex) {
@@ -77,7 +86,16 @@ public class AvdProjekt extends javax.swing.JFrame {
             String prioritet, String startdatum, String slutdatum){
         model.addRow(new Object[]{projekt, status, chef, land, prioritet, startdatum, slutdatum});
     }
-    
+    private void laggTillRadInfo(String projekt, String status, String chef, String land,
+            String prioritet, String startdatum, String slutdatum){
+        projektLista.add(projekt);
+        projektLista.add(status);
+        projektLista.add(chef);
+        projektLista.add(land);
+        projektLista.add(prioritet);
+        projektLista.add(startdatum);
+        projektLista.add(slutdatum);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,12 +107,15 @@ public class AvdProjekt extends javax.swing.JFrame {
     private void initComponents() {
 
         lblAvdProjekt = new javax.swing.JLabel();
-        tfSokruta = new javax.swing.JTextField();
         spPanel = new javax.swing.JScrollPane();
         tblProjekt = new javax.swing.JTable();
         btReturn = new javax.swing.JButton();
         btSok = new javax.swing.JButton();
         cbxStatus = new javax.swing.JComboBox<>();
+        tfSokTill = new javax.swing.JTextField();
+        lblFranDat = new javax.swing.JLabel();
+        lblTillDat = new javax.swing.JLabel();
+        tfSokFran = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,46 +147,79 @@ public class AvdProjekt extends javax.swing.JFrame {
         });
 
         btSok.setText("Sök");
+        btSok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSokActionPerformed(evt);
+            }
+        });
 
         cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxStatusActionPerformed(evt);
+            }
+        });
+
+        lblFranDat.setForeground(new java.awt.Color(102, 102, 102));
+        lblFranDat.setText("Från datum:");
+
+        lblTillDat.setForeground(new java.awt.Color(102, 102, 102));
+        lblTillDat.setText("Till datum:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblAvdProjekt)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(spPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFranDat)
+                                    .addComponent(tfSokFran, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btSok)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btReturn)))
-                        .addGap(38, 38, 38))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfSokTill, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btSok)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblTillDat)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btReturn)))))
+                        .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(lblAvdProjekt)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(lblAvdProjekt)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFranDat)
+                            .addComponent(lblTillDat)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(btReturn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btReturn)
+                    .addComponent(tfSokTill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSok)
-                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfSokFran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -174,6 +228,14 @@ public class AvdProjekt extends javax.swing.JFrame {
     private void btReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReturnActionPerformed
         this.dispose();
     }//GEN-LAST:event_btReturnActionPerformed
+
+    private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
+        
+    }//GEN-LAST:event_btSokActionPerformed
+
+    private void cbxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,8 +277,11 @@ public class AvdProjekt extends javax.swing.JFrame {
     private javax.swing.JButton btSok;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel lblAvdProjekt;
+    private javax.swing.JLabel lblFranDat;
+    private javax.swing.JLabel lblTillDat;
     private javax.swing.JScrollPane spPanel;
     private javax.swing.JTable tblProjekt;
-    private javax.swing.JTextField tfSokruta;
+    private javax.swing.JTextField tfSokFran;
+    private javax.swing.JTextField tfSokTill;
     // End of variables declaration//GEN-END:variables
 }
