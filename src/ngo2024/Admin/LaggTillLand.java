@@ -418,16 +418,17 @@ public class LaggTillLand extends javax.swing.JFrame {
                String sqlFraga="INSERT INTO land VALUES(" + hogstaLid() + ",'" + tfNamn.getText() + "','"
                + tfSprak.getText() + "'," + getValuta() + ", '" + tfTidzon.getText() + "','" 
                + tfPolitik.getText() + "','" + tfEkonomi.getText() + "')";
+        if(kontrollOk==true){    
         try{
-            if(kontrollOk==true){
+           
             idb.insert(sqlFraga);
             System.out.println(sqlFraga);
-        }
+        
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
         
-       
+        }   
     }//GEN-LAST:event_btnSkapaActionPerformed
 
     /**

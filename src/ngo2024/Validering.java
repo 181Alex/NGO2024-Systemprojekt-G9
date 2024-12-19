@@ -197,7 +197,7 @@ public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, Stri
     int tSokInt = Integer.parseInt(tillSok.replace("-", ""));
     boolean inomIntervall=false;
         
-        if(fSokInt<startInt && tSokInt>slutInt){
+        if(fSokInt<=startInt && tSokInt>=slutInt){
             inomIntervall=true;
         }
         return inomIntervall;   
