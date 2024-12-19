@@ -5,6 +5,8 @@
 package ngo2024;
 
 import javax.swing.table.DefaultTableModel;
+import ngo2024.Meny;
+import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**
@@ -200,6 +202,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         });
     }
     
+}
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
@@ -210,4 +213,4 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblProjekt;
     private javax.swing.JTable tblLedarProj;
     // End of variables declaration//GEN-END:variables
-}
+
