@@ -25,6 +25,8 @@ public class LaggTillLand extends javax.swing.JFrame {
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
+        lblError.setVisible(false);
+        lblSkapad.setVisible(false);
     }
     
     public void totalKontroll() {
@@ -70,7 +72,7 @@ public class LaggTillLand extends javax.swing.JFrame {
         Validering valid = new Validering(idb);
         String valuta = tfValuta.getText();
         // kotnroll av valuta så att endast nummer och komma skrivs
-    if (valid.checkTelefon(valuta)) {
+    if (valid.checkValuta(valuta)) {
             lblValutaBad.setVisible(false);
             return true;
     } else {
@@ -217,7 +219,6 @@ public class LaggTillLand extends javax.swing.JFrame {
         lblPolitikBad = new javax.swing.JLabel();
         lblEkonomiBad = new javax.swing.JLabel();
         lblSkapad = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -290,8 +291,6 @@ public class LaggTillLand extends javax.swing.JFrame {
         lblSkapad.setForeground(new java.awt.Color(0, 204, 51));
         lblSkapad.setText("Skapad");
 
-        jTextField1.setText("jTextField1");
-
         lblError.setForeground(new java.awt.Color(255, 0, 51));
         lblError.setText("Error!");
 
@@ -306,13 +305,11 @@ public class LaggTillLand extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(btnSkapa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnTillbaka, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblError))
+                                .addComponent(lblError)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnAndraStader))))
                     .addGroup(layout.createSequentialGroup()
@@ -337,15 +334,14 @@ public class LaggTillLand extends javax.swing.JFrame {
                                         .addComponent(tfTidzon)
                                         .addComponent(tfValuta)
                                         .addComponent(tfSprak)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNamnBad)
                             .addComponent(lblSprakBad)
                             .addComponent(lblValutaBad)
                             .addComponent(lblTidzonBad)
                             .addComponent(lblPolitikBad)
-                            .addComponent(lblEkonomiBad))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(lblEkonomiBad))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -357,12 +353,11 @@ public class LaggTillLand extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                        .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNamnBad))
-                        .addGap(18, 18, 18)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfSprak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -387,7 +382,7 @@ public class LaggTillLand extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(tfEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEkonomiBad))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAndraStader)
                             .addComponent(btnSkapa)
@@ -396,7 +391,7 @@ public class LaggTillLand extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -427,8 +422,12 @@ public class LaggTillLand extends javax.swing.JFrame {
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
-        
+        lblError.setVisible(false);
+        lblSkapad.setVisible(true);
         }   
+        else{
+            lblError.setVisible(true);
+        }
     }//GEN-LAST:event_btnSkapaActionPerformed
 
     /**
@@ -477,7 +476,6 @@ public class LaggTillLand extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblEkonomiBad;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblNamnBad;
