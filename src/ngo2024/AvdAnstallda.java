@@ -19,8 +19,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private int avdNmr;
     private ArrayList<String> epostLista = new ArrayList<>();
     private ArrayList<String> namnLista = new ArrayList<>();
+    private ArrayList<String> telefonLista = new ArrayList<>();
+    private ArrayList<String> mentorLista = new ArrayList<>();
     private DefaultTableModel model;
-    
     
 
     /**
@@ -68,9 +69,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 String mentor = idb.fetchSingle(sqlFragaMentor);
 
                 if (enValidering.tillhorAvdelning(avdNmr, aid)) {
-                    model.addRow(new Object[]{namn, epost, telefon, mentor});
-                    laggTillEpost(epost);
-                    laggTillNamn(namn);
+                    laggTillNyRad(namn, epost, telefon, mentor);
+                    laggTillRadInfo(namn, epost, telefon, mentor);
                 }
 
             }
@@ -98,14 +98,18 @@ public class AvdAnstallda extends javax.swing.JFrame {
         return antalRader;
     }
 
-    private void laggTillEpost(String epost) {
+    private void laggTillRadInfo(String namn, String epost, String telefon, String mentor) {
         epostLista.add(epost);
-    }
-
-    private void laggTillNamn(String namn) {
         namnLista.add(namn);
+        telefonLista.add(telefon);
+        mentorLista.add(mentor);
+    }
+    
+    private void laggTillNyRad(String namn, String epost, String telefon, String mentor){
+        model.addRow(new Object[]{namn, epost, telefon, mentor});
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,26 +255,36 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
         if (cbEpost.isSelected()) {
 
-            for (String epost : epostLista) {
+            for (int i = 0; i<epostLista.size(); i++) {
 
-                epost = epost.toLowerCase();
+                String epost = epostLista.get(i).toLowerCase();
 
-                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {
-                    System.out.println(epost);
-                    hittad = true;
+                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {                    
+                String namn = namnLista.get(i);  
+                String telefon = telefonLista.get(i); 
+                String mentor = mentorLista.get(i); 
+
+                laggTillNyRad(namn, epost, telefon, mentor);
+                
+                hittad = true;    
 
                 }
             }
 
         } else if (cbNamn.isSelected()) {
 
-            for (String namn : namnLista) {
+            for (int i = 0; i < namnLista.size(); i++) {
 
-                namn = namn.toLowerCase();
+                String namn = namnLista.get(i).toLowerCase();
 
                 if (namn.equals(sokOrd) || namn.startsWith(sokOrd)) {
-                    System.out.println(namn);
-                    hittad = true;
+                String epost = epostLista.get(i);  
+                String telefon = telefonLista.get(i); 
+                String mentor = mentorLista.get(i); 
+
+                laggTillNyRad(namn, epost, telefon, mentor);
+                
+                hittad = true;  
                 }
             }
         }
