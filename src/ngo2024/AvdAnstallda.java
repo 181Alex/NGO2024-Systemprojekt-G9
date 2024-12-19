@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -19,9 +20,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private int avdNmr;
     private ArrayList<String> epostLista = new ArrayList<>();
     private ArrayList<String> namnLista = new ArrayList<>();
+    private ArrayList<String> telefonLista = new ArrayList<>();
+    private ArrayList<String> mentorLista = new ArrayList<>();
     private DefaultTableModel model;
-    
-    
 
     /**
      * Creates new form AvdAnstallda
@@ -42,35 +43,27 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }
    
     private void anstalldTabell() {
-        
+        Validering enValidering = new Validering(idb);
         
         try {
-            Validering enValidering = new Validering(idb);
+            String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn, "
+                         + "a.epost, a.telefon, CONCAT(b.fornamn, ' ', b.efternamn) AS mentor "
+                         + "FROM anstalld a "
+                         + "LEFT JOIN handlaggare h ON a.aid = h.aid "
+                         + "LEFT JOIN anstalld b ON h.mentor = b.aid "
+                         + "WHERE a.avdelning = " + avdNmr;
+            
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
-            for (int aid = 1; aid <= antalAnstallda(); aid++) {
-                String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
-                        + "FROM anstalld WHERE aid = " + aid;
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                String epost = rad.get("epost");
+                String telefon = rad.get("telefon");
+                String mentor = rad.get("mentor");
 
-                String sqlFragaEpost = "SELECT epost "
-                        + "FROM anstalld WHERE aid = " + aid;
-
-                String sqlFragaTelefon = "SELECT telefon "
-                        + "FROM anstalld WHERE aid = " + aid;
-
-                String sqlFragaMentor = "SELECT CONCAT(b.fornamn, ' ', b.efternamn) "
-                        + "AS m_namn FROM handlaggare h "
-                        + "LEFT JOIN anstalld b ON h.mentor = b.aid "
-                        + "WHERE h.aid = " + aid;
-
-                String namn = idb.fetchSingle(sqlFragaNamn);
-                String epost = idb.fetchSingle(sqlFragaEpost);
-                String telefon = idb.fetchSingle(sqlFragaTelefon);
-                String mentor = idb.fetchSingle(sqlFragaMentor);
-
-                if (enValidering.tillhorAvdelning(avdNmr, aid)) {
-                    model.addRow(new Object[]{namn, epost, telefon, mentor});
-                    laggTillEpost(epost);
-                    laggTillNamn(namn);
+                if (enValidering.tillhorAvdelning(avdNmr, Integer.parseInt(rad.get("aid")))) {
+                    laggTillNyRad(namn, epost, telefon, mentor);
+                    laggTillRadInfo(namn, epost, telefon, mentor);
                 }
 
             }
@@ -80,32 +73,18 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     }
 
-    private int antalAnstallda() {
-
-        int antalRader = 0;
-
-        try {
-
-            String sqlRad = "SELECT COUNT(*) FROM anstalld";
-
-            String svar = idb.fetchSingle(sqlRad);
-            antalRader = Integer.parseInt(svar);
-
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return antalRader;
-    }
-
-    private void laggTillEpost(String epost) {
+    private void laggTillRadInfo(String namn, String epost, String telefon, String mentor) {
         epostLista.add(epost);
-    }
-
-    private void laggTillNamn(String namn) {
         namnLista.add(namn);
+        telefonLista.add(telefon);
+        mentorLista.add(mentor);
+    }
+    
+    private void laggTillNyRad(String namn, String epost, String telefon, String mentor){
+        model.addRow(new Object[]{namn, epost, telefon, mentor});
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -243,7 +222,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
         String sokOrd = tfSokruta.getText().toLowerCase();
-        Validering enValidering = new Validering(idb);
         lblFelmeddelande.setVisible(false);
 
         boolean hittad = false;
@@ -251,26 +229,36 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
         if (cbEpost.isSelected()) {
 
-            for (String epost : epostLista) {
+            for (int i = 0; i<epostLista.size(); i++) {
 
-                epost = epost.toLowerCase();
+                String epost = epostLista.get(i).toLowerCase();
 
-                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {
-                    System.out.println(epost);
-                    hittad = true;
+                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {                    
+                String namn = namnLista.get(i);  
+                String telefon = telefonLista.get(i); 
+                String mentor = mentorLista.get(i); 
+
+                laggTillNyRad(namn, epost, telefon, mentor);
+                
+                hittad = true;    
 
                 }
             }
 
         } else if (cbNamn.isSelected()) {
 
-            for (String namn : namnLista) {
+            for (int i = 0; i < namnLista.size(); i++) {
 
-                namn = namn.toLowerCase();
+                String namn = namnLista.get(i).toLowerCase();
 
                 if (namn.equals(sokOrd) || namn.startsWith(sokOrd)) {
-                    System.out.println(namn);
-                    hittad = true;
+                String epost = epostLista.get(i);  
+                String telefon = telefonLista.get(i); 
+                String mentor = mentorLista.get(i); 
+
+                laggTillNyRad(namn, epost, telefon, mentor);
+                
+                hittad = true;  
                 }
             }
         }
