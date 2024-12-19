@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
+    </Component>
+  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -26,14 +34,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="btnSkapa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="lblLyckades" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                      <Component id="lblError" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblAnstallDatum" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -68,24 +68,51 @@
                                       <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblEpostBad" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Component id="btnRandom" min="-2" max="-2" attributes="0"/>
-                                          </Group>
                                           <Component id="lblDatumBad1" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblTelefonBad" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblAdressBad" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="btnRandom" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
+                                                  <Component id="tfMentor" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="cbAvdelning" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="chbAdmin" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSkapa" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="lblLyckades" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                              <Component id="lblError" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="chbHandlaggare" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblAnsvarBad" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="tfAnsvarighetsOmrade" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -168,8 +195,16 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfMentor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="chbAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="chbHandlaggare" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAnsvarBad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfAnsvarighetsOmrade" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSkapa" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLyckades" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -365,6 +400,40 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbAdmin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Admin"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbAdminActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbHandlaggare">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbHandlaggareActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAnsvarBad">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfAnsvarighetsOmrade">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="AnsvarighetsOmr&#xe5;de"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfMentor">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mentor (aid)"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
