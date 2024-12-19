@@ -441,11 +441,7 @@ String inloggadAnvandare;
         
         kontrollOk=totOk;
     }
-    
-    
-    
-    
-    
+
     
     public boolean datumKontroll(InfDB idb){
         Validering valid = new Validering(idb); 
@@ -569,6 +565,7 @@ String inloggadAnvandare;
         System.out.println(hogsta);
         return hogsta+1;
     }
+    
 private int getAvdelning(){
     int avdelning=0;
     String val=cbAvdelning.getSelectedItem().toString();
@@ -631,8 +628,6 @@ public int getMentor(){
 } return it;
 }
 
-
-    
     
 public boolean isAdmin(){
     boolean svar=false;
@@ -659,8 +654,7 @@ public boolean alltMed(){
     }
     return alltMed;
 }    
-    
-    
+
     
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
        tfLosenord.setText(randomPassword());

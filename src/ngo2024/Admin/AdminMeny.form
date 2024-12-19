@@ -40,6 +40,8 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
                           <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
+                          <Component id="btnLaggTillLand" max="32767" attributes="0"/>
+                          <Component id="btnAndraLand" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -61,7 +63,11 @@
               <Component id="btnLaggTillAnstalld" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnTaBortAnstalld" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="190" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnLaggTillLand" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnAndraLand" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="132" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -100,6 +106,19 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaBortAnstalldActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnLaggTillLand">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xe4;gg till land"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillLandActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAndraLand">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#xc4;ndra land"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
