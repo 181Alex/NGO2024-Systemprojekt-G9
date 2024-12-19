@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -42,32 +43,25 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }
    
     private void anstalldTabell() {
-        
+        Validering enValidering = new Validering(idb);
         
         try {
-            Validering enValidering = new Validering(idb);
+            String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn, "
+                         + "a.epost, a.telefon, CONCAT(b.fornamn, ' ', b.efternamn) AS mentor "
+                         + "FROM anstalld a "
+                         + "LEFT JOIN handlaggare h ON a.aid = h.aid "
+                         + "LEFT JOIN anstalld b ON h.mentor = b.aid "
+                         + "WHERE a.avdelning = " + avdNmr;
+            
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
-            for (int aid = 1; aid <= antalAnstallda(); aid++) {
-                String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
-                        + "FROM anstalld WHERE aid = " + aid;
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                String epost = rad.get("epost");
+                String telefon = rad.get("telefon");
+                String mentor = rad.get("mentor");
 
-                String sqlFragaEpost = "SELECT epost "
-                        + "FROM anstalld WHERE aid = " + aid;
-
-                String sqlFragaTelefon = "SELECT telefon "
-                        + "FROM anstalld WHERE aid = " + aid;
-
-                String sqlFragaMentor = "SELECT CONCAT(b.fornamn, ' ', b.efternamn) "
-                        + "AS m_namn FROM handlaggare h "
-                        + "LEFT JOIN anstalld b ON h.mentor = b.aid "
-                        + "WHERE h.aid = " + aid;
-
-                String namn = idb.fetchSingle(sqlFragaNamn);
-                String epost = idb.fetchSingle(sqlFragaEpost);
-                String telefon = idb.fetchSingle(sqlFragaTelefon);
-                String mentor = idb.fetchSingle(sqlFragaMentor);
-
-                if (enValidering.tillhorAvdelning(avdNmr, aid)) {
+                if (enValidering.tillhorAvdelning(avdNmr, Integer.parseInt(rad.get("aid")))) {
                     laggTillNyRad(namn, epost, telefon, mentor);
                     laggTillRadInfo(namn, epost, telefon, mentor);
                 }
