@@ -31,6 +31,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     }
     
     public void fyllCb(){
+        cbValjAnstalld.removeAllItems();
         String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) AS namn FROM anstalld";
         
         ArrayList<String> namnLista=new ArrayList<>();
@@ -215,6 +216,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
        lblBorttagen.setVisible(true);
+       fyllCb();
        
     }//GEN-LAST:event_btnTaBortActionPerformed
 
