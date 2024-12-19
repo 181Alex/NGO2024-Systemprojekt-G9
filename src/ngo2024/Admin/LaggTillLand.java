@@ -27,6 +27,12 @@ public class LaggTillLand extends javax.swing.JFrame {
         kontrollOk=false;
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
+        jLabel1.setVisible(false);
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel6.setVisible(false);
     }
     
     public void totalKontroll() {
@@ -34,10 +40,8 @@ public class LaggTillLand extends javax.swing.JFrame {
 
     if (!valutaKontroll()) {
         totOk = false;
-        lblValutaBad.setVisible(true);
     } else if (!namnKontroll()) {
         totOk = false;
-        lblNamnBad.setVisible(true);
     } else if (!sprakKontroll()) {
         totOk = false;
         lblSprakBad.setVisible(true);
@@ -51,7 +55,6 @@ public class LaggTillLand extends javax.swing.JFrame {
         totOk = false;
         lblTidzonBad.setVisible(true);
     }else if (sammaNamnKontroll()) {
-        lblNamnBad.setVisible(true);
         totOk = false;
     }
 

@@ -103,6 +103,38 @@ public class AndraLand extends javax.swing.JFrame {
         }
     }
     
+    public void fyllTabellAndra(){
+        String sLid=selectLid();
+        int lidL=Integer.parseInt(sLid);
+        String namnS=" ";
+        String sprakS=" ";
+        String valutaS=" ";
+        String politikS=" ";
+        String ekonomiS=" ";
+        String tidzonS=" ";
+
+        try{
+            namnS = idb.fetchSingle("SELECT namn FROM land WHERE lid = " + lidL);
+            sprakS = idb.fetchSingle("SELECT sprak FROM land WHERE lid = " + lidL);
+            valutaS = idb.fetchSingle("SELECT valuta FROM land WHERE lid = " + lidL);
+            politikS = idb.fetchSingle("SELECT politisk_struktur FROM land WHERE lid = " + lidL);
+            ekonomiS = idb.fetchSingle("SELECT ekonomi FROM land WHERE lid = " + lidL);
+            tidzonS = idb.fetchSingle("SELECT tidszon FROM land WHERE lid = " + lidL);      
+            
+            
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        } 
+            tfNamn.setText(namnS);
+            tfSprak.setText(sprakS);
+            tfValuta.setText(valutaS);
+            tfPolitik.setText(politikS);
+            tfEkonomi.setText(ekonomiS);
+            tfTidzon.setText(tidzonS);
+                    
+    }
+    
     
     
 
@@ -171,15 +203,20 @@ public class AndraLand extends javax.swing.JFrame {
 
         tfSprak.setText("Språk");
 
-        tfValuta.setText("Valuta");
+        tfValuta.setText("12.123");
 
-        tfTidzon.setText("Tidzon");
+        tfTidzon.setText("Tidzon x");
 
         jLabel1.setText("Namn");
 
-        tfPolitik.setText("Politisk Struktur");
+        tfPolitik.setText("Politisk Struktur x");
 
-        tfEkonomi.setText("Ekonomi");
+        tfEkonomi.setText("Ekonomi x");
+        tfEkonomi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfEkonomiActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Språk");
 
@@ -385,6 +422,7 @@ public class AndraLand extends javax.swing.JFrame {
            cbhAndra.setSelected(false);
            gomAndra();
        }
+       
     }//GEN-LAST:event_cbhTaBortActionPerformed
     public void gomAndra(){
         
@@ -460,10 +498,16 @@ public class AndraLand extends javax.swing.JFrame {
           lblLid.setText(selectLid());
           int i=cbValjLand.getSelectedIndex();
           lblNamn.setText(cbValjLand.getItemAt(i));
-      }
+      }else if(cbhAndra.isSelected()){
+           fyllTabellAndra();
+       }
         
       
     }//GEN-LAST:event_btnValjActionPerformed
+
+    private void tfEkonomiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEkonomiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEkonomiActionPerformed
 
     /**
      * @param args the command line arguments
