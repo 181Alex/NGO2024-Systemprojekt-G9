@@ -190,5 +190,17 @@ public boolean checkDatumSkillnad(String franDatum, String tillDatum){
         return mindre;
 }
 
+public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, String franSok, String tillSok){
+    int startInt = Integer.parseInt(franDatum.replace("-", ""));
+    int slutInt = Integer.parseInt(tillDatum.replace("-", ""));
+    int fSokInt = Integer.parseInt(franSok.replace("-", ""));
+    int tSokInt = Integer.parseInt(tillSok.replace("-", ""));
+    boolean inomIntervall=false;
+        
+        if(fSokInt<startInt && tSokInt>slutInt){
+            inomIntervall=true;
+        }
+        return inomIntervall;   
+}
 
 }

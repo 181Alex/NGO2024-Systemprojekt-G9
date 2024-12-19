@@ -27,7 +27,7 @@ public class LaggTillLand extends javax.swing.JFrame {
         kontrollOk=false;
     }
     
-    public void totalKontroll(InfDB idb) {
+    public void totalKontroll() {
     Boolean totOk = true;
 
     if (!valutaKontroll()) {
@@ -413,11 +413,20 @@ public class LaggTillLand extends javax.swing.JFrame {
     }//GEN-LAST:event_tfNamnActionPerformed
 
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
-        totalKontroll(idb);
+        totalKontroll();
         int hogsta=hogstaLid();
-        String sqlFraga="INSERT INTO land VALUES(" + hogstaLid() + ",'" + tfNamn.getText() + "','"
+               String sqlFraga="INSERT INTO land VALUES(" + hogstaLid() + ",'" + tfNamn.getText() + "','"
                + tfSprak.getText() + "'," + getValuta() + ", '" + tfTidzon.getText() + "','" 
                + tfPolitik.getText() + "','" + tfEkonomi.getText() + "')";
+        try{
+            if(kontrollOk==true){
+            idb.insert(sqlFraga);
+            System.out.println(sqlFraga);
+        }
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
        
     }//GEN-LAST:event_btnSkapaActionPerformed
 
