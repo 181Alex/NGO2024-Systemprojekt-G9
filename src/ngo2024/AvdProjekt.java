@@ -164,10 +164,10 @@ public class AvdProjekt extends javax.swing.JFrame {
         });
 
         lblFranDat.setForeground(new java.awt.Color(102, 102, 102));
-        lblFranDat.setText("Från datum:");
+        lblFranDat.setText("Startdatum:");
 
         lblTillDat.setForeground(new java.awt.Color(102, 102, 102));
-        lblTillDat.setText("Till datum:");
+        lblTillDat.setText("Slutdatum:");
 
         lblFelmeddelande.setForeground(new java.awt.Color(255, 51, 51));
         lblFelmeddelande.setText("Felmeddelande");
@@ -262,7 +262,7 @@ public class AvdProjekt extends javax.swing.JFrame {
         
         if(!sokFran.isEmpty() && !sokTill.isEmpty() &&
                 !enValidering.checkDatumSkillnad(sokFran, sokTill)){
-            lblFelmeddelande.setText("Slutdatum måste vara senare än eller lika med startdatum");
+            lblFelmeddelande.setText("Slutdatum måste vara senare än startdatum");
             lblFelmeddelande.setVisible(true);
             return;
         }

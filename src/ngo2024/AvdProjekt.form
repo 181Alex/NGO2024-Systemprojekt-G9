@@ -207,7 +207,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Fr&#xe5;n datum:"/>
+        <Property name="text" type="java.lang.String" value="Startdatum:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblTillDat">
@@ -215,7 +215,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="66" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Till datum:"/>
+        <Property name="text" type="java.lang.String" value="Slutdatum:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfSokFran">
