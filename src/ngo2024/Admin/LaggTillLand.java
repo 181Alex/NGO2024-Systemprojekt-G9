@@ -414,6 +414,7 @@ public class LaggTillLand extends javax.swing.JFrame {
 
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
         totalKontroll(idb);
+        int hogsta=hogstaLid();
         String sqlFraga="INSERT INTO land VALUES(" + hogstaLid() + ",'" + tfNamn.getText() + "','"
                + tfSprak.getText() + "'," + getValuta() + ", '" + tfTidzon.getText() + "','" 
                + tfPolitik.getText() + "','" + tfEkonomi.getText() + "')";

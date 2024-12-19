@@ -180,5 +180,15 @@ public boolean checkMeningOSiffra(String mening){
     return matches;
 }
 
+public boolean checkDatumSkillnad(String franDatum, String tillDatum){
+    boolean mindre=false;
+    int startInt = Integer.parseInt(franDatum.replace("-", ""));
+        int slutInt = Integer.parseInt(tillDatum.replace("-", ""));
+        if(startInt<slutInt){
+            mindre=true;
+        }
+        return mindre;
+}
+
 
 }
