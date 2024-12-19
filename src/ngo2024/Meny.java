@@ -151,7 +151,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btMalActionPerformed
 
     private void btProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProjektActionPerformed
-        new MinaProjekt(idb).setVisible(true);
+        new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btProjektActionPerformed
 
     /**

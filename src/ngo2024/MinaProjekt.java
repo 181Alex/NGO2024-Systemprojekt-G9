@@ -14,11 +14,14 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     
      private InfDB idb;
+     private String anvandarEpost;
+     
     /**
      * Creates new form MinaProjekt
      */
-    public MinaProjekt(InfDB idb) {
+    public MinaProjekt(InfDB idb, String inloggadAnvandare) {
          this.idb = idb;
+         anvandarEpost = inloggadAnvandare;
         //epost = "john.smith@example.com"; // Sparar den inloggade anv?ndarens e-post
         initComponents();
         //fyllProjektTabell(); // Fyll tabellen med data
@@ -83,7 +86,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)))
+                        .addGap(0, 0, 0)))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,9 +100,9 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(lblLedareProj)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128)
+                .addGap(126, 126, 126)
                 .addComponent(lblProjekt)
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         pack();
@@ -148,6 +151,9 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
     }
+    
+      
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
