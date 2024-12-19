@@ -66,6 +66,7 @@ public class MinAvdelning extends javax.swing.JFrame {
         lblAvdNamn = new javax.swing.JLabel();
         btSeAnstallda = new javax.swing.JButton();
         btSeProjekt = new javax.swing.JButton();
+        btBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +88,13 @@ public class MinAvdelning extends javax.swing.JFrame {
             }
         });
 
+        btBack.setText("X");
+        btBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,18 +102,26 @@ public class MinAvdelning extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSeProjekt)
-                    .addComponent(btSeAnstallda)
-                    .addComponent(lblAvdNamn)
-                    .addComponent(lblAvdelning))
-                .addContainerGap(271, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btSeProjekt)
+                            .addComponent(btSeAnstallda)
+                            .addComponent(lblAvdNamn))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAvdelning)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                        .addComponent(btBack)
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(lblAvdelning)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAvdelning)
+                    .addComponent(btBack))
+                .addGap(9, 9, 9)
                 .addComponent(btSeProjekt)
                 .addGap(12, 12, 12)
                 .addComponent(btSeAnstallda)
@@ -124,6 +140,10 @@ public class MinAvdelning extends javax.swing.JFrame {
     private void btSeProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeProjektActionPerformed
       new AvdProjekt(idb, avdNmr).setVisible(true);
     }//GEN-LAST:event_btSeProjektActionPerformed
+
+    private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +181,7 @@ public class MinAvdelning extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBack;
     private javax.swing.JButton btSeAnstallda;
     private javax.swing.JButton btSeProjekt;
     private javax.swing.JLabel lblAvdNamn;

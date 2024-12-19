@@ -13,7 +13,7 @@ import oru.inf.InfException;
  * @author linneagottling
  */
 public class AvdAnstallda extends javax.swing.JFrame {
-    
+
     private InfDB idb;
     private int avdNmr;
 
@@ -21,59 +21,56 @@ public class AvdAnstallda extends javax.swing.JFrame {
      * Creates new form AvdAnstallda
      */
     public AvdAnstallda(InfDB idb, int avdNmr) {
-        this.idb=idb;
+        this.idb = idb;
         this.avdNmr = avdNmr;
         initComponents();
         anstalldTabell();
     }
-    
-    public void anstalldTabell(){ 
-        
+
+    private void anstalldTabell() {
+
         DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
         model.setRowCount(0);
-        
-        try{
-        Validering enValidering = new Validering(idb);
-        
-        int antalRader = 0;
-        
-        String sqlRad = "SELECT COUNT(*) FROM anstalld";
-        
-        String svar = idb.fetchSingle(sqlRad);
-        antalRader = Integer.parseInt(svar);   
- 
-        
-        for(int aid = 1; aid <= antalRader-1; aid++){
-        String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
-                + "FROM anstalld WHERE aid = " + aid;     
-        
-        String sqlFragaEpost = "SELECT epost "
-                + "FROM anstalld WHERE aid = " + aid;  
-        
-        String sqlFragaTelefon =  "SELECT telefon "
-                + "FROM anstalld WHERE aid = " + aid;
-        
-        String sqlFragaMentor = "SELECT CONCAT(b.fornamn, ' ', b.efternamn) "
-                + "AS m_namn FROM handlaggare h "
-                + "LEFT JOIN anstalld b ON h.mentor = b.aid "
-                + "WHERE h.aid = " + aid;
-        
-        String namn = idb.fetchSingle(sqlFragaNamn);
-        String epost = idb.fetchSingle(sqlFragaEpost);
-        String telefon = idb.fetchSingle(sqlFragaTelefon);
-        String mentor = idb.fetchSingle(sqlFragaMentor);
-       
-        
-            if (enValidering.tillhorAvdelning(avdNmr, aid)) {
-            model.addRow(new Object[]{namn, epost, telefon, mentor});
-            }       
-            
-        }       
-        } 
-        catch(InfException ex){
+
+        try {
+            Validering enValidering = new Validering(idb);
+
+            int antalRader = 0;
+
+            String sqlRad = "SELECT COUNT(*) FROM anstalld";
+
+            String svar = idb.fetchSingle(sqlRad);
+            antalRader = Integer.parseInt(svar);
+
+            for (int aid = 1; aid <= antalRader; aid++) {
+                String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
+                        + "FROM anstalld WHERE aid = " + aid;
+
+                String sqlFragaEpost = "SELECT epost "
+                        + "FROM anstalld WHERE aid = " + aid;
+
+                String sqlFragaTelefon = "SELECT telefon "
+                        + "FROM anstalld WHERE aid = " + aid;
+
+                String sqlFragaMentor = "SELECT CONCAT(b.fornamn, ' ', b.efternamn) "
+                        + "AS m_namn FROM handlaggare h "
+                        + "LEFT JOIN anstalld b ON h.mentor = b.aid "
+                        + "WHERE h.aid = " + aid;
+
+                String namn = idb.fetchSingle(sqlFragaNamn);
+                String epost = idb.fetchSingle(sqlFragaEpost);
+                String telefon = idb.fetchSingle(sqlFragaTelefon);
+                String mentor = idb.fetchSingle(sqlFragaMentor);
+
+                if (enValidering.tillhorAvdelning(avdNmr, aid)) {
+                    model.addRow(new Object[]{namn, epost, telefon, mentor});
+                }
+
+            }
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
 
     /**
@@ -90,6 +87,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
         lblHeader = new javax.swing.JLabel();
         tfSokruta = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
+        btSok = new javax.swing.JButton();
+        btBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +120,20 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
+        btSok.setText("Sök");
+        btSok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSokActionPerformed(evt);
+            }
+        });
+
+        btBack.setText("X");
+        btBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,21 +141,37 @@ public class AvdAnstallda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 144, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btSok))
+                            .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btBack)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(lblHeader)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(lblHeader)
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btSok)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btBack)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         pack();
@@ -151,6 +180,23 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private void tfSokrutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSokrutaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfSokrutaActionPerformed
+
+    private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
+        String sokOrd = tfSokruta.getText();
+        Validering enValidering = new Validering(idb);
+
+        try {
+         
+
+        } catch (InfException ex) {
+
+        }
+
+    }//GEN-LAST:event_btSokActionPerformed
+
+    private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,6 +234,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBack;
+    private javax.swing.JButton btSok;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblHeader;
     private javax.swing.JScrollPane spPanel;
