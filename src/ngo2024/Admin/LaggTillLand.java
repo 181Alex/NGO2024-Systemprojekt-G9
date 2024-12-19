@@ -13,7 +13,8 @@ import oru.inf.InfException;
  */
 public class LaggTillLand extends javax.swing.JFrame {
     private InfDB idb;
-    private String inloggadAnvandare;   
+    private String inloggadAnvandare;  
+    boolean kontrollOk;
     /**
      * Creates new form LaggTillLand
      */
@@ -21,7 +22,35 @@ public class LaggTillLand extends javax.swing.JFrame {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
+        kontrollOk=false;
     }
+    
+    public int hogstaLid(InfDB idb){
+        int hogsta=0;
+        String sqlFraga="Select MAX(lid) FROM Land";
+        try{
+            String max=idb.fetchSingle(sqlFraga);
+            hogsta=Integer.parseInt(max);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(hogsta);
+        return hogsta+1;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,21 +61,218 @@ public class LaggTillLand extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        btnTillbaka = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        btnAndraStader = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        tfNamn = new javax.swing.JTextField();
+        tfSprak = new javax.swing.JTextField();
+        tfValuta = new javax.swing.JTextField();
+        tfTidzon = new javax.swing.JTextField();
+        tfPolitik = new javax.swing.JTextField();
+        tfEkonomi = new javax.swing.JTextField();
+        btnSkapa = new javax.swing.JButton();
+        lblNamnBad = new javax.swing.JLabel();
+        lblSprakBad = new javax.swing.JLabel();
+        lblValutaBad = new javax.swing.JLabel();
+        lblTidzonBad = new javax.swing.JLabel();
+        lblPolitikBad = new javax.swing.JLabel();
+        lblEkonomiBad = new javax.swing.JLabel();
+        lblSkapad = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        lblError = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Namn");
+
+        btnTillbaka.setText("X");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Språk");
+
+        jLabel3.setText("Valuta");
+
+        jLabel4.setText("Tidzon");
+
+        jLabel5.setText("Politisk Struktur");
+
+        jLabel6.setText("Ekonomi");
+
+        btnAndraStader.setText("Ändra städer");
+
+        jLabel7.setText("Lägg till Länder");
+
+        tfNamn.setText("Namn");
+        tfNamn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNamnActionPerformed(evt);
+            }
+        });
+
+        tfSprak.setText("Språk");
+
+        tfValuta.setText("Valuta");
+
+        tfTidzon.setText("Tidzon");
+
+        tfPolitik.setText("Politisk Struktur");
+
+        tfEkonomi.setText("Ekonomi");
+
+        btnSkapa.setText("Skapa");
+
+        lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblNamnBad.setText("!");
+
+        lblSprakBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblSprakBad.setText("!");
+
+        lblValutaBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblValutaBad.setText("!");
+
+        lblTidzonBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblTidzonBad.setText("!");
+
+        lblPolitikBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblPolitikBad.setText("!");
+
+        lblEkonomiBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblEkonomiBad.setText("!");
+
+        lblSkapad.setForeground(new java.awt.Color(0, 204, 51));
+        lblSkapad.setText("Skapad");
+
+        jTextField1.setText("jTextField1");
+
+        lblError.setForeground(new java.awt.Color(255, 0, 51));
+        lblError.setText("Error!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(btnSkapa))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTillbaka, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblError))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAndraStader))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNamn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSkapad)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(tfEkonomi)
+                                        .addComponent(tfPolitik, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                        .addComponent(tfTidzon)
+                                        .addComponent(tfValuta)
+                                        .addComponent(tfSprak)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNamnBad)
+                            .addComponent(lblSprakBad)
+                            .addComponent(lblValutaBad)
+                            .addComponent(lblTidzonBad)
+                            .addComponent(lblPolitikBad)
+                            .addComponent(lblEkonomiBad))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(jLabel7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNamnBad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfSprak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSprakBad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(tfValuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValutaBad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(tfTidzon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTidzonBad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(tfPolitik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPolitikBad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(tfEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEkonomiBad))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAndraStader)
+                            .addComponent(btnSkapa)
+                            .addComponent(lblSkapad)
+                            .addComponent(lblError))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new AdminMeny(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tfNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNamnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfNamnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -84,5 +310,30 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAndraStader;
+    private javax.swing.JButton btnSkapa;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblEkonomiBad;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JLabel lblPolitikBad;
+    private javax.swing.JLabel lblSkapad;
+    private javax.swing.JLabel lblSprakBad;
+    private javax.swing.JLabel lblTidzonBad;
+    private javax.swing.JLabel lblValutaBad;
+    private javax.swing.JTextField tfEkonomi;
+    private javax.swing.JTextField tfNamn;
+    private javax.swing.JTextField tfPolitik;
+    private javax.swing.JTextField tfSprak;
+    private javax.swing.JTextField tfTidzon;
+    private javax.swing.JTextField tfValuta;
     // End of variables declaration//GEN-END:variables
 }
