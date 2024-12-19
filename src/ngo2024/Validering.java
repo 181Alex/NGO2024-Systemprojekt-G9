@@ -205,5 +205,11 @@ public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, Stri
         }
         return inomIntervall;   
 }
-
+public boolean checkAktiv(String status){
+    boolean aktiv = true;
+    if(status.equals("Avslutat")){
+        aktiv = false;
+    }
+    return aktiv;
+}
 }

@@ -270,20 +270,24 @@ public class AvdProjekt extends javax.swing.JFrame {
         for(int i = 0; i<projektLista.size(); i++){
             String startdatum = startdatumLista.get(i);
             String slutdatum = slutdatumLista.get(i);
+            String status = statusLista.get(i);
             
             if (!sokFran.isEmpty() && !sokTill.isEmpty()){
-                if(enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, sokTill)){
-                     laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i),
+                if(enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, sokTill) 
+                        && enValidering.checkAktiv(status)){
+                     laggTillNyRad(projektLista.get(i), status, chefLista.get(i),
                         landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
                 }
             } else if(!sokFran.isEmpty() && sokTill.isEmpty() && 
-                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null)) {
-            laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i), 
+                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null)
+                    && enValidering.checkAktiv(status)) {
+            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
                           landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
                          
             } else if(sokFran.isEmpty() && !sokTill.isEmpty() && 
-                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill)) {
-            laggTillNyRad(projektLista.get(i), statusLista.get(i), chefLista.get(i), 
+                 enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill) 
+                    && enValidering.checkAktiv(status)) {
+            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
                           landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
                 
             } 
