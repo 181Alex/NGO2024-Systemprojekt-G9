@@ -4,8 +4,10 @@
  */
 package ngo2024.Admin;
 
+import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,7 +27,32 @@ public class LaggTillLand extends javax.swing.JFrame {
         kontrollOk=false;
     }
     
-    public int hogstaLid(InfDB idb){
+    public void totalKontroll(InfDB idb) {
+    Boolean totOk = true;
+
+    if (!valutaKontroll()) {
+        totOk = false;
+    } else if (!namnKontroll()) {
+        totOk = false;
+    } else if (!sprakKontroll()) {
+        totOk = false;
+    } else if (!politikKontroll()) {
+        totOk = false;
+    } else if (!ekonomiKontroll()) {
+        totOk = false;
+    } else if (!tidzonKontroll()) {
+        totOk = false;
+    }else if (sammaNamnKontroll()) {
+        totOk = false;
+    }
+
+    kontrollOk = totOk;
+}
+    
+    
+    
+    public int hogstaLid(){
+        // hämtar ut högsta lid
         int hogsta=0;
         String sqlFraga="Select MAX(lid) FROM Land";
         try{
@@ -39,11 +66,117 @@ public class LaggTillLand extends javax.swing.JFrame {
         return hogsta+1;
     }
     
+    public boolean valutaKontroll(){
+        Validering valid = new Validering(idb);
+        String valuta = tfValuta.getText();
+        // kotnroll av valuta så att endast nummer och komma skrivs
+    if (valid.checkTelefon(valuta)) {
+            lblValutaBad.setVisible(false);
+            return true;
+    } else {
+            lblValutaBad.setVisible(true);
+            return false;
+    }
+    }
     
     
     
+    public double getValuta(){
+        String skriv=tfValuta.getText();
+        double returer=0;
+            if(valutaKontroll()){
+            returer=Double.parseDouble(skriv);}
+        return returer;
+    }
     
     
+    public boolean namnKontroll(){
+        Validering valid = new Validering(idb);
+        String namn = tfNamn.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkFornamn(namn)) {
+            lblNamnBad.setVisible(false);
+            return true;
+    } else {
+            lblNamnBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean sammaNamnKontroll(){
+        boolean samma=false;
+        ArrayList<String> namnLista=new ArrayList<>();
+        String sqlFraga="SELECT namn FROM land";
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        for(String namn:namnLista){
+            if(namn.equals(tfNamn.getText())){
+                samma=true;
+            }
+        }
+        if (samma==true){
+            lblNamnBad.setVisible(true);
+        }
+        return samma;
+    }
+    
+    
+    
+    public boolean sprakKontroll(){
+        Validering valid = new Validering(idb);
+        String sprak = tfSprak.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkFornamn(sprak)) {
+            lblSprakBad.setVisible(false);
+            return true;
+    } else {
+            lblSprakBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean politikKontroll(){
+        Validering valid = new Validering(idb);
+        String politik = tfPolitik.getText();
+        // liknande politik 1, en mening sedan siffra
+    if (valid.checkMeningOSiffra(politik)) {
+            lblPolitikBad.setVisible(false);
+            return true;
+    } else {
+            lblPolitikBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean ekonomiKontroll(){
+        Validering valid = new Validering(idb);
+        String ekonomi = tfEkonomi.getText();
+        // liknande ekonomi 1 dvs en mening sedan en siffra
+    if (valid.checkMeningOSiffra(ekonomi)) {
+            lblEkonomiBad.setVisible(false);
+            return true;
+    } else {
+            lblEkonomiBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean tidzonKontroll(){
+        Validering valid = new Validering(idb);
+        String tidzon = tfTidzon.getText();
+        // liknande ekonomi 1 dvs en mening sedan en siffra
+    if (valid.checkMeningOSiffra(tidzon)) {
+            lblTidzonBad.setVisible(false);
+            return true;
+    } else {
+            lblTidzonBad.setVisible(true);
+            return false;
+    }
+    }
     
     
     
@@ -130,6 +263,11 @@ public class LaggTillLand extends javax.swing.JFrame {
         tfEkonomi.setText("Ekonomi");
 
         btnSkapa.setText("Skapa");
+        btnSkapa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSkapaActionPerformed(evt);
+            }
+        });
 
         lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
         lblNamnBad.setText("!");
@@ -273,6 +411,14 @@ public class LaggTillLand extends javax.swing.JFrame {
     private void tfNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNamnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNamnActionPerformed
+
+    private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
+        totalKontroll(idb);
+        String sqlFraga="INSERT INTO land VALUES(" + hogstaLid() + ",'" + tfNamn.getText() + "','"
+               + tfSprak.getText() + "'," + getValuta() + ", '" + tfTidzon.getText() + "','" 
+               + tfPolitik.getText() + "','" + tfEkonomi.getText() + "')";
+       
+    }//GEN-LAST:event_btnSkapaActionPerformed
 
     /**
      * @param args the command line arguments

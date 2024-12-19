@@ -49,6 +49,7 @@ public class Validering {
     
     public boolean checkEpost(String ePost){
         boolean matches=false;
+        // måste skriva valfritt@xxxxx.com, alla special tecken msåte finnas där.
         String checker="^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$";
         if(ePost.matches(checker)){
             matches=true;
@@ -59,6 +60,7 @@ public class Validering {
 
     public boolean checkDatum(String datum){
         boolean matches=false;
+        // måste skrivas yyyy-mm-dd
         String checker="^(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
         if(datum.matches(checker)){
             matches=true;
@@ -96,6 +98,7 @@ public class Validering {
      return matches;
 }
     public boolean checkMentor(String mentor) {
+        // kollar om en mentor finns
         if (mentor==null){
             return true;
         }
@@ -156,8 +159,26 @@ public class Validering {
     }
     
     
+public boolean checkValuta(String valuta) {
+    boolean matches = false;
+    // siffror, ett komma tecken och sedan mer siffror (en double)
+    String checker = "^\\d+(\\.\\d+)?$";
+    if (valuta.matches(checker)) {
+        matches = true;
+    }
+    return matches;
+   
+}
 
-    
-    
-    
+public boolean checkMeningOSiffra(String mening){
+    boolean matches = false;
+    // en mening/ ord sedan en siffra i slutet
+    String checker = "^.*\\d$";
+    if (mening.matches(checker)) {
+        matches = true;
+    }
+    return matches;
+}
+
+
 }
