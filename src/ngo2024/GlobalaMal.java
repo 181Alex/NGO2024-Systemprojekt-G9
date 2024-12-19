@@ -9,7 +9,6 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -40,11 +39,10 @@ public class GlobalaMal extends javax.swing.JFrame {
 
     private void tabellDesign() {
         //fixar tabellens bredd
-        TableColumnModel columnModel = tblGlobalaMal.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(138);  // För kort text
-        columnModel.getColumn(1).setPreferredWidth(138); // För längre text
-        columnModel.getColumn(2).setPreferredWidth(300);
-        columnModel.getColumn(3).setPreferredWidth(138);
+        tblGlobalaMal.getColumnModel().getColumn(0).setPreferredWidth(138);  // För kort text
+        tblGlobalaMal.getColumnModel().getColumn(1).setPreferredWidth(138); // För längre text
+        tblGlobalaMal.getColumnModel().getColumn(2).setPreferredWidth(300); 
+        tblGlobalaMal.getColumnModel().getColumn(3).setPreferredWidth(138); 
 
         tblGlobalaMal.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
         tblGlobalaMal.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());

@@ -4,6 +4,8 @@
  */
 package ngo2024;
 
+import TabellDesign.MultiLineCellRenderer;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
@@ -46,6 +48,35 @@ public class AvdProjekt extends javax.swing.JFrame {
         model = (DefaultTableModel) tblProjekt.getModel();
         model.setRowCount(0);
         lblFelmeddelande.setVisible(false);
+        tabellDesign();
+    }
+    
+    
+    private void tabellDesign() {
+        tblProjekt.getColumnModel().getColumn(0).setPreferredWidth(90);
+        tblProjekt.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tblProjekt.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblProjekt.getColumnModel().getColumn(3).setPreferredWidth(70);
+        tblProjekt.getColumnModel().getColumn(4).setPreferredWidth(90);
+        tblProjekt.getColumnModel().getColumn(5).setPreferredWidth(90);
+        tblProjekt.getColumnModel().getColumn(6).setPreferredWidth(90);
+
+        tblProjekt.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
+        tblProjekt.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+        tblProjekt.getColumnModel().getColumn(2).setCellRenderer(new MultiLineCellRenderer());
+        tblProjekt.getColumnModel().getColumn(4).setCellRenderer(new MultiLineCellRenderer());
+        tblProjekt.getColumnModel().getColumn(5).setCellRenderer(new MultiLineCellRenderer());
+        tblProjekt.getColumnModel().getColumn(6).setCellRenderer(new MultiLineCellRenderer());
+
+
+        for (int row = 0; row < tblProjekt.getRowCount(); row++) {
+            int rowHeight = tblProjekt.getRowHeight();
+            for (int column = 0; column < tblProjekt.getColumnCount(); column++) {
+                Component comp = tblProjekt.prepareRenderer(tblProjekt.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+            tblProjekt.setRowHeight(row, rowHeight);
+        }
     }
 
     private void projektTabell() {
@@ -146,6 +177,7 @@ public class AvdProjekt extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblProjekt.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         spPanel.setViewportView(tblProjekt);
 
         btReturn.setText("X");
