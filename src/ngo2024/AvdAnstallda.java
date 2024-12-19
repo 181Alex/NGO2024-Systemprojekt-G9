@@ -73,24 +73,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     }
 
-    private int antalAnstallda() {
-
-        int antalRader = 0;
-
-        try {
-
-            String sqlRad = "SELECT COUNT(*) FROM anstalld";
-
-            String svar = idb.fetchSingle(sqlRad);
-            antalRader = Integer.parseInt(svar);
-
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return antalRader;
-    }
-
     private void laggTillRadInfo(String namn, String epost, String telefon, String mentor) {
         epostLista.add(epost);
         namnLista.add(namn);
