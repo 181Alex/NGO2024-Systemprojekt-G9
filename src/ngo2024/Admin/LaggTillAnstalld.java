@@ -380,21 +380,21 @@ String inloggadAnvandare;
             String sqlA=" ";
             String sqlH=" ";
             if(admin==true){
-                sqlA="INSERT INTO admin VALUES(" + hogsta + ", " + 1;
+                sqlA="INSERT INTO admin VALUES(" + hogsta + ", " + 1 + ")";
                 idb.insert(sqlFraga);
                 idb.insert(sqlA);
+                System.out.println(sqlA);
+
                 
             }
             else if(admin==false){
                 sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', " + getMentor() + ")";
                 idb.insert(sqlFraga);
                 idb.insert(sqlH);
-
+                System.out.println(sqlH);
             }
             
-            System.out.println(sqlFraga);
-            System.out.println(sqlA);
-            System.out.println(sqlH);
+
 
                 
             }
@@ -432,6 +432,9 @@ String inloggadAnvandare;
         totOk = false;
         }
         else if(!AnsvarKontroll(idb)){
+            totOk=false;
+        }
+        else if(!mentorKontroll(idb)){
             totOk=false;
         }
         
@@ -523,6 +526,20 @@ String inloggadAnvandare;
         
     }}
     
+    public boolean mentorKontroll(InfDB idb){
+    Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String mentor = tfMentor.getText(); 
+    
+    // Kontrollera om Mentor är giltig
+    if (valid.checkMentor(mentor)) {
+        return true;
+    } else {
+        return false;
+        
+    }}
+    
     public boolean AnsvarKontroll(InfDB idb){
             Validering valid = new Validering(idb); 
           // Hämta text från textfältet
@@ -580,9 +597,16 @@ private int getAvdelning(){
     
 public int getMentor(){
     String st=tfMentor.getText();
-    int it=Integer.parseInt(st);
+    int it=0;
+    if(st.isBlank()){
+        it=0;
+    }
+    else{
+    it=Integer.parseInt(st);}
     return it;
 }
+
+
     
     
 public boolean isAdmin(){

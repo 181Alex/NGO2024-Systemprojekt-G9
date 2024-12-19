@@ -95,6 +95,14 @@ public class Validering {
         }
      return matches;
 }
+    public boolean checkMentor(String mentor) {
+        boolean matches = false;
+        //endast siffror
+        String checker = "^\\\\d+$";
+        if (mentor.matches(checker)) {
+        matches = true;
+        }
+     return matches;
     
     
 
