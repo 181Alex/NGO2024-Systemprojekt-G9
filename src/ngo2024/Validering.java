@@ -85,6 +85,18 @@ public class Validering {
         }
      return matches;
 }
+    
+    public boolean checkAnsvar(String Ansvar) {
+        boolean matches = false;
+        //alla bokstäver ok inga siffror
+        String checker = "^[A-Za-zåäöÅÄÖ]+$";
+        if (Ansvar.matches(checker)) {
+        matches = true;
+        }
+     return matches;
+}
+    
+    
 
    public boolean checkTelefon(String telefon) {
         boolean matches = false;
@@ -127,10 +139,12 @@ public class Validering {
          else{
              return false;
          }
+         
+    
     }
     
     
-    
+
     
     
     
