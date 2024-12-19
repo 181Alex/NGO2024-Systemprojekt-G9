@@ -7,6 +7,7 @@ package ngo2024;
 import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,11 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     private InfDB idb;
     private int avdNmr;
+    private ArrayList<String> epostLista = new ArrayList<>();
+    private ArrayList<String> namnLista = new ArrayList<>();
+    private DefaultTableModel model;
+    
+    
 
     /**
      * Creates new form AvdAnstallda
@@ -24,25 +30,24 @@ public class AvdAnstallda extends javax.swing.JFrame {
         this.idb = idb;
         this.avdNmr = avdNmr;
         initComponents();
+        konstrueraTabell();
         anstalldTabell();
+
     }
-
-    private void anstalldTabell() {
-
-        DefaultTableModel model = (DefaultTableModel) tblAnstallda.getModel();
+    
+    private void konstrueraTabell(){
+        model = (DefaultTableModel) tblAnstallda.getModel();
         model.setRowCount(0);
-
+        lblFelmeddelande.setVisible(false);
+    }
+   
+    private void anstalldTabell() {
+        
+        
         try {
             Validering enValidering = new Validering(idb);
 
-            int antalRader = 0;
-
-            String sqlRad = "SELECT COUNT(*) FROM anstalld";
-
-            String svar = idb.fetchSingle(sqlRad);
-            antalRader = Integer.parseInt(svar);
-
-            for (int aid = 1; aid <= antalRader; aid++) {
+            for (int aid = 1; aid <= antalAnstallda(); aid++) {
                 String sqlFragaNamn = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn "
                         + "FROM anstalld WHERE aid = " + aid;
 
@@ -64,6 +69,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
                 if (enValidering.tillhorAvdelning(avdNmr, aid)) {
                     model.addRow(new Object[]{namn, epost, telefon, mentor});
+                    laggTillEpost(epost);
+                    laggTillNamn(namn);
                 }
 
             }
@@ -71,6 +78,32 @@ public class AvdAnstallda extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
 
+    }
+
+    private int antalAnstallda() {
+
+        int antalRader = 0;
+
+        try {
+
+            String sqlRad = "SELECT COUNT(*) FROM anstalld";
+
+            String svar = idb.fetchSingle(sqlRad);
+            antalRader = Integer.parseInt(svar);
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return antalRader;
+    }
+
+    private void laggTillEpost(String epost) {
+        epostLista.add(epost);
+    }
+
+    private void laggTillNamn(String namn) {
+        namnLista.add(namn);
     }
 
     /**
@@ -86,9 +119,11 @@ public class AvdAnstallda extends javax.swing.JFrame {
         tblAnstallda = new javax.swing.JTable();
         lblHeader = new javax.swing.JLabel();
         tfSokruta = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
         btSok = new javax.swing.JButton();
         btBack = new javax.swing.JButton();
+        cbNamn = new javax.swing.JCheckBox();
+        cbEpost = new javax.swing.JCheckBox();
+        lblFelmeddelande = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,8 +153,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
-
         btSok.setText("Sök");
         btSok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +167,23 @@ public class AvdAnstallda extends javax.swing.JFrame {
             }
         });
 
+        cbNamn.setText("Namn");
+        cbNamn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNamnActionPerformed(evt);
+            }
+        });
+
+        cbEpost.setText("Epost");
+        cbEpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEpostActionPerformed(evt);
+            }
+        });
+
+        lblFelmeddelande.setForeground(new java.awt.Color(255, 51, 51));
+        lblFelmeddelande.setText("Felmeddelande");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,15 +193,21 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 144, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btSok))
+                            .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btSok)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbNamn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbEpost))
+                            .addComponent(lblFelmeddelande))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                         .addComponent(btBack)
                         .addGap(24, 24, 24))))
         );
@@ -161,11 +217,15 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(lblHeader)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHeader)
+                            .addComponent(lblFelmeddelande))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfSokruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btSok)))
+                            .addComponent(btSok)
+                            .addComponent(cbNamn)
+                            .addComponent(cbEpost)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(btBack)))
@@ -182,23 +242,66 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }//GEN-LAST:event_tfSokrutaActionPerformed
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
-        String sokOrd = tfSokruta.getText();
+        String sokOrd = tfSokruta.getText().toLowerCase();
         Validering enValidering = new Validering(idb);
+        lblFelmeddelande.setVisible(false);
 
-        try {
-         
+        boolean hittad = false;
+        model.setRowCount(0);
 
-        } catch(Exception ex){
-                System.out.println(ex.getMessage());
+        if (cbEpost.isSelected()) {
+
+            for (String epost : epostLista) {
+
+                epost = epost.toLowerCase();
+
+                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {
+                    System.out.println(epost);
+                    hittad = true;
+
                 }
+            }
 
+        } else if (cbNamn.isSelected()) {
+
+            for (String namn : namnLista) {
+
+                namn = namn.toLowerCase();
+
+                if (namn.equals(sokOrd) || namn.startsWith(sokOrd)) {
+                    System.out.println(namn);
+                    hittad = true;
+                }
+            }
         }
+            if (!cbNamn.isSelected() && !cbEpost.isSelected()) {
+                lblFelmeddelande.setText("Du måste välja antingen epost eller namn");
+                lblFelmeddelande.setVisible(true);
+            }
+
+            else if (!hittad) {
+                lblFelmeddelande.setText("Inga resultat");
+                lblFelmeddelande.setVisible(true);
+
+            }
 
     }//GEN-LAST:event_btSokActionPerformed
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed
         this.dispose();
     }//GEN-LAST:event_btBackActionPerformed
+
+    private void cbEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEpostActionPerformed
+        if (cbEpost.isSelected()) {
+            cbNamn.setSelected(false);
+        }
+    }//GEN-LAST:event_cbEpostActionPerformed
+
+    private void cbNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamnActionPerformed
+        if (cbNamn.isSelected()) {
+            cbEpost.setSelected(false);
+        }
+    }//GEN-LAST:event_cbNamnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,7 +341,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBack;
     private javax.swing.JButton btSok;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JCheckBox cbEpost;
+    private javax.swing.JCheckBox cbNamn;
+    private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblHeader;
     private javax.swing.JScrollPane spPanel;
     private javax.swing.JTable tblAnstallda;
