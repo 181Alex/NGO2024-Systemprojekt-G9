@@ -246,7 +246,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btAndraActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-       new OmProjekt(idb, "2").setVisible(true);
+       new OmProjekt_1(idb, "2").setVisible(true);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /*

@@ -11,7 +11,7 @@ import oru.inf.InfException;
  *
  * @author frida.selin
  */
-public class OmProjekt extends javax.swing.JFrame {
+public class OmProjekt_1 extends javax.swing.JFrame {
   
     private InfDB idb;
     private String projektId;
@@ -19,106 +19,73 @@ public class OmProjekt extends javax.swing.JFrame {
     /**
      * Creates new form OmProjekt
      */
-    public OmProjekt(InfDB idb, String projektId) {
+    public OmProjekt_1(InfDB idb, String projektId) {
         initComponents();
         this.projektId = projektId;
         this.idb = idb;
         
-        lblH1ProjNamn.setText(getProjNamn(projektId));
-        lblBeskrivning.setText(getProjBeskrivning(projektId));
-        lblPrioritet.setText(getProjPrio(projektId));
-        lblStatus.setText(getProjStatus(projektId));
-        lblSlutDatum.setText(getStartdatum(projektId));
-        lblStartDatum.setText(getInfromation(projektId));
-        lblKostnad.setText(getKostnad(projektId));
+        lblH1ProjNamn.setText(getFromProjekt(projektId, projNamn()));
+        lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
+        lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
+        lblStatus.setText(getFromProjekt(projektId, status()));
+        lblSlutDatum.setText(getFromProjekt(projektId, slutdatum()));
+        lblStartDatum.setText(getFromProjekt(projektId, startdatum()));
+        lblKostnad.setText(getFromProjekt(projektId, kostnad()));
         lblLand.setText(getLand(projektId));
         lblProjektChef.setText(getProjektChef(projektId));
     }
     
-    
-    
-    private String getProjNamn(String projektId){
-        String projektNamn=" ";
+    private String getFromProjekt(String projektId, String specifikInfo){
+        String minInfo=" ";
         try{
-            String sqlFraga = "SELECT projektnamn FROM projekt where pid = '" + projektId + "'";
-        projektNamn = idb.fetchSingle(sqlFraga);
+            String sqlFraga = "SELECT " + specifikInfo + " FROM projekt where pid = '" + projektId + "'";
+        minInfo = idb.fetchSingle(sqlFraga);
         } catch (InfException ex){
            System.out.println(ex.getMessage());
         }
-
-        return projektNamn;
+        return minInfo;
     }
     
-    private String getProjBeskrivning(String projektId){
-        String projektBeskrivning=" ";
-        try{
-            String sqlFraga = "SELECT beskrivning FROM projekt where pid = '" + projektId + "'";
-        projektBeskrivning = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektBeskrivning;
+    private String projNamn()
+    {
+        String projNamn = "projektnamn";
+        return projNamn;
     }
     
-    private String getProjPrio(String projektId){
-        String projektPrio=" ";
-        try{
-            String sqlFraga = "SELECT prioritet FROM projekt where pid = '" + projektId + "'";
-        projektPrio = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektPrio;
+    private String projBeskrivning()
+    {
+        String projBeskrivning = "beskrivning";
+        return projBeskrivning;
     }
     
-    private String getProjStatus(String projektId){
-        String projektStatus=" ";
-        try{
-            String sqlFraga = "SELECT status FROM projekt where pid = '" + projektId + "'";
-        projektStatus = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektStatus;
+    private String prioritet()
+    {
+        String prioritet = "prioritet";
+        return prioritet;
     }
     
-    private String getStartdatum(String projektId){
-        String projektStart=" ";
-        try{
-            String sqlFraga = "SELECT startdatum FROM projekt where pid = '" + projektId + "'";
-        projektStart = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektStart;
+    private String status()
+    {
+        String status = "status";
+        return status;
     }
     
-    private String getSlutdatum(String projektId){
-        String projektSlut=" ";
-        try{
-            String sqlFraga = "SELECT slutdatum FROM projekt where pid = '" + projektId + "'";
-        projektSlut = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektSlut;
+    private String startdatum()
+    {
+        String startdatum = "startdatum";
+        return startdatum;
     }
     
-    private String getKostnad(String projektId){
-        String projektKostnad=" ";
-        try{
-            String sqlFraga = "SELECT kostnad FROM projekt where pid = '" + projektId + "'";
-        projektKostnad = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
-        }
-
-        return projektKostnad;
+    private String slutdatum()
+    {
+        String slutdatum = "slutdatum";
+        return slutdatum;
+    }
+    
+    private String kostnad()
+    {
+        String kostnad = "kostnad";
+        return kostnad;
     }
     
     private String getLand(String projektId){
@@ -132,7 +99,6 @@ public class OmProjekt extends javax.swing.JFrame {
 
         return projektLand;
     }
-    
     
     private String getProjektChef(String projektId){
         String projektProjektChef=" ";
@@ -271,10 +237,10 @@ public class OmProjekt extends javax.swing.JFrame {
                         .addComponent(lblBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblH2Status)
-                                .addComponent(lblH2Prio)
-                                .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblH2Prio, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblPrioritet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblH2Status))
                             .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(176, 176, 176)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
