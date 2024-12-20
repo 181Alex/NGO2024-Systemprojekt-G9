@@ -5,6 +5,7 @@
 package ngo2024.Admin;
 
 import java.util.ArrayList;
+import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -16,15 +17,21 @@ public class AndraLand extends javax.swing.JFrame {
     
     private InfDB idb;
     private String inloggadAnvandare; 
+    private boolean kontrollOk;
     /**
      * Creates new form AndraLand
      */
     public AndraLand(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
+        kontrollOk=true;
+        
         initComponents();
         fyllCb();
         gomAlla();
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
+
     }
     
     public void fyllCb(){
@@ -104,6 +111,7 @@ public class AndraLand extends javax.swing.JFrame {
     }
     
     public void fyllTabellAndra(){
+        // fyller fälten som användaren ska ändra med det valda landet.
         String sLid=selectLid();
         int lidL=Integer.parseInt(sLid);
         String namnS=" ";
@@ -135,7 +143,174 @@ public class AndraLand extends javax.swing.JFrame {
                     
     }
     
+    public void gorAndring(){
+        String sLid=selectLid();
+        int lidL=Integer.parseInt(sLid);
+        String namnS = tfNamn.getText();
+        String sprakS = tfSprak.getText();
+        String valutaS = tfValuta.getText();
+        String politikS = tfPolitik.getText();
+        String ekonomiS = tfEkonomi.getText();
+        String tidzonS = tfTidzon.getText();
+        String sqlUpdate="UPDATE land SET namn='" + namnS + "', sprak= '" + sprakS + "', valuta= " + valutaS
+                + ", tidszon= '" + tidzonS + "', politisk_struktur= '" + politikS + "', ekonomi= '"
+                + ekonomiS + "' where lid=" + lidL;
+        try{
+            idb.update(sqlUpdate);
+            System.out.println(sqlUpdate);
+        }
+        
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        } 
+    }
     
+public void gomBad(){
+    //gömmer alla fel medelandena, används innan ett specefikt fel ska upplysas.
+    lblEkonomiBad.setVisible(false);
+        lblNamnBad.setVisible(false);
+        lblPolitikBad.setVisible(false);
+        lblSprakBad.setVisible(false);
+        lblTidzonBad.setVisible(false);
+        lblValutaBad.setVisible(false);
+}    
+
+public void totalKontroll() {
+    Boolean totOk = true;
+
+    if (!valutaKontroll()) {
+        totOk = false;
+    } else if (!namnKontroll()) {
+        totOk = false;
+    } else if (!sprakKontroll()) {
+        totOk = false;
+        lblSprakBad.setVisible(true);
+    } else if (!politikKontroll()) {
+        totOk = false;
+        lblPolitikBad.setVisible(true);
+    } else if (!ekonomiKontroll()) {
+        totOk = false;
+        lblEkonomiBad.setVisible(true);
+    } else if (!tidzonKontroll()) {
+        totOk = false;
+        lblTidzonBad.setVisible(true);
+    }else if (sammaNamnKontroll()) {
+        totOk = false;
+    }
+    kontrollOk = totOk;}
+
+
+    public boolean namnKontroll(){
+        Validering valid = new Validering(idb);
+        String namn = tfNamn.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkFornamn(namn)) {
+            lblNamnBad.setVisible(false);
+            return true;
+    } else {
+        gomBad();
+            lblNamnBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean sammaNamnKontroll(){
+        boolean samma=false;
+        ArrayList<String> namnLista=new ArrayList<>();
+        String sqlFraga="SELECT namn FROM land";
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        for(String namn:namnLista){
+            if(namn.equals(tfNamn.getText())){
+                samma=true;
+            }
+        }
+        if (samma==true){
+            gomBad();
+            lblNamnBad.setVisible(true);
+        }
+        return samma;
+    }
+    
+    
+    
+    public boolean sprakKontroll(){
+        Validering valid = new Validering(idb);
+        String sprak = tfSprak.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkFornamn(sprak)) {
+            lblSprakBad.setVisible(false);
+            return true;
+    } else {
+        gomBad();
+            lblSprakBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean politikKontroll(){
+        Validering valid = new Validering(idb);
+        String politik = tfPolitik.getText();
+        // liknande politik 1, en mening sedan siffra
+    if (valid.checkMeningOSiffra(politik)) {
+            lblPolitikBad.setVisible(false);
+            return true;
+    } else {
+        gomBad();
+            lblPolitikBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean ekonomiKontroll(){
+        Validering valid = new Validering(idb);
+        String ekonomi = tfEkonomi.getText();
+        // liknande ekonomi 1 dvs en mening sedan en siffra
+    if (valid.checkMeningOSiffra(ekonomi)) {
+            lblEkonomiBad.setVisible(false);
+            return true;
+    } else {
+        gomBad();
+
+            lblEkonomiBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean tidzonKontroll(){
+        Validering valid = new Validering(idb);
+        String tidzon = tfTidzon.getText();
+        // liknande ekonomi 1 dvs en mening sedan en siffra
+    if (valid.checkMeningOSiffra(tidzon)) {
+            lblTidzonBad.setVisible(false);
+            return true;
+    } else {
+            gomBad();
+            lblTidzonBad.setVisible(true);
+            return false;
+    }
+    }
+
+    public boolean valutaKontroll(){
+        Validering valid = new Validering(idb);
+        String valuta = tfValuta.getText();
+        // kotnroll av valuta så att endast nummer och komma skrivs
+    if (valid.checkValuta(valuta)) {
+            lblValutaBad.setVisible(false);
+            return true;
+    } else {
+            gomBad();
+            lblValutaBad.setVisible(true);
+            return false;
+            
+    }
+    }
+
+
     
 
     /**
@@ -175,6 +350,8 @@ public class AndraLand extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
         btnAndra = new javax.swing.JButton();
         btnValj = new javax.swing.JButton();
+        lblLyckades = new javax.swing.JLabel();
+        lblError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -271,6 +448,11 @@ public class AndraLand extends javax.swing.JFrame {
         });
 
         btnAndra.setText("Ändra");
+        btnAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraActionPerformed(evt);
+            }
+        });
 
         btnValj.setText("Välj");
         btnValj.addActionListener(new java.awt.event.ActionListener() {
@@ -278,6 +460,12 @@ public class AndraLand extends javax.swing.JFrame {
                 btnValjActionPerformed(evt);
             }
         });
+
+        lblLyckades.setForeground(new java.awt.Color(0, 204, 0));
+        lblLyckades.setText("Lyckades");
+
+        lblError.setForeground(new java.awt.Color(255, 51, 0));
+        lblError.setText("Error!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -332,6 +520,10 @@ public class AndraLand extends javax.swing.JFrame {
                         .addContainerGap(168, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAndra)
+                        .addGap(54, 54, 54)
+                        .addComponent(lblLyckades)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblError)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +586,10 @@ public class AndraLand extends javax.swing.JFrame {
                     .addComponent(tfEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEkonomiBad))
                 .addGap(18, 18, 18)
-                .addComponent(btnAndra)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAndra)
+                    .addComponent(lblLyckades)
+                    .addComponent(lblError))
                 .addGap(18, 18, 18))
         );
 
@@ -409,6 +604,7 @@ public class AndraLand extends javax.swing.JFrame {
     String stringInt=lblLid.getText();
     int iInt=Integer.parseInt(stringInt);
     taBortLand(iInt);
+    fyllCb();
     
     }//GEN-LAST:event_btnTaBortActionPerformed
 
@@ -422,7 +618,6 @@ public class AndraLand extends javax.swing.JFrame {
            cbhAndra.setSelected(false);
            gomAndra();
        }
-       
     }//GEN-LAST:event_cbhTaBortActionPerformed
     public void gomAndra(){
         
@@ -509,6 +704,21 @@ public class AndraLand extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfEkonomiActionPerformed
 
+    private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
+            totalKontroll();
+            if(kontrollOk==true){
+                gorAndring();
+                lblLyckades.setVisible(true);
+                lblError.setVisible(false);
+                fyllCb();
+            }
+            else{
+                lblError.setVisible(true);
+                lblLyckades.setVisible(false);}
+
+        
+    }//GEN-LAST:event_btnAndraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -560,7 +770,9 @@ public class AndraLand extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblBorttagen;
     private javax.swing.JLabel lblEkonomiBad;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblLid;
+    private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblNamn;
     private javax.swing.JLabel lblNamnBad;
     private javax.swing.JLabel lblPolitikBad;
