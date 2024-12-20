@@ -331,7 +331,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_tfKostnadActionPerformed
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btCloseActionPerformed
 
     /**
