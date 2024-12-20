@@ -16,7 +16,7 @@ private InfDB idb;
 private boolean created;
 private Random randomizer;
 boolean kontrollOk;
-String inloggadAnvandare;
+private String inloggadAnvandare;
 
     /**
      * Creates new form LaggTillAnstalld
