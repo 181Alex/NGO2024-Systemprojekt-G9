@@ -10,26 +10,47 @@ import ngo2024.Meny;
 import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import TabellDesign.MultiLineCellRenderer;
+import java.awt.Component;
+
 /**
  *
- * @author 
+ * @author
  */
 public class MinaProjekt extends javax.swing.JFrame {
 
-    
-     private InfDB idb;
-     private String anvandarEpost;
-     
+    private InfDB idb;
+    private String anvandarEpost;
+    private int personAid;
+
+    private ArrayList<String> projektNamnLista = new ArrayList<>();
+    private ArrayList<String> statusLista = new ArrayList<>();
+
     /**
      * Creates new form MinaProjekt
      */
     public MinaProjekt(InfDB idb, String inloggadAnvandare) {
-         this.idb = idb;
-         anvandarEpost = inloggadAnvandare;
-        //epost = "john.smith@example.com"; // Sparar den inloggade anv?ndarens e-post
+        this.idb = idb;
+        anvandarEpost = inloggadAnvandare;
+        personAid = getAid();
+
         initComponents();
-        //fyllProjektTabell(); // Fyll tabellen med data
-        tblLedarProj.setVisible(false);
+
+        //tblLedarProj.setVisible(false);
+    }
+
+    private int getAid() {
+        try {
+            String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + anvandarEpost + "'";
+            String resultat = idb.fetchSingle(sqlFraga);
+            personAid = Integer.parseInt(resultat);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return personAid;
     }
 
     /**
@@ -112,16 +133,20 @@ public class MinaProjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                                .addComponent(lblLedareProj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btAndra))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
-                        .addComponent(lblLedareProj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btAndra)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -147,17 +172,15 @@ public class MinaProjekt extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-      
-    
+
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         btnReturn.setBorderPainted(false);
         new Meny(idb, anvandarEpost).setVisible(true); //kanske inte m?ste vara new
-        this.dispose(); 
+        this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
-       new ProjektChef(idb, anvandarEpost).setVisible(true);
+        new ProjektChef(idb, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btAndraActionPerformed
 
     /*
@@ -199,41 +222,39 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
 
-*/
-    
+     */
     public void tblLedarProjModel() {
 
         DefaultTableModel tblModel = (DefaultTableModel) tblLedarProj.getModel();
         tblModel.setRowCount(0);
 
         try {
-           // Validering enValidKlass = new Validering(idb);
+            // Validering enValidKlass = new Validering(idb);
 
-            String sqlRad = "SELECT COUNT (*) FROM projekt";
+            String sqlRad = "SELECT COUNT(*) FROM projekt";
 
             String svar = idb.fetchSingle(sqlRad);
             int antalRader = Integer.parseInt(svar);
 
             for (int pid = 1; pid <= antalRader; pid++) {
-                   
-                    String sqlFragaProjNamn = "SELECT projektnamn"
-                            + "FROM projekt WHERE pid =" + pid;
 
-                    String sqlFragaStatus = "SELECT status"
-                            + "FROM projekt WHERE pid =" + pid;
+                String sqlFragaProjNamn = "SELECT projektnamn FROM projekt WHERE pid = " + pid;
 
-                    String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
-                    String projektStatus = idb.fetchSingle(sqlFragaStatus);
+                String sqlFragaStatus = "SELECT status FROM projekt WHERE pid = " + pid;
 
-                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
-                
+                String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
+                String projektStatus = idb.fetchSingle(sqlFragaStatus);
+
+                tblModel.addRow(new Object[]{projektNamn, projektStatus});
+
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
 
     }
-    
+
+    /*
     public void tblProjektModel() {
 
         DefaultTableModel tblModel = (DefaultTableModel) tblProjekt.getModel();
@@ -249,11 +270,11 @@ public class MinaProjekt extends javax.swing.JFrame {
 
             for (int pid = 1; pid <= antalRader; pid++) {
                    
-                    String sqlFragaProjNamn = "SELECT projektnamn"
+                    String sqlFragaProjNamn = "SELECT projektnamn "
                             + "FROM projekt WHERE pid =" + pid;
 
                     String sqlFragaStatus = "SELECT status" 
-                            + "FROM projekt WHERE pid =" + pid;
+                            + " FROM projekt WHERE pid =" + pid;
 
                     String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
                     String projektStatus = idb.fetchSingle(sqlFragaStatus);
@@ -266,9 +287,67 @@ public class MinaProjekt extends javax.swing.JFrame {
         }
 
     }
+     */
+    public void tblProjektModel() {
 
+        DefaultTableModel tblModel = (DefaultTableModel) tblLedarProj.getModel();
+        tblModel.setRowCount(0);
+
+        try {
+            // Validering enValidKlass = new Validering(idb);
+
+            String sqlRad = "SELECT COUNT(*) FROM projekt";
+
+            String svar = idb.fetchSingle(sqlRad);
+            int antalRader = Integer.parseInt(svar);
+
+            for (int pid = 1; pid <= antalRader; pid++) {
+
+                String sqlFragaProjNamn = "SELECT projektnamn FROM projekt WHERE pid = " + pid;
+
+                String sqlFragaStatus = "SELECT status FROM projekt WHERE pid = " + pid;
+
+                String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
+                String projektStatus = idb.fetchSingle(sqlFragaStatus);
+
+                tblModel.addRow(new Object[]{projektNamn, projektStatus});
+
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    /*
+    public void tblProjektModel() {
+        DefaultTableModel tblModel = (DefaultTableModel) tblProjekt.getModel();
+        tblModel.setRowCount(0);
+        
+        try {
+            String sqlFraga = "SELECT projektnamn, status FROM projekt";
+            
+            List<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+            
+            if (resultat != null) {
+                for (HashMap<String, String> rad : resultat) {
+                    String projektNamn = rad.get("projektnamn");
+                    String projektStatus = rad.get("status");
+                    
+                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
+                }
+                
+            }
+            else {
+                System.out.println("No rows found");
+            } 
+        } catch (InfException ex) {
+                    System.out.println("Error " + ex.getMessage());
+                    }
+    }
     
-    
+     */
+
     /**
      * @param args the command line arguments
      */
@@ -303,9 +382,8 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
     }
-    
 
-     
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAndra;
     private javax.swing.JButton btnReturn;
