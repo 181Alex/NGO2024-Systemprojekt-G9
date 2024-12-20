@@ -4,16 +4,24 @@
  */
 package ngo2024;
 
+import javax.swing.table.DefaultTableModel;
+import oru.inf.InfDB;
+import oru.inf.InfException;
 /**
  *
  * @author linneagottling
  */
 public class ProjektChef extends javax.swing.JFrame {
+    
+     private InfDB idb;
+     private String epost;
 
     /**
      * Creates new form ProjektChef
      */
-    public ProjektChef() {
+    public ProjektChef(InfDB idb, String epost) {
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
     }
 
