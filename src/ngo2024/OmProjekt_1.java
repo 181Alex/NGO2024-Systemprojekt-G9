@@ -4,26 +4,28 @@
  */
 package ngo2024;
 
-
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
 /**
  *
  * @author frida.selin
  */
 public class OmProjekt_1 extends javax.swing.JFrame {
-  
+
     private InfDB idb;
     private String projektId;
-    
+    private String anvandarEpost;
+
     /**
      * Creates new form OmProjekt
      */
-    public OmProjekt_1(InfDB idb, String projektId) {
+    public OmProjekt_1(InfDB idb, String anvandarEpost, String projektId) {
         initComponents();
         this.projektId = projektId;
+        this.anvandarEpost = anvandarEpost;
         this.idb = idb;
-        
+
         lblH1ProjNamn.setText(getFromProjekt(projektId, projNamn()));
         lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
         lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
@@ -35,86 +37,79 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblProjektChef.setText(getProjektChef(projektId));
     }
     
-    private String getFromProjekt(String projektId, String specifikInfo){
-        String minInfo=" ";
-        try{
+    
+
+    private String getFromProjekt(String projektId, String specifikInfo) {
+        String minInfo = " ";
+        try {
             String sqlFraga = "SELECT " + specifikInfo + " FROM projekt where pid = '" + projektId + "'";
-        minInfo = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            minInfo = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
         return minInfo;
     }
-    
-    private String projNamn()
-    {
+
+    private String projNamn() {
         String projNamn = "projektnamn";
         return projNamn;
     }
-    
-    private String projBeskrivning()
-    {
+
+    private String projBeskrivning() {
         String projBeskrivning = "beskrivning";
         return projBeskrivning;
     }
-    
-    private String prioritet()
-    {
+
+    private String prioritet() {
         String prioritet = "prioritet";
         return prioritet;
     }
-    
-    private String status()
-    {
+
+    private String status() {
         String status = "status";
         return status;
     }
-    
-    private String startdatum()
-    {
+
+    private String startdatum() {
         String startdatum = "startdatum";
         return startdatum;
     }
-    
-    private String slutdatum()
-    {
+
+    private String slutdatum() {
         String slutdatum = "slutdatum";
         return slutdatum;
     }
-    
-    private String kostnad()
-    {
+
+    private String kostnad() {
         String kostnad = "kostnad";
         return kostnad;
     }
-    
-    private String getLand(String projektId){
-        String projektLand=" ";
-        try{
+
+    private String getLand(String projektId) {
+        String projektLand = " ";
+        try {
             String sqlFraga = "SELECT namn FROM land JOIN projekt ON projekt.land = land.lid WHERE pid = '" + projektId + "'";
-        projektLand = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektLand = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektLand;
     }
-    
-    private String getProjektChef(String projektId){
-        String projektProjektChef=" ";
-        try{
+
+    private String getProjektChef(String projektId) {
+        String projektProjektChef = " ";
+        try {
             String sqlFragaFornamn = "SELECT fornamn FROM anstalld JOIN projekt ON projekt.projektchef = anstalld.aid WHERE pid = '" + projektId + "'";
             String sqlFragaEfternamn = "SELECT efternamn FROM anstalld JOIN projekt ON projekt.projektchef = anstalld.aid WHERE pid = '" + projektId + "'";
             projektProjektChef = idb.fetchSingle(sqlFragaFornamn) + " " + idb.fetchSingle(sqlFragaEfternamn);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektProjektChef;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,6 +135,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblKostnad = new javax.swing.JLabel();
         lblH2ProjChef = new javax.swing.JLabel();
         lblProjektChef = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,6 +163,13 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         jLabel2.setText("Land:");
 
         lblH2ProjChef.setText("Projektledare:");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,14 +216,21 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                                                 .addComponent(lblH2Prio, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 23, Short.MAX_VALUE)))
-                        .addGap(337, 337, 337))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(224, 224, 224)
+                        .addComponent(jButton1)
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(lblH1ProjNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(lblH1ProjNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -256,6 +266,11 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new MinaProjekt(idb, anvandarEpost).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +308,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblBeskrivning;

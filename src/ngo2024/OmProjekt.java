@@ -4,151 +4,147 @@
  */
 package ngo2024;
 
-
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
 /**
  *
  * @author frida.selin
  */
 public class OmProjekt extends javax.swing.JFrame {
-  
+
     private InfDB idb;
     private String projektId;
-    
+
+    private String anvandarEpost;
+
     /**
      * Creates new form OmProjekt
      */
-    public OmProjekt(InfDB idb, String projektId) {
+    public OmProjekt(InfDB idb, String anvandarEpost, String projektId) {
         initComponents();
         this.projektId = projektId;
         this.idb = idb;
-        
+
         lblH1ProjNamn.setText(getProjNamn(projektId));
         lblBeskrivning.setText(getProjBeskrivning(projektId));
         lblPrioritet.setText(getProjPrio(projektId));
         lblStatus.setText(getProjStatus(projektId));
         lblSlutDatum.setText(getStartdatum(projektId));
-        lblStartDatum.setText(getInfromation(projektId));
         lblKostnad.setText(getKostnad(projektId));
         lblLand.setText(getLand(projektId));
         lblProjektChef.setText(getProjektChef(projektId));
     }
-    
-    
-    
-    private String getProjNamn(String projektId){
-        String projektNamn=" ";
-        try{
+
+    private String getProjNamn(String projektId) {
+        String projektNamn = " ";
+        try {
             String sqlFraga = "SELECT projektnamn FROM projekt where pid = '" + projektId + "'";
-        projektNamn = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektNamn = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektNamn;
     }
-    
-    private String getProjBeskrivning(String projektId){
-        String projektBeskrivning=" ";
-        try{
+
+    private String getProjBeskrivning(String projektId) {
+        String projektBeskrivning = " ";
+        try {
             String sqlFraga = "SELECT beskrivning FROM projekt where pid = '" + projektId + "'";
-        projektBeskrivning = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektBeskrivning = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektBeskrivning;
     }
-    
-    private String getProjPrio(String projektId){
-        String projektPrio=" ";
-        try{
+
+    private String getProjPrio(String projektId) {
+        String projektPrio = " ";
+        try {
             String sqlFraga = "SELECT prioritet FROM projekt where pid = '" + projektId + "'";
-        projektPrio = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektPrio = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektPrio;
     }
-    
-    private String getProjStatus(String projektId){
-        String projektStatus=" ";
-        try{
+
+    private String getProjStatus(String projektId) {
+        String projektStatus = " ";
+        try {
             String sqlFraga = "SELECT status FROM projekt where pid = '" + projektId + "'";
-        projektStatus = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektStatus = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektStatus;
     }
-    
-    private String getStartdatum(String projektId){
-        String projektStart=" ";
-        try{
+
+    private String getStartdatum(String projektId) {
+        String projektStart = " ";
+        try {
             String sqlFraga = "SELECT startdatum FROM projekt where pid = '" + projektId + "'";
-        projektStart = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektStart = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektStart;
     }
-    
-    private String getSlutdatum(String projektId){
-        String projektSlut=" ";
-        try{
+
+    private String getSlutdatum(String projektId) {
+        String projektSlut = " ";
+        try {
             String sqlFraga = "SELECT slutdatum FROM projekt where pid = '" + projektId + "'";
-        projektSlut = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektSlut = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektSlut;
     }
-    
-    private String getKostnad(String projektId){
-        String projektKostnad=" ";
-        try{
+
+    private String getKostnad(String projektId) {
+        String projektKostnad = " ";
+        try {
             String sqlFraga = "SELECT kostnad FROM projekt where pid = '" + projektId + "'";
-        projektKostnad = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektKostnad = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektKostnad;
     }
-    
-    private String getLand(String projektId){
-        String projektLand=" ";
-        try{
+
+    private String getLand(String projektId) {
+        String projektLand = " ";
+        try {
             String sqlFraga = "SELECT namn FROM land JOIN projekt ON projekt.land = land.lid WHERE pid = '" + projektId + "'";
-        projektLand = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+            projektLand = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektLand;
     }
-    
-    
-    private String getProjektChef(String projektId){
-        String projektProjektChef=" ";
-        try{
+
+    private String getProjektChef(String projektId) {
+        String projektProjektChef = " ";
+        try {
             String sqlFragaFornamn = "SELECT fornamn FROM anstalld JOIN projekt ON projekt.projektchef = anstalld.aid WHERE pid = '" + projektId + "'";
             String sqlFragaEfternamn = "SELECT efternamn FROM anstalld JOIN projekt ON projekt.projektchef = anstalld.aid WHERE pid = '" + projektId + "'";
             projektProjektChef = idb.fetchSingle(sqlFragaFornamn) + " " + idb.fetchSingle(sqlFragaEfternamn);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return projektProjektChef;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
