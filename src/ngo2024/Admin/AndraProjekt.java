@@ -7,6 +7,7 @@ package ngo2024.Admin;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -17,6 +18,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     
     private InfDB idb;
     private String epost;
+    private HashMap<Integer, String> anstalldLista;
 
     /**
      * Creates new form AndraProjekt
@@ -24,10 +26,11 @@ public class AndraProjekt extends javax.swing.JFrame {
     public AndraProjekt(InfDB idb, String epost) {
         this.idb = idb;
         this.epost = epost;
+        anstalldLista = new HashMap<>();
 
         initComponents();
         fyllCb();
-        //gomAlla();
+        gomAlla();
         
     }
     
@@ -113,9 +116,7 @@ private String getPid(){
     }
     return pid;
 }
-private String getAid(){
-    String sPid = getPid();
-    int pid = Integer.parseInt(sPid);
+private String getChefAid(int pid){
     String aid = " ";
     
     try{
@@ -147,8 +148,7 @@ private void taBortProjekt(int pid){
 private void fyllTabellAndra(){
      String sPid=getPid();
         int pid=Integer.parseInt(sPid);
-    String sAid = getAid();
-        int aid = Integer.parseInt(sAid);
+    String pAid = getChefAid(pid);
         
         String namn=" ";
         String beskrivning=" ";
@@ -160,19 +160,24 @@ private void fyllTabellAndra(){
         String nStatus = " ";
         String nChef = " ";
         String nAid = " ";
-
+       
+        ArrayList<String> personLista = new ArrayList<>();
+        
         //uppdaterar alla comboboxes
         cbxPrioritet.removeAllItems();
         cbxStatus.removeAllItems();
         cbxProjektchef.removeAllItems();
+        
+        //lägger till alternativ i prio och status
+        cbxPrioritet.addItem("Hög");
+        cbxPrioritet.addItem("Låg");
+        cbxPrioritet.addItem("Medel");
+        
+        cbxStatus.addItem("Planerat");
+        cbxStatus.addItem("Pågående");
+        cbxStatus.addItem("Avslutat");
 
-        ArrayList<String> prioritetLista = new ArrayList<>();
-        ArrayList<String> statusLista = new ArrayList<>();
-        ArrayList<String> projektchefLista = new ArrayList<>();
-
-        String sqlPrio = "SELECT prioritet FROM projekt ";
-        String sqlStat = "SELECT status FROM projekt";
-        String sqlPrCh = "SELECT namn FROM anstalld WHERE aid = " + aid;
+        String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld";
 
         try{
             namn = idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid = " + pid);
@@ -185,21 +190,19 @@ private void fyllTabellAndra(){
             //hämtar ut nuvarande 
             nPrio = idb.fetchSingle("SELECT prioritet FROM projekt WHERE pid = " + pid);
             nStatus = idb.fetchSingle("SELECT status FROM projekt WHERE pid = " + pid);
-            nChef = idb.fetchSingle("SELECT namn FROM projekt WHERE projektchef = " + aid);
-            nAid = idb.fetchSingle("SELECT projektchef FROM projekt WHERE aid = " + aid);
+            nChef = idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) "
+                                 + "FROM anstalld WHERE aid = " + pAid);
+            nAid = pAid;                  
+                   
+            personLista = idb.fetchColumn(sqlPerson);
+            
+            int i = 1;
 
-            prioritetLista = idb.fetchColumn(sqlPrio);
-            statusLista = idb.fetchColumn(sqlStat);
-            projektchefLista = idb.fetchColumn(sqlPrCh);
-
-            for(String prio : prioritetLista){
-                cbxPrioritet.addItem(prio);
-            }
-            for(String stat: statusLista){
-                cbxStatus.addItem(stat);
-            }
-            for(String pnamn : projektchefLista){
-                cbxProjektchef.addItem(pnamn);
+            for(String anstNamn : personLista){
+                cbxProjektchef.addItem(anstNamn);
+                anstalldLista.put(i, anstNamn);
+                i++;
+                
             }         
             
         }
@@ -217,10 +220,112 @@ private void fyllTabellAndra(){
             tfNprio.setText(nPrio);
             tfNstatus.setText(nStatus);
             tfNprojektchef.setText(nChef);
-            lblNaid.setText(nAid);
+            lblNaid.setText(nAid);            
                     
 }
 
+public void gomTaBort(){
+    // Visa allt om Ändra
+    btAndra.setVisible(true);
+    btHallbarhet.setVisible(true);
+    btPartner.setVisible(true);
+    btValj.setVisible(true);
+    cbxPrioritet.setVisible(true);
+    cbxProjekt.setVisible(true);
+    cbxStatus.setVisible(true);
+    cbxProjektchef.setVisible(true);
+    lblAid.setVisible(true);
+    lblBeskrivning.setVisible(true);
+    lblHallbarhet.setVisible(true);
+    lblKostnad.setVisible(true);
+    lblLand.setVisible(true);
+    lblMeddelande.setVisible(true);
+    lblN1.setVisible(true);
+    lblN2.setVisible(true);
+    lblN3.setVisible(true);
+    lblNaid.setVisible(true);
+    lblPrioritet.setVisible(true);
+    lblProjektchef.setVisible(true);
+    lblProjektnamn.setVisible(true);
+    lblProjektpartner.setVisible(true);
+    lblSlutdatum.setVisible(true);
+    lblStartdatum.setVisible(true);
+    lblStatus.setVisible(true);
+    tfKostnad.setVisible(true);
+    tfLand.setVisible(true);
+    tfNprio.setVisible(true);
+    tfNprojektchef.setVisible(true);
+    tfNstatus.setVisible(true);
+    tfProjektnamn.setVisible(true);
+    tfSlutdatum.setVisible(true);
+    tfStartdatum.setVisible(true);
+    
+
+    // Göm det som tillhör ta bort
+    lblPid.setVisible(false);
+    lblPnamn.setVisible(false);
+    btTaBort.setVisible(false);
+   
+    //göm felgrejor
+    lblFelBeskrivning.setVisible(false);
+    lblFelKostnad.setVisible(false);
+    lblFelLand.setVisible(false);
+    lblFelNamn.setVisible(false);
+    lblFelSlutdatum.setVisible(false);
+    lblFelStartdatum.setVisible(false);
+}
+
+private void gomAndra(){
+    // Göm allt om Ändra
+    btAndra.setVisible(false);
+    btHallbarhet.setVisible(false);
+    btPartner.setVisible(false);
+    cbxPrioritet.setVisible(false);  
+    cbxStatus.setVisible(false);
+    cbxProjektchef.setVisible(false);
+    lblAid.setVisible(false);
+    lblBeskrivning.setVisible(false);
+    lblHallbarhet.setVisible(false);
+    lblKostnad.setVisible(false);
+    lblLand.setVisible(false);
+    lblMeddelande.setVisible(false);
+    lblN1.setVisible(false);
+    lblN2.setVisible(false);
+    lblN3.setVisible(false);
+    lblNaid.setVisible(false);
+    lblPrioritet.setVisible(false);
+    lblProjektchef.setVisible(false);
+    lblProjektnamn.setVisible(false);
+    lblProjektpartner.setVisible(false);
+    lblSlutdatum.setVisible(false);
+    lblStartdatum.setVisible(false);
+    lblStatus.setVisible(false);
+    tfKostnad.setVisible(false);
+    tfLand.setVisible(false);
+    tfNprio.setVisible(false);
+    tfNprojektchef.setVisible(false);
+    tfNstatus.setVisible(false);
+    tfProjektnamn.setVisible(false);
+    tfSlutdatum.setVisible(false);
+    tfStartdatum.setVisible(false);
+    
+
+    // Visa det som tillhör ta bort
+    lblPid.setVisible(true);
+    lblPnamn.setVisible(true);
+    btTaBort.setVisible(true);
+    btValj.setVisible(true);
+    cbxProjekt.setVisible(true);
+    
+   
+    //göm felgrejor
+    lblFelBeskrivning.setVisible(false);
+    lblFelKostnad.setVisible(false);
+    lblFelLand.setVisible(false);
+    lblFelNamn.setVisible(false);
+    lblFelSlutdatum.setVisible(false);
+    lblFelStartdatum.setVisible(false);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -281,8 +386,18 @@ private void fyllTabellAndra(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         chbAndra.setText("Ändra");
+        chbAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbAndraActionPerformed(evt);
+            }
+        });
 
         chbTaBort.setText("Ta bort");
+        chbTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbTaBortActionPerformed(evt);
+            }
+        });
 
         btTaBort.setText("Ta bort");
 
@@ -339,6 +454,11 @@ private void fyllTabellAndra(){
         });
 
         cbxProjektchef.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxProjektchef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxProjektchefActionPerformed(evt);
+            }
+        });
 
         btAndra.setText("Ändra");
 
@@ -636,6 +756,33 @@ private void fyllTabellAndra(){
     private void btPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPartnerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btPartnerActionPerformed
+
+    private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed
+        String selectedPerson = (String) cbxProjektchef.getSelectedItem();
+        String aid = " ";
+        for(int id : anstalldLista.keySet()){
+            String namn = anstalldLista.get(id);
+            if(selectedPerson.equals(namn)){
+                aid = String.valueOf(id);
+            }
+        }
+        lblAid.setText(aid);
+        
+    }//GEN-LAST:event_cbxProjektchefActionPerformed
+
+    private void chbAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAndraActionPerformed
+        if(chbAndra.isSelected()){
+            chbTaBort.setSelected(false);
+            gomTaBort();
+        }
+    }//GEN-LAST:event_chbAndraActionPerformed
+
+    private void chbTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbTaBortActionPerformed
+        if(chbTaBort.isSelected()){
+           chbAndra.setSelected(false);
+           gomAndra();
+       }
+    }//GEN-LAST:event_chbTaBortActionPerformed
 
     /**
      * @param args the command line arguments
