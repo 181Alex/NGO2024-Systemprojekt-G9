@@ -43,31 +43,6 @@
                               <Component id="lblNamn" min="-2" pref="152" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel3" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfEkonomi" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfPolitik" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfTidzon" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfValuta" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfSprak" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblSprakBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblValutaBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblTidzonBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblPolitikBad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblEkonomiBad" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <Component id="cbValjLand" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnValj" min="-2" max="-2" attributes="0"/>
@@ -82,11 +57,41 @@
                               <Component id="lblNamnBad" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnAndra" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                              <Component id="lblLyckades" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lblError" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jLabel2" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel3" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnAndra" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblLyckades" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                      <Component id="lblError" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="tfEkonomi" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfPolitik" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfTidzon" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfValuta" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="tfSprak" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblSprakBad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblValutaBad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblTidzonBad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblPolitikBad" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblEkonomiBad" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="0" pref="56" max="32767" attributes="0"/>

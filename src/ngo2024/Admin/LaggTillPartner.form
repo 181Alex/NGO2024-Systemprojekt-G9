@@ -23,17 +23,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
               <Component id="tfNamn" min="-2" pref="177" max="-2" attributes="0"/>
-              <EmptySpace pref="118" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblNamnBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblKPersonBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblEpostBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTelefonBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAdressBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblBranschBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="lblError" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="lblSkapad" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblNamnBad" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                      <Component id="cbStad" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblKPersonBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpostBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefonBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdressBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBranschBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -53,15 +68,12 @@
                                       <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblSkapad" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="tfBransch" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="tfAdress" alignment="0" pref="175" max="32767" attributes="0"/>
-                                          <Component id="tfTelefon" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="tfKPerson" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="tfBransch" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="tfAdress" alignment="0" pref="175" max="32767" attributes="0"/>
+                                      <Component id="tfTelefon" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="tfKPerson" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -72,14 +84,8 @@
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="btnSkapa" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnTillbaka" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="lblError" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace pref="276" max="32767" attributes="0"/>
+                          <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -90,22 +96,28 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblNamnBad" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfNamn" min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Component id="lblError" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="tfNamn" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblNamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSkapad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lblKPersonBad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="lblEpostBad" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblTelefonBad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="lblAdressBad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="lblBranschBad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="69" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblBranschBad" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbStad" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
@@ -142,11 +154,7 @@
                       <Component id="tfBransch" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnSkapa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblSkapad" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblError" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnSkapa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -301,6 +309,16 @@
         </Property>
         <Property name="text" type="java.lang.String" value="!"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbStad">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {})" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

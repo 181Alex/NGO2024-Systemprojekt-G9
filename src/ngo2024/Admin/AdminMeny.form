@@ -45,7 +45,7 @@
                               <Component id="btnAndraLand" max="32767" attributes="0"/>
                               <Component id="jButton1" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="btnGlobalaMal" min="-2" pref="167" max="-2" attributes="0"/>
+                          <Component id="btnLaggTillPartner" min="-2" pref="167" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -74,7 +74,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnGlobalaMal" min="-2" max="-2" attributes="0"/>
+              <Component id="btnLaggTillPartner" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="74" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -139,12 +139,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnGlobalaMal">
+    <Component class="javax.swing.JButton" name="btnLaggTillPartner">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Globala M&#xe5;l"/>
+        <Property name="text" type="java.lang.String" value="L&#xe4;gg till partner"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGlobalaMalActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillPartnerActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
