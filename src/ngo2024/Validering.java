@@ -88,6 +88,23 @@ public class Validering {
      return matches;
 }
     
+    public boolean checkNamn(String namn) {
+        boolean matches=false;
+        if (namn == null || namn.trim().isEmpty()) {
+            return matches; // Hantera null eller tomma strängar
+        }
+        namn = namn.trim(); // Ta bort inledande och avslutande mellanslag (endast mellan ok)
+        // kräver först bokstver/- och mellanrum och sedan efternamn
+
+        String regex = "^[A-Za-zåäöÅÄÖ-]+ [A-Za-zåäöÅÄÖ-]+$";
+         if(namn.matches(regex)){
+             matches=true;
+         }
+        return matches;
+    }
+    
+    
+    
     public boolean checkAnsvar(String Ansvar) {
         boolean matches = false;
         //alla bokstäver ok inga siffror
@@ -235,5 +252,16 @@ public boolean checkAktiv(String status){
     }
         return aktiv;
 }
+
+public boolean checkStorlek(int max, String inmatning){
+    boolean mindre=false;
+      int in=inmatning.length();
+      if(in<=max){
+          mindre=true;
+      }
+      return mindre;
+}
+
+
 
 }

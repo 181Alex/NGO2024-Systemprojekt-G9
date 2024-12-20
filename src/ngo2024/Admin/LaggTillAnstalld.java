@@ -462,7 +462,7 @@ private String inloggadAnvandare;
     public boolean fornamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String fornamn = tfFornamn.getText();
-    if (valid.checkFornamn(fornamn)) {
+    if (valid.checkFornamn(fornamn)&& valid.checkStorlek(100, fornamn)) {
         lblFornamnBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -474,7 +474,7 @@ private String inloggadAnvandare;
     public boolean efternamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String efternamn = tfEfternamn.getText();
-    if (valid.checkEfternamn(efternamn)) {
+    if (valid.checkEfternamn(efternamn) && valid.checkStorlek(100, efternamn)) {
             lblEfternamnBad.setVisible(false);
             return true;
     } else {
@@ -486,7 +486,7 @@ private String inloggadAnvandare;
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        if (valid.checkAdress(adress)) {
+        if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
         } else {
@@ -498,7 +498,7 @@ private String inloggadAnvandare;
      public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)) {
+    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
     } else {
@@ -514,7 +514,7 @@ private String inloggadAnvandare;
     String epost = tfEpost.getText(); 
     
     // Kontrollera om e-postadressen är giltig
-    if (valid.checkEpost(epost)) {
+    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
         lblEpostBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -546,7 +546,7 @@ private String inloggadAnvandare;
     String epost = tfAnsvarighetsOmrade.getText(); 
     
     // Kontrollera om ANsvarighetsområdet är ok är giltig
-    if(valid.checkAnsvar(epost)) {
+    if(valid.checkAnsvar(epost)&& valid.checkStorlek(255, epost)) {
         return true;
     } else {
         return false;

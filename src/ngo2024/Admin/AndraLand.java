@@ -204,7 +204,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(namn)) {
+    if (valid.checkFornamn(namn)&& valid.checkStorlek(100, namn)) {
             lblNamnBad.setVisible(false);
             return true;
     } else {
@@ -242,7 +242,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String sprak = tfSprak.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(sprak)) {
+    if (valid.checkFornamn(sprak)&& valid.checkStorlek(100, sprak)) {
             lblSprakBad.setVisible(false);
             return true;
     } else {
@@ -256,7 +256,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String politik = tfPolitik.getText();
         // liknande politik 1, en mening sedan siffra
-    if (valid.checkMeningOSiffra(politik)) {
+    if (valid.checkMeningOSiffra(politik)&& valid.checkStorlek(255, politik)) {
             lblPolitikBad.setVisible(false);
             return true;
     } else {
@@ -270,7 +270,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String ekonomi = tfEkonomi.getText();
         // liknande ekonomi 1 dvs en mening sedan en siffra
-    if (valid.checkMeningOSiffra(ekonomi)) {
+    if (valid.checkMeningOSiffra(ekonomi)&& valid.checkStorlek(255, ekonomi)) {
             lblEkonomiBad.setVisible(false);
             return true;
     } else {
@@ -285,7 +285,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String tidzon = tfTidzon.getText();
         // liknande ekonomi 1 dvs en mening sedan en siffra
-    if (valid.checkMeningOSiffra(tidzon)) {
+    if (valid.checkMeningOSiffra(tidzon)&& valid.checkStorlek(20, tidzon)) {
             lblTidzonBad.setVisible(false);
             return true;
     } else {
