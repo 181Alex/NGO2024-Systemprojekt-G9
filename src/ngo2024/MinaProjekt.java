@@ -48,12 +48,13 @@ public class MinaProjekt extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLedarProj = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblProjekt = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 204));
 
-        btnReturn.setBackground(new java.awt.Color(212, 214, 231));
-        btnReturn.setIcon(new javax.swing.ImageIcon("C:\\Users\\frida.selin\\Documents\\arrowImg2.png")); // NOI18N
+        btnReturn.setBackground(new java.awt.Color(255, 175, 203));
         btnReturn.setText("tillbaka");
         btnReturn.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createCompoundBorder()));
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +71,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         lblLedareProj.setText("Ledar Projekt");
 
+        tblLedarProj.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 255, 204), new java.awt.Color(255, 153, 255), null, null));
         tblLedarProj.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -82,6 +84,19 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
+        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Projekt Namn", "Status"
+            }
+        ));
+        jScrollPane3.setViewportView(tblProjekt);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,22 +104,21 @@ public class MinaProjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMinaProj, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                         .addComponent(lblLedareProj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(354, 354, 354))))
+                        .addComponent(lblProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(btnReturn)
-                .addGap(18, 18, 18)
+                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMinaProj)
                 .addGap(28, 28, 28)
                 .addComponent(lblLedareProj)
@@ -112,7 +126,9 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblProjekt)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,6 +143,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_btnReturnActionPerformed
 
+    /*
     public void tblLedarProjModel() {
 
         DefaultTableModel tblModel = (DefaultTableModel) tblLedarProj.getModel();
@@ -143,9 +160,9 @@ public class MinaProjekt extends javax.swing.JFrame {
             antalRader = Integer.parseInt(svar);
 
             for (int pid = 1; pid <= antalRader; pid++) {
-
+                   
                 if (enValidKlass.arChef(anvandarEpost)) {
-                    tblLedarProj.setVisible(true);
+                    tblLedarProj.setVisible(true); 
 
                     String sqlFragaProjNamn = "SELECT projektnamn"
                             + "FROM projekt WHERE pid =" + pid;
@@ -165,6 +182,73 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
 
+*/
+    
+    public void tblLedarProjModel() {
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblLedarProj.getModel();
+        tblModel.setRowCount(0);
+
+        try {
+           // Validering enValidKlass = new Validering(idb);
+
+            String sqlRad = "SELECT COUNT (*) FROM projekt";
+
+            String svar = idb.fetchSingle(sqlRad);
+            int antalRader = Integer.parseInt(svar);
+
+            for (int pid = 1; pid <= antalRader; pid++) {
+                   
+                    String sqlFragaProjNamn = "SELECT projektnamn"
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String sqlFragaStatus = "SELECT status"
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
+                    String projektStatus = idb.fetchSingle(sqlFragaStatus);
+
+                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
+                
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+    
+    public void tblProjektModel() {
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblProjekt.getModel();
+        tblModel.setRowCount(0);
+
+        try {
+           // Validering enValidKlass = new Validering(idb);
+
+            String sqlRad = "SELECT COUNT (*) FROM projekt";
+
+            String svar = idb.fetchSingle(sqlRad);
+            int antalRader = Integer.parseInt(svar);
+
+            for (int pid = 1; pid <= antalRader; pid++) {
+                   
+                    String sqlFragaProjNamn = "SELECT projektnamn"
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String sqlFragaStatus = "SELECT status" 
+                            + "FROM projekt WHERE pid =" + pid;
+
+                    String projektNamn = idb.fetchSingle(sqlFragaProjNamn);
+                    String projektStatus = idb.fetchSingle(sqlFragaStatus);
+
+                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
+                
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
 
     
     
@@ -209,9 +293,11 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JButton btnReturn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblLedareProj;
     private javax.swing.JLabel lblMinaProj;
     private javax.swing.JLabel lblProjekt;
     private javax.swing.JTable tblLedarProj;
+    private javax.swing.JTable tblProjekt;
     // End of variables declaration//GEN-END:variables
 }
