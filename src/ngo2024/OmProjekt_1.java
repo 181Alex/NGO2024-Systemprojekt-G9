@@ -26,7 +26,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         this.anvandarEpost = anvandarEpost;
         this.idb = idb;
 
-        lblH1ProjNamn.setText(getFromProjekt(projektId, projNamn()));
+        lblH1ProjNamn.setText(setProjNamnUpperCase());
         lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
         lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
         lblStatus.setText(getFromProjekt(projektId, status()));
@@ -48,6 +48,12 @@ public class OmProjekt_1 extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
         return minInfo;
+    }
+    
+    private String setProjNamnUpperCase()
+    {
+        String UpperCaseName = getFromProjekt(projektId, projNamn()).toUpperCase();
+        return UpperCaseName;
     }
 
     private String projNamn() {
@@ -139,7 +145,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblH1ProjNamn.setFont(new java.awt.Font("Typo Round Bold Demo", 1, 18)); // NOI18N
+        lblH1ProjNamn.setFont(new java.awt.Font("Typo Round Bold Demo", 1, 24)); // NOI18N
         lblH1ProjNamn.setForeground(new java.awt.Color(102, 0, 102));
 
         lblBeskrivning.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -164,7 +170,9 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         lblH2ProjChef.setText("Projektledare:");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("<- tillbaka");
+        jButton1.setToolTipText("");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -178,11 +186,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblH2ProjChef, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblBeskrivning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -216,21 +219,24 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                                                 .addComponent(lblH2Prio, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(224, 224, 224)
-                        .addComponent(jButton1)
-                        .addGap(38, 38, 38))))
+                                .addGap(0, 57, Short.MAX_VALUE)))
+                        .addGap(280, 280, 280))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblH2ProjChef, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(lblH1ProjNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton1)))
+                .addGap(23, 23, 23)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(lblH1ProjNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -261,7 +267,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                     .addComponent(lblKostnad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblH2Partners)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         pack();
