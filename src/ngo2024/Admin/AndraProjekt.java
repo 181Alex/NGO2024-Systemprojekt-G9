@@ -239,7 +239,6 @@ public void gomTaBort(){
     lblHallbarhet.setVisible(true);
     lblKostnad.setVisible(true);
     lblLand.setVisible(true);
-    lblMeddelande.setVisible(true);
     lblN1.setVisible(true);
     lblN2.setVisible(true);
     lblN3.setVisible(true);
@@ -273,6 +272,9 @@ public void gomTaBort(){
     lblFelNamn.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelStartdatum.setVisible(false);
+    
+    //gömmer meddelande
+    lblMeddelande.setVisible(false);
 }
 
 private void gomAndra(){
