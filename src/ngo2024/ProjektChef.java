@@ -4,13 +4,14 @@
  */
 package ngo2024;
 
-import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
 /**
  *
  * @author linneagottling
  */
+
 public class ProjektChef extends javax.swing.JFrame {
     
      private InfDB idb;
@@ -80,7 +81,7 @@ public class ProjektChef extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProjektChef().setVisible(true);
+                //new ProjektChef().setVisible(true);
             }
         });
     }
