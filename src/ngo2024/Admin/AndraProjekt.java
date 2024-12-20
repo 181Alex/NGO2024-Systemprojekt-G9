@@ -91,6 +91,13 @@ public class AndraProjekt extends javax.swing.JFrame {
         lblHallbarhet.setVisible(false);
         btHallbarhet.setVisible(false);
         btPartner.setVisible(false);
+        lblN1.setVisible(false);
+        lblN2.setVisible(false);
+        lblN3.setVisible(false);
+        lblNaid.setVisible(false);
+        tfNprio.setVisible(false);
+        tfNstatus.setVisible(false);
+        tfNprojektchef.setVisible(false);
     }   
     
 private String getPid(){
@@ -149,6 +156,10 @@ private void fyllTabellAndra(){
         String slutdatum=" ";
         String kostnad=" ";
         String land=" ";
+        String nPrio = " ";
+        String nStatus = " ";
+        String nChef = " ";
+        String nAid = " ";
 
         //uppdaterar alla comboboxes
         cbxPrioritet.removeAllItems();
@@ -159,8 +170,8 @@ private void fyllTabellAndra(){
         ArrayList<String> statusLista = new ArrayList<>();
         ArrayList<String> projektchefLista = new ArrayList<>();
 
-        String sqlPrio = "SELECT prioritet FROM projekt WHERE pid = " + pid;
-        String sqlStat = "SELECT status FROM projekt WHERE pid = " + pid;
+        String sqlPrio = "SELECT prioritet FROM projekt ";
+        String sqlStat = "SELECT status FROM projekt";
         String sqlPrCh = "SELECT namn FROM anstalld WHERE aid = " + aid;
 
         try{
@@ -169,7 +180,13 @@ private void fyllTabellAndra(){
             startdatum = idb.fetchSingle("SELECT startdatum FROM projekt WHERE pid = " + pid);
             slutdatum = idb.fetchSingle("SELECT slutdatum FROM projekt WHERE pid = " + pid);
             kostnad = idb.fetchSingle("SELECT kostnad FROM projekt WHERE pid = " + pid);
-            land = idb.fetchSingle("SELECT land FROM projekt WHERE pid = " + pid);      
+            land = idb.fetchSingle("SELECT land FROM projekt WHERE pid = " + pid);
+            
+            //hämtar ut nuvarande 
+            nPrio = idb.fetchSingle("SELECT prioritet FROM projekt WHERE pid = " + pid);
+            nStatus = idb.fetchSingle("SELECT status FROM projekt WHERE pid = " + pid);
+            nChef = idb.fetchSingle("SELECT namn FROM projekt WHERE projektchef = " + aid);
+            nAid = idb.fetchSingle("SELECT projektchef FROM projekt WHERE aid = " + aid);
 
             prioritetLista = idb.fetchColumn(sqlPrio);
             statusLista = idb.fetchColumn(sqlStat);
@@ -195,6 +212,12 @@ private void fyllTabellAndra(){
             tfSlutdatum.setText(slutdatum);
             tfKostnad.setText(kostnad);
             tfLand.setText(land);
+            
+            //skriver ut nuvarande
+            tfNprio.setText(nPrio);
+            tfNstatus.setText(nStatus);
+            tfNprojektchef.setText(nChef);
+            lblNaid.setText(nAid);
                     
 }
 
@@ -247,6 +270,13 @@ private void fyllTabellAndra(){
         lblProjektpartner = new javax.swing.JLabel();
         btHallbarhet = new javax.swing.JButton();
         btPartner = new javax.swing.JButton();
+        lblN1 = new javax.swing.JLabel();
+        lblN2 = new javax.swing.JLabel();
+        lblN3 = new javax.swing.JLabel();
+        tfNprio = new javax.swing.JTextField();
+        tfNstatus = new javax.swing.JTextField();
+        tfNprojektchef = new javax.swing.JTextField();
+        lblNaid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -361,6 +391,20 @@ private void fyllTabellAndra(){
             }
         });
 
+        lblN1.setText("Nuvarande:");
+
+        lblN2.setText("Nuvarande:");
+
+        lblN3.setText("Nuvarande:");
+
+        tfNprio.setEditable(false);
+
+        tfNstatus.setEditable(false);
+
+        tfNprojektchef.setEditable(false);
+
+        lblNaid.setText("aid");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -413,10 +457,6 @@ private void fyllTabellAndra(){
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblAid)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btAndra))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblFelSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblFelKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,7 +474,26 @@ private void fyllTabellAndra(){
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btPartner)
                                             .addComponent(btHallbarhet))))
-                                .addGap(0, 14, Short.MAX_VALUE))))
+                                .addGap(0, 14, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblAid)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(62, 62, 62)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblN1)
+                                            .addComponent(lblN2)
+                                            .addComponent(lblN3))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(tfNprio)
+                                                .addComponent(tfNstatus, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                                            .addComponent(tfNprojektchef, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblNaid)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btAndra))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMeddelande)
@@ -509,17 +568,24 @@ private void fyllTabellAndra(){
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPrioritet)
-                            .addComponent(cbxPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblN1)
+                            .addComponent(tfNprio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblStatus)
-                            .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblN2)
+                            .addComponent(tfNstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblProjektchef)
                             .addComponent(cbxProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btAndra)
-                            .addComponent(lblAid))
+                            .addComponent(lblAid)
+                            .addComponent(lblN3)
+                            .addComponent(tfNprojektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNaid))
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -631,6 +697,10 @@ private void fyllTabellAndra(){
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblMeddelande;
+    private javax.swing.JLabel lblN1;
+    private javax.swing.JLabel lblN2;
+    private javax.swing.JLabel lblN3;
+    private javax.swing.JLabel lblNaid;
     private javax.swing.JLabel lblPid;
     private javax.swing.JLabel lblPnamn;
     private javax.swing.JLabel lblPrioritet;
@@ -643,6 +713,9 @@ private void fyllTabellAndra(){
     private javax.swing.JTextField tfBeskrivning;
     private javax.swing.JTextField tfKostnad;
     private javax.swing.JTextField tfLand;
+    private javax.swing.JTextField tfNprio;
+    private javax.swing.JTextField tfNprojektchef;
+    private javax.swing.JTextField tfNstatus;
     private javax.swing.JTextField tfProjektnamn;
     private javax.swing.JTextField tfSlutdatum;
     private javax.swing.JTextField tfStartdatum;
