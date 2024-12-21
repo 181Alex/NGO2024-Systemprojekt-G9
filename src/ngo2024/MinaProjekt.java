@@ -16,6 +16,10 @@ import java.util.List;
 import TabellDesign.MultiLineCellRenderer;
 import java.awt.Component;
 
+//ska ta bort
+import javax.swing.Timer;
+import java.awt.Color;
+
 /**
  *
  * @author
@@ -41,6 +45,16 @@ public class MinaProjekt extends javax.swing.JFrame {
         initComponents();
         //konstrueraTabell();
         //tblLedarProj.setVisible(false);
+      
+        //ska ta bort
+        Color[] colors = {Color.YELLOW,  Color.GREEN, Color.CYAN, Color.BLUE, Color.RED};
+        int[] colorIndex = {0}; // Use an array for mutability inside the timer
+        Timer timer = new Timer(500, e -> {
+           jToggleButton1.setBackground(colors[colorIndex[0]]);
+            colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
+        });
+        timer.start();
+        
     }
 
     private int getAid() {
@@ -105,18 +119,22 @@ public class MinaProjekt extends javax.swing.JFrame {
         jTree1 = new javax.swing.JTree();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 0, 204));
+        setTitle("Mina Projekt");
+        setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Calibri", 0, 10)); // NOI18N
 
-        btnReturn.setBackground(new java.awt.Color(255, 175, 203));
-        btnReturn.setText("tillbaka");
-        btnReturn.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createCompoundBorder()));
+        btnReturn.setText("<- tillbaka");
+        btnReturn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
+        btnReturn.setCursor(new java.awt.Cursor(java.awt.Cursor.SW_RESIZE_CURSOR));
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturnActionPerformed(evt);
             }
         });
 
-        lblMinaProj.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblMinaProj.setFont(new java.awt.Font("Typo Round Light Demo", 1, 24)); // NOI18N
         lblMinaProj.setForeground(new java.awt.Color(51, 0, 102));
         lblMinaProj.setText("Mina Projekt");
 
@@ -195,7 +213,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,8 +228,8 @@ public class MinaProjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton1))
+                    .addComponent(btnReturn)
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblMinaProj)
                 .addGap(28, 28, 28)
@@ -226,7 +244,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(215, Short.MAX_VALUE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,6 +264,8 @@ public class MinaProjekt extends javax.swing.JFrame {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         new OmProjekt_1(idb, anvandarEpost, "2").setVisible(true);
         this.dispose();
+        
+        
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /*
