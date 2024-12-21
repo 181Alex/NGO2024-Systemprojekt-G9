@@ -183,6 +183,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xc4;ndra st&#xe4;der"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAndraStaderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>

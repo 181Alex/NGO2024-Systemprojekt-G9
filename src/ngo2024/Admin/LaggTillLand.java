@@ -253,6 +253,11 @@ public class LaggTillLand extends javax.swing.JFrame {
         jLabel6.setText("Ekonomi");
 
         btnAndraStader.setText("Ändra städer");
+        btnAndraStader.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraStaderActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Lägg till Länder");
 
@@ -434,6 +439,11 @@ public class LaggTillLand extends javax.swing.JFrame {
             lblError.setVisible(true);
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
+
+    private void btnAndraStaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraStaderActionPerformed
+       new StadForandring(idb, inloggadAnvandare).setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_btnAndraStaderActionPerformed
 
     /**
      * @param args the command line arguments

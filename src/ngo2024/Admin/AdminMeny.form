@@ -37,15 +37,14 @@
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
-                              <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
-                              <Component id="btnLaggTillLand" max="32767" attributes="0"/>
-                              <Component id="btnAndraLand" max="32767" attributes="0"/>
-                              <Component id="jButton1" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="btnLaggTillPartner" min="-2" pref="167" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
+                          <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
+                          <Component id="btnLaggTillLand" max="32767" attributes="0"/>
+                          <Component id="btnAndraLand" max="32767" attributes="0"/>
+                          <Component id="jButton1" max="32767" attributes="0"/>
+                          <Component id="btnStad" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnLaggTillPartner" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -75,7 +74,9 @@
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnLaggTillPartner" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="74" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnStad" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="45" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -145,6 +146,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillPartnerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="St&#xe4;der"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStadActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

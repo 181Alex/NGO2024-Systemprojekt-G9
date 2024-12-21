@@ -4,18 +4,88 @@
  */
 package ngo2024.Admin;
 
+import ngo2024.Validering;
+import oru.inf.InfDB;
+import oru.inf.InfException;
+import java.util.ArrayList;
+
 /**
  *
  * @author alexanderabboud
  */
 public class StadForandring extends javax.swing.JFrame {
-
+    private InfDB idb;
+    private String inloggadAnvandare;  
+    boolean kontrollOk;
+    
     /**
      * Creates new form StadForandring
      */
-    public StadForandring() {
+    public StadForandring(InfDB idb, String inloggadAnvandare) {
+        this.idb=idb;
+        this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
+        
+        gomAlla();
     }
+    
+    public void gomAlla(){
+        btnAndra.setVisible(false);
+        btnTaBort.setVisible(false);
+        btnLaggTill.setVisible(false);
+        lblStadNamn.setVisible(false);
+        lblLand.setVisible(false);
+        cbValjLand.setVisible(false);
+        tfNamn.setVisible(false);
+        cbValjStad.setVisible(false);
+    }
+    
+    public void visaLaggTill(){
+        if(cbhLaggTill.isSelected()){
+            cbhTaBort.setSelected(false);
+            cbhAndra.setSelected(false);
+            lblStadNamn.setVisible(true);
+            lblLand.setVisible(true);
+            cbValjLand.setVisible(true);
+            tfNamn.setVisible(true);
+            btnAndra.setVisible(false);
+            btnTaBort.setVisible(false);
+            btnLaggTill.setVisible(true);
+            cbValjStad.setVisible(false);
+        }
+    }
+    
+    public void visaAndra(){
+        if(cbhAndra.isSelected()){
+            cbhTaBort.setSelected(false);
+            cbhLaggTill.setSelected(false);
+            cbValjStad.setVisible(true);
+            lblStadNamn.setVisible(true);
+            lblLand.setVisible(true);
+            cbValjLand.setVisible(true);
+            tfNamn.setVisible(true);
+            btnAndra.setVisible(true);
+            btnTaBort.setVisible(false);
+            btnLaggTill.setVisible(false);
+        }
+    }
+    
+    public void visaTaBort(){
+        if(cbhTaBort.isSelected()){
+            cbhAndra.setSelected(false);
+            cbhLaggTill.setSelected(false);
+            cbValjStad.setVisible(true);
+            lblStadNamn.setVisible(true);
+            lblLand.setVisible(false);
+            cbValjLand.setVisible(false);
+            tfNamn.setVisible(true);
+            btnAndra.setVisible(false);
+            btnTaBort.setVisible(true);
+            btnLaggTill.setVisible(false);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,21 +96,155 @@ public class StadForandring extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cbhLaggTill = new javax.swing.JCheckBox();
+        cbhAndra = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        cbhTaBort = new javax.swing.JCheckBox();
+        btnTaBort = new javax.swing.JButton();
+        cbValjStad = new javax.swing.JComboBox<>();
+        lblStadNamn = new javax.swing.JLabel();
+        lblLand = new javax.swing.JLabel();
+        cbValjLand = new javax.swing.JComboBox<>();
+        tfNamn = new javax.swing.JTextField();
+        btnAndra = new javax.swing.JButton();
+        btnLaggTill = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        cbhLaggTill.setText("Lägg till");
+        cbhLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbhLaggTillActionPerformed(evt);
+            }
+        });
+
+        cbhAndra.setText("Ändra");
+        cbhAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbhAndraActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Städer");
+
+        cbhTaBort.setText("Ta bort");
+        cbhTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbhTaBortActionPerformed(evt);
+            }
+        });
+
+        btnTaBort.setText("Ta bort");
+
+        cbValjStad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+
+        lblStadNamn.setText("Stad");
+
+        lblLand.setText("Land");
+
+        cbValjLand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+
+        tfNamn.setText("Namn");
+
+        btnAndra.setText("Ändra");
+
+        btnLaggTill.setText("Lägg till");
+
+        btnTillbaka.setText("X");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLand)
+                                    .addComponent(lblStadNamn))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(btnTaBort)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAndra)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLaggTill))
+                        .addGap(180, 386, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbhLaggTill)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbhAndra)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbhTaBort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbhLaggTill)
+                    .addComponent(cbhAndra)
+                    .addComponent(cbhTaBort)
+                    .addComponent(btnTillbaka))
+                .addGap(18, 18, 18)
+                .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStadNamn)
+                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLand)
+                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAndra))
+                .addGap(18, 18, 18)
+                .addComponent(btnLaggTill)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbhLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhLaggTillActionPerformed
+        visaLaggTill();
+    }//GEN-LAST:event_cbhLaggTillActionPerformed
+
+    private void cbhAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhAndraActionPerformed
+        visaAndra();
+    }//GEN-LAST:event_cbhAndraActionPerformed
+
+    private void cbhTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhTaBortActionPerformed
+        visaTaBort();
+    }//GEN-LAST:event_cbhTaBortActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new AdminMeny(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -72,11 +276,24 @@ public class StadForandring extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StadForandring().setVisible(true);
+               // new StadForandring().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAndra;
+    private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> cbValjLand;
+    private javax.swing.JComboBox<String> cbValjStad;
+    private javax.swing.JCheckBox cbhAndra;
+    private javax.swing.JCheckBox cbhLaggTill;
+    private javax.swing.JCheckBox cbhTaBort;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblLand;
+    private javax.swing.JLabel lblStadNamn;
+    private javax.swing.JTextField tfNamn;
     // End of variables declaration//GEN-END:variables
 }
