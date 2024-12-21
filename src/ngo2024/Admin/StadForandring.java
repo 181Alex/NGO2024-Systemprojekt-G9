@@ -28,6 +28,7 @@ public class StadForandring extends javax.swing.JFrame {
         fyllValjLand();
         fyllValjStad();
         gomAlla();
+        kontrollOk=true;
     }
     
     public void fyllValjStad(){
@@ -67,6 +68,86 @@ public class StadForandring extends javax.swing.JFrame {
     }
     
     
+    public boolean kontrollStadText(){
+         Validering valid = new Validering(idb);
+        String namn = tfNamn.getText();
+        // kollar så staden ahr rätt tecken, vissa special tecken tillåtna samt bindestreck och mellanrum ok.
+    if (valid.checkStad(namn)&& valid.checkStorlek(255, namn)) {
+            lblNamnBad.setVisible(false);
+            return true;
+    } else {
+            lblNamnBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public String selectLand(){
+      String sqlFraga="SELECT namn FROM land where lid= (Select land from stad where namn='" 
+              + cbValjStad.getSelectedItem() + "')";
+      String namn=" ";
+      try{
+          namn=idb.fetchSingle(sqlFraga);
+          System.out.println(sqlFraga);
+      }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+      
+      return namn;
+      
+    }
+    
+    
+    
+    
+    public void totalKontroll() {
+    Boolean totOk = true;
+    
+     if(!kontrollStadText()){
+        totOk=false;
+        }
+    kontrollOk=totOk;
+    }
+    
+    public int selectLid(){
+        String slid="111";
+        try{
+            String sqlFraga="SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
+            slid=idb.fetchSingle(sqlFraga);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        int lid=Integer.parseInt(slid);
+        return lid;
+        }
+    
+    public int hogstaSid(){
+        // hämtar ut högsta lid
+        int hogsta=0;
+        String sqlFraga="Select MAX(sid) FROM stad";
+        try{
+            String max=idb.fetchSingle(sqlFraga);
+            hogsta=Integer.parseInt(max);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(hogsta);
+        return hogsta+1;
+    }
+    public int selectSid(){
+        String sSid="111";
+        try{
+            String sqlFraga="SELECT sid FROM stad where namn='" + cbValjStad.getSelectedItem() + "'";
+            sSid=idb.fetchSingle(sqlFraga);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        int sid=Integer.parseInt(sSid);
+        return sid;
+        }
+    
     
     public void gomAlla(){
         btnAndra.setVisible(false);
@@ -77,6 +158,10 @@ public class StadForandring extends javax.swing.JFrame {
         cbValjLand.setVisible(false);
         tfNamn.setVisible(false);
         cbValjStad.setVisible(false);
+        lblNamnBad.setVisible(false);
+        lblError.setVisible(false);
+        lblLyckades.setVisible(false);
+        lblNuLand.setVisible(false);
     }
     
     public void visaLaggTill(){
@@ -91,6 +176,8 @@ public class StadForandring extends javax.swing.JFrame {
             btnTaBort.setVisible(false);
             btnLaggTill.setVisible(true);
             cbValjStad.setVisible(false);
+            btnValj.setVisible(false);
+            lblNuLand.setVisible(false);
         }
     }
     
@@ -101,7 +188,8 @@ public class StadForandring extends javax.swing.JFrame {
             cbValjStad.setVisible(true);
             lblStadNamn.setVisible(true);
             lblLand.setVisible(true);
-            cbValjLand.setVisible(true);
+            lblNuLand.setVisible(true);
+            cbValjLand.setVisible(false);
             tfNamn.setVisible(true);
             btnAndra.setVisible(true);
             btnTaBort.setVisible(false);
@@ -115,12 +203,14 @@ public class StadForandring extends javax.swing.JFrame {
             cbhLaggTill.setSelected(false);
             cbValjStad.setVisible(true);
             lblStadNamn.setVisible(true);
-            lblLand.setVisible(false);
+            lblLand.setVisible(true);
             cbValjLand.setVisible(false);
             tfNamn.setVisible(true);
             btnAndra.setVisible(false);
             btnTaBort.setVisible(true);
             btnLaggTill.setVisible(false);
+            lblNuLand.setVisible(true);
+            
         }
     }
     
@@ -148,6 +238,11 @@ public class StadForandring extends javax.swing.JFrame {
         btnAndra = new javax.swing.JButton();
         btnLaggTill = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
+        lblNamnBad = new javax.swing.JLabel();
+        lblLyckades = new javax.swing.JLabel();
+        lblError = new javax.swing.JLabel();
+        btnValj = new javax.swing.JButton();
+        lblNuLand = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,6 +270,11 @@ public class StadForandring extends javax.swing.JFrame {
         });
 
         btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
 
         cbValjStad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
@@ -187,8 +287,18 @@ public class StadForandring extends javax.swing.JFrame {
         tfNamn.setText("Namn");
 
         btnAndra.setText("Ändra");
+        btnAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraActionPerformed(evt);
+            }
+        });
 
         btnLaggTill.setText("Lägg till");
+        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillActionPerformed(evt);
+            }
+        });
 
         btnTillbaka.setText("X");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +306,24 @@ public class StadForandring extends javax.swing.JFrame {
                 btnTillbakaActionPerformed(evt);
             }
         });
+
+        lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblNamnBad.setText("!");
+
+        lblLyckades.setForeground(new java.awt.Color(0, 204, 0));
+        lblLyckades.setText("Lyckades");
+
+        lblError.setForeground(new java.awt.Color(255, 51, 0));
+        lblError.setText("Error!");
+
+        btnValj.setText("Välj");
+        btnValj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValjActionPerformed(evt);
+            }
+        });
+
+        lblNuLand.setText("Land");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -205,25 +333,13 @@ public class StadForandring extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblLand)
-                                    .addComponent(lblStadNamn))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(btnTaBort)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAndra)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnValj))
                             .addComponent(btnLaggTill))
-                        .addGap(180, 386, Short.MAX_VALUE))
+                        .addGap(180, 299, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -234,7 +350,32 @@ public class StadForandring extends javax.swing.JFrame {
                         .addComponent(cbhTaBort)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTillbaka)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLand)
+                                    .addComponent(lblStadNamn))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNuLand)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblNamnBad))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnTaBort)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAndra))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblLyckades)
+                                .addGap(47, 47, 47)
+                                .addComponent(lblError)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,22 +388,30 @@ public class StadForandring extends javax.swing.JFrame {
                     .addComponent(cbhTaBort)
                     .addComponent(btnTillbaka))
                 .addGap(18, 18, 18)
-                .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbValjStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValj))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStadNamn)
-                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNamnBad))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLand)
-                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbValjLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNuLand))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAndra))
                 .addGap(18, 18, 18)
                 .addComponent(btnLaggTill)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLyckades)
+                    .addComponent(lblError))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,20 +419,109 @@ public class StadForandring extends javax.swing.JFrame {
 
     private void cbhLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhLaggTillActionPerformed
         visaLaggTill();
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
     }//GEN-LAST:event_cbhLaggTillActionPerformed
 
     private void cbhAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhAndraActionPerformed
         visaAndra();
+        lblNuLand.setVisible(false);
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
+        fyllValjStad();
     }//GEN-LAST:event_cbhAndraActionPerformed
 
     private void cbhTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhTaBortActionPerformed
         visaTaBort();
+        lblNuLand.setVisible(false);
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
+        fyllValjStad();
     }//GEN-LAST:event_cbhTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         new AdminMeny(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
+       String sqlFraga="INSERT INTO stad VALUES(" + hogstaSid() + ", '" + tfNamn.getText() + "', " + selectLid() + ")";
+        //Lägger till staden
+       if(kontrollOk){
+            try{
+          System.out.println(sqlFraga);;
+          idb.insert(sqlFraga);
+            }
+            catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+          lblLyckades.setVisible(true);
+          lblError.setVisible(false);
+       }
+       else{
+           lblLyckades.setVisible(false);
+          lblError.setVisible(true);
+       }
+    }//GEN-LAST:event_btnLaggTillActionPerformed
+
+    private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
+        String sqlFraga="UPDATE stad SET namn= '"+ tfNamn.getText() + "' WHERE sid= " + selectSid() ;
+        //uppdaterar staden
+       if(kontrollOk){
+            try{
+          System.out.println(sqlFraga);;
+          idb.update(sqlFraga);
+            }
+            catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+          lblLyckades.setVisible(true);
+          lblError.setVisible(false);
+       }
+       else{
+           lblLyckades.setVisible(false);
+          lblError.setVisible(true);
+       }
+    }//GEN-LAST:event_btnAndraActionPerformed
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+     String sqlFraga="DELETE FROM stad WHERE sid=" + selectSid();
+    
+
+        //tar bort den valda staden
+       if(kontrollOk){
+            try{
+          System.out.println(sqlFraga);;
+          idb.delete(sqlFraga);
+            }
+            catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+          lblLyckades.setVisible(true);
+          lblError.setVisible(false);
+       }
+       else{
+           lblLyckades.setVisible(false);
+          lblError.setVisible(true);
+       }
+    }//GEN-LAST:event_btnTaBortActionPerformed
+
+    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
+
+       // fyller ut vilket land det är
+       if(cbhAndra.isSelected()){
+       int i=cbValjStad.getSelectedIndex();
+       tfNamn.setText(cbValjStad.getItemAt(i));
+       lblNuLand.setVisible(true);
+       lblNuLand.setText(selectLand());
+       }
+       else if(cbhTaBort.isSelected()){
+        int i=cbValjStad.getSelectedIndex();
+        tfNamn.setText(cbValjStad.getItemAt(i));
+        lblNuLand.setVisible(true);
+        lblNuLand.setText(selectLand());
+       }
+    }//GEN-LAST:event_btnValjActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,13 +563,18 @@ public class StadForandring extends javax.swing.JFrame {
     private javax.swing.JButton btnLaggTill;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JButton btnValj;
     private javax.swing.JComboBox<String> cbValjLand;
     private javax.swing.JComboBox<String> cbValjStad;
     private javax.swing.JCheckBox cbhAndra;
     private javax.swing.JCheckBox cbhLaggTill;
     private javax.swing.JCheckBox cbhTaBort;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblLand;
+    private javax.swing.JLabel lblLyckades;
+    private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JLabel lblNuLand;
     private javax.swing.JLabel lblStadNamn;
     private javax.swing.JTextField tfNamn;
     // End of variables declaration//GEN-END:variables

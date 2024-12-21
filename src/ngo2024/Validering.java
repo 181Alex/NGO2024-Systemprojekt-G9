@@ -88,6 +88,17 @@ public class Validering {
      return matches;
 }
     
+    public boolean checkStad(String namn){
+        boolean matches=false;
+                //kontrollerar alla bokstäver i vanliga svenska alfabetet plus andra tecken som kan 
+                //finnas i städers namn exempelvis: Çapakçur
+            String checker="^[a-zA-ZåäöÅÄÖéèëêíìïîóòöôúùüûç-]+(?:[ -][a-zA-ZåäöÅÄÖéèëêíìïîóòöôúùüûç-]+)*$";
+        if(namn.matches(checker)){
+            matches=true;}
+            return matches;
+        }
+    
+    
     public boolean checkNamn(String namn) {
         boolean matches=false;
         if (namn == null || namn.trim().isEmpty()) {
