@@ -25,9 +25,48 @@ public class StadForandring extends javax.swing.JFrame {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
-        
+        fyllValjLand();
+        fyllValjStad();
         gomAlla();
     }
+    
+    public void fyllValjStad(){
+        cbValjStad.removeAllItems();
+        String sqlFraga="SELECT namn FROM stad";
+        
+        ArrayList<String> namnLista=new ArrayList<>();
+        
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+            
+            for(String namn:namnLista){
+                cbValjStad.addItem(namn);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void fyllValjLand(){
+        cbValjLand.removeAllItems();
+        String sqlFraga="SELECT namn FROM land";
+        
+        ArrayList<String> namnLista=new ArrayList<>();
+        
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+            
+            for(String namn:namnLista){
+                cbValjLand.addItem(namn);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
     
     public void gomAlla(){
         btnAndra.setVisible(false);
