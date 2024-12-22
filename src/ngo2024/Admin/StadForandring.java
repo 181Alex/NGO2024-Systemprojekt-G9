@@ -194,6 +194,7 @@ public class StadForandring extends javax.swing.JFrame {
             btnAndra.setVisible(true);
             btnTaBort.setVisible(false);
             btnLaggTill.setVisible(false);
+            btnValj.setVisible(true);
         }
     }
     
@@ -202,10 +203,10 @@ public class StadForandring extends javax.swing.JFrame {
             cbhAndra.setSelected(false);
             cbhLaggTill.setSelected(false);
             cbValjStad.setVisible(true);
-            lblStadNamn.setVisible(true);
+            lblStadNamn.setVisible(false);
             lblLand.setVisible(true);
             cbValjLand.setVisible(false);
-            tfNamn.setVisible(true);
+            tfNamn.setVisible(false);
             btnAndra.setVisible(false);
             btnTaBort.setVisible(true);
             btnLaggTill.setVisible(false);
