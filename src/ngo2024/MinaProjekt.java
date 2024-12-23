@@ -60,8 +60,6 @@ public class MinaProjekt extends javax.swing.JFrame {
         timer2.start();
         */
         
-        getContentPane().setBackground(Color.PINK);
-        
         Timer timer3 = new Timer(200, e -> {
            lblMinaProj.setForeground(colors[colorIndex[0]]);
             colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
@@ -82,6 +80,30 @@ public class MinaProjekt extends javax.swing.JFrame {
         return personAid;
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
     
     private void konstrueraTabell() {

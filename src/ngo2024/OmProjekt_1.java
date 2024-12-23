@@ -5,6 +5,7 @@
 package ngo2024;
 //
 
+import java.util.ArrayList;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -19,6 +20,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private String projektId;
     private String anvandarEpost;
     
+    private ArrayList<String> namnLista = new ArrayList<>();
    
     /**
      * Creates new form OmProjekt
@@ -38,9 +40,24 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblKostnad.setText(getFromProjekt(projektId, kostnad()));
         lblLand.setText(getLand(projektId));
         lblProjektChef.setText(getProjektChef(projektId));
-        
+        lblProjAnstallda.setText(getAnstallda(projektId));
         
     }
+    
+    public String getAnstallda(String projektId)
+    {
+        String anstallda = " ";
+        try {
+            String sqlAnstallda = "SELECT fornamn, efternamn FROM anstalld JOIN ans_proj on ans_proj.aid = anstalld.aid JOIN projekt on ans_proj.pid = projekt.pid WHERE projekt.pid = '" + projektId + "'"; 
+          //  anstallda = idb.fetchSingle(sqlAnstallda);
+            namnLista = idb.fetchColumn(sqlAnstallda); // change to hasmap. Get both names. Make list appear
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return anstallda;
+    }
+    
+    
    
     private String getFromProjekt(String projektId, String specifikInfo) {
         String minInfo = " ";
@@ -145,6 +162,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblH2ProjChef = new javax.swing.JLabel();
         lblProjektChef = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
+        lblProjAnstallda = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,13 +200,22 @@ public class OmProjekt_1 extends javax.swing.JFrame {
             }
         });
 
+        lblProjAnstallda.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(btnTillbaka, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblBeskrivning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -229,10 +256,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(btnTillbaka, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,22 +275,22 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                     .addComponent(lblH2ProjChef)
                     .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(lblBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblH2Prio, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblPrioritet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblH2Status))
+                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblH2Prio, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblPrioritet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblH2Status))
-                            .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(176, 176, 176)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblH2Kostnad)
-                                .addComponent(jLabel2))
-                            .addComponent(lblLand, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblH2Kostnad)
+                        .addComponent(jLabel2))
+                    .addComponent(lblLand, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblKostnad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblH2Partners)
@@ -331,6 +354,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblPrioritet;
+    private javax.swing.JLabel lblProjAnstallda;
     private javax.swing.JLabel lblProjektChef;
     private javax.swing.JLabel lblSlutDatum;
     private javax.swing.JLabel lblStartDatum;
