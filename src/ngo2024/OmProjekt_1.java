@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024;
-
+//
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
