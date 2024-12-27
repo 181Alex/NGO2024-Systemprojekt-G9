@@ -31,19 +31,15 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         this.anvandarEpost = anvandarEpost;
         this.idb = idb;
 
-        lblH1ProjNamn.setText(setProjNamnUpperCase());
-        lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
-        lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
-        lblStatus.setText(getFromProjekt(projektId, status()));
-        lblSlutDatum.setText(getFromProjekt(projektId, slutdatum()));
-        lblStartDatum.setText(getFromProjekt(projektId, startdatum()));
-        lblKostnad.setText(getFromProjekt(projektId, kostnad()));
-        lblLand.setText(getLand(projektId));
-        lblProjektChef.setText(getProjektChef(projektId));
-        lblProjAnstallda.setText(getAnstallda(projektId));
+        //initierar rätt text vid rätt fält
+        setAllTextFeilds();
         
     }
     
+   /**
+    * Hämtar anställda inom specifikt projekt från databasen 
+    * Tar in parametervärdet för önskade projekts ID i datatyp String
+    */
     public String getAnstallda(String projektId)
     {
         String anstallda = " ";
@@ -57,8 +53,31 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return anstallda;
     }
     
+   /**
+    * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare att tyda
+    * tillkallar alla set text metoder för att hämta rätt information från sql basen
+    *och initierar rätt text vid rätt fält
+    */
+    private void setAllTextFeilds() {
+      
+        lblH1ProjNamn.setText(setProjNamnUpperCase());
+        lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
+        lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
+        lblStatus.setText(getFromProjekt(projektId, status()));
+        lblSlutDatum.setText(getFromProjekt(projektId, slutdatum()));
+        lblStartDatum.setText(getFromProjekt(projektId, startdatum()));
+        lblKostnad.setText(getFromProjekt(projektId, kostnad()));
+        lblLand.setText(getLand(projektId));
+        lblProjektChef.setText(getProjektChef(projektId));
+        lblProjAnstallda.setText(getAnstallda(projektId));
+    }
     
-   
+   /**
+    * Metod som inehåller en SQL bas fråga som återanvänds ofta för att hämta önskad String
+    * 
+    * Parameter 1: önskade projekts ID i datatyp String
+    * Parameter 2: String hämtar önskad kolumn i databasen som vill hämtas. Ex. 'projektnamn', 'beskrivning'
+    */
     private String getFromProjekt(String projektId, String specifikInfo) {
         String minInfo = " ";
         try {
@@ -70,12 +89,18 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return minInfo;
     }
     
+   /**
+    * Metod som förändrar rubriken med projekt namnet till upper case
+    */
     private String setProjNamnUpperCase()
     {
         String UpperCaseName = getFromProjekt(projektId, projNamn()).toUpperCase();
         return UpperCaseName;
     }
 
+   /**
+    * Metod hämtar String med innehåll 'projektnamn' vilket är en kolumn i tabellen projekt i databasen
+    */
     private String projNamn() {
         String projNamn = "projektnamn";
         return projNamn;
@@ -111,6 +136,10 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return kostnad;
     }
 
+   /**
+    * Metod hämtar landet ett specifikt porjekt utförs i
+    * Parametervärde String av önskade projekts ID
+    */
     private String getLand(String projektId) {
         String projektLand = " ";
         try {
@@ -123,6 +152,11 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return projektLand;
     }
 
+   /**
+    * Metod hämtar projektchef för specifikt projekt ifrån databasen
+    * Parametervärde tar String av önskat porjekts ID
+    * Skriver samman för och efternamn från databasen till utskriften
+    */
     private String getProjektChef(String projektId) {
         String projektProjektChef = " ";
         try {
