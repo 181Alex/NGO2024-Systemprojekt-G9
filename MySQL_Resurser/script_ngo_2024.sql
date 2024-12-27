@@ -4,6 +4,8 @@
 -- ------------------------------------------------------
 -- Server version	8.0.36
 
+use mysql;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -14,7 +16,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 
 -- Ta bort proceduren om den redan finns
 DROP PROCEDURE IF EXISTS setup_ngo_2024;
@@ -42,6 +43,8 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+USE NGO_2024;
 
 -- Table structure for table `admin`
 --
@@ -295,9 +298,9 @@ CREATE TABLE `avdelning` (
 
 LOCK TABLES `avdelning` WRITE;
 /*!40000 ALTER TABLE `avdelning` DISABLE KEYS */;
-INSERT INTO `avdelning` VALUES (1,'Avdelning för Hållbar Energi och Klimatförändringar','fokuserar på att främja användningen av förnybar energi och att bekämpa klimatförändringar genom utbildning, projektimplementering och politiska påverkansinsatser.','NGO-gatan 1','policy@ngo.org','123456789',1,NULL),
-                               (2,'Avdelning för Samhällsutveckling och Utbildning','Teknisk utveckling och innovation för mänskliga rättigheter.','NGO-vägen 2','tech@ngo.org','123456789',2,NULL),
-                               (3,'Avdelning för Teknologisk Innovation och Entreprenörskap','Kommunikation och medvetenhet om digitala rättigheter.','NGO-vägen 3','communication@ngo.org','123456789',3,NULL);
+INSERT INTO `avdelning` VALUES (1,'Avdelning för Hållbar Energi och Klimatförändringar','fokuserar på att främja användningen av förnybar energi och att bekämpa klimatförändringar genom utbildning, projektimplementering och politiska påverkansinsatser.','NGO-gatan 1','policy@ngo.org','123456789',1,4),
+                               (2,'Avdelning för Samhällsutveckling och Utbildning','Teknisk utveckling och innovation för mänskliga rättigheter.','NGO-vägen 2','tech@ngo.org','123456789',2,8),
+                               (3,'Avdelning för Teknologisk Innovation och Entreprenörskap','Kommunikation och medvetenhet om digitala rättigheter.','NGO-vägen 3','communication@ngo.org','123456789',3,3);
 /*!40000 ALTER TABLE `avdelning` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,7 +551,7 @@ CREATE TABLE `projekt` (
   PRIMARY KEY (`pid`),
   KEY `projektchef` (`projektchef`),
   KEY `land` (`land`),
-  CONSTRAINT `projekt_ibfk_1` FOREIGN KEY (`projektchef`) REFERENCES `anstalld` (`aid`),
+  CONSTRAINT `projekt_ibfk_1` FOREIGN KEY (`projektchef`) REFERENCES `handlaggare` (`aid`),
   CONSTRAINT `projekt_ibfk_2` FOREIGN KEY (`land`) REFERENCES `land` (`lid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -559,16 +562,16 @@ CREATE TABLE `projekt` (
 
 LOCK TABLES `projekt` WRITE;
 /*!40000 ALTER TABLE `projekt` DISABLE KEYS */;
-INSERT INTO `projekt` VALUES (1,'Projekt 1','Beskrivning av projekt 1','2023-01-01','2023-06-30',10000.00,'Pågående','Hög',1,1),
-                             (2,'Projekt 2','Beskrivning av projekt 2','2023-02-01','2023-07-31',15000.00,'Planerat','Medel',2,2),
-                             (3,'Projekt 3','Beskrivning av projekt 3','2023-03-01','2023-08-31',12000.00,'Avslutat','Låg',3,3),
-                             (4,'Projekt 4','Beskrivning av projekt 4','2023-04-01','2023-09-30',18000.00,'Pågående','Hög',4,4),
-                             (5,'Projekt 5','Beskrivning av projekt 5','2023-05-01','2023-10-31',13000.00,'Pågående','Medel',5,5),
-                             (6,'Projekt 6','Beskrivning av projekt 6','2023-06-01','2023-11-30',20000.00,'Planerat','Låg',6,1),
-                             (7,'Projekt 7','Beskrivning av projekt 7','2023-07-01','2023-12-31',16000.00,'Pågående','Hög',7,2),
-                             (8,'Projekt 8','Beskrivning av projekt 8','2023-08-01','2024-01-31',14000.00,'Avslutat','Medel',8,3),
-                             (9,'Projekt 9','Beskrivning av projekt 9','2023-09-01','2024-02-29',17000.00,'Pågående','Låg',9,4),
-                             (10,'Projekt 10','Beskrivning av projekt 10','2023-10-01','2024-03-31',22000.00,'Planerat','Hög',10,5);
+INSERT INTO `projekt` VALUES (1,'Projekt 1','Beskrivning av projekt 1','2023-01-01','2023-06-30',10000.00,'Pågående','Hög',10,1),
+                             (2,'Projekt 2','Beskrivning av projekt 2','2023-02-01','2023-07-31',15000.00,'Planerat','Medel',4,2),
+                             (3,'Projekt 3','Beskrivning av projekt 3','2023-03-01','2023-08-31',12000.00,'Avslutat','Låg',5,3),
+                             (4,'Projekt 4','Beskrivning av projekt 4','2023-04-01','2023-09-30',18000.00,'Pågående','Hög',8,4),
+                             (5,'Projekt 5','Beskrivning av projekt 5','2023-05-01','2023-10-31',13000.00,'Pågående','Medel',9,5),
+                             (6,'Projekt 6','Beskrivning av projekt 6','2023-06-01','2023-11-30',20000.00,'Planerat','Låg',10,1),
+                             (7,'Projekt 7','Beskrivning av projekt 7','2023-07-01','2023-12-31',16000.00,'Pågående','Hög',13,2),
+                             (8,'Projekt 8','Beskrivning av projekt 8','2023-08-01','2024-01-31',14000.00,'Avslutat','Medel',20,3),
+                             (9,'Projekt 9','Beskrivning av projekt 9','2023-09-01','2024-02-29',17000.00,'Pågående','Låg',29,4),
+                             (10,'Projekt 10','Beskrivning av projekt 10','2023-10-01','2024-03-31',22000.00,'Planerat','Hög',46,5);
 /*!40000 ALTER TABLE `projekt` ENABLE KEYS */;
 UNLOCK TABLES;
 
