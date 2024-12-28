@@ -362,7 +362,7 @@ public void skapaNu(){
 
         tfSlutDatum.setText("yyyy-mm-dd");
 
-        tfKostnad.setText("1234567,12");
+        tfKostnad.setText("1234567.12");
         tfKostnad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfKostnadActionPerformed(evt);
@@ -557,6 +557,8 @@ public void skapaNu(){
 
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
        totalKontroll();
+       lblError.setVisible(false);
+        lblSkapad.setVisible(false);
         if(kontrollOk){
             lblSkapad.setVisible(true);
             skapaNu();
