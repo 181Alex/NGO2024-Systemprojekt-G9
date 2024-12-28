@@ -189,14 +189,25 @@ public class Validering {
     
 public boolean checkValuta(String valuta) {
     boolean matches = false;
-    // siffror, ett komma tecken och sedan mer siffror (en double)
-    String checker = "^\\d+(\\.\\d+)?$";
+    // Regex för siffror, ett komma och upp till fyra decimaler
+    String checker = "^\\d+,(\\d{1,4})?$";
     if (valuta.matches(checker)) {
         matches = true;
     }
     return matches;
-   
 }
+
+
+public boolean checkKostnad(String kostnad) {
+    boolean matches = false;
+    // Regex för upp till 12 siffror före kommatecknet och upp till 2 decimaler
+    String checker = "^\\d{1,12},(\\d{1,2})?$";
+    if (kostnad.matches(checker)) {
+        matches = true;
+    }
+    return matches;
+}
+
 
 public boolean checkMeningOSiffra(String mening){
     boolean matches = false;
