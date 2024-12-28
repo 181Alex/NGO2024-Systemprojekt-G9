@@ -190,6 +190,7 @@ private void fyllTabellAndra(){
         String nLid = " ";
        
         ArrayList<String> personLista = new ArrayList<>();
+        ArrayList<String> allaLanderLista = new ArrayList<>();
         
         cbxPrioritet.removeAllItems();
         cbxLand.removeAllItems();
@@ -232,6 +233,7 @@ private void fyllTabellAndra(){
             nLid = pLid;
                    
             personLista = idb.fetchColumn(sqlPerson);
+            allaLanderLista = idb.fetchColumn(sqlLand);
             
             
             for(String anstNamn : personLista){
@@ -241,7 +243,15 @@ private void fyllTabellAndra(){
                 cbxProjektchef.addItem(anstNamn);
                 anstalldLista.put(i, anstNamn);
                 
-            }         
+            }
+            
+            for(String landNamn : allaLanderLista){
+               String sqlLid = "SELECT lid FROM land WHERE "
+                       + "namn = '" + landNamn + "'";
+               String i = idb.fetchSingle(sqlLid);
+               cbxLand.addItem(landNamn);
+               landLista.put(i, landNamn);
+            }
             
         }
         catch(InfException ex){
@@ -301,6 +311,7 @@ public void gomTaBort(){
     lblNLand.setVisible(true);
     lblLid.setVisible(true);
     lblNLid.setVisible(true);
+    tfBeskrivning.setVisible(true);
     
 
     // Göm det som tillhör ta bort
@@ -351,6 +362,7 @@ private void gomAndra(){
     tfProjektnamn.setVisible(false);
     tfSlutdatum.setVisible(false);
     tfStartdatum.setVisible(false);
+    tfBeskrivning.setVisible(false);
     tfNLand.setVisible(false);
     cbxLand.setVisible(false);
     lblNLand.setVisible(false);
@@ -490,6 +502,18 @@ private void visaAid(){
             }
         }     
         lblAid.setText(aid);
+}
+
+private void visaLid(){
+    String selectedLand = (String) cbxLand.getSelectedItem();
+        String lid = " ";
+        for(String id : landLista.keySet()){
+            String namn = landLista.get(id);
+            if(selectedLand != null && selectedLand.equals(namn)){
+                lid = id;               
+            }
+        }     
+        lblLid.setText(lid);
 }
 
 
@@ -702,6 +726,11 @@ private void visaAid(){
         lblFelmeddelande.setText("Felmeddelande");
 
         cbxLand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        cbxLand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxLandActionPerformed(evt);
+            }
+        });
 
         lblNLand.setText("Nuvarande:");
 
@@ -951,6 +980,7 @@ private void visaAid(){
       }else if(chbAndra.isSelected()){         
            fyllTabellAndra();
            visaAid();
+           visaLid();
        }
         
     }//GEN-LAST:event_btValjActionPerformed
@@ -964,8 +994,7 @@ private void visaAid(){
     }//GEN-LAST:event_btPartnerActionPerformed
 
     private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed
-
-        
+        visaAid();
     }//GEN-LAST:event_cbxProjektchefActionPerformed
 
     private void chbAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAndraActionPerformed
@@ -988,6 +1017,10 @@ private void visaAid(){
     taBortProjekt(iInt);
     fyllCb();
     }//GEN-LAST:event_btTaBortActionPerformed
+
+    private void cbxLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLandActionPerformed
+       visaLid();
+    }//GEN-LAST:event_cbxLandActionPerformed
 
     /**
      * @param args the command line arguments
