@@ -8,6 +8,7 @@ import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 
@@ -20,6 +21,8 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     private InfDB idb;
     private String inloggadAnvandare;  
     boolean kontrollOk;
+    private HashMap<String, String> anstalldLista;
+    private HashMap<String, String> landLista;
     
     /**
      * Creates new form LaggTillPorjekt
@@ -29,52 +32,77 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
-        fyllStatus();
-        fyllProjektChef();
-        fyllPrioritet();
-        fyllLand();
+        fyllAllaCb();
+        anstalldLista = new HashMap<>();
+        landLista = new HashMap<>();
         
     }
-    
-    
-    public void fyllStatus(){
+        
+private void fyllStatus(){
+        cbStatus.removeAllItems();
+        
         cbStatus.addItem("Planerat");
         cbStatus.addItem("Pågående");
         cbStatus.addItem("Avslutat");
+        cbStatus.addItem("Pausad");
     }
-    
-    public void fyllProjektChef(){
+       
+private void fyllProjektChef(){
+        cbProjektChef.removeAllItems();
+        
         String sqlFraga="SELECT namn FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
-        ArrayList<String> chefLista=new ArrayList<>();
+        
         try{
-            chefLista=idb.fetchColumn(sqlFraga);
-            for(String namn:chefLista){
-                chefLista.add(namn);
+            ArrayList<String> chefLista=idb.fetchColumn(sqlFraga);
+            
+            for(String anstNamn : chefLista){
+                String sqlAid = "SELECT aid from anstalld WHERE "
+                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
+                String i = idb.fetchSingle(sqlAid);
+                cbProjektChef.addItem(anstNamn);
+                anstalldLista.put(i, anstNamn);
+                
             }
             
-        }catch(Exception ex){
+        }catch(InfException ex){
             System.out.println(ex.getMessage());
         }}
         
-
-    public void fyllPrioritet(){
+private void fyllPrioritet(){
+        cbPrioritet.removeAllItems();
+        
         cbPrioritet.addItem("låg");
         cbPrioritet.addItem("Medel");
         cbPrioritet.addItem("hög");
     }
     
-    public void fyllLand(){
-        String sqlFraga="SELECT namn FROM land";
-        ArrayList<String> namnLista=new ArrayList<>();
+private void fyllLand(){
+        cbLand.removeAllItems();
+        
+        String sqlLand = "SELECT namn FROM land ";
+        
         try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            for(String namn:namnLista){
-                namnLista.add(namn);
+
+        ArrayList<String> allaLanderLista =  idb.fetchColumn(sqlLand);
+                                             
+            for(String landNamn : allaLanderLista){
+               String sqlLid = "SELECT lid FROM land WHERE "
+                       + "namn = '" + landNamn + "'";
+               String i = idb.fetchSingle(sqlLid);
+               cbLand.addItem(landNamn);
+               landLista.put(i, landNamn);
             }
-            
-        }catch(Exception ex){
+        }catch(InfException ex){
             System.out.println(ex.getMessage());
         }
+    }
+    
+ private void fyllAllaCb(){
+        fyllStatus();
+        fyllProjektChef();
+        fyllPrioritet();
+        fyllLand();
+        
     }
     
     public int hogstaPid(){

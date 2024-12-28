@@ -32,12 +32,12 @@ public class AndraProjekt extends javax.swing.JFrame {
         landLista = new HashMap<>();
 
         initComponents();
-        fyllCb();
+        fyllCbProjekt();
         gomAlla();
         
     }
     
-private void fyllCb(){
+private void fyllCbProjekt(){
         cbxProjekt.removeAllItems();
         String sqlFraga = "SELECT projektnamn FROM projekt";
         
@@ -170,45 +170,16 @@ private void taBortProjekt(int pid){
         }
 }
 
-private void fyllCbAndra(){
-        
-        cbxPrioritet.removeAllItems();
+private void fyllCbLand(){
+       
         cbxLand.removeAllItems();
-        cbxStatus.removeAllItems();
-        cbxProjektchef.removeAllItems();
-        
-        //lägger till alternativ i prio och status
-        cbxPrioritet.addItem("Hög");
-        cbxPrioritet.addItem("Låg");
-        cbxPrioritet.addItem("Medel");
-        
-        cbxStatus.addItem("Planerat");
-        cbxStatus.addItem("Pågående");
-        cbxStatus.addItem("Avslutat");
-        cbxStatus.addItem("Pausad");
-
-        String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld"
-                        + " WHERE aid in (SELECT aid FROM handlaggare)";
         
         String sqlLand = "SELECT namn FROM land ";
         
         try{
-        ArrayList<String> personLista = new ArrayList<>();
-        ArrayList<String> allaLanderLista = new ArrayList<>();
-            
-            personLista = idb.fetchColumn(sqlPerson);
-            allaLanderLista = idb.fetchColumn(sqlLand);
-                                    
-            
-            for(String anstNamn : personLista){
-                String sqlAid = "SELECT aid from anstalld WHERE "
-                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
-                String i = idb.fetchSingle(sqlAid);
-                cbxProjektchef.addItem(anstNamn);
-                anstalldLista.put(i, anstNamn);
-                
-            }
-            
+
+        ArrayList<String> allaLanderLista =  idb.fetchColumn(sqlLand);
+                                             
             for(String landNamn : allaLanderLista){
                String sqlLid = "SELECT lid FROM land WHERE "
                        + "namn = '" + landNamn + "'";
@@ -223,8 +194,57 @@ private void fyllCbAndra(){
         }
 }
 
+private void fyllCbProjektchef(){
+    cbxProjektchef.removeAllItems();
+
+    String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld"
+                        + " WHERE aid in (SELECT aid FROM handlaggare)";
+      
+    try {
+        ArrayList<String> personLista = idb.fetchColumn(sqlPerson);
+                    
+            for(String anstNamn : personLista){
+                String sqlAid = "SELECT aid from anstalld WHERE "
+                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
+                String i = idb.fetchSingle(sqlAid);
+                cbxProjektchef.addItem(anstNamn);
+                anstalldLista.put(i, anstNamn);
+                
+            }
+        
+        
+    } catch (InfException ex){
+        System.out.println(ex.getMessage());
+    }
+    
+            
+}
+
+private void fyllCbPrio(){
+    
+    cbxPrioritet.removeAllItems();
+            
+    cbxPrioritet.addItem("Hög");
+    cbxPrioritet.addItem("Låg");
+    cbxPrioritet.addItem("Medel");
+}
+
+private void fyllCbStatus(){
+    cbxStatus.removeAllItems();
+    
+            
+    cbxStatus.addItem("Planerat");
+    cbxStatus.addItem("Pågående");
+    cbxStatus.addItem("Avslutat");
+    cbxStatus.addItem("Pausad");
+}
+
 private void fyllTabellAndra(){
-    fyllCbAndra();
+    fyllCbLand();
+    fyllCbPrio();
+    fyllCbStatus();
+    fyllCbProjektchef();
+    
     
      String sPid=getPid();
         int pid=Integer.parseInt(sPid);
@@ -288,7 +308,7 @@ private void fyllTabellAndra(){
                     
 }
 
-public void gomTaBort(){
+private void gomTaBort(){
     // Visa allt om Ändra
     btAndra.setVisible(true);
     btHallbarhet.setVisible(true);
@@ -405,7 +425,7 @@ private void gomAndra(){
     lblFelmeddelande.setVisible(false);
 }
 
-public void gomBad(){
+private void gomBad(){
     //gömmer alla fel medelandena, används innan ett specefikt fel ska upplysas.
     lblFelNamn.setVisible(false);
     lblFelBeskrivning.setVisible(false);
@@ -1109,7 +1129,7 @@ private void gorAndring(){
     String stringInt=lblPid.getText();
     int iInt=Integer.parseInt(stringInt);
     taBortProjekt(iInt);
-    fyllCb();
+    fyllCbProjekt();
     lblMeddelande.setText("Borttagen");
     lblMeddelande.setVisible(true);
     }//GEN-LAST:event_btTaBortActionPerformed
@@ -1124,7 +1144,7 @@ private void gorAndring(){
            fyllTabellAndra();
            lblMeddelande.setText("Lyckades!");
            lblMeddelande.setVisible(true);
-           fyllCb();
+           fyllCbProjekt();
        } else {
            lblFelmeddelande.setText("Något gick fel");
            lblFelmeddelande.setVisible(true);
