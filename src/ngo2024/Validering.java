@@ -190,7 +190,7 @@ public class Validering {
     
 public boolean checkValuta(String valuta) {
     boolean matches = false;
-    // Regex för siffror, ett komma och upp till fyra decimaler
+    // Regex för siffror, ett punkt och upp till fyra decimaler
     String checker = "^\\d+.(\\d{1,4})?$";
     if (valuta.matches(checker)) {
         matches = true;
@@ -201,8 +201,8 @@ public boolean checkValuta(String valuta) {
 
 public boolean checkKostnad(String kostnad) {
     boolean matches = false;
-    // Regex för upp till 12 siffror före kommatecknet och upp till 2 decimaler
-    String checker = "^\\\\d{1,12},\\\\d{1,4}$";
+    // Regex för upp till 12 siffror före punkt och 1-4 decimaler
+    String checker = "^\\d{1,12},\\d{1,4}$";
     if (kostnad.matches(checker)) {
         matches = true;
     }
