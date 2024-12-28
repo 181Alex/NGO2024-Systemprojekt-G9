@@ -32,7 +32,7 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
-        fyllAllaCb();
+        fyllAllt();
         anstalldLista = new HashMap<>();
         landLista = new HashMap<>();
         
@@ -97,15 +97,16 @@ private void fyllLand(){
         }
     }
     
- private void fyllAllaCb(){
+private void fyllAllt(){
         fyllStatus();
         fyllProjektChef();
         fyllPrioritet();
-        fyllLand();
-        
-    }
+        fyllLand();   
+        lblAid.setText(getPChef());
+        lblLid.setText(getLandid());
+}
     
-    public int hogstaPid(){
+private int hogstaPid(){
         // hämtar ut högsta pid
         int hogsta=0;
         String sqlFraga="Select MAX(pid) FROM projekt";
@@ -118,9 +119,9 @@ private void fyllLand(){
         }
         System.out.println(hogsta);
         return hogsta+1;
-    }
+}
     
-    public boolean namnKontroll(){
+private boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // kontrollerar namn format
@@ -131,10 +132,10 @@ private void fyllLand(){
             lblNamnBad.setVisible(true);
             return false;
     }
-    }
+}
     
     
-    public boolean beskrivningKontroll(){
+private boolean beskrivningKontroll(){
            Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
@@ -145,10 +146,10 @@ private void fyllLand(){
             lblBeskrivningBad.setVisible(true);
             return false;
     }
-    }
+}
     
     
-    private boolean stDatumKontroll(){
+private boolean stDatumKontroll(){
 Validering valid = new Validering(idb); 
     
     // Hämta text från textfältet
@@ -193,7 +194,7 @@ private boolean kostnadKontroll(){
     }
 }
     
-    public void totalKontroll() {
+private void totalKontroll() {
     Boolean totOk = true;
 
     if (!namnKontroll()) {
@@ -214,6 +215,47 @@ private boolean kostnadKontroll(){
     }
     kontrollOk=totOk;
     }
+
+private String getLandid(){
+        String selectedLand = (String) cbLand.getSelectedItem();
+        String lid = " ";
+        for(String id : landLista.keySet()){
+            String namn = landLista.get(id);
+            if(selectedLand != null && selectedLand.equals(namn)){
+                lid = id;               
+            }
+        }
+        return lid;
+}
+    
+private String getPChef(){
+        String selectedPerson = (String) cbProjektChef.getSelectedItem();
+        String aid = " ";
+        for(String id : anstalldLista.keySet()){
+            String namn = anstalldLista.get(id);
+            if(selectedPerson != null && selectedPerson.equals(namn)){
+                aid = id;               
+            }
+        } 
+        return aid;
+    }
+
+public void skapaNu(){
+        String status=(String) cbStatus.getSelectedItem();
+        String prioritet=(String) cbPrioritet.getSelectedItem();
+        String sqlFraga= "INSERT INTO projekt VALUES(" + hogstaPid() + ", '" + tfNamn.getText() + "', '"
+                + tfBeskrivning.getText() + "', " + tfStartDatum.getText() + ", " + tfSlutDatum.getText()
+                + ", " + tfKostnad.getText() + "', '" + status + "', '" + prioritet + "', " + getPChef() 
+                + "', " + getLandid() + ")";
+        System.out.println(sqlFraga);
+        try{
+            idb.insert(sqlFraga);
+        } catch(InfException ex){
+            System.out.println(ex.getMessage());
+}
+}
+
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -252,6 +294,8 @@ private boolean kostnadKontroll(){
         btnSkapa = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
         lblSkapad = new javax.swing.JLabel();
+        lblLid = new javax.swing.JLabel();
+        lblAid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -326,12 +370,21 @@ private boolean kostnadKontroll(){
         lblKostnadBad.setText("!");
 
         btnSkapa.setText("Skapa");
+        btnSkapa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSkapaActionPerformed(evt);
+            }
+        });
 
         lblError.setForeground(new java.awt.Color(255, 0, 51));
         lblError.setText("Error!");
 
         lblSkapad.setForeground(new java.awt.Color(0, 204, 51));
         lblSkapad.setText("Skapad");
+
+        lblLid.setText("lid");
+
+        lblAid.setText("aid");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -345,43 +398,47 @@ private boolean kostnadKontroll(){
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTillbaka))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSkapa)
+                        .addGap(33, 33, 33)
+                        .addComponent(lblSkapad)
+                        .addGap(51, 51, 51)
+                        .addComponent(lblError))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfNamn)
+                            .addComponent(tfBeskrivning)
+                            .addComponent(tfStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(tfSlutDatum)
+                            .addComponent(tfKostnad)
+                            .addComponent(cbProjektChef, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbLand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSkapa)
-                                .addGap(33, 33, 33)
-                                .addComponent(lblSkapad)
-                                .addGap(51, 51, 51)
-                                .addComponent(lblError))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfNamn)
-                                    .addComponent(tfBeskrivning)
-                                    .addComponent(tfStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                                    .addComponent(tfSlutDatum)
-                                    .addComponent(tfKostnad)
-                                    .addComponent(cbProjektChef, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbLand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblNamnBad)
                                     .addComponent(lblBeskrivningBad)
                                     .addComponent(lblStartDatumBad)
                                     .addComponent(lblSlutDatumBad)
-                                    .addComponent(lblKostnadBad))))
-                        .addGap(0, 173, Short.MAX_VALUE)))
+                                    .addComponent(lblKostnadBad)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblAid)
+                                    .addComponent(lblLid))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -432,11 +489,15 @@ private boolean kostnadKontroll(){
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(cbProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblAid)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLid)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSkapa)
@@ -460,6 +521,17 @@ private boolean kostnadKontroll(){
         new AdminMeny(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
+       totalKontroll();
+        if(kontrollOk){
+            lblSkapad.setVisible(true);
+            skapaNu();
+        }
+        else{
+            lblError.setVisible(true);
+        }
+    }//GEN-LAST:event_btnSkapaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,9 +585,11 @@ private boolean kostnadKontroll(){
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblAid;
     private javax.swing.JLabel lblBeskrivningBad;
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblKostnadBad;
+    private javax.swing.JLabel lblLid;
     private javax.swing.JLabel lblNamnBad;
     private javax.swing.JLabel lblSkapad;
     private javax.swing.JLabel lblSlutDatumBad;
