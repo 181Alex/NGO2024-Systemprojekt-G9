@@ -108,7 +108,7 @@ public class Validering {
         namn = namn.trim(); // Ta bort inledande och avslutande mellanslag (endast mellan ok)
         // kräver först bokstver/- och mellanrum och sedan efternamn
 
-        String regex = "^[A-Za-zåäöÅÄÖ-]+ [A-Za-zåäöÅÄÖ-]+$";
+        String regex = "^[A-Za-zåäöÅÄÖ]+([ .-][A-Za-zåäöÅÄÖ]+)*$";
          if(namn.matches(regex)){
              matches=true;
          }
@@ -234,6 +234,7 @@ public boolean checkBeskrivning(String beskrivning) {
 
 public boolean checkDatumSkillnad(String franDatum, String tillDatum){
     boolean mindre=false;
+    // start måste vara mindre än slut
     int startInt = Integer.parseInt(franDatum.replace("-", ""));
         int slutInt = Integer.parseInt(tillDatum.replace("-", ""));
         if(startInt<slutInt){

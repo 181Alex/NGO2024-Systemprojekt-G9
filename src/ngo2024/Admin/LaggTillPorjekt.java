@@ -144,6 +144,22 @@ private boolean namnKontroll(){
             return false;
     }
 }
+
+private boolean mellanDatum(){
+        Validering valid = new Validering(idb);
+        String start = tfStartDatum.getText();
+        String slut=tfSlutDatum.getText();
+        // kontrollerar namn format
+    if (valid.checkDatumSkillnad(start, slut)) {
+            lblStartDatumBad.setVisible(true);
+            lblSlutDatumBad.setVisible(true);
+            return true;
+    } else {
+            lblStartDatumBad.setVisible(true);
+            lblSlutDatumBad.setVisible(true);
+            return false;
+    }
+}
     
     
 private boolean beskrivningKontroll(){
@@ -223,6 +239,9 @@ private void totalKontroll() {
     } else if (!kostnadKontroll()) {  
         totOk = false;
         lblKostnadBad.setVisible(true);
+    }
+    else if(!mellanDatum()){
+        totOk=false;
     }
     kontrollOk=totOk;
     }
