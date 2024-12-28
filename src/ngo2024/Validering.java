@@ -202,12 +202,13 @@ public boolean checkValuta(String valuta) {
 public boolean checkKostnad(String kostnad) {
     boolean matches = false;
     // Regex för upp till 12 siffror före punkt och 1-4 decimaler
-    String checker = "^\\d{1,12},\\d{1,4}$";
+    String checker = "^\\d{1,12}\\.\\d{1,4}$";
     if (kostnad.matches(checker)) {
         matches = true;
     }
     return matches;
 }
+
 
 
 public boolean checkMeningOSiffra(String mening){
