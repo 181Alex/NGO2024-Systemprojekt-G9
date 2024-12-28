@@ -194,7 +194,7 @@ public class AvdProjekt extends javax.swing.JFrame {
             }
         });
 
-        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Planerade", "Pågående", "Avslutade", "Aktiva" }));
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alla", "Planerade", "Pågående", "Avslutade", "Aktiva", "Pausad" }));
         cbxStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxStatusActionPerformed(evt);
@@ -349,6 +349,8 @@ public class AvdProjekt extends javax.swing.JFrame {
                 case "Aktiva":
                     statusMatchar = enValidering.checkAktiv(status);
                     break;
+                case"Pausad":
+                    statusMatchar = enValidering.checkPausad(status);
             }
         }
 

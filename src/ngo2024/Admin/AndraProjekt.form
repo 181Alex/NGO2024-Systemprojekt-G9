@@ -26,121 +26,76 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="chbAndra" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="chbTaBort" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btTaBort" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btClose" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="lblProjektnamn" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <Component id="lblProjektnamn" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                                  <Component id="lblSlutdatum" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                              <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblSlutdatum" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblLand" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblProjektchef" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="tfStartdatum" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfSlutdatum" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfKostnad" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfLand" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cbxProjektchef" alignment="0" pref="179" max="32767" attributes="0"/>
-                          <Component id="tfProjektnamn" max="32767" attributes="0"/>
-                          <Component id="tfBeskrivning" max="32767" attributes="0"/>
-                          <Component id="cbxPrioritet" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cbxStatus" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFelSlutdatum" min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="lblFelKostnad" min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Component id="lblFelLand" min="-2" pref="12" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="lblFelNamn" max="32767" attributes="0"/>
-                                          <Component id="lblFelBeskrivning" max="32767" attributes="0"/>
-                                          <Component id="lblFelStartdatum" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblHallbarhet" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblProjektpartner" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btPartner" min="-2" max="-2" attributes="0"/>
-                                          <Component id="btHallbarhet" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblAid" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblN1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblN2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblN3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="tfNprio" max="32767" attributes="0"/>
-                                              <Component id="tfNstatus" pref="116" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblLand" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="tfNprojektchef" alignment="1" min="-2" pref="116" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblProjektchef" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="lblNaid" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btAndra" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="tfStartdatum" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfSlutdatum" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfKostnad" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbxProjektchef" alignment="0" pref="179" max="32767" attributes="0"/>
+                                  <Component id="tfProjektnamn" max="32767" attributes="0"/>
+                                  <Component id="tfBeskrivning" max="32767" attributes="0"/>
+                                  <Component id="cbxPrioritet" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbxStatus" max="32767" attributes="0"/>
+                                  <Component id="cbxLand" alignment="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblMeddelande" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="cbxProjekt" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -151,16 +106,82 @@
                               <Component id="lblPnamn" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="chbAndra" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="chbTaBort" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btTaBort" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btClose" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblAid" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="lblLid" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Component id="lblFelBeskrivning" min="-2" pref="16" max="-2" attributes="0"/>
+                                          <Component id="lblFelNamn" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lblN1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblN2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblN3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblNLand" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="tfNprio" max="32767" attributes="0"/>
+                                          <Component id="tfNstatus" pref="116" max="32767" attributes="0"/>
+                                          <Component id="tfNprojektchef" alignment="0" pref="116" max="32767" attributes="0"/>
+                                          <Component id="tfNLand" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblNaid" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="btAndra" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblNLid" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lblMeddelande" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                              <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblHallbarhet" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblProjektpartner" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="btPartner" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="btHallbarhet" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFelStartdatum" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="lblFelSlutdatum" min="-2" pref="12" max="-2" attributes="0"/>
+                                  <Component id="lblFelKostnad" alignment="0" min="-2" pref="12" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -183,12 +204,12 @@
                   <Component id="btValj" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblPid" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblPnamn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblMeddelande" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelmeddelande" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblMeddelande" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblProjektnamn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="tfProjektnamn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -197,8 +218,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelBeskrivning" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfBeskrivning" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="tfBeskrivning" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblFelBeskrivning" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -220,38 +243,13 @@
                       </Group>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblFelLand" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfLand" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbxLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblLid" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblN1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfNprio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblN2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfNstatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btAndra" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblAid" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblN3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tfNprojektchef" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNaid" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblHallbarhet" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btHallbarhet" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -262,8 +260,38 @@
                           <Component id="btPartner" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblNLid" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbxPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblN1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNprio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblN2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNstatus" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbxProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btAndra" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAid" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblN3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNprojektchef" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNaid" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -289,6 +317,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ta bort"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btTaBortActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbxProjekt">
       <Properties>
@@ -395,17 +426,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfKostnadActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfLand">
-    </Component>
     <Component class="javax.swing.JComboBox" name="cbxProjektchef">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {})" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -465,14 +489,6 @@
         <Property name="text" type="java.lang.String" value="!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFelLand">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btClose">
       <Properties>
         <Property name="text" type="java.lang.String" value="X"/>
@@ -483,13 +499,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="cbxPrioritet">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {})" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -498,13 +509,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="cbxStatus">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {})" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -570,6 +576,44 @@
     <Component class="javax.swing.JLabel" name="lblNaid">
       <Properties>
         <Property name="text" type="java.lang.String" value="aid"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelmeddelande">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Felmeddelande"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbxLand">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] {})" type="code"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNLand">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nuvarande:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfNLand">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="lid"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNLid">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="lid"/>
       </Properties>
     </Component>
   </SubComponents>
