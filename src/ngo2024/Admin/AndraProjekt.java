@@ -170,26 +170,7 @@ private void taBortProjekt(int pid){
         }
 }
 
-private void fyllTabellAndra(){
-     String sPid=getPid();
-        int pid=Integer.parseInt(sPid);
-    String pAid = getChefAid(pid);
-    String pLid = getLid(pid);
-        
-        String namn=" ";
-        String beskrivning=" ";
-        String startdatum=" ";
-        String slutdatum=" ";
-        String kostnad=" ";
-        String nLand=" ";
-        String nPrio = " ";
-        String nStatus = " ";
-        String nChef = " ";
-        String nAid = " ";
-        String nLid = " ";
-       
-        ArrayList<String> personLista = new ArrayList<>();
-        ArrayList<String> allaLanderLista = new ArrayList<>();
+private void fyllCbAndra(){
         
         cbxPrioritet.removeAllItems();
         cbxLand.removeAllItems();
@@ -210,7 +191,57 @@ private void fyllTabellAndra(){
                         + " WHERE aid in (SELECT aid FROM handlaggare)";
         
         String sqlLand = "SELECT namn FROM land ";
+        
+        try{
+        ArrayList<String> personLista = new ArrayList<>();
+        ArrayList<String> allaLanderLista = new ArrayList<>();
+            
+            personLista = idb.fetchColumn(sqlPerson);
+            allaLanderLista = idb.fetchColumn(sqlLand);
+                                    
+            
+            for(String anstNamn : personLista){
+                String sqlAid = "SELECT aid from anstalld WHERE "
+                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
+                String i = idb.fetchSingle(sqlAid);
+                cbxProjektchef.addItem(anstNamn);
+                anstalldLista.put(i, anstNamn);
+                
+            }
+            
+            for(String landNamn : allaLanderLista){
+               String sqlLid = "SELECT lid FROM land WHERE "
+                       + "namn = '" + landNamn + "'";
+               String i = idb.fetchSingle(sqlLid);
+               cbxLand.addItem(landNamn);
+               landLista.put(i, landNamn);
+            }
+                      
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+}
 
+private void fyllTabellAndra(){
+    fyllCbAndra();
+    
+     String sPid=getPid();
+        int pid=Integer.parseInt(sPid);
+    String pAid = getChefAid(pid);
+    String pLid = getLid(pid);
+        
+        String namn=" ";
+        String beskrivning=" ";
+        String startdatum=" ";
+        String slutdatum=" ";
+        String kostnad=" ";
+        String nLand=" ";
+        String nPrio = " ";
+        String nStatus = " ";
+        String nChef = " ";
+        String nAid = " ";
+        String nLid = " ";
 
         try{
             namn = idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid = " + pid);
@@ -230,27 +261,6 @@ private void fyllTabellAndra(){
             
             nAid = pAid;
             nLid = pLid;
-                   
-            personLista = idb.fetchColumn(sqlPerson);
-            allaLanderLista = idb.fetchColumn(sqlLand);
-            
-            
-            for(String anstNamn : personLista){
-                String sqlAid = "SELECT aid from anstalld WHERE "
-                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
-                String i = idb.fetchSingle(sqlAid);
-                cbxProjektchef.addItem(anstNamn);
-                anstalldLista.put(i, anstNamn);
-                
-            }
-            
-            for(String landNamn : allaLanderLista){
-               String sqlLid = "SELECT lid FROM land WHERE "
-                       + "namn = '" + landNamn + "'";
-               String i = idb.fetchSingle(sqlLid);
-               cbxLand.addItem(landNamn);
-               landLista.put(i, landNamn);
-            }
             
         }
         catch(InfException ex){

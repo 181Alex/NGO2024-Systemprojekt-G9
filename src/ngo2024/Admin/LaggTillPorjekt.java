@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author alexanderabboud
+ * @author alexanderabboud & linneagottling
  */
 public class LaggTillPorjekt extends javax.swing.JFrame {
 
