@@ -190,13 +190,14 @@ public class Validering {
     
 public boolean checkValuta(String valuta) {
     boolean matches = false;
-    // Regex för siffror, ett punkt och upp till fyra decimaler
-    String checker = "^\\d+.(\\d{1,4})?$";
-    if (valuta.matches(checker)) {
+    // Regex för siffror, en punkt och upp till fyra decimaler
+    String checker = "^\\d+(\\.\\d{1,4})?$";
+        if (valuta.matches(checker)) {
         matches = true;
     }
     return matches;
 }
+
 
 
 public boolean checkKostnad(String kostnad) {

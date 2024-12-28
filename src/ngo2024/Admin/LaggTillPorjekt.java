@@ -106,7 +106,87 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     }
     
     
+    public boolean beskrivningKontroll(){
+           Validering valid = new Validering(idb);
+        String besk = tfBeskrivning.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
+            lblBeskrivningBad.setVisible(false);
+            return true;
+    } else {
+            lblBeskrivningBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    
+    private boolean stDatumKontroll(){
+Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String datum = tfStartDatum.getText(); 
+    
+    // Kontrollera om e-postadressen är giltig
+    if (valid.checkDatum(datum)) {
+        lblStartDatumBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblStartDatumBad.setVisible(true); // Visa varning
+        return false;
+    }
+}
 
+private boolean slDatumKontroll(){
+Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String datum = tfSlutDatum.getText(); 
+    
+    // Kontrollera om e-postadressen är giltig
+    if (valid.checkDatum(datum)) {
+        lblSlutDatumBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblSlutDatumBad.setVisible(true); // Visa varning
+        return false;
+    }
+}
+
+private boolean kostnadKontroll(){
+    Validering enValidering = new Validering(idb);
+    String kostnad = tfKostnad.getText();
+    if(enValidering.checkKostnad(kostnad)){
+        lblKostnadBad.setVisible(false);
+        return true;
+    } else {
+        lblKostnadBad.setVisible(true);
+        return false;
+
+    }
+}
+    
+    public void totalKontroll() {
+    Boolean totOk = true;
+
+    if (!namnKontroll()) {
+        totOk = false;
+        lblNamnBad.setVisible(true);
+    } else if (!beskrivningKontroll()) {  
+        totOk = false;
+        lblBeskrivningBad.setVisible(true);
+    } else if (!stDatumKontroll()) {  
+        totOk = false;
+        lblStartDatumBad.setVisible(true);
+    } else if (!slDatumKontroll()) {  
+        totOk = false;
+        lblSlutDatumBad.setVisible(true);
+    } else if (!kostnadKontroll()) {  
+        totOk = false;
+        lblKostnadBad.setVisible(true);
+    }
+    kontrollOk=totOk;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,6 +221,9 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         lblStartDatumBad = new javax.swing.JLabel();
         lblSlutDatumBad = new javax.swing.JLabel();
         lblKostnadBad = new javax.swing.JLabel();
+        btnSkapa = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+        lblSkapad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -214,6 +297,14 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         lblKostnadBad.setForeground(new java.awt.Color(255, 0, 51));
         lblKostnadBad.setText("!");
 
+        btnSkapa.setText("Skapa");
+
+        lblError.setForeground(new java.awt.Color(255, 0, 51));
+        lblError.setText("Error!");
+
+        lblSkapad.setForeground(new java.awt.Color(0, 204, 51));
+        lblSkapad.setText("Skapad");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -227,33 +318,41 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
                         .addComponent(btnTillbaka))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfNamn)
-                            .addComponent(tfBeskrivning)
-                            .addComponent(tfStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(tfSlutDatum)
-                            .addComponent(tfKostnad)
-                            .addComponent(cbProjektChef, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbLand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNamnBad)
-                            .addComponent(lblBeskrivningBad)
-                            .addComponent(lblStartDatumBad)
-                            .addComponent(lblSlutDatumBad)
-                            .addComponent(lblKostnadBad))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSkapa)
+                                .addGap(33, 33, 33)
+                                .addComponent(lblSkapad)
+                                .addGap(51, 51, 51)
+                                .addComponent(lblError))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfNamn)
+                                    .addComponent(tfBeskrivning)
+                                    .addComponent(tfStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                    .addComponent(tfSlutDatum)
+                                    .addComponent(tfKostnad)
+                                    .addComponent(cbProjektChef, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbLand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNamnBad)
+                                    .addComponent(lblBeskrivningBad)
+                                    .addComponent(lblStartDatumBad)
+                                    .addComponent(lblSlutDatumBad)
+                                    .addComponent(lblKostnadBad))))
                         .addGap(0, 173, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -310,7 +409,12 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSkapa)
+                    .addComponent(lblSkapad)
+                    .addComponent(lblError))
+                .addContainerGap())
         );
 
         pack();
@@ -365,6 +469,7 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSkapa;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> cbLand;
     private javax.swing.JComboBox<String> cbPrioritet;
@@ -381,8 +486,10 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblBeskrivningBad;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblKostnadBad;
     private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JLabel lblSkapad;
     private javax.swing.JLabel lblSlutDatumBad;
     private javax.swing.JLabel lblStartDatumBad;
     private javax.swing.JTextField tfBeskrivning;
