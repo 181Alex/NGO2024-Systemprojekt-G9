@@ -21,7 +21,6 @@ public class AndraProjekt extends javax.swing.JFrame {
     private String epost;
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> landLista;
-    private boolean kontrollOk = false;
 
     /**
      * Creates new form AndraProjekt
@@ -404,7 +403,7 @@ private boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfProjektnamn.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(namn)&& valid.checkStorlek(255, namn)) {
+    if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(255, namn)) {
             lblFelNamn.setVisible(false);
             return true;
     } else {
@@ -422,10 +421,13 @@ private boolean sammaNamnKontroll(){
         } catch(InfException ex){
             System.out.println(ex.getMessage());
         }
-        
+        String selectedProjekt = (String) cbxProjekt.getSelectedItem();
+       
         for(String namn:namnLista){
             if(namn.equals(tfProjektnamn.getText())){
+                
                 samma=true;
+               
             }
         }
         if (samma==true){
@@ -438,7 +440,7 @@ private boolean beskrivningKontroll(){
         Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(besk)&& valid.checkStorlek(255, besk)) {
+    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
             lblFelBeskrivning.setVisible(false);
             return true;
     } else {
@@ -492,7 +494,23 @@ private boolean kostnadKontroll(){
     }
 }
 
+private boolean totalKontroll(){
+    boolean ok = false;
+    
+    if(namnKontroll() && sammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
+            && slDatumKontroll() && kostnadKontroll()){
+        ok = true;
+        lblFelmeddelande.setVisible(false);
+    }
+    return ok;
+}
+
 private void visaAid(){
+        
+    lblAid.setText(getSelectedAid());
+}
+
+private String getSelectedAid(){
     String selectedPerson = (String) cbxProjektchef.getSelectedItem();
         String aid = " ";
         for(String id : anstalldLista.keySet()){
@@ -500,20 +518,57 @@ private void visaAid(){
             if(selectedPerson != null && selectedPerson.equals(namn)){
                 aid = id;               
             }
-        }     
-        lblAid.setText(aid);
+        } 
+        return aid;
 }
 
 private void visaLid(){
-    String selectedLand = (String) cbxLand.getSelectedItem();
+   
+        lblLid.setText(getSelectedLid());
+}
+
+private String getSelectedLid(){
+        String selectedLand = (String) cbxLand.getSelectedItem();
         String lid = " ";
         for(String id : landLista.keySet()){
             String namn = landLista.get(id);
             if(selectedLand != null && selectedLand.equals(namn)){
                 lid = id;               
             }
-        }     
-        lblLid.setText(lid);
+        }
+        return lid;
+}
+
+private void gorAndring(){
+    String sPid=getPid();
+        int pid=Integer.parseInt(sPid);
+        
+        String namnS = tfProjektnamn.getText();
+        String beskrivningS = tfBeskrivning.getText();
+        String startdatumS = tfStartdatum.getText();
+        String slutdatumS = tfSlutdatum.getText();
+        String kostnadS = tfKostnad.getText();
+        
+        String landIdS = getSelectedLid();
+        String statusS = (String) cbxStatus.getSelectedItem();
+        String prioritetS = (String) cbxPrioritet.getSelectedItem();
+        String chefIdS = getSelectedAid();              
+        
+        String sqlUpdate="UPDATE projekt SET projektnamn='" + namnS + "', beskrivning= '" 
+                + beskrivningS + "', kostnad = " + kostnadS
+                + ", startdatum= '" + startdatumS + "', slutdatum= '" + slutdatumS + "', land = " 
+                + landIdS + ", status = '" 
+                + statusS + "', prioritet = '" + prioritetS 
+                + "', projektchef = " + chefIdS 
+                + " WHERE pid = " + pid;
+        try{
+            idb.update(sqlUpdate);
+            System.out.println(sqlUpdate);
+        }
+        
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
+        } 
 }
 
 
@@ -661,6 +716,11 @@ private void visaLid(){
         });
 
         btAndra.setText("Ändra");
+        btAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAndraActionPerformed(evt);
+            }
+        });
 
         lblAid.setText("aid");
 
@@ -1021,6 +1081,18 @@ private void visaLid(){
     private void cbxLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLandActionPerformed
        visaLid();
     }//GEN-LAST:event_cbxLandActionPerformed
+
+    private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
+       if(totalKontroll() == true){
+           gorAndring();
+           lblMeddelande.setText("Lyckades!");
+           lblMeddelande.setVisible(true);
+           fyllCb();
+       } else {
+           lblFelmeddelande.setText("Något gick fel");
+           lblFelmeddelande.setVisible(true);
+       }
+    }//GEN-LAST:event_btAndraActionPerformed
 
     /**
      * @param args the command line arguments
