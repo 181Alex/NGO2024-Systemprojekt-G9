@@ -35,6 +35,8 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         fyllAllt();
         anstalldLista = new HashMap<>();
         landLista = new HashMap<>();
+        lblError.setVisible(false);
+        lblSkapad.setVisible(false);
         
     }
         
