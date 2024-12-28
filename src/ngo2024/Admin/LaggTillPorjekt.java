@@ -30,14 +30,23 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     public LaggTillPorjekt(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
+        anstalldLista = new HashMap<>();
+        landLista = new HashMap<>();
         initComponents();
         kontrollOk=false;
         fyllAllt();
-        anstalldLista = new HashMap<>();
-        landLista = new HashMap<>();
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
+        gomBad();
         
+    }
+    
+    private void gomBad(){
+        lblNamnBad.setVisible(false);
+        lblBeskrivningBad.setVisible(false);
+        lblStartDatumBad.setVisible(false);
+        lblSlutDatumBad.setVisible(false);
+        lblKostnadBad.setVisible(false);
     }
         
 private void fyllStatus(){
@@ -52,7 +61,7 @@ private void fyllStatus(){
 private void fyllProjektChef(){
         cbProjektChef.removeAllItems();
         
-        String sqlFraga="SELECT namn FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
+        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
         
         try{
             ArrayList<String> chefLista=idb.fetchColumn(sqlFraga);
@@ -246,9 +255,9 @@ public void skapaNu(){
         String status=(String) cbStatus.getSelectedItem();
         String prioritet=(String) cbPrioritet.getSelectedItem();
         String sqlFraga= "INSERT INTO projekt VALUES(" + hogstaPid() + ", '" + tfNamn.getText() + "', '"
-                + tfBeskrivning.getText() + "', " + tfStartDatum.getText() + ", " + tfSlutDatum.getText()
-                + ", " + tfKostnad.getText() + "', '" + status + "', '" + prioritet + "', " + getPChef() 
-                + "', " + getLandid() + ")";
+                + tfBeskrivning.getText() + "', '" + tfStartDatum.getText() + "', '" + tfSlutDatum.getText()
+                + "', " + tfKostnad.getText() + ", '" + status + "', '" + prioritet + "', " + getPChef() 
+                + ", " + getLandid() + ")";
         System.out.println(sqlFraga);
         try{
             idb.insert(sqlFraga);
@@ -344,6 +353,11 @@ public void skapaNu(){
         cbProjektChef.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
         cbLand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+        cbLand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLandActionPerformed(evt);
+            }
+        });
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
@@ -396,10 +410,6 @@ public void skapaNu(){
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTillbaka))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSkapa)
                         .addGap(33, 33, 33)
                         .addComponent(lblSkapad)
@@ -435,13 +445,15 @@ public void skapaNu(){
                                     .addComponent(lblBeskrivningBad)
                                     .addComponent(lblStartDatumBad)
                                     .addComponent(lblSlutDatumBad)
-                                    .addComponent(lblKostnadBad)))
+                                    .addComponent(lblKostnadBad)
+                                    .addComponent(btnTillbaka)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblAid)
-                                    .addComponent(lblLid))))))
-                .addContainerGap())
+                                    .addComponent(lblLid)))))
+                    .addComponent(jLabel7))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,6 +546,10 @@ public void skapaNu(){
             lblError.setVisible(true);
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
+
+    private void cbLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLandActionPerformed
+     lblLid.setText(getLandid());
+    }//GEN-LAST:event_cbLandActionPerformed
 
     /**
      * @param args the command line arguments
