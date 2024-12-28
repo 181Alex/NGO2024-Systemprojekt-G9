@@ -137,6 +137,10 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         cbPrioritet = new javax.swing.JComboBox<>();
         btnTillbaka = new javax.swing.JButton();
         lblNamnBad = new javax.swing.JLabel();
+        lblBeskrivningBad = new javax.swing.JLabel();
+        lblStartDatumBad = new javax.swing.JLabel();
+        lblSlutDatumBad = new javax.swing.JLabel();
+        lblKostnadBad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -198,6 +202,18 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
         lblNamnBad.setText("!");
 
+        lblBeskrivningBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblBeskrivningBad.setText("!");
+
+        lblStartDatumBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblStartDatumBad.setText("!");
+
+        lblSlutDatumBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblSlutDatumBad.setText("!");
+
+        lblKostnadBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblKostnadBad.setText("!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +248,12 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
                             .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(lblNamnBad)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNamnBad)
+                            .addComponent(lblBeskrivningBad)
+                            .addComponent(lblStartDatumBad)
+                            .addComponent(lblSlutDatumBad)
+                            .addComponent(lblKostnadBad))
                         .addGap(0, 173, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -252,19 +273,27 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblBeskrivningBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(tfStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblStartDatumBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(tfSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblSlutDatumBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblKostnadBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -351,7 +380,11 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblBeskrivningBad;
+    private javax.swing.JLabel lblKostnadBad;
     private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JLabel lblSlutDatumBad;
+    private javax.swing.JLabel lblStartDatumBad;
     private javax.swing.JTextField tfBeskrivning;
     private javax.swing.JTextField tfKostnad;
     private javax.swing.JTextField tfNamn;

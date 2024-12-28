@@ -202,7 +202,7 @@ public boolean checkValuta(String valuta) {
 public boolean checkKostnad(String kostnad) {
     boolean matches = false;
     // Regex för upp till 12 siffror före kommatecknet och upp till 2 decimaler
-    String checker = "^\\d{1,12}.(\\d{1,2})?$";
+    String checker = "^\\\\d{1,12},\\\\d{1,4}$";
     if (kostnad.matches(checker)) {
         matches = true;
     }
