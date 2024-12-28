@@ -212,8 +212,8 @@ public boolean checkKostnad(String kostnad) {
 
 public boolean checkMeningOSiffra(String mening){
     boolean matches = false;
-    // en mening/ ord sedan en siffra i slutet
-    String checker = "^[A-Za-zÅÄÖåäö]+\\s(1000|[1-9]\\d{0,2})$";
+    // en mening/ ord sedan en siffra i slutet, vissa tecken, som t.ex komma och bindesstreck är också ok
+    String checker = "^[A-Za-zÅÄÖåäö]+([\\\\s,\\\\-][A-Za-zÅÄÖåäö]+)*(\\\\s(1000|[1-9]\\\\d{0,2}))?$";
     if (mening.matches(checker)) {
         matches = true;
     }
