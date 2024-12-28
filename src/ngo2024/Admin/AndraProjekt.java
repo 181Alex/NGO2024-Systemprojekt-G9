@@ -18,7 +18,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     
     private InfDB idb;
     private String epost;
-    private HashMap<Integer, String> anstalldLista;
+    private HashMap<String, String> anstalldLista;
 
     /**
      * Creates new form AndraProjekt
@@ -177,7 +177,9 @@ private void fyllTabellAndra(){
         cbxStatus.addItem("Pågående");
         cbxStatus.addItem("Avslutat");
 
-        String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld";
+        String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld"
+                        + " WHERE aid in (SELECT aid FROM handlaggare)";
+
 
         try{
             namn = idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid = " + pid);
@@ -196,12 +198,16 @@ private void fyllTabellAndra(){
                    
             personLista = idb.fetchColumn(sqlPerson);
             
-            int i = 1;
+            
+            
+
 
             for(String anstNamn : personLista){
+                String sqlAid = "SELECT aid from anstalld WHERE "
+                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
+                String i = idb.fetchSingle(sqlAid);
                 cbxProjektchef.addItem(anstNamn);
                 anstalldLista.put(i, anstNamn);
-                i++;
                 
             }         
             
@@ -762,10 +768,10 @@ private void gomAndra(){
     private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed
         String selectedPerson = (String) cbxProjektchef.getSelectedItem();
         String aid = " ";
-        for(int id : anstalldLista.keySet()){
+        for(String id : anstalldLista.keySet()){
             String namn = anstalldLista.get(id);
             if(selectedPerson.equals(namn)){
-                aid = String.valueOf(id);
+                aid = id;
             }
         }
         lblAid.setText(aid);
