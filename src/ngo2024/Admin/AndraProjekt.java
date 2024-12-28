@@ -269,6 +269,12 @@ private void fyllTabellAndra(){
             tfNprojektchef.setText(nChef);
             lblNaid.setText(nAid);  
             lblNLid.setText(nLid);
+            
+            //sätter rätt värden i checkboxen
+            cbxPrioritet.setSelectedItem(nPrio);
+            cbxLand.setSelectedItem(nLand);
+            cbxStatus.setSelectedItem(nStatus);
+            cbxProjektchef.setSelectedItem(nChef);
                     
 }
 
@@ -424,14 +430,17 @@ private boolean inteSammaNamnKontroll(){
             System.out.println(ex.getMessage());
         }
         String selectedProjekt = (String) cbxProjekt.getSelectedItem();
+        selectedProjekt = selectedProjekt.trim();
+                
        
-        if(tfProjektnamn.getText().equals(selectedProjekt)){
+        if(tfProjektnamn.getText().equalsIgnoreCase(selectedProjekt)){
             sInteSamma=true;
         }
         
         
         for(String namn:namnLista){
-            if(namn.equals(tfProjektnamn.getText())){
+            namn = namn.trim();
+            if(namn.equalsIgnoreCase(tfProjektnamn.getText())){
                 
                 inteSamma=false;
             }
@@ -508,7 +517,7 @@ private boolean kostnadKontroll(){
 }
 
 private boolean totalKontroll(){
-    boolean ok = false;
+    boolean ok;
     
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
             && slDatumKontroll() && kostnadKontroll()){
@@ -586,7 +595,6 @@ private void gorAndring(){
             System.out.println(ex.getMessage());
         } 
 }
-
 
 
     /**
@@ -1092,6 +1100,8 @@ private void gorAndring(){
     int iInt=Integer.parseInt(stringInt);
     taBortProjekt(iInt);
     fyllCb();
+    lblMeddelande.setText("Borttagen");
+    lblMeddelande.setVisible(true);
     }//GEN-LAST:event_btTaBortActionPerformed
 
     private void cbxLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLandActionPerformed
@@ -1101,6 +1111,7 @@ private void gorAndring(){
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
     if(totalKontroll() == true){
            gorAndring();
+           fyllTabellAndra();
            lblMeddelande.setText("Lyckades!");
            lblMeddelande.setVisible(true);
            fyllCb();
