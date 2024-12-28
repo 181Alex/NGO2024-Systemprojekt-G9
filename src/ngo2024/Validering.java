@@ -268,9 +268,17 @@ public boolean checkPagaende(String status){
         return pagaende;
 }
 
+public boolean checkPausad(String status){
+    boolean pausad = false;
+    if(status.equals("Pausad")){
+        pausad = true;
+    }
+    return pausad;
+}
+
 public boolean checkAktiv(String status){
     boolean aktiv = true;
-    if(status.equals("Avslutat")){
+    if(status.equals("Avslutat") || status.equals("Pausad")){
         aktiv = false;
     }
         return aktiv;
