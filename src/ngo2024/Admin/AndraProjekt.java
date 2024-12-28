@@ -407,13 +407,13 @@ private boolean namnKontroll(){
             lblFelNamn.setVisible(false);
             return true;
     } else {
-            lblFelNamn.setVisible(true);
+        lblFelNamn.setVisible(false);
             return false;
     }
 }
 
-private boolean sammaNamnKontroll(){
-        boolean samma=false;
+private boolean inteSammaNamnKontroll(){
+        boolean inteSamma=true;
         ArrayList<String> namnLista=new ArrayList<>();
         String sqlFraga="SELECT projektnamn FROM projekt";
         try{
@@ -424,16 +424,18 @@ private boolean sammaNamnKontroll(){
         String selectedProjekt = (String) cbxProjekt.getSelectedItem();
        
         for(String namn:namnLista){
-            if(namn.equals(tfProjektnamn.getText())){
+            if(namn.equals(tfProjektnamn.getText()) && !tfProjektnamn.getText().equals(selectedProjekt)){
                 
-                samma=true;
+                inteSamma=false;
                
             }
         }
-        if (samma==true){
+        if (inteSamma==false){
             lblFelNamn.setVisible(true);
+        } else {
+            lblFelNamn.setVisible(false);
         }
-        return samma;
+        return inteSamma;
 }
 
 private boolean beskrivningKontroll(){
@@ -495,12 +497,14 @@ private boolean kostnadKontroll(){
 }
 
 private boolean totalKontroll(){
-    boolean ok = false;
+    boolean ok;
     
-    if(namnKontroll() && sammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
+    if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
             && slDatumKontroll() && kostnadKontroll()){
         ok = true;
         lblFelmeddelande.setVisible(false);
+    } else {
+        ok = false;
     }
     return ok;
 }
