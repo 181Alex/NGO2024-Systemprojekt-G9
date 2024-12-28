@@ -414,6 +414,8 @@ private boolean namnKontroll(){
 
 private boolean inteSammaNamnKontroll(){
         boolean inteSamma=true;
+        boolean sInteSamma=false;
+        boolean retur=true;
         ArrayList<String> namnLista=new ArrayList<>();
         String sqlFraga="SELECT projektnamn FROM projekt";
         try{
@@ -423,19 +425,28 @@ private boolean inteSammaNamnKontroll(){
         }
         String selectedProjekt = (String) cbxProjekt.getSelectedItem();
        
+        if(tfProjektnamn.getText().equals(selectedProjekt)){
+            sInteSamma=true;
+        }
+        
+        
         for(String namn:namnLista){
-            if(namn.equals(tfProjektnamn.getText()) && !tfProjektnamn.getText().equals(selectedProjekt)){
+            if(namn.equals(tfProjektnamn.getText())){
                 
                 inteSamma=false;
-               
             }
         }
-        if (inteSamma==false){
-            lblFelNamn.setVisible(true);
-        } else {
+        if(sInteSamma==true){
+            retur=sInteSamma;
             lblFelNamn.setVisible(false);
+
         }
-        return inteSamma;
+        else if (inteSamma==false){
+            lblFelNamn.setVisible(true);
+            retur=inteSamma;
+        } 
+        
+        return retur;
 }
 
 private boolean beskrivningKontroll(){
@@ -497,13 +508,14 @@ private boolean kostnadKontroll(){
 }
 
 private boolean totalKontroll(){
-    boolean ok;
+    boolean ok = false;
     
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
             && slDatumKontroll() && kostnadKontroll()){
         ok = true;
         lblFelmeddelande.setVisible(false);
     } else {
+        lblMeddelande.setVisible(false);
         ok = false;
     }
     return ok;
@@ -1087,7 +1099,7 @@ private void gorAndring(){
     }//GEN-LAST:event_cbxLandActionPerformed
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
-       if(totalKontroll() == true){
+    if(totalKontroll() == true){
            gorAndring();
            lblMeddelande.setText("Lyckades!");
            lblMeddelande.setVisible(true);
