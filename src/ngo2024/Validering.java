@@ -220,6 +220,16 @@ public boolean checkMeningOSiffra(String mening){
     return matches;
 }
 
+public boolean checkBeskrivning(String beskrivning) {
+    boolean matches = false;
+    // Regex för att tillåta text med tillåtna tecken
+    String checker = "^[A-Za-zÅÄÖåäö0-9.,\\-!?\\s]+$";
+    if (beskrivning.matches(checker)) {
+        matches = true;
+    }
+    return matches;
+}
+
 public boolean checkDatumSkillnad(String franDatum, String tillDatum){
     boolean mindre=false;
     int startInt = Integer.parseInt(franDatum.replace("-", ""));
