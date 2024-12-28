@@ -34,6 +34,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         initComponents();
         fyllCbProjekt();
         gomAlla();
+
         
     }
     
@@ -124,7 +125,7 @@ private String getPid(){
     }
     return pid;
 }
-private String getChefAid(int pid){
+private String getChefAid(String pid){
     String aid = " ";
     
     try{
@@ -141,7 +142,7 @@ private String getChefAid(int pid){
     return aid;
 }
 
-private String getLid(int pid){
+private String getLid(String pid){
     String lid = " ";
     
     try{
@@ -158,7 +159,7 @@ private String getLid(int pid){
     return lid;
 }
     
-private void taBortProjekt(int pid){
+private void taBortProjekt(String pid){
     
         String sqlFraga = "DELETE FROM projekt WHERE pid = " + pid;
         try{
@@ -246,8 +247,7 @@ private void fyllTabellAndra(){
     fyllCbProjektchef();
     
     
-     String sPid=getPid();
-        int pid=Integer.parseInt(sPid);
+    String pid=getPid();
     String pAid = getChefAid(pid);
     String pLid = getLid(pid);
         
@@ -595,8 +595,7 @@ private String getSelectedLid(){
 }
 
 private void gorAndring(){
-    String sPid=getPid();
-        int pid=Integer.parseInt(sPid);
+    String pid=getPid();
         
         String namnS = tfProjektnamn.getText();
         String beskrivningS = tfBeskrivning.getText();
@@ -1126,9 +1125,8 @@ private void gorAndring(){
     }//GEN-LAST:event_chbTaBortActionPerformed
 
     private void btTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTaBortActionPerformed
-    String stringInt=lblPid.getText();
-    int iInt=Integer.parseInt(stringInt);
-    taBortProjekt(iInt);
+    String pid=lblPid.getText();
+    taBortProjekt(pid);
     fyllCbProjekt();
     lblMeddelande.setText("Borttagen");
     lblMeddelande.setVisible(true);
