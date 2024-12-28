@@ -8,7 +8,7 @@ import oru.inf.InfException;
 
 /**
  *
- * @author alexanderabboud
+ * @author Amalali
  */
 public class MinProfil extends javax.swing.JFrame {
  private InfDB idb;
