@@ -204,7 +204,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(namn)&& valid.checkStorlek(100, namn)) {
+    if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(100, namn)) {
             lblNamnBad.setVisible(false);
             return true;
     } else {
@@ -216,6 +216,8 @@ public void totalKontroll() {
     
     public boolean sammaNamnKontroll(){
         boolean samma=false;
+        boolean sSamma=true;
+        boolean retur=false;
         ArrayList<String> namnLista=new ArrayList<>();
         String sqlFraga="SELECT namn FROM land";
         try{
@@ -223,17 +225,27 @@ public void totalKontroll() {
         } catch(Exception ex){
             System.out.println(ex.getMessage());
         }
+        String valtLand= (String) cbValjLand.getSelectedItem();
+        
+        if(tfNamn.getText().equals(valtLand)){
+                sSamma=false;
+            }
+        
         
         for(String namn:namnLista){
             if(namn.equals(tfNamn.getText())){
                 samma=true;
             }
         }
-        if (samma==true){
+        if(sSamma==false){
+            retur=sSamma;
+        }
+        else if (samma==true){
             gomBad();
             lblNamnBad.setVisible(true);
+            retur=samma;
         }
-        return samma;
+        return retur;
     }
     
     
@@ -242,7 +254,7 @@ public void totalKontroll() {
         Validering valid = new Validering(idb);
         String sprak = tfSprak.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkFornamn(sprak)&& valid.checkStorlek(100, sprak)) {
+    if (valid.checkMeningOSiffra(sprak)&& valid.checkStorlek(100, sprak)) {
             lblSprakBad.setVisible(false);
             return true;
     } else {

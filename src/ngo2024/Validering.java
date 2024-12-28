@@ -46,6 +46,7 @@ public class Validering {
         }
         return isChef;
     }
+   
     
     public boolean checkEpost(String ePost){
         boolean matches=false;
@@ -190,7 +191,7 @@ public class Validering {
 public boolean checkValuta(String valuta) {
     boolean matches = false;
     // Regex för siffror, ett komma och upp till fyra decimaler
-    String checker = "^\\d+,(\\d{1,4})?$";
+    String checker = "^\\d+.(\\d{1,4})?$";
     if (valuta.matches(checker)) {
         matches = true;
     }
@@ -201,7 +202,7 @@ public boolean checkValuta(String valuta) {
 public boolean checkKostnad(String kostnad) {
     boolean matches = false;
     // Regex för upp till 12 siffror före kommatecknet och upp till 2 decimaler
-    String checker = "^\\d{1,12},(\\d{1,2})?$";
+    String checker = "^\\d{1,12}.(\\d{1,2})?$";
     if (kostnad.matches(checker)) {
         matches = true;
     }
@@ -212,7 +213,7 @@ public boolean checkKostnad(String kostnad) {
 public boolean checkMeningOSiffra(String mening){
     boolean matches = false;
     // en mening/ ord sedan en siffra i slutet
-    String checker = "^.*\\d$";
+    String checker = "^[A-Za-zÅÄÖåäö]+\\s(1000|[1-9]\\d{0,2})$";
     if (mening.matches(checker)) {
         matches = true;
     }

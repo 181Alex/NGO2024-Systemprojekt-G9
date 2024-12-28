@@ -4,18 +4,108 @@
  */
 package ngo2024.Admin;
 
+import ngo2024.Validering;
+import oru.inf.InfDB;
+import oru.inf.InfException;
+import java.util.ArrayList;
+
+
+
 /**
  *
  * @author alexanderabboud
  */
 public class LaggTillPorjekt extends javax.swing.JFrame {
 
+    private InfDB idb;
+    private String inloggadAnvandare;  
+    boolean kontrollOk;
+    
     /**
      * Creates new form LaggTillPorjekt
      */
-    public LaggTillPorjekt() {
+    public LaggTillPorjekt(InfDB idb, String inloggadAnvandare) {
+        this.idb=idb;
+        this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
+        kontrollOk=false;
+        fyllStatus();
+        fyllProjektChef();
+        fyllPrioritet();
+        fyllLand();
+        
     }
+    
+    
+    public void fyllStatus(){
+        cbStatus.addItem("Planerat");
+        cbStatus.addItem("Pågående");
+        cbStatus.addItem("Avslutat");
+    }
+    
+    public void fyllProjektChef(){
+        String sqlFraga="SELECT namn FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
+        ArrayList<String> chefLista=new ArrayList<>();
+        try{
+            chefLista=idb.fetchColumn(sqlFraga);
+            for(String namn:chefLista){
+                chefLista.add(namn);
+            }
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }}
+        
+
+    public void fyllPrioritet(){
+        cbPrioritet.addItem("låg");
+        cbPrioritet.addItem("Medel");
+        cbPrioritet.addItem("hög");
+    }
+    
+    public void fyllLand(){
+        String sqlFraga="SELECT namn FROM land";
+        ArrayList<String> namnLista=new ArrayList<>();
+        try{
+            namnLista=idb.fetchColumn(sqlFraga);
+            for(String namn:namnLista){
+                namnLista.add(namn);
+            }
+            
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public int hogstaPid(){
+        // hämtar ut högsta pid
+        int hogsta=0;
+        String sqlFraga="Select MAX(pid) FROM projekt";
+        try{
+            String max=idb.fetchSingle(sqlFraga);
+            hogsta=Integer.parseInt(max);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(hogsta);
+        return hogsta+1;
+    }
+    
+    public boolean namnKontroll(){
+        Validering valid = new Validering(idb);
+        String namn = tfNamn.getText();
+        // kontrollerar namn format
+    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+            lblNamnBad.setVisible(false);
+            return true;
+    } else {
+            lblNamnBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,15 +126,17 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        tfNamn = new javax.swing.JTextField();
+        tfBeskrivning = new javax.swing.JTextField();
+        tfStartDatum = new javax.swing.JTextField();
+        tfSlutDatum = new javax.swing.JTextField();
+        tfKostnad = new javax.swing.JTextField();
+        cbProjektChef = new javax.swing.JComboBox<>();
+        cbLand = new javax.swing.JComboBox<>();
+        cbStatus = new javax.swing.JComboBox<>();
+        cbPrioritet = new javax.swing.JComboBox<>();
+        btnTillbaka = new javax.swing.JButton();
+        lblNamnBad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,23 +160,43 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
 
         jLabel10.setText("Land");
 
-        jTextField1.setText("jTextField1");
+        tfNamn.setText("Namn");
+        tfNamn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNamnActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        tfBeskrivning.setText("Beskrivning");
 
-        jTextField3.setText("jTextField3");
+        tfStartDatum.setText("yyyy-mm-dd");
 
-        jTextField4.setText("jTextField4");
+        tfSlutDatum.setText("yyyy-mm-dd");
 
-        jTextField5.setText("jTextField5");
+        tfKostnad.setText("1234567,12");
+        tfKostnad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfKostnadActionPerformed(evt);
+            }
+        });
 
-        jTextField6.setText("jTextField6");
+        cbProjektChef.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
-        jTextField7.setText("jTextField7");
+        cbLand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+        cbPrioritet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+
+        btnTillbaka.setText("X");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblNamnBad.setText("!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,7 +205,10 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -107,63 +222,83 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6)
-                            .addComponent(jTextField7)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                            .addComponent(tfNamn)
+                            .addComponent(tfBeskrivning)
+                            .addComponent(tfStartDatum, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(tfSlutDatum)
+                            .addComponent(tfKostnad)
+                            .addComponent(cbProjektChef, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbLand, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNamnBad)
+                        .addGap(0, 173, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(btnTillbaka))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNamnBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cbPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                    .addComponent(cbLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tfNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNamnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfNamnActionPerformed
+
+    private void tfKostnadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfKostnadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfKostnadActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new AdminMeny(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,8 +336,11 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> cbLand;
+    private javax.swing.JComboBox<String> cbPrioritet;
+    private javax.swing.JComboBox<String> cbProjektChef;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -213,12 +351,11 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JTextField tfBeskrivning;
+    private javax.swing.JTextField tfKostnad;
+    private javax.swing.JTextField tfNamn;
+    private javax.swing.JTextField tfSlutDatum;
+    private javax.swing.JTextField tfStartDatum;
     // End of variables declaration//GEN-END:variables
 }
