@@ -23,7 +23,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
 /**
  *
  * @author
@@ -32,23 +31,23 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String anvandarEpost;
-    private int personAid;
-   
+    private String personAid;
+
     /**
      * Creates new form MinaProjekt
      */
     public MinaProjekt(InfDB idb, String inloggadAnvandare) {
         this.idb = idb;
         anvandarEpost = inloggadAnvandare;
-        personAid = getAid();
+        personAid = getAidString();
 
         initComponents();
-      
+
         //ska ta bort
-        Color[] colors = {Color.YELLOW,  Color.GREEN, Color.CYAN, Color.BLUE, Color.RED};
+        Color[] colors = {Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED};
         int[] colorIndex = {0}; // Use an array for mutability inside the timer
         Timer timer = new Timer(500, e -> {
-           jToggleButton1.setBackground(colors[colorIndex[0]]);
+            jToggleButton1.setBackground(colors[colorIndex[0]]);
             colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
         });
         timer.start();
@@ -58,54 +57,64 @@ public class MinaProjekt extends javax.swing.JFrame {
             colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
         });
         timer2.start();
-        */
-        
+         */
+
         Timer timer3 = new Timer(200, e -> {
-           lblMinaProj.setForeground(colors[colorIndex[0]]);
+            lblMinaProj.setForeground(colors[colorIndex[0]]);
             colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
         });
         timer3.start();
-        
-        
+        setInfo();
+
     }
 
-    private int getAid() {
+    private void setInfo() {
+        getProjekt();
+        lblPersonIdText.setText(getAidString());
+    }
+
+    private String getAidString() {
+        String stringAid = "";
         try {
             String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + anvandarEpost + "'";
-            String resultat = idb.fetchSingle(sqlFraga);
-            personAid = Integer.parseInt(resultat);
+            stringAid = idb.fetchSingle(sqlFraga);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        return personAid;
+        return stringAid;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private String getProjekt() {
+        StringBuilder allaNamn = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT projekt.projektnamn "
+                    + "FROM projekt "
+                    + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                    + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
+                    + "WHERE anstalld.aid = '" + personAid + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad(namn);
+                allaNamn.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjektLista.setText("<html>" + allaNamn.toString() + "</html>");
+        return allaNamn.toString();
+    }
+
+    private void laggTillNyRad(String namn) {
+        lblProjektLista.setText(lblProjektLista.getText() + namn + "\n");
+    }
+
     
     
     
     /*
-    
     private void konstrueraTabell() {
         model = (DefaultTableModel) tblProjekts.getModel();
         model.setRowCount (0);
@@ -145,9 +154,10 @@ public class MinaProjekt extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLedarProj = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblProjekt = new javax.swing.JTable();
+        lblProjektLista = new javax.swing.JLabel();
         btAndra = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
+        lblPersonIdText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mina Projekt");
@@ -184,18 +194,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblLedarProj);
 
-        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Projekt Namn", "Status"
-            }
-        ));
-        jScrollPane3.setViewportView(tblProjekt);
+        jScrollPane3.setViewportView(lblProjektLista);
 
         btAndra.setText("Ändra");
         btAndra.addActionListener(new java.awt.event.ActionListener() {
@@ -211,6 +210,8 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
 
+        lblPersonIdText.setText("AID");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -218,16 +219,17 @@ public class MinaProjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btAndra)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-                            .addComponent(lblProjekt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblPersonIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btAndra))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addComponent(jScrollPane3)
+                    .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLedareProj, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
                     .addComponent(lblMinaProj, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -253,8 +255,13 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(lblProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                .addGap(45, 45, 45)
-                .addComponent(btAndra)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(btAndra))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lblPersonIdText)))
                 .addGap(367, 367, 367))
         );
 
@@ -270,19 +277,15 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
         // new ProjektChef(idb, anvandarEpost).setVisible(true);
-        
-        
+
     }//GEN-LAST:event_btAndraActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        new OmProjekt_1(idb, anvandarEpost, "2").setVisible(true);
+        new OmProjekt_1(idb, anvandarEpost, "3").setVisible(true);
         this.dispose();
-        
-        
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-
-    
     /*
     public void tblProjektModel() {
         DefaultTableModel tblModel = (DefaultTableModel) tblProjekt.getModel();
@@ -309,9 +312,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                     System.out.println("Error " + ex.getMessage());
                     }
     }
-        */
-    
- 
+     */
     /**
      * @param args the command line arguments
      */
@@ -356,8 +357,9 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblLedareProj;
     private javax.swing.JLabel lblMinaProj;
+    private javax.swing.JLabel lblPersonIdText;
     private javax.swing.JLabel lblProjekt;
+    private javax.swing.JLabel lblProjektLista;
     private javax.swing.JTable tblLedarProj;
-    private javax.swing.JTable tblProjekt;
     // End of variables declaration//GEN-END:variables
 }

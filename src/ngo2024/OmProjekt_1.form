@@ -32,6 +32,10 @@
               <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <Component id="lblH2Partners" min="-2" pref="112" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblBeskrivning" alignment="1" max="32767" attributes="0"/>
                           <Component id="lblH1ProjNamn" alignment="0" max="32767" attributes="0"/>
@@ -51,7 +55,6 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lblStatus" min="-2" pref="110" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="lblH2Partners" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel2" min="-2" pref="37" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -72,8 +75,9 @@
                                           </Group>
                                       </Group>
                                   </Group>
+                                  <Component id="lblProjAnstallda" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="280" max="-2" attributes="0"/>
@@ -85,10 +89,10 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblProjektChef" min="-2" pref="211" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblPartners" min="-2" pref="368" max="-2" attributes="0"/>
-                          <Component id="lblProjAnstallda" min="-2" pref="269" max="-2" attributes="0"/>
+                          <Component id="lblPartners" max="32767" attributes="0"/>
+                          <Component id="lblH2Anstallda" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="319" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="319" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -125,9 +129,11 @@
                   </Group>
                   <Component id="lblStatus" min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Component id="lblProjAnstallda" pref="24" max="32767" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Component id="lblH2Anstallda" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblProjAnstallda" min="-2" pref="82" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                       <Component id="lblH2Kostnad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -139,8 +145,8 @@
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="lblH2Partners" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="lblPartners" min="-2" pref="25" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
+              <Component id="lblPartners" pref="52" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -242,6 +248,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPartners">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblH2Anstallda">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Anst&#xe4;llda inom projektet:"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
