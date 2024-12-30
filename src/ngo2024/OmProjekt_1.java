@@ -5,23 +5,27 @@
 package ngo2024;
 //
 
-import java.util.ArrayList;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+// import TabellDesign.MultiLineCellRenderer;
+// import java.awt.Component;
+// import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author frida.selin
  */
-
 public class OmProjekt_1 extends javax.swing.JFrame {
 
     private InfDB idb;
     private String projektId;
     private String anvandarEpost;
-    
+
     private ArrayList<String> namnLista = new ArrayList<>();
-   
+
     /**
      * Creates new form OmProjekt
      */
@@ -33,33 +37,32 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
-        
+
     }
-    
-   /**
-    * Hämtar anställda inom specifikt projekt från databasen 
-    * Tar in parametervärdet för önskade projekts ID i datatyp String
-    */
-    public String getAnstallda(String projektId)
-    {
-        String anstallda = " ";
-        try {
-            String sqlAnstallda = "SELECT fornamn, efternamn FROM anstalld JOIN ans_proj on ans_proj.aid = anstalld.aid JOIN projekt on ans_proj.pid = projekt.pid WHERE projekt.pid = '" + projektId + "'"; 
-          //  anstallda = idb.fetchSingle(sqlAnstallda);
-            namnLista = idb.fetchColumn(sqlAnstallda); // change to hasmap. Get both names. Make list appear
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return anstallda;
-    }
-    
-   /**
-    * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare att tyda
-    * tillkallar alla set text metoder för att hämta rätt information från sql basen
-    *och initierar rätt text vid rätt fält
-    */
+
+    /**
+     *
+     * Tar in parametervärdet för önskade projekts ID i datatyp String
+     *
+     * public String getAnstallda(String projektId) { String anstallda = " ";
+     * try { String sqlAnstallda = "SELECT fornamn, efternamn FROM anstalld JOIN
+     * ans_proj on ans_proj.aid = anstalld.aid JOIN projekt on ans_proj.pid =
+     * projekt.pid WHERE projekt.pid = '" + projektId + "'"; // anstallda =
+     * idb.fetchSingle(sqlAnstallda); //namnLista =
+     * idb.fetchColumn(sqlAnstallda); // change to hasmap. Get both names. Make
+     * list appear namnLista = idb.fetchSingle(sqlAnstallda); } catch
+     * (InfException ex) { System.out.println(ex.getMessage()); } return
+     * anstallda; }
+     *
+     *
+     */
+    /**
+     * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare
+     * att tyda tillkallar alla set text metoder för att hämta rätt information
+     * från sql basen och initierar rätt text vid rätt fält
+     */
     private void setAllTextFeilds() {
-      
+
         lblH1ProjNamn.setText(setProjNamnUpperCase());
         lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
         lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
@@ -69,15 +72,79 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblKostnad.setText(getFromProjekt(projektId, kostnad()));
         lblLand.setText(getLand(projektId));
         lblProjektChef.setText(getProjektChef(projektId));
-        lblProjAnstallda.setText(getAnstallda(projektId));
+        // lblProjAnstallda.setText(getAnstallda(projektId));
+        getAnstallda(projektId);
+        getPartners(projektId);
     }
-    
-   /**
-    * Metod som inehåller en SQL bas fråga som återanvänds ofta för att hämta önskad String
-    * 
-    * Parameter 1: önskade projekts ID i datatyp String
-    * Parameter 2: String hämtar önskad kolumn i databasen som vill hämtas. Ex. 'projektnamn', 'beskrivning'
-    */
+
+    //private String getAnstallda()
+    private String getAnstallda(String pid) {
+        StringBuilder allaNamn = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn "
+                    + "FROM anstalld a "
+                    + "JOIN ans_proj on ans_proj.aid = a.aid "
+                    + "JOIN projekt on ans_proj.pid = projekt.pid "
+                    + "WHERE projekt.pid = '" + pid + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad(namn);
+                //allaNamn.append(namn).append("\n"); 
+                allaNamn.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjAnstallda.setText("<html>" + allaNamn.toString() + "</html>");
+        return allaNamn.toString();
+    }
+
+    private void laggTillNyRad(String namn) {
+        lblProjAnstallda.setText(lblProjAnstallda.getText() + namn + "\n");
+
+        //lblProjAnstallda.setText("<html>" + namn.replace("\n", "<br>") + "</html>");
+    }
+
+    private String getPartners(String pid) {
+        StringBuilder allaObjekt = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT namn FROM partner "
+                    + "JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid "
+                    + "JOIN projekt ON projekt_partner.pid = projekt.pid "
+                    + "WHERE projekt.pid = '" + pid + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad2(namn);
+                //allaNamn.append(namn).append("\n"); 
+                allaObjekt.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblPartners.setText("<html>" + allaObjekt.toString() + "</html>");
+        return allaObjekt.toString();
+    }
+
+    private void laggTillNyRad2(String namn) {
+        lblPartners.setText(lblPartners.getText() + namn + "\n");
+
+        //lblProjAnstallda.setText("<html>" + namn.replace("\n", "<br>") + "</html>");
+    }
+
+    /**
+     * Metod som inehåller en SQL bas fråga som återanvänds ofta för att hämta
+     * önskad String
+     *
+     * Parameter 1: önskade projekts ID i datatyp String Parameter 2: String
+     * hämtar önskad kolumn i databasen som vill hämtas. Ex. 'projektnamn',
+     * 'beskrivning'
+     */
     private String getFromProjekt(String projektId, String specifikInfo) {
         String minInfo = " ";
         try {
@@ -88,19 +155,19 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         }
         return minInfo;
     }
-    
-   /**
-    * Metod som förändrar rubriken med projekt namnet till upper case
-    */
-    private String setProjNamnUpperCase()
-    {
+
+    /**
+     * Metod som förändrar rubriken med projekt namnet till upper case
+     */
+    private String setProjNamnUpperCase() {
         String UpperCaseName = getFromProjekt(projektId, projNamn()).toUpperCase();
         return UpperCaseName;
     }
 
-   /**
-    * Metod hämtar String med innehåll 'projektnamn' vilket är en kolumn i tabellen projekt i databasen
-    */
+    /**
+     * Metod hämtar String med innehåll 'projektnamn' vilket är en kolumn i
+     * tabellen projekt i databasen
+     */
     private String projNamn() {
         String projNamn = "projektnamn";
         return projNamn;
@@ -136,10 +203,10 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return kostnad;
     }
 
-   /**
-    * Metod hämtar landet ett specifikt porjekt utförs i
-    * Parametervärde String av önskade projekts ID
-    */
+    /**
+     * Metod hämtar landet ett specifikt porjekt utförs i Parametervärde String
+     * av önskade projekts ID
+     */
     private String getLand(String projektId) {
         String projektLand = " ";
         try {
@@ -152,11 +219,11 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return projektLand;
     }
 
-   /**
-    * Metod hämtar projektchef för specifikt projekt ifrån databasen
-    * Parametervärde tar String av önskat porjekts ID
-    * Skriver samman för och efternamn från databasen till utskriften
-    */
+    /**
+     * Metod hämtar projektchef för specifikt projekt ifrån databasen
+     * Parametervärde tar String av önskat porjekts ID Skriver samman för och
+     * efternamn från databasen till utskriften
+     */
     private String getProjektChef(String projektId) {
         String projektProjektChef = " ";
         try {
@@ -197,6 +264,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         lblProjektChef = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         lblProjAnstallda = new javax.swing.JLabel();
+        lblPartners = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,9 +316,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblBeskrivning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblH1ProjNamn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -283,12 +348,16 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                                                 .addComponent(lblH2Prio, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 37, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(280, 280, 280))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblH2ProjChef, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblH2ProjChef, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -318,8 +387,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                         .addComponent(lblH2Status))
                     .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(lblProjAnstallda, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblH2Kostnad)
@@ -328,7 +397,9 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                     .addComponent(lblKostnad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblH2Partners)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(256, 256, 256))
         );
 
         pack();
@@ -343,36 +414,36 @@ public class OmProjekt_1 extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(OmProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            //new OmProjekt().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //new OmProjekt().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTillbaka;
@@ -387,6 +458,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private javax.swing.JLabel lblH2Status;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
+    private javax.swing.JLabel lblPartners;
     private javax.swing.JLabel lblPrioritet;
     private javax.swing.JLabel lblProjAnstallda;
     private javax.swing.JLabel lblProjektChef;
