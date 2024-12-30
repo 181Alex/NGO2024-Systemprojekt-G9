@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author
+ * @author Frida Selin
  */
 public class MinaProjekt extends javax.swing.JFrame {
 
@@ -69,7 +69,12 @@ public class MinaProjekt extends javax.swing.JFrame {
     }
 
     private void setInfo() {
-        getProjekt();
+         getProjektnamn();
+         getProjektStatus();
+         
+         //lägg till kontrol av att det finns ledar projekt
+         getLedarProjektnamn();
+         getLedarProjektStatus();
         lblPersonIdText.setText(getAidString());
     }
 
@@ -84,10 +89,10 @@ public class MinaProjekt extends javax.swing.JFrame {
         return stringAid;
     }
 
-    private String getProjekt() {
+    private String getProjektnamn() {
         StringBuilder allaNamn = new StringBuilder();
         try {
-            String sqlFraga = "SELECT projekt.projektnamn "
+            String sqlFraga = "SELECT projekt.pid, projekt.projektnamn "
                     + "FROM projekt "
                     + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
                     + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
@@ -96,7 +101,7 @@ public class MinaProjekt extends javax.swing.JFrame {
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
             for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("namn");
+                String namn = rad.get("projektnamn");
                 laggTillNyRad(namn);
                 allaNamn.append(namn).append("<br>");
             }
@@ -111,7 +116,88 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblProjektLista.setText(lblProjektLista.getText() + namn + "\n");
     }
 
+    private String getProjektStatus() {
+        StringBuilder allaStatus = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT projekt.pid, projekt.status "
+                    + "FROM projekt "
+                    + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                    + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
+                    + "WHERE anstalld.aid = '" + personAid + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String status = rad.get("status");
+                laggTillNyRadStatus(status);
+                allaStatus.append(status).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjektListaS.setText("<html>" + allaStatus.toString() + "</html>");
+        return allaStatus.toString();
+    }
+
+    private void laggTillNyRadStatus(String status) {
+        lblProjektListaS.setText(lblProjektListaS.getText() + status + "\n");
+    }
     
+    
+    
+    
+    
+    
+    
+    
+    
+        private String getLedarProjektnamn() {
+        StringBuilder allaNamn = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT projekt.pid, projekt.projektnamn "
+                    + "FROM projekt WHERE projektchef = '" + personAid + "'" ;
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("projektnamn");
+                laggTillNyRadLP(namn);
+                allaNamn.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjektListaL.setText("<html>" + allaNamn.toString() + "</html>");
+        return allaNamn.toString();
+    }
+
+    private void laggTillNyRadLP(String namn) {
+        lblProjektListaL.setText(lblProjektListaL.getText() + namn + "\n");
+    }
+
+    private String getLedarProjektStatus() {
+        StringBuilder allaStatus = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT projekt.pid, projekt.status "
+                    + "FROM projekt WHERE projektchef = '" + personAid + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String status = rad.get("status");
+                laggTillNyRadLedarStatus(status);
+                allaStatus.append(status).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjektListaLS.setText("<html>" + allaStatus.toString() + "</html>");
+        return allaStatus.toString();
+    }
+
+    private void laggTillNyRadLedarStatus(String status) {
+        lblProjektListaLS.setText(lblProjektListaLS.getText() + status + "\n");
+    }
     
     
     /*
@@ -151,13 +237,14 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblMinaProj = new javax.swing.JLabel();
         lblProjekt = new javax.swing.JLabel();
         lblLedareProj = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblLedarProj = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         lblProjektLista = new javax.swing.JLabel();
         btAndra = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         lblPersonIdText = new javax.swing.JLabel();
+        lblProjektListaS = new javax.swing.JLabel();
+        lblProjektListaL = new javax.swing.JLabel();
+        lblProjektListaLS = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mina Projekt");
@@ -183,17 +270,8 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         lblLedareProj.setText("Ledar Projekt");
 
-        tblLedarProj.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 255, 204), new java.awt.Color(255, 153, 255), null, null));
-        tblLedarProj.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Projekt Namn", "Status"
-            }
-        ));
-        jScrollPane1.setViewportView(tblLedarProj);
-
+        lblProjektLista.setToolTipText("");
+        lblProjektLista.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jScrollPane3.setViewportView(lblProjektLista);
 
         btAndra.setText("Ändra");
@@ -212,27 +290,38 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         lblPersonIdText.setText("AID");
 
+        lblProjektListaL.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        lblProjektListaLS.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblPersonIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btAndra))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8))
-                    .addComponent(jScrollPane3)
-                    .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLedareProj, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
-                    .addComponent(lblMinaProj, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblProjektListaL, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblProjektListaLS, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblPersonIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btAndra))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(8, 8, 8))
+                        .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLedareProj, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMinaProj, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -249,19 +338,23 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(lblMinaProj)
                 .addGap(28, 28, 28)
                 .addComponent(lblLedareProj)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblProjektListaLS, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addComponent(lblProjektListaL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(lblProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btAndra))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                        .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(lblPersonIdText)))
+                        .addComponent(lblProjektListaS, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btAndra, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPersonIdText, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(367, 367, 367))
         );
 
@@ -352,7 +445,6 @@ public class MinaProjekt extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAndra;
     private javax.swing.JButton btnReturn;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblLedareProj;
@@ -360,6 +452,8 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblPersonIdText;
     private javax.swing.JLabel lblProjekt;
     private javax.swing.JLabel lblProjektLista;
-    private javax.swing.JTable tblLedarProj;
+    private javax.swing.JLabel lblProjektListaL;
+    private javax.swing.JLabel lblProjektListaLS;
+    private javax.swing.JLabel lblProjektListaS;
     // End of variables declaration//GEN-END:variables
 }
