@@ -566,7 +566,7 @@ private boolean totalKontroll(){
     boolean ok;
     
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
-            && slDatumKontroll() && kostnadKontroll() && mellanDatum()==true){
+            && slDatumKontroll() && kostnadKontroll() && mellanDatum()){
         ok = true;
         lblFelmeddelande.setVisible(false);
     } else {
