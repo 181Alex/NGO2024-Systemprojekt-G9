@@ -48,10 +48,10 @@
                           <Component id="btnLaggTillProjekt" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnGlobalaMal" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnMinAvdelning" min="-2" max="-2" attributes="0"/>
-                          <Component id="brnMinaProjekt" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnMinAvdelning" max="32767" attributes="0"/>
+                          <Component id="brnMinaProjekt" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnGlobalaMal" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
