@@ -43,8 +43,18 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="cbHallbarhetsMal" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblMeddelande" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="btLaggTill" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btTaBort" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="cbHallbarhetsMal" min="-2" pref="148" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="lblHid" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -83,7 +93,17 @@
                   <Component id="cbHallbarhetsMal" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblHid" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="154" max="32767" attributes="0"/>
+              <EmptySpace pref="79" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblMeddelande" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                  <Component id="lblFelmeddelande" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -160,6 +180,38 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Pid:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btLaggTill">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xe4;gg till i Projekt"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btLaggTillActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btTaBort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ta bort fr&#xe5;n projekt"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btTaBortActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblMeddelande">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="cc" red="33" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Meddelande"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelmeddelande">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Felmeddelande"/>
       </Properties>
     </Component>
   </SubComponents>
