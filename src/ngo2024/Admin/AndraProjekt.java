@@ -546,11 +546,27 @@ private boolean kostnadKontroll(){
     }
 }
 
+private boolean mellanDatum(){
+        Validering valid = new Validering(idb);
+        String start = tfStartdatum.getText();
+        String slut=tfSlutdatum.getText();
+        // kontrollerar namn format
+    if (valid.checkDatumSkillnad(start, slut)) {
+            lblFelStartdatum.setVisible(false);
+            lblFelSlutdatum.setVisible(false);
+            return true;
+    } else {
+            lblFelStartdatum.setVisible(true);
+            lblFelSlutdatum.setVisible(true);
+            return false;
+    }
+}
+
 private boolean totalKontroll(){
     boolean ok;
     
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
-            && slDatumKontroll() && kostnadKontroll()){
+            && slDatumKontroll() && kostnadKontroll() && mellanDatum()){
         ok = true;
         lblFelmeddelande.setVisible(false);
     } else {
