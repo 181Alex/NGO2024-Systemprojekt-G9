@@ -52,6 +52,7 @@ public class AdminMeny extends javax.swing.JFrame {
         btnGlobalaMal = new javax.swing.JButton();
         btnMinAvdelning = new javax.swing.JButton();
         brnMinaProjekt = new javax.swing.JButton();
+        btnTaBortPartner = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +144,13 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
+        btnTaBortPartner.setText("Ändra och ta bort partner");
+        btnTaBortPartner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortPartnerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,6 +158,11 @@ public class AdminMeny extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnTaBortPartner)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnStad, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnMinProfil)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -165,7 +178,6 @@ public class AdminMeny extends javax.swing.JFrame {
                             .addComponent(btnLaggTillLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAndraLand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnStad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLaggTillPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLaggTillProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,7 +217,9 @@ public class AdminMeny extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLaggTillPartner)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnStad)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTaBortPartner)
+                    .addComponent(btnStad))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -261,6 +275,10 @@ public class AdminMeny extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_brnMinaProjektActionPerformed
 
+    private void btnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnerActionPerformed
+        new AndraPartner(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnTaBortPartnerActionPerformed
+
     
     
     
@@ -315,6 +333,7 @@ public class AdminMeny extends javax.swing.JFrame {
     private javax.swing.JButton btnMinProfil;
     private javax.swing.JButton btnStad;
     private javax.swing.JButton btnTaBortAnstalld;
+    private javax.swing.JButton btnTaBortPartner;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblAdmin;
     private javax.swing.JLabel lblEpost;
