@@ -103,8 +103,9 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     
     private void laggTill(){
         String hid = getSelectedHid();
+        String sPid = lblPid.getText();
         
-        String sqlLaggTill = "INSERT INTO proj_hallbarhet VALUES( " + pid
+        String sqlLaggTill = "INSERT INTO proj_hallbarhet VALUES( " + sPid
                 + ", " + hid + ")";
         
         try {
@@ -129,8 +130,9 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     
     private void taBort(){
         String hid = getSelectedHid();
+        String sPid = lblPid.getText();
         
-        String sqlTaBort = "DELETE FROM proj_hallbarhet WHERE pid = " + pid + " AND hid = " + hid;
+        String sqlTaBort = "DELETE FROM proj_hallbarhet WHERE pid = " + sPid + " AND hid = " + hid;
         
         try{
             idb.delete(sqlTaBort);
@@ -145,10 +147,11 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     
     private boolean kontrollInteSamma(String hid){
         boolean finnsEj = true;
+        String sPid = lblPid.getText();
         
         String sqlFraga = "SELECT COUNT(*) AS Antal "
                 + "FROM proj_hallbarhet "
-                + "WHERE pid = " + pid + " AND hid = " + hid;
+                + "WHERE pid = " + sPid + " AND hid = " + hid;
         
         try{
            String sqlAntal = idb.fetchSingle(sqlFraga);
