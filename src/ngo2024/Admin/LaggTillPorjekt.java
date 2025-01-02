@@ -151,8 +151,8 @@ private boolean mellanDatum(){
         String slut=tfSlutDatum.getText();
         // kontrollerar namn format
     if (valid.checkDatumSkillnad(start, slut)) {
-            lblStartDatumBad.setVisible(true);
-            lblSlutDatumBad.setVisible(true);
+            lblStartDatumBad.setVisible(false);
+            lblSlutDatumBad.setVisible(false);
             return true;
     } else {
             lblStartDatumBad.setVisible(true);
