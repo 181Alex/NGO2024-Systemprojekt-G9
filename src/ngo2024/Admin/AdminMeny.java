@@ -169,10 +169,10 @@ public class AdminMeny extends javax.swing.JFrame {
                             .addComponent(btnLaggTillPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLaggTillProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGlobalaMal)
-                            .addComponent(btnMinAvdelning)
-                            .addComponent(brnMinaProjekt))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMinAvdelning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(brnMinaProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGlobalaMal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -218,22 +218,18 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
         new TaBortAnstalld(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
        new LaggTillAnstalld(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillLandActionPerformed
        new LaggTillLand(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillLandActionPerformed
 
     private void btnAndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLandActionPerformed
         new AndraLand(idb, inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
     }//GEN-LAST:event_btnAndraLandActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -242,17 +238,14 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void btnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillPartnerActionPerformed
         new LaggTillPartner(idb, inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillPartnerActionPerformed
 
     private void btnStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStadActionPerformed
        new StadForandring(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnStadActionPerformed
 
     private void btnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillProjektActionPerformed
         new LaggTillPorjekt(idb, inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillProjektActionPerformed
 
     private void btnGlobalaMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGlobalaMalActionPerformed
@@ -265,7 +258,7 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void brnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnMinaProjektActionPerformed
         new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_brnMinaProjektActionPerformed
 
     
