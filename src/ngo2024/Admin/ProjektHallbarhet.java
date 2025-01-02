@@ -6,6 +6,8 @@ package ngo2024.Admin;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -15,6 +17,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     
     private InfDB idb;
     private String pid;
+    private HashMap<String, String> malLista;
 
     /**
      * Creates new form ProjektHallbarhet
@@ -25,6 +28,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         initComponents();
         lblPid.setText(pid);
         setProjektnamn(pid);
+        malLista = new HashMap<>();
     }
 
     private void setProjektnamn(String pid){
@@ -37,6 +41,60 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
+    private void fyllCbLaggTill(){
+        cbHallbarhetsMal.removeAllItems();
+        
+        try {
+            String sqlFraga = "SELECT namn FROM hallbarhetsmal";
+            
+            ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
+          
+            for(String malNamn : allaMal){
+                String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
+                        + "namn = '" + malNamn + "'";
+                String hid = idb.fetchSingle(sqlHid);
+                cbHallbarhetsMal.addItem(malNamn);
+                malLista.put(hid, malNamn);
+            }
+            
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    private void fyllCbTaBort(String pid){
+        cbHallbarhetsMal.removeAllItems();
+        
+        try {
+            String sqlFraga = "SELECT namn FROM hallbarhetsmal "
+                    + "JOIN proj_hallbarhet ON hallbarhetsmal.hid = proj_hallbarhet.hid "
+                    + "WHERE pid =" + pid;
+            
+            ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
+          
+            for(String malNamn : allaMal){
+                cbHallbarhetsMal.addItem(malNamn);
+            }
+            
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+private String getSelectedHid(){
+        String selectedMal= (String) cbHallbarhetsMal.getSelectedItem();
+        String hid = " ";
+        for(String id : malLista.keySet()){
+            String namn = malLista.get(id);
+            if(selectedMal != null && selectedMal.equals(namn)){
+                hid = id;               
+            }
+        }
+        return hid;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +108,12 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
         lblProjektnamn = new javax.swing.JLabel();
         lblPid = new javax.swing.JLabel();
+        chLaggTill = new javax.swing.JCheckBox();
+        lblRubrik = new javax.swing.JLabel();
+        chTaBort = new javax.swing.JCheckBox();
+        cbHallbarhetsMal = new javax.swing.JComboBox<>();
+        lblHid = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,32 +124,91 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             }
         });
 
+        lblProjektnamn.setForeground(new java.awt.Color(102, 102, 102));
         lblProjektnamn.setText("Projektnamn");
 
+        lblPid.setForeground(new java.awt.Color(102, 102, 102));
         lblPid.setText("Pid");
+
+        chLaggTill.setText("Lägg till");
+        chLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chLaggTillActionPerformed(evt);
+            }
+        });
+
+        lblRubrik.setText("Lägg till/ Ta bort hållbarhetsmål för projekt:");
+
+        chTaBort.setText("Ta bort");
+        chTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chTaBortActionPerformed(evt);
+            }
+        });
+
+        cbHallbarhetsMal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbHallbarhetsMal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbHallbarhetsMalActionPerformed(evt);
+            }
+        });
+
+        lblHid.setText("hid");
+
+        jLabel2.setText("Pid:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(lblProjektnamn)
-                .addGap(18, 18, 18)
-                .addComponent(lblPid)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
-                .addComponent(btnClose)
-                .addGap(16, 16, 16))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblProjektnamn)
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPid)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRubrik)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addComponent(btnClose)
+                        .addGap(16, 16, 16))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbHallbarhetsMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblHid))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(chLaggTill)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chTaBort)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblRubrik)
+                    .addComponent(btnClose))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClose)
                     .addComponent(lblProjektnamn)
-                    .addComponent(lblPid))
-                .addContainerGap(262, Short.MAX_VALUE))
+                    .addComponent(lblPid)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chLaggTill)
+                    .addComponent(chTaBort))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbHallbarhetsMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHid))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,6 +217,24 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void chLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chLaggTillActionPerformed
+      if(chLaggTill.isSelected()){
+          chTaBort.setSelected(false);
+          fyllCbLaggTill();
+      }
+    }//GEN-LAST:event_chLaggTillActionPerformed
+
+    private void chTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chTaBortActionPerformed
+       if(chTaBort.isSelected()){
+          chLaggTill.setSelected(false);
+          fyllCbTaBort(pid);
+      }
+    }//GEN-LAST:event_chTaBortActionPerformed
+
+    private void cbHallbarhetsMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHallbarhetsMalActionPerformed
+      lblHid.setText(getSelectedHid());
+    }//GEN-LAST:event_cbHallbarhetsMalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,7 +273,13 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JComboBox<String> cbHallbarhetsMal;
+    private javax.swing.JCheckBox chLaggTill;
+    private javax.swing.JCheckBox chTaBort;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblHid;
     private javax.swing.JLabel lblPid;
     private javax.swing.JLabel lblProjektnamn;
+    private javax.swing.JLabel lblRubrik;
     // End of variables declaration//GEN-END:variables
 }
