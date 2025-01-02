@@ -20,6 +20,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private InfDB idb;
     private String projektId;
     private String anvandarEpost;
+    private String aid;
+    private boolean projektLedare;
 
     /**
      * Creates new form OmProjekt
@@ -33,7 +35,12 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
 
+        //projektLedare.arChef(anvandarEpost);
+
     }
+
+    
+
 
     /**
      *
