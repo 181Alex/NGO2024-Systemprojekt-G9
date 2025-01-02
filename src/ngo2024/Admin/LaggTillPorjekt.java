@@ -370,6 +370,11 @@ public void skapaNu(){
         });
 
         cbProjektChef.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+        cbProjektChef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProjektChefActionPerformed(evt);
+            }
+        });
 
         cbLand.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
         cbLand.addActionListener(new java.awt.event.ActionListener() {
@@ -571,6 +576,10 @@ public void skapaNu(){
     private void cbLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLandActionPerformed
      lblLid.setText(getLandid());
     }//GEN-LAST:event_cbLandActionPerformed
+
+    private void cbProjektChefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProjektChefActionPerformed
+     lblAid.setText(getPChef());
+    }//GEN-LAST:event_cbProjektChefActionPerformed
 
     /**
      * @param args the command line arguments
