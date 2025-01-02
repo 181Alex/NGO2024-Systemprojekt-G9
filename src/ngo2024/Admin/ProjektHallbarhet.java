@@ -23,6 +23,19 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         this.idb = idb;
         this.pid = pid;
         initComponents();
+        lblPid.setText(pid);
+        setProjektnamn(pid);
+    }
+
+    private void setProjektnamn(String pid){
+        try{
+            String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
+            String projektnamn = idb.fetchSingle(sqlFraga);
+            lblProjektnamn.setText(projektnamn);
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -35,6 +48,8 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     private void initComponents() {
 
         btnClose = new javax.swing.JButton();
+        lblProjektnamn = new javax.swing.JLabel();
+        lblPid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,12 +60,20 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             }
         });
 
+        lblProjektnamn.setText("Projektnamn");
+
+        lblPid.setText("Pid");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(361, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(lblProjektnamn)
+                .addGap(18, 18, 18)
+                .addComponent(lblPid)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
                 .addComponent(btnClose)
                 .addGap(16, 16, 16))
         );
@@ -58,7 +81,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(btnClose)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClose)
+                    .addComponent(lblProjektnamn)
+                    .addComponent(lblPid))
                 .addContainerGap(262, Short.MAX_VALUE))
         );
 
@@ -106,5 +132,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JLabel lblPid;
+    private javax.swing.JLabel lblProjektnamn;
     // End of variables declaration//GEN-END:variables
 }

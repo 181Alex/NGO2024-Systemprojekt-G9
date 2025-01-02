@@ -571,6 +571,7 @@ private boolean totalKontroll(){
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
             && slDatumKontroll() && kostnadKontroll() && mellanDatum()){
         ok = true;
+        gomBad();
         lblFelmeddelande.setVisible(false);
     } else {
         lblMeddelande.setVisible(false);
@@ -1124,11 +1125,11 @@ private void gorAndring(){
     }//GEN-LAST:event_btValjActionPerformed
 
     private void btHallbarhetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHallbarhetActionPerformed
-       new ProjektHallbarhet(idb, getPid());
+    new ProjektHallbarhet(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btHallbarhetActionPerformed
 
     private void btPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPartnerActionPerformed
-        // TODO add your handling code here:
+       new ProjektPartner(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btPartnerActionPerformed
 
     private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed
