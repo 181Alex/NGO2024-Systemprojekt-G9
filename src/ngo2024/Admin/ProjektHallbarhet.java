@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author linneagottling
  */
 public class ProjektHallbarhet extends javax.swing.JFrame {
-    
+
     private InfDB idb;
     private String pid;
     private HashMap<String, String> malLista;
@@ -29,72 +29,140 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         lblPid.setText(pid);
         setProjektnamn(pid);
         malLista = new HashMap<>();
+        lblMeddelande.setVisible(false);
+        btTaBort.setVisible(false);
+        btLaggTill.setVisible(false);
+        cbHallbarhetsMal.removeAllItems();
+        lblFelmeddelande.setVisible(false);
     }
 
-    private void setProjektnamn(String pid){
-        try{
+    private void setProjektnamn(String pid) {
+        try {
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
             String projektnamn = idb.fetchSingle(sqlFraga);
             lblProjektnamn.setText(projektnamn);
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }
-    }
-    
-    private void fyllCbLaggTill(){
-        cbHallbarhetsMal.removeAllItems();
-        
-        try {
-            String sqlFraga = "SELECT namn FROM hallbarhetsmal";
-            
-            ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
-          
-            for(String malNamn : allaMal){
-                String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
-                        + "namn = '" + malNamn + "'";
-                String hid = idb.fetchSingle(sqlHid);
-                cbHallbarhetsMal.addItem(malNamn);
-                malLista.put(hid, malNamn);
-            }
-            
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
     
-    private void fyllCbTaBort(String pid){
+
+    private void fyllCbLaggTill() {
         cbHallbarhetsMal.removeAllItems();
-        
+
+        try {
+            String sqlFraga = "SELECT namn FROM hallbarhetsmal";
+
+            ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
+
+            //fyller i alla mål
+            for (String malNamn : allaMal) {
+                String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
+                        + "namn = '" + malNamn + "'";
+                cbHallbarhetsMal.addItem(malNamn);
+                String hid = idb.fetchSingle(sqlHid);
+                malLista.put(hid, malNamn);
+            }
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void fyllCbTaBort() {
+        cbHallbarhetsMal.removeAllItems();
+
         try {
             String sqlFraga = "SELECT namn FROM hallbarhetsmal "
                     + "JOIN proj_hallbarhet ON hallbarhetsmal.hid = proj_hallbarhet.hid "
                     + "WHERE pid =" + pid;
-            
+
             ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
-          
-            for(String malNamn : allaMal){
+
+            for (String malNamn : allaMal) {
                 cbHallbarhetsMal.addItem(malNamn);
             }
-            
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-private String getSelectedHid(){
-        String selectedMal= (String) cbHallbarhetsMal.getSelectedItem();
+
+    private String getSelectedHid() {
+        String selectedMal = (String) cbHallbarhetsMal.getSelectedItem();
         String hid = " ";
-        for(String id : malLista.keySet()){
+        for (String id : malLista.keySet()) {
             String namn = malLista.get(id);
-            if(selectedMal != null && selectedMal.equals(namn)){
-                hid = id;               
+            if (selectedMal != null && selectedMal.equals(namn)) {
+                hid = id;
             }
         }
         return hid;
-}
+    }
+    
+    private void laggTill(){
+        String hid = getSelectedHid();
+        
+        String sqlLaggTill = "INSERT INTO proj_hallbarhet VALUES( " + pid
+                + ", " + hid + ")";
+        
+        try {
+            if(kontrollInteSamma(hid)){
+            idb.insert(sqlLaggTill);
+            lblFelmeddelande.setVisible(false);
+            lblMeddelande.setText("Tillagd");
+            lblMeddelande.setVisible(true);
+            } else {
+                lblFelmeddelande.setText("Detta mål finns redan för detta projekt");
+                lblFelmeddelande.setVisible(true);
+                lblMeddelande.setVisible(false);
+            }
+            
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        
+    }
+    
+    private void taBort(){
+        String hid = getSelectedHid();
+        
+        String sqlTaBort = "DELETE FROM proj_hallbarhet WHERE pid = " + pid + " AND hid = " + hid;
+        
+        try{
+            idb.delete(sqlTaBort);
+            lblMeddelande.setText("Borttagen från projekt");
+            lblMeddelande.setVisible(true);       
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+    }
+    
+    private boolean kontrollInteSamma(String hid){
+        boolean finnsEj = true;
+        
+        String sqlFraga = "SELECT COUNT(*) AS Antal "
+                + "FROM proj_hallbarhet "
+                + "WHERE pid = " + pid + " AND hid = " + hid;
+        
+        try{
+           String sqlAntal = idb.fetchSingle(sqlFraga);
+           int antal = Integer.parseInt(sqlAntal);
+           
+           if(antal> 0){
+               finnsEj = false;
+           }
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return finnsEj;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,6 +182,10 @@ private String getSelectedHid(){
         cbHallbarhetsMal = new javax.swing.JComboBox<>();
         lblHid = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btLaggTill = new javax.swing.JButton();
+        btTaBort = new javax.swing.JButton();
+        lblMeddelande = new javax.swing.JLabel();
+        lblFelmeddelande = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +229,26 @@ private String getSelectedHid(){
 
         jLabel2.setText("Pid:");
 
+        btLaggTill.setText("Lägg till i Projekt");
+        btLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLaggTillActionPerformed(evt);
+            }
+        });
+
+        btTaBort.setText("Ta bort från projekt");
+        btTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTaBortActionPerformed(evt);
+            }
+        });
+
+        lblMeddelande.setForeground(new java.awt.Color(51, 204, 0));
+        lblMeddelande.setText("Meddelande");
+
+        lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelande.setText("Felmeddelande");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,8 +271,16 @@ private String getSelectedHid(){
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbHallbarhetsMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblMeddelande)
                                 .addGap(18, 18, 18)
+                                .addComponent(lblFelmeddelande))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btLaggTill)
+                                .addGap(18, 18, 18)
+                                .addComponent(btTaBort))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbHallbarhetsMal, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblHid))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(chLaggTill)
@@ -208,33 +308,57 @@ private String getSelectedHid(){
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbHallbarhetsMal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblHid))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMeddelande, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFelmeddelande))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btLaggTill)
+                    .addComponent(btTaBort))
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void chLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chLaggTillActionPerformed
-      if(chLaggTill.isSelected()){
-          chTaBort.setSelected(false);
-          fyllCbLaggTill();
-      }
+        if (chLaggTill.isSelected()) {
+            chTaBort.setSelected(false);
+            fyllCbLaggTill();
+            btTaBort.setVisible(false);
+            btLaggTill.setVisible(true);
+            lblMeddelande.setVisible(false);
+            lblFelmeddelande.setVisible(false);
+        }
     }//GEN-LAST:event_chLaggTillActionPerformed
 
     private void chTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chTaBortActionPerformed
-       if(chTaBort.isSelected()){
-          chLaggTill.setSelected(false);
-          fyllCbTaBort(pid);
-      }
+        if (chTaBort.isSelected()) {
+            chLaggTill.setSelected(false);
+            fyllCbTaBort();
+            btLaggTill.setVisible(false);
+            btTaBort.setVisible(true);
+            lblMeddelande.setVisible(false);
+            lblFelmeddelande.setVisible(false);
+        }
     }//GEN-LAST:event_chTaBortActionPerformed
 
     private void cbHallbarhetsMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHallbarhetsMalActionPerformed
-      lblHid.setText(getSelectedHid());
+        lblHid.setText(getSelectedHid());
     }//GEN-LAST:event_cbHallbarhetsMalActionPerformed
+
+    private void btLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLaggTillActionPerformed
+        laggTill();
+    }//GEN-LAST:event_btLaggTillActionPerformed
+
+    private void btTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTaBortActionPerformed
+        taBort();
+    }//GEN-LAST:event_btTaBortActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,12 +396,16 @@ private String getSelectedHid(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btLaggTill;
+    private javax.swing.JButton btTaBort;
     private javax.swing.JButton btnClose;
     private javax.swing.JComboBox<String> cbHallbarhetsMal;
     private javax.swing.JCheckBox chLaggTill;
     private javax.swing.JCheckBox chTaBort;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblHid;
+    private javax.swing.JLabel lblMeddelande;
     private javax.swing.JLabel lblPid;
     private javax.swing.JLabel lblProjektnamn;
     private javax.swing.JLabel lblRubrik;
