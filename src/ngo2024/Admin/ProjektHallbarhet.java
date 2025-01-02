@@ -34,8 +34,29 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         btLaggTill.setVisible(false);
         cbHallbarhetsMal.removeAllItems();
         lblFelmeddelande.setVisible(false);
+        fyllHashMap();
     }
 
+    private void fyllHashMap(){
+            
+            try{
+             String sqlFraga = "SELECT namn FROM hallbarhetsmal";
+
+            ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
+
+            //fyller i alla mål
+            for (String malNamn : allaMal) {
+                String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
+                        + "namn = '" + malNamn + "'";
+                String paid = idb.fetchSingle(sqlHid);
+                malLista.put(paid, malNamn);
+            }
+            } catch (InfException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+            
+    
     private void setProjektnamn(String pid) {
         try {
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
@@ -58,11 +79,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
             //fyller i alla mål
             for (String malNamn : allaMal) {
-                String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
-                        + "namn = '" + malNamn + "'";
                 cbHallbarhetsMal.addItem(malNamn);
-                String hid = idb.fetchSingle(sqlHid);
-                malLista.put(hid, malNamn);
             }
 
         } catch (InfException ex) {
@@ -123,8 +140,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             
         } catch (InfException ex){
             System.out.println(ex.getMessage());
-        }
-        
+        }     
         
     }
     
@@ -357,10 +373,12 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
     private void btLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLaggTillActionPerformed
         laggTill();
+        fyllHashMap();
     }//GEN-LAST:event_btLaggTillActionPerformed
 
     private void btTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTaBortActionPerformed
         taBort();
+        fyllHashMap();
     }//GEN-LAST:event_btTaBortActionPerformed
 
     /**
