@@ -441,8 +441,7 @@ public class StadForandring extends javax.swing.JFrame {
     }//GEN-LAST:event_cbhTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new AdminMeny(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed

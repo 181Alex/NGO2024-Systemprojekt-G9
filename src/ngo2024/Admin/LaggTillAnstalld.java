@@ -665,8 +665,7 @@ public boolean alltMed(){
     }//GEN-LAST:event_tfAnstallDatumActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-       new AdminMeny(idb, inloggadAnvandare).setVisible(true);
-       this.setVisible(false);
+       this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void chbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAdminActionPerformed

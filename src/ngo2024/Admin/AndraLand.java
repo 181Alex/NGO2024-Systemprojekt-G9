@@ -618,8 +618,7 @@ public void totalKontroll() {
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new AdminMeny(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void cbhTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhTaBortActionPerformed
