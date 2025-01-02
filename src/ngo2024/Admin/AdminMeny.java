@@ -5,6 +5,9 @@
 package ngo2024.Admin;
 
 import ngo2024.MinProfil;
+import ngo2024.GlobalaMal;
+import ngo2024.MinaProjekt;
+import ngo2024.MinAvdelning;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 /**
@@ -46,6 +49,9 @@ public class AdminMeny extends javax.swing.JFrame {
         btnLaggTillPartner = new javax.swing.JButton();
         btnStad = new javax.swing.JButton();
         btnLaggTillProjekt = new javax.swing.JButton();
+        btnGlobalaMal = new javax.swing.JButton();
+        btnMinAvdelning = new javax.swing.JButton();
+        brnMinaProjekt = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,6 +122,27 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
+        btnGlobalaMal.setText("Globala Mål");
+        btnGlobalaMal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGlobalaMalActionPerformed(evt);
+            }
+        });
+
+        btnMinAvdelning.setText("Min avdelning");
+        btnMinAvdelning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMinAvdelningActionPerformed(evt);
+            }
+        });
+
+        brnMinaProjekt.setText("Mina projekt");
+        brnMinaProjekt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnMinaProjektActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,7 +168,12 @@ public class AdminMeny extends javax.swing.JFrame {
                             .addComponent(btnStad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLaggTillPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnLaggTillProjekt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGlobalaMal)
+                            .addComponent(btnMinAvdelning)
+                            .addComponent(brnMinaProjekt))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,11 +185,17 @@ public class AdminMeny extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMinProfil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLaggTillAnstalld)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLaggTillAnstalld)
+                    .addComponent(btnGlobalaMal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTaBortAnstalld)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTaBortAnstalld)
+                    .addComponent(btnMinAvdelning))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLaggTillLand)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLaggTillLand)
+                    .addComponent(brnMinaProjekt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAndraLand)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,7 +233,7 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void btnAndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLandActionPerformed
         new AndraLand(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+            this.setVisible(false);
     }//GEN-LAST:event_btnAndraLandActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -204,19 +242,39 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void btnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillPartnerActionPerformed
         new LaggTillPartner(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+            this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillPartnerActionPerformed
 
     private void btnStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStadActionPerformed
        new StadForandring(idb, inloggadAnvandare).setVisible(true);
-       this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_btnStadActionPerformed
 
     private void btnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillProjektActionPerformed
         new LaggTillPorjekt(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
+            this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillProjektActionPerformed
 
+    private void btnGlobalaMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGlobalaMalActionPerformed
+        new GlobalaMal(idb).setVisible(true);
+    }//GEN-LAST:event_btnGlobalaMalActionPerformed
+
+    private void btnMinAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinAvdelningActionPerformed
+        new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnMinAvdelningActionPerformed
+
+    private void brnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnMinaProjektActionPerformed
+        new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_brnMinaProjektActionPerformed
+
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -253,11 +311,14 @@ public class AdminMeny extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton brnMinaProjekt;
     private javax.swing.JButton btnAndraLand;
+    private javax.swing.JButton btnGlobalaMal;
     private javax.swing.JButton btnLaggTillAnstalld;
     private javax.swing.JButton btnLaggTillLand;
     private javax.swing.JButton btnLaggTillPartner;
     private javax.swing.JButton btnLaggTillProjekt;
+    private javax.swing.JButton btnMinAvdelning;
     private javax.swing.JButton btnMinProfil;
     private javax.swing.JButton btnStad;
     private javax.swing.JButton btnTaBortAnstalld;

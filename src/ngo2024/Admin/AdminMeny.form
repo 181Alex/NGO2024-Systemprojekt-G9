@@ -47,7 +47,13 @@
                           <Component id="btnLaggTillPartner" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnLaggTillProjekt" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnGlobalaMal" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMinAvdelning" min="-2" max="-2" attributes="0"/>
+                          <Component id="brnMinaProjekt" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -64,11 +70,20 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnMinProfil" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnLaggTillAnstalld" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnLaggTillAnstalld" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnGlobalaMal" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnTaBortAnstalld" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnTaBortAnstalld" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnMinAvdelning" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnLaggTillLand" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnLaggTillLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="brnMinaProjekt" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnAndraLand" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -165,6 +180,30 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillProjektActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGlobalaMal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Globala M&#xe5;l"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGlobalaMalActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnMinAvdelning">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Min avdelning"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMinAvdelningActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="brnMinaProjekt">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mina projekt"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brnMinaProjektActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

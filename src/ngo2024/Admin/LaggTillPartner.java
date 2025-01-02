@@ -121,7 +121,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
 
         jLabel6.setText("Bransch");
 
-        jLabel7.setText("Lägg till Länder");
+        jLabel7.setText("Lägg till partner");
 
         tfNamn.setText("Namn");
         tfNamn.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +223,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7)
                                 .addComponent(btnSkapa))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)
                             .addComponent(btnTillbaka)
                             .addContainerGap()))))
         );
