@@ -33,6 +33,9 @@ public class Statistik extends javax.swing.JFrame {
         konstrueraTabell();
         fyllTabell();
         tabellDesign();
+        totKostnad();
+        medelKostnad();
+        totalKostnadAvslutade();
     }
     
     private void konstrueraTabell(){
@@ -41,12 +44,14 @@ public class Statistik extends javax.swing.JFrame {
     }
     
         private void tabellDesign() {
-        tbStatistik.getColumnModel().getColumn(0).setPreferredWidth(200);
-        tbStatistik.getColumnModel().getColumn(1).setPreferredWidth(316);
+        tbStatistik.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tbStatistik.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tbStatistik.getColumnModel().getColumn(2).setPreferredWidth(100);
 
 
         tbStatistik.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
         tbStatistik.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+        tbStatistik.getColumnModel().getColumn(2).setCellRenderer(new MultiLineCellRenderer());
 
 
         for (int row = 0; row < tbStatistik.getRowCount(); row++) {
@@ -76,7 +81,7 @@ public class Statistik extends javax.swing.JFrame {
     private void fyllTabell() {
 
         try {
-            String sqlFraga = "SELECT kostnad, projektnamn FROM projekt "
+            String sqlFraga = "SELECT kostnad, projektnamn, status FROM projekt "
                     + "WHERE projektchef = " + getChefId(epost);
 
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
@@ -85,8 +90,9 @@ public class Statistik extends javax.swing.JFrame {
                 
                     String projekt = rad.get("projektnamn");
                     String kostnad = rad.get("kostnad");
+                    String status = rad.get("status");
                    
-                    model.addRow(new Object[]{projekt, kostnad});
+                    model.addRow(new Object[]{projekt, kostnad, status});
 
             }
         } catch (InfException ex) {
@@ -94,7 +100,48 @@ public class Statistik extends javax.swing.JFrame {
         }
     }
    
+    private void totKostnad(){
+        String sqlFraga = "SELECT SUM(kostnad) FROM projekt WHERE projektchef = " 
+                + getChefId(epost);
+        
+        try {
+            String tot = idb.fetchSingle(sqlFraga);
+            tfTot.setText(tot);
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+   
+    private void medelKostnad(){
+        String sqlFraga = "SELECT ROUND(AVG(kostnad), 2) as medelvärde"
+                + " FROM projekt WHERE projektchef = "
+                +getChefId(epost);
+        
+        try{
+            String medel = idb.fetchSingle(sqlFraga);
+            tfMedel.setText(medel);
+            
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     
+    private void totalKostnadAvslutade(){
+        String sqlFraga = "SELECT SUM(kostnad) FROM projekt "
+                + "WHERE projektchef = " + getChefId(epost)
+                + " AND status = 'Avslutat'";
+        try{
+            String totAvs = idb.fetchSingle(sqlFraga);
+            if(totAvs != null){
+            tfTotAvs.setText(totAvs);
+            } else {
+                tfTotAvs.setText("0.00");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
    
 
     /**
@@ -115,6 +162,8 @@ public class Statistik extends javax.swing.JFrame {
         lblMedel = new javax.swing.JLabel();
         tfTot = new javax.swing.JTextField();
         tfMedel = new javax.swing.JTextField();
+        lbTotAvs = new javax.swing.JLabel();
+        tfTotAvs = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,23 +176,24 @@ public class Statistik extends javax.swing.JFrame {
 
         tbStatistik.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Projekt", "Kostnad"
+                "Projekt", "Kostnad", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tbStatistik.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         spPanel.setViewportView(tbStatistik);
 
         lblRubrik.setText("Kostnaden för projekt:");
@@ -158,29 +208,39 @@ public class Statistik extends javax.swing.JFrame {
 
         tfMedel.setEditable(false);
 
+        lbTotAvs.setText("Total avslutade:");
+
+        tfTotAvs.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRubrik)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lblMedel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfMedel, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblRubrik)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(lblTot)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(tfTot, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfTot, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblMedel)
+                                    .addComponent(lbTotAvs))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfTotAvs, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                    .addComponent(tfMedel))))
+                        .addGap(213, 213, 213)
                         .addComponent(btClose))
-                    .addComponent(lblProjektchef, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(lblProjektchef, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
@@ -191,10 +251,9 @@ public class Statistik extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btClose)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblRubrik)
-                        .addGap(18, 18, 18)
-                        .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblRubrik))
+                .addGap(18, 18, 18)
+                .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTot)
@@ -203,7 +262,11 @@ public class Statistik extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMedel)
                     .addComponent(tfMedel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotAvs)
+                    .addComponent(tfTotAvs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         pack();
@@ -250,6 +313,7 @@ public class Statistik extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
+    private javax.swing.JLabel lbTotAvs;
     private javax.swing.JLabel lblMedel;
     private javax.swing.JLabel lblProjektchef;
     private javax.swing.JLabel lblRubrik;
@@ -258,5 +322,6 @@ public class Statistik extends javax.swing.JFrame {
     private javax.swing.JTable tbStatistik;
     private javax.swing.JTextField tfMedel;
     private javax.swing.JTextField tfTot;
+    private javax.swing.JTextField tfTotAvs;
     // End of variables declaration//GEN-END:variables
 }
