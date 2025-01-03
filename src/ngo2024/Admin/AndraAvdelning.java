@@ -343,23 +343,20 @@ public class AndraAvdelning extends javax.swing.JFrame {
             chef=idb.fetchSingle("SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "'");
             stad=idb.fetchSingle("SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "'");
             
+            
         }catch(InfException ex){
             System.out.println(ex.getMessage());
-        }
+        
         
         tfNamn.setText(avdNamn);
         tfBeskrivning.setText(beskrivning);
         tfAdress.setText(adress);
         tfEpost.setText(epost);
         tfTelefon.setText(telefon);
-        
-        int chefS=Integer.parseInt(chef)-1;
-        int stadS=Integer.parseInt(stad)-1;
-        
-        cbStad.setSelectedIndex(stadS);
-        cbChef.setSelectedIndex(chefS);
-        
-    }
+        cbStad.setSelectedIndex(Integer.parseInt(stad));
+        cbChef.setSelectedIndex(Integer.parseInt(chef));
+       
+    }}
     
     
     
