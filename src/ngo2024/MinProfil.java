@@ -14,7 +14,8 @@ package ngo2024;
 public class MinProfil extends javax.swing.JFrame {
   private InfDB idb;
   private String epost;
-  private String name;
+  private String firstname;
+  private String lastname;
   private String department;
   private boolean isEditing = false;
     /**
@@ -23,9 +24,15 @@ public class MinProfil extends javax.swing.JFrame {
  public MinProfil(InfDB idb, String epost) {
   this.idb=idb;
   this.epost=epost;
-  name = getname(epost);
-  department = getdepartment(epost);
+  this.firstname = getfirstname(epost);
+  this.lastname = getlastname(epost);
+  this.department = getdepartment(epost);
   initComponents();
+  
+  txtFirstName.setText(firstname != null ? firstname : "");
+  txtLastName.setText(lastname != null ? lastname : "");
+  txtEmail.setText(epost != null ? epost : "");
+  txtDepartment.setText(department != null ? department : "");
     }
 
     public MinProfil(InfDB idb) {
@@ -33,23 +40,33 @@ public class MinProfil extends javax.swing.JFrame {
     }
     
   
-    private String getname(String epost){
-       String txtName="";
+    private String getfirstname(String epost){
+       String txtFirstName="";
        try{
-        String sqlFraga = "SELECT namn FROM anstalld WHERE epost = '" + epost +"'";
-        txtName = idb.fetchSingle(sqlFraga);
+        String sqlQuery = "SELECT fornamn FROM anstalld WHERE epost = '" + epost +"'";
+        txtFirstName = idb.fetchSingle(sqlQuery);
        } catch (InfException ex){
         System.out.println(ex.getMessage());
        } 
-       return txtName;
+       return txtFirstName;
         }
 
+    private String getlastname(String epost){
+       String txtLastName="";
+       try{
+        String sqlQuery = "SELECT efternamn FROM anstalld WHERE epost = '" + epost +"'";
+        txtLastName = idb.fetchSingle(sqlQuery);
+       } catch (InfException ex){
+        System.out.println(ex.getMessage());
+       } 
+       return txtLastName;
+        }
 
     private String getdepartment (String epost){
        String txtDepartment="";
        try{
-        String sqlFraga = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE epost = '" + epost +"')";
-        txtDepartment = idb.fetchSingle(sqlFraga);
+        String sqlQuery = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE epost = '" + epost +"')";
+        txtDepartment = idb.fetchSingle(sqlQuery);
        } catch (InfException ex){
         System.out.println(ex.getMessage());
        } 
@@ -59,18 +76,27 @@ public class MinProfil extends javax.swing.JFrame {
        
    public MinProfil(){
         initComponents();
-        txtName.setText(name);
+        txtFirstName.setText(firstname);
+        txtLastName.setText(lastname);
         txtEmail.setText(epost);
+        txtPassword.setText("");
+       
            
         txtDepartment.setText(department);
            
-        txtName.setEditable(false);
+        txtFirstName.setEditable(false);
+        txtLastName.setEditable(false);
         txtEmail.setEditable(false);
+        txtPassword.setEditable(false);
+        
+        txtPassword.setVisible(false);
+        Losenord.setVisible(false);
         }
        
     
        private void onChangeClicked(){
-           txtName.setEditable(true);
+           txtFirstName.setEditable(true);
+           txtLastName.setEditable(true);
            txtEmail.setEditable(true);
            
            Change.setText("Spara");
@@ -78,11 +104,17 @@ public class MinProfil extends javax.swing.JFrame {
            Change.addActionListener(evt -> onSavedClicked()); 
        }
        private void onSavedClicked(){
-           name = txtName.getText();
+           firstname = txtFirstName.getText();
+           lastname = txtLastName.getText();
            epost = txtEmail.getText();
            
-           txtName.setEditable(false);
+           txtFirstName.setEditable(false);
+           txtLastName.setEditable(false);
            txtEmail.setEditable(false);
+           txtPassword.setEditable(false);
+        
+           txtPassword.setVisible(false);
+           Losenord.setVisible(false);
            
            Change.setText("Ändra");
            Change.removeActionListener(Change.getActionListeners()[0]);
@@ -106,9 +138,12 @@ public class MinProfil extends javax.swing.JFrame {
         Epost = new javax.swing.JLabel();
         Avdelning = new javax.swing.JLabel();
         Change = new javax.swing.JButton();
-        txtName = new javax.swing.JTextField();
+        txtFirstName = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtDepartment = new javax.swing.JTextField();
+        txtLastName = new javax.swing.JTextField();
+        Losenord = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,11 +162,11 @@ public class MinProfil extends javax.swing.JFrame {
             }
         });
 
-        txtName.setEnabled(false);
-        txtName.setFocusable(false);
-        txtName.addActionListener(new java.awt.event.ActionListener() {
+        txtFirstName.setEnabled(false);
+        txtFirstName.setFocusable(false);
+        txtFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
+                txtFirstNameActionPerformed(evt);
             }
         });
 
@@ -153,6 +188,21 @@ public class MinProfil extends javax.swing.JFrame {
             }
         });
 
+        txtLastName.setEnabled(false);
+        txtLastName.setFocusable(false);
+        txtLastName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLastNameActionPerformed(evt);
+            }
+        });
+
+        Losenord.setText("Lösenord:");
+
+        txtPassword.setEditable(false);
+        txtPassword.setText("jPasswordField1");
+        txtPassword.setEnabled(false);
+        txtPassword.setFocusable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,13 +210,17 @@ public class MinProfil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(MinProfil)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Namn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Epost, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -174,11 +228,16 @@ public class MinProfil extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Avdelning)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDepartment))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(152, 152, 152)
-                        .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                                .addComponent(txtDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(MinProfil)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Losenord)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +247,8 @@ public class MinProfil extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Namn)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Epost)
@@ -198,16 +258,20 @@ public class MinProfil extends javax.swing.JFrame {
                     .addComponent(Avdelning)
                     .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Losenord)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(Change)
-                .addGap(18, 93, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+    private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    }//GEN-LAST:event_txtFirstNameActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
@@ -219,35 +283,74 @@ public class MinProfil extends javax.swing.JFrame {
 
     private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
         if (isEditing) {
-            name = txtName.getText();
+            firstname = txtFirstName.getText();
+            lastname = txtLastName.getText();
             epost = txtEmail.getText();
+            String newPassword = new String(txtPassword.getPassword());
             
-            txtName.setEditable(false);
-            txtName.setFocusable(false);
-            txtName.setEnabled(false);
+            try {
+                String updateQuery = "UPDATE anstalld SET fornamn = '"+ firstname +"', efternamn = '" + lastname + "', anstalld.epost = '" + epost + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
+                idb.update(updateQuery);
+                
+                this.epost = epost;
+           } catch (InfException ex) {
+               JOptionPane.showMessageDialog (this, "Fel vid uppdatering av databasen:" );
+                String message = ex.getMessage();
+               return;
+            }
+            
+            txtFirstName.setEditable(false);
+            txtFirstName.setFocusable(false);
+            txtFirstName.setEnabled(false);
+            
+            txtLastName.setEditable(false);
+            txtLastName.setFocusable(false);
+            txtLastName.setEnabled(false);
             
             txtEmail.setEditable(false);
             txtEmail.setFocusable(false);
             txtEmail.setEnabled(false);
+            
+            txtPassword.setEditable(false);
+            txtPassword.setFocusable(false);
+            txtPassword.setEnabled(false);
+            txtPassword.setVisible(false);
+            
+            Losenord.setVisible(false);
             
             Change.setText("Ändra");
             
         JOptionPane.showMessageDialog(this, "Ändringar sparade!");
             isEditing = false;
         } else {
-            txtName.setEditable(true);
-            txtName.setFocusable(true);
-            txtName.setEnabled(true);
+            txtFirstName.setEditable(true);
+            txtFirstName.setFocusable(true);
+            txtFirstName.setEnabled(true);
+            
+            txtLastName.setEditable(true);
+            txtLastName.setFocusable(true);
+            txtLastName.setEnabled(true);
             
             txtEmail.setEditable(true);
             txtEmail.setFocusable(true);
             txtEmail.setEnabled(true);
+            
+            txtPassword.setEditable(true);
+            txtPassword.setFocusable(true);
+            txtPassword.setEnabled(true);
+            txtPassword.setVisible(true);
+            
+            Losenord.setVisible(true);
             
             Change.setText("Spara");
             
             isEditing = true;
         }
     }//GEN-LAST:event_ChangeActionPerformed
+
+    private void txtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLastNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,10 +360,13 @@ public class MinProfil extends javax.swing.JFrame {
     private javax.swing.JLabel Avdelning;
     private javax.swing.JButton Change;
     private javax.swing.JLabel Epost;
+    private javax.swing.JLabel Losenord;
     private javax.swing.JLabel MinProfil;
     private javax.swing.JLabel Namn;
     private javax.swing.JTextField txtDepartment;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtLastName;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
