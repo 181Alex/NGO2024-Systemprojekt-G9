@@ -26,6 +26,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
      */
     public OmProjekt_1(InfDB idb, String anvandarEpost, String projektId) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.projektId = projektId;
         this.anvandarEpost = anvandarEpost;
         this.idb = idb;

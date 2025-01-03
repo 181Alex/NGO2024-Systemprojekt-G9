@@ -75,15 +75,15 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void setInfo() {
        // getProjektnamn(); //loop här
-        getProjektStatus();
-        getLedarProjektnamn();
+        //getProjektStatus();
+      //  getLedarProjektnamn();
 
         //lägg till kontrol av att det finns ledar projekt
-        getLedarProjektnamn();
-        getLedarProjektStatus();
-        textArea1.setEnabled(false);
+     //   getLedarProjektnamn();
+     //   getLedarProjektStatus();
+        txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
-        textArea1.setText(String.join("\n", getAnvandarPid()));
+        txtAreaProj.setText(String.join("\n", getAnvandarPid()));
         txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         cbxValjProj.setVisible(false);
         lblValjProj.setVisible(false);
@@ -191,7 +191,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     
     
-
+/*
     private String getProjektStatus() {
         StringBuilder allaStatus = new StringBuilder();
         try {
@@ -266,7 +266,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void laggTillNyRadLedarStatus(String status) {
         lblProjektListaLS.setText(lblProjektListaLS.getText() + status + "\n");
-    }
+    } */
 
     /*
     private void konstrueraTabell() {
@@ -314,7 +314,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblProjektListaL = new javax.swing.JLabel();
         lblProjektListaLS = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        textArea1 = new javax.swing.JTextArea();
+        txtAreaProj = new javax.swing.JTextArea();
         cbxValjProj = new javax.swing.JComboBox<>();
         lblValjProj = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -365,10 +365,10 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         lblProjektListaLS.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        textArea1.setColumns(20);
-        textArea1.setRows(5);
-        textArea1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jScrollPane2.setViewportView(textArea1);
+        txtAreaProj.setColumns(20);
+        txtAreaProj.setRows(5);
+        txtAreaProj.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setViewportView(txtAreaProj);
 
         cbxValjProj.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -400,9 +400,8 @@ public class MinaProjekt extends javax.swing.JFrame {
                                 .addComponent(lblProjektListaLS, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -453,7 +452,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                     .addComponent(jScrollPane4))
                 .addGap(26, 26, 26)
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(44, 44, 44))
         );
 
         pack();
@@ -552,7 +551,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblProjektListaLS;
     private javax.swing.JLabel lblProjektListaS;
     private javax.swing.JLabel lblValjProj;
-    private javax.swing.JTextArea textArea1;
     private javax.swing.JTextArea txtAreaChefsProj;
+    private javax.swing.JTextArea txtAreaProj;
     // End of variables declaration//GEN-END:variables
 }
