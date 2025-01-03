@@ -16,6 +16,7 @@ public class MinProfil extends javax.swing.JFrame {
   private String epost;
   private String name;
   private String department;
+  private boolean isEditing = false;
     /**
      * Creates new form MinProfil
      */
@@ -217,7 +218,35 @@ public class MinProfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDepartmentActionPerformed
 
     private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
-        // TODO add your handling code here:
+        if (isEditing) {
+            name = txtName.getText();
+            epost = txtEmail.getText();
+            
+            txtName.setEditable(false);
+            txtName.setFocusable(false);
+            txtName.setEnabled(false);
+            
+            txtEmail.setEditable(false);
+            txtEmail.setFocusable(false);
+            txtEmail.setEnabled(false);
+            
+            Change.setText("Ändra");
+            
+        JOptionPane.showMessageDialog(this, "Ändringar sparade!");
+            isEditing = false;
+        } else {
+            txtName.setEditable(true);
+            txtName.setFocusable(true);
+            txtName.setEnabled(true);
+            
+            txtEmail.setEditable(true);
+            txtEmail.setFocusable(true);
+            txtEmail.setEnabled(true);
+            
+            Change.setText("Spara");
+            
+            isEditing = true;
+        }
     }//GEN-LAST:event_ChangeActionPerformed
 
     /**
