@@ -1112,7 +1112,8 @@ private void gorAndring(){
          lblPid.setText(getPid());
           int i=cbxProjekt.getSelectedIndex();
           lblPnamn.setText(cbxProjekt.getItemAt(i));
-      }else if(chbAndra.isSelected()){         
+      }else if(chbAndra.isSelected()){ 
+          lblPid.setText(getPid());
            fyllTabellAndra();
            visaAid();
            visaLid();
