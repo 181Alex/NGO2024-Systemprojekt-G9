@@ -10,11 +10,9 @@ import oru.inf.InfException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 /**
- *
- * @author frida.selin
- */
+  * @author frida.selin
+  */
 public class OmProjekt_1 extends javax.swing.JFrame {
 
     private InfDB idb;
@@ -35,12 +33,12 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
-        projektLedare = projektLedarValidering();
         
+        //anropar kontroll för att se hurvida användaren är projektledare för projektet
+        projektLedare = projektLedarValidering();
         
         //projektLedare.arChef(anvandarEpost);
         andraButton();
-
     }
     
      private String getAidString() {
@@ -54,7 +52,10 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return stringAid;
     }
     
-
+     /**
+      * Kontrolerar om användaren är projektledare för projektet. 
+      * Metoden anropas i konstruktorn.
+    */ 
     private boolean projektLedarValidering(){
         String valideringsPid = null;
         //String sqlFraga = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "'";
@@ -87,8 +88,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
             btnEdit.setVisible(false);
         }
     }
-    
-
 
     /**
      *
@@ -112,7 +111,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
      * från sql basen och initierar rätt text vid rätt fält
      */
     private void setAllTextFeilds() {
-
         lblH1ProjNamn.setText(setProjNamnUpperCase());
         lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
         lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
@@ -136,7 +134,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                     + "JOIN ans_proj on ans_proj.aid = a.aid "
                     + "JOIN projekt on ans_proj.pid = projekt.pid "
                     + "WHERE projekt.pid = '" + pid + "'";
-
+            
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
             for (HashMap<String, String> rad : resultat) {
