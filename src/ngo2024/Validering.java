@@ -46,6 +46,25 @@ public class Validering {
         }
         return isChef;
     }
+    
+    
+    public boolean isProjektetsChef(String ePost, String projektId){
+        boolean isProjektetsChef=false;
+                String valideringsPid = null;
+        try {
+            String sqlFraga = "SELECT pid FROM projekt WHERE projektchef IN(SELECT aid FROM anstalld where epost = '" + ePost + "')";
+            valideringsPid = idb.fetchSingle(sqlFraga);
+        
+            if (valideringsPid != null && valideringsPid.equals(projektId)) {
+                isProjektetsChef = true;
+            }
+        
+        }
+        catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return isProjektetsChef;
+    }
    
     
     public boolean checkEpost(String ePost){

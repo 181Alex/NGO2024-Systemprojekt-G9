@@ -115,7 +115,7 @@ public class Meny extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("<- Tillbaka");
+        jButton1.setText("Logga ut");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -142,7 +142,7 @@ public class Meny extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addGap(109, 109, 109)
                                 .addComponent(lblInloggadAnvandare)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblHandlaggare, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btProfil, javax.swing.GroupLayout.Alignment.TRAILING))

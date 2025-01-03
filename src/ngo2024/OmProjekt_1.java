@@ -19,7 +19,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private String projektId;
     private String anvandarEpost;
     private String aid;
-    private boolean projektLedare;
+    // ta bort ? private boolean projektLedare;
 
     /**
      * Creates new form OmProjekt
@@ -36,7 +36,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         setAllTextFeilds();
         
         //anropar kontroll för att se hurvida användaren är projektledare för projektet
-        projektLedare = projektLedarValidering();
+        // ta bort? projektLedare = projektLedarValidering();
         
         //projektLedare.arChef(anvandarEpost);
         andraButton();
@@ -57,7 +57,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
       * Kontrolerar om användaren är projektledare för projektet. 
       * Metoden anropas i konstruktorn.
     */ 
-    private boolean projektLedarValidering(){
+  /*  private boolean projektLedarValidering(){
         String valideringsPid = null;
         //String sqlFraga = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "'";
         try {
@@ -78,14 +78,11 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         }
         return projektLedare;
     }
-    
+    */
     
     private void andraButton() {
-        
-        if (projektLedare){
-            btnEdit.setVisible(true);
-        }
-        else {
+        Validering valid = new Validering(idb);
+        if (!valid.isProjektetsChef(anvandarEpost, projektId)){
             btnEdit.setVisible(false);
         }
     }
