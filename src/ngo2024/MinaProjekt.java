@@ -10,9 +10,7 @@ import ngo2024.Meny;
 import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import TabellDesign.MultiLineCellRenderer;
 import java.awt.Component;
 
@@ -78,8 +76,9 @@ public class MinaProjekt extends javax.swing.JFrame {
         //lägg till kontrol av att det finns ledar projekt
         getLedarProjektnamn();
         getLedarProjektStatus();
-        //lblPersonIdText.setText(getAidString());
-        //textArea1.setText(getAnvandarPid());
+        lblPersonIdText.setText(getAidString());
+        
+        textArea1.setText(String.join("\n", getAnvandarPid()));
     }
 
     private String getAidString() {
@@ -322,6 +321,8 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         lblPersonIdText.setText("AID");
 
+        lblProjektListaS.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
         lblProjektListaL.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         lblProjektListaLS.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -383,12 +384,9 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addComponent(lblProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                        .addGap(24, 24, 24))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblProjektListaS, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btAndra, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblPersonIdText, javax.swing.GroupLayout.Alignment.TRAILING))
