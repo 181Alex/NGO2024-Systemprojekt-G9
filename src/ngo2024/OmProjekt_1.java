@@ -316,6 +316,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(900, 600));
 
         lblH1ProjNamn.setFont(new java.awt.Font("Typo Round Bold Demo", 1, 24)); // NOI18N
         lblH1ProjNamn.setForeground(new java.awt.Color(102, 0, 102));
@@ -420,7 +421,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                                         .addComponent(lblH2Prio, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(lblProjAnstallda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblProjAnstallda, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
                         .addGap(317, 317, 317))))
         );
         layout.setVerticalGroup(
@@ -465,8 +466,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblH2Partners)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPartners, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                .addGap(221, 221, 221))
+                .addComponent(lblPartners, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(141, 141, 141))
         );
 
         pack();

@@ -3,6 +3,9 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[900, 600]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -92,7 +95,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="lblProjAnstallda" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblProjAnstallda" alignment="0" pref="430" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="317" max="-2" attributes="0"/>
                   </Group>
@@ -150,8 +153,8 @@
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="lblH2Partners" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="lblPartners" pref="52" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
+              <Component id="lblPartners" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
