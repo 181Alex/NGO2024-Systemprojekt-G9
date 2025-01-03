@@ -47,13 +47,15 @@ public class Validering {
         return isChef;
     }
     
-    
+    /**
+      * Kontrolerar om användaren är projektledare för ett specifikt projekt
+      * Används i klassen OmProjekt_1
+    */ 
     public boolean isProjektetsChef(String ePost, String projektId){
         boolean isProjektetsChef=false;
-                String valideringsPid = null;
         try {
             String sqlFraga = "SELECT pid FROM projekt WHERE projektchef IN(SELECT aid FROM anstalld where epost = '" + ePost + "')";
-            valideringsPid = idb.fetchSingle(sqlFraga);
+            String valideringsPid = idb.fetchSingle(sqlFraga);
         
             if (valideringsPid != null && valideringsPid.equals(projektId)) {
                 isProjektetsChef = true;

@@ -52,34 +52,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         }
         return stringAid;
     }
-    
-     /**
-      * Kontrolerar om användaren är projektledare för projektet. 
-      * Metoden anropas i konstruktorn.
-    */ 
-  /*  private boolean projektLedarValidering(){
-        String valideringsPid = null;
-        //String sqlFraga = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "'";
-        try {
-            String sqlFraga = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "'";
-            valideringsPid = idb.fetchSingle(sqlFraga);
-        
-            if (valideringsPid != null && valideringsPid.equals(projektId)) {
-                projektLedare = true;
-            }
 
-            else {
-                projektLedare = false;
-            }
-        
-        }
-        catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return projektLedare;
-    }
-    */
-    
+ 
     private void andraButton() {
         Validering valid = new Validering(idb);
         if (!valid.isProjektetsChef(anvandarEpost, projektId)){
