@@ -5,6 +5,8 @@
 
 package ngo2024.Admin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -18,6 +20,9 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private InfDB idb;
     private String inloggadAnvandare;  
     boolean kontrollOk;
+    private HashMap<String, String> anstalldLista;
+    private HashMap<String, String> stadLista;
+    private HashMap<String, String> avdLista;
     
     /** Creates new form AndraAvdelning */
     public AndraAvdelning(InfDB idb, String inloggadAnvandare) {
@@ -25,7 +30,78 @@ public class AndraAvdelning extends javax.swing.JFrame {
         this.inloggadAnvandare=inloggadAnvandare;
         kontrollOk=false;
         initComponents();
+        anstalldLista = new HashMap<>();
+        stadLista = new HashMap<>();
+        avdLista = new HashMap<>();
     }
+    
+     private void fyllProjektChef(){
+        cbChef.removeAllItems();
+        //fyller projektchefs lsitan
+        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
+        
+        try{
+            ArrayList<String> chefLista=idb.fetchColumn(sqlFraga);
+            
+            for(String anstNamn : chefLista){
+                String sqlAid = "SELECT aid from anstalld WHERE "
+                        + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
+                String i = idb.fetchSingle(sqlAid);
+                cbChef.addItem(anstNamn);
+                anstalldLista.put(i, anstNamn);
+                
+            }
+            
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }}
+    
+    private void fyllStad(){
+        cbStad.removeAllItems();
+        //fyller stads listan
+        String sqlLand = "SELECT namn FROM stad ";
+        
+        try{
+
+        ArrayList<String> allaStaderLista =  idb.fetchColumn(sqlLand);
+                                             
+            for(String stadNamn : allaStaderLista){
+               String sqlLid = "SELECT sid FROM stad WHERE "
+                       + "namn = '" + stadNamn + "'";
+               String i = idb.fetchSingle(sqlLid);
+               cbStad.addItem(stadNamn);
+               stadLista.put(i, stadNamn);
+            }
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    private void fyllAvdelning(){
+        cbAvdelning.removeAllItems();
+        //fyller stads listan
+        String sqlLand = "SELECT namn FROM avdelning ";
+        
+        try{
+
+        ArrayList<String> avdeLista =  idb.fetchColumn(sqlLand);
+                                             
+            for(String avdNamn : avdeLista){
+               String sqlLid = "SELECT avdid FROM avdelning WHERE "
+                       + "namn = '" + avdNamn + "'";
+               String i = idb.fetchSingle(sqlLid);
+               cbAvdelning.addItem(avdNamn);
+               avdLista.put(i, avdNamn);
+            }
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -36,22 +112,326 @@ public class AndraAvdelning extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTelefon = new javax.swing.JLabel();
+        tfTelefon = new javax.swing.JTextField();
+        tfEpost = new javax.swing.JTextField();
+        cbChef = new javax.swing.JComboBox<>();
+        tfAdress = new javax.swing.JTextField();
+        cbStad = new javax.swing.JComboBox<>();
+        lblAdress = new javax.swing.JLabel();
+        tfBeskrivning = new javax.swing.JTextField();
+        lblEpost = new javax.swing.JLabel();
+        tfNamn = new javax.swing.JTextField();
+        lblTelefonBad = new javax.swing.JLabel();
+        lblEpostBad = new javax.swing.JLabel();
+        lblChef = new javax.swing.JLabel();
+        lblStad = new javax.swing.JLabel();
+        lblAdressBad = new javax.swing.JLabel();
+        lblBeskrivning = new javax.swing.JLabel();
+        lblBeskrivningBad = new javax.swing.JLabel();
+        lblNamn = new javax.swing.JLabel();
+        lblNamnBad = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cbAvdelning = new javax.swing.JComboBox<>();
+        btnValj = new javax.swing.JButton();
+        btnAndra = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblTelefon.setText("Telefon");
+
+        tfTelefon.setText("123-123-1234");
+        tfTelefon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTelefonActionPerformed(evt);
+            }
+        });
+
+        tfEpost.setText("example@mail.com");
+        tfEpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfEpostActionPerformed(evt);
+            }
+        });
+
+        cbChef.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+
+        tfAdress.setText("123 blabla, bobla");
+
+        cbStad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+
+        lblAdress.setText("Adress");
+
+        tfBeskrivning.setText("Beskrivning");
+
+        lblEpost.setText("Epost");
+
+        tfNamn.setText("Namn");
+
+        lblTelefonBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblTelefonBad.setText("!");
+
+        lblEpostBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblEpostBad.setText("!");
+
+        lblChef.setText("Chef");
+
+        lblStad.setText("Stad");
+
+        lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblAdressBad.setText("!");
+
+        lblBeskrivning.setText("Beskrivning");
+
+        lblBeskrivningBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblBeskrivningBad.setText("!");
+
+        lblNamn.setText("Namn");
+
+        lblNamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblNamnBad.setText("!");
+
+        jLabel1.setText("Ändra avdelning");
+
+        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
+
+        btnValj.setText("Välj");
+
+        btnAndra.setText("Ändra");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnValj))
+                    .addComponent(lblEpost)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblChef)
+                        .addGap(70, 70, 70)
+                        .addComponent(cbChef, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblAdress)
+                        .addGap(56, 56, 56)
+                        .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblAdressBad))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblStad)
+                        .addGap(70, 70, 70)
+                        .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTelefon)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTelefonBad))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEpostBad))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBeskrivning)
+                            .addComponent(lblNamn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNamnBad)
+                            .addComponent(lblBeskrivningBad)))
+                    .addComponent(btnAndra))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValj))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNamn)
+                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNamnBad))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBeskrivning)
+                    .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBeskrivningBad))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAdressBad))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEpostBad)
+                            .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEpost))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTelefonBad)
+                            .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTelefon)))
+                    .addComponent(lblAdress))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStad))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblChef)
+                    .addComponent(cbChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(btnAndra)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tfTelefonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTelefonActionPerformed
+
+    private void tfEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEpostActionPerformed
+
+    }//GEN-LAST:event_tfEpostActionPerformed
+
+        //kontroller kommer här
+    
+    private void totalKontroll() {
+    Boolean totOk = true;
+
+    if (!namnKontroll()) {
+        totOk = false;
+        lblNamnBad.setVisible(true);
+    } else if (!beskrivningKontroll()) {  
+        totOk = false;
+        lblBeskrivningBad.setVisible(true);
+    } else if (!adressKontroll(idb)) {  
+        totOk = false;
+        lblAdressBad.setVisible(true);
+    } else if (!telefonKontroll(idb)) {  
+        totOk = false;
+        lblTelefonBad.setVisible(true);
+    } else if (!epostKontroll(idb)) {  
+        totOk = false;
+        lblEpostBad.setVisible(true);
+    }
+
+    kontrollOk = totOk;
+}
+
+    
+    public boolean adressKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String adress = tfAdress.getText();
+        if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+            lblAdressBad.setVisible(false);
+            return true;
+        } else {
+            lblAdressBad.setVisible(true);
+            return false;
+        }}
+    
+    public boolean telefonKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+        String telefon = tfTelefon.getText();
+    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+            lblTelefonBad.setVisible(false);
+            return true;
+    } else {
+            lblTelefonBad.setVisible(true);
+            return false;
+    }
+    }
+    
+    public boolean epostKontroll(InfDB idb){
+    Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = tfEpost.getText(); 
+    
+    // Kontrollera om e-postadressen är giltig
+    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+        lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblEpostBad.setVisible(true); // Visa varning
+        return false;
+        
+    }}
+    
+    private boolean namnKontroll(){
+        Validering valid = new Validering(idb);
+        String namn = tfNamn.getText();
+        // kontrollerar namn format
+    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+            lblNamnBad.setVisible(false);
+            return true;
+    } else {
+            lblNamnBad.setVisible(true);
+            return false;
+    }
+}
+    
+   private boolean beskrivningKontroll(){
+           Validering valid = new Validering(idb);
+        String besk = tfBeskrivning.getText();
+        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
+    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
+            lblBeskrivningBad.setVisible(false);
+            return true;
+    } else {
+            lblBeskrivningBad.setVisible(true);
+            return false;
+    }
+} 
+    
+   private String getPChef(){
+        String selectedPerson = (String) cbChef.getSelectedItem();
+        String aid = " ";
+        for(String id : anstalldLista.keySet()){
+            String namn = anstalldLista.get(id);
+            if(selectedPerson != null && selectedPerson.equals(namn)){
+                aid = id;               
+            }
+        } 
+        return aid;
+    }
+   
+   private String getStad(){
+       String namn= (String) cbStad.getSelectedItem();
+        String sid = " ";
+        for(String id : stadLista.keySet()){
+            String ssStad = stadLista.get(id);
+            if(namn != null && namn.equals(ssStad)){
+                sid = id;               
+            }
+        } 
+        return sid;
+   }
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -88,6 +468,29 @@ public class AndraAvdelning extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAndra;
+    private javax.swing.JButton btnValj;
+    private javax.swing.JComboBox<String> cbAvdelning;
+    private javax.swing.JComboBox<String> cbChef;
+    private javax.swing.JComboBox<String> cbStad;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAdress;
+    private javax.swing.JLabel lblAdressBad;
+    private javax.swing.JLabel lblBeskrivning;
+    private javax.swing.JLabel lblBeskrivningBad;
+    private javax.swing.JLabel lblChef;
+    private javax.swing.JLabel lblEpost;
+    private javax.swing.JLabel lblEpostBad;
+    private javax.swing.JLabel lblNamn;
+    private javax.swing.JLabel lblNamnBad;
+    private javax.swing.JLabel lblStad;
+    private javax.swing.JLabel lblTelefon;
+    private javax.swing.JLabel lblTelefonBad;
+    private javax.swing.JTextField tfAdress;
+    private javax.swing.JTextField tfBeskrivning;
+    private javax.swing.JTextField tfEpost;
+    private javax.swing.JTextField tfNamn;
+    private javax.swing.JTextField tfTelefon;
     // End of variables declaration//GEN-END:variables
 
 }
