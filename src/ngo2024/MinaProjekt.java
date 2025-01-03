@@ -43,6 +43,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         projNamnLista = new ArrayList<String>();
 
         initComponents();
+        this.setLocationRelativeTo(null);
 
         /*
         //ska ta bort
@@ -73,16 +74,17 @@ public class MinaProjekt extends javax.swing.JFrame {
     }
 
     private void setInfo() {
-        getProjektnamn(); //loop här
+       // getProjektnamn(); //loop här
         getProjektStatus();
         getLedarProjektnamn();
 
         //lägg till kontrol av att det finns ledar projekt
         getLedarProjektnamn();
         getLedarProjektStatus();
-        lblPersonIdText.setText(getAidString());
-
+        textArea1.setEnabled(false);
+        txtAreaChefsProj.setEditable(false);
         textArea1.setText(String.join("\n", getAnvandarPid()));
+        txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         cbxValjProj.setVisible(false);
         lblValjProj.setVisible(false);
     }
@@ -116,6 +118,28 @@ public class MinaProjekt extends javax.swing.JFrame {
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
+        
+        
+        cbxValjProj.setVisible(true);
+        lblValjProj.setVisible(true);
+        cbxValjProj.addActionListener(e -> {
+            String valtProjekt = (String) cbxValjProj.getSelectedItem();
+
+            if (valtProjekt != null) {
+                try {
+                    String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
+
+                    if (projektPid != null) {
+                        new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
+                        this.dispose();
+                    } else {
+                        System.out.println("Inget pid hittades för projektet: " + valtProjekt);
+                    }
+                } catch (InfException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
     }
     
 
@@ -134,7 +158,8 @@ public class MinaProjekt extends javax.swing.JFrame {
             for (String pid : pidLista) {
                 //hämta namn från pid
                 //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
-                projektnamnLista.add(idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'"));
+                
+                projektnamnLista.add(" " + idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'") + "\t" + idb.fetchSingle("SELECT status FROM projekt WHERE pid ='" + pid + "'"));
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -142,33 +167,30 @@ public class MinaProjekt extends javax.swing.JFrame {
         return projektnamnLista;
 
     }
-
-    private String getProjektnamn() {
-        StringBuilder allaNamn = new StringBuilder();
+    
+    private ArrayList getChefsProjekt() {
+        ArrayList<String> pidLista = new ArrayList<>();
+        ArrayList<String> chefProjektLista = new ArrayList<>();
         try {
-            String sqlFraga = "SELECT projekt.pid, projekt.projektnamn "
-                    + "FROM projekt "
-                    + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
-                    + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
-                    + "WHERE anstalld.aid = '" + personAid + "'";
+            String sqlFragaPid = "SELECT projekt.pid FROM projekt "
+                    + "WHERE projektchef = '" + personAid + "'";
 
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+            pidLista = idb.fetchColumn(sqlFragaPid);
 
-            for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("projektnamn");
-                laggTillNyRad(namn);
-                allaNamn.append(namn).append("<br>");
+            for (String pid : pidLista) {
+                //hämta namn från pid
+                //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
+                chefProjektLista.add(idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'") + "\t" + idb.fetchSingle("SELECT status FROM projekt WHERE pid ='" + pid + "'"));
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        lblProjektLista.setText("<html>" + allaNamn.toString() + "</html>");
-        return allaNamn.toString();
+        return chefProjektLista;
+
     }
 
-    private void laggTillNyRad(String namn) {
-        lblProjektLista.setText(lblProjektLista.getText() + namn + "\n");
-    }
+    
+    
 
     private String getProjektStatus() {
         StringBuilder allaStatus = new StringBuilder();
@@ -210,6 +232,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                 laggTillNyRadLP(namn);
                 allaNamn.append(namn).append("<br>");
             }
+            
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
@@ -286,9 +309,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblLedareProj = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lblProjektLista = new javax.swing.JLabel();
-        btAndra = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
-        lblPersonIdText = new javax.swing.JLabel();
         lblProjektListaS = new javax.swing.JLabel();
         lblProjektListaL = new javax.swing.JLabel();
         lblProjektListaLS = new javax.swing.JLabel();
@@ -296,6 +317,8 @@ public class MinaProjekt extends javax.swing.JFrame {
         textArea1 = new javax.swing.JTextArea();
         cbxValjProj = new javax.swing.JComboBox<>();
         lblValjProj = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtAreaChefsProj = new javax.swing.JTextArea();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -317,7 +340,7 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
 
-        lblMinaProj.setFont(new java.awt.Font("Typo Round Light Demo", 1, 24)); // NOI18N
+        lblMinaProj.setFont(new java.awt.Font("Yu Gothic UI", 1, 24)); // NOI18N
         lblMinaProj.setForeground(new java.awt.Color(51, 0, 102));
         lblMinaProj.setText("Mina Projekt");
 
@@ -329,21 +352,12 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblProjektLista.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jScrollPane3.setViewportView(lblProjektLista);
 
-        btAndra.setText("Ändra");
-        btAndra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAndraActionPerformed(evt);
-            }
-        });
-
-        jToggleButton1.setText("Öppna Projekt");
+        jToggleButton1.setText("Gammal knapp");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-
-        lblPersonIdText.setText("AID");
 
         lblProjektListaS.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -353,11 +367,17 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         textArea1.setColumns(20);
         textArea1.setRows(5);
+        textArea1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(textArea1);
 
         cbxValjProj.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblValjProj.setText("Välj det projekt du vill öppna:");
+
+        txtAreaChefsProj.setColumns(20);
+        txtAreaChefsProj.setRows(5);
+        txtAreaChefsProj.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        jScrollPane4.setViewportView(txtAreaChefsProj);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -368,36 +388,36 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMinaProj, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLedareProj, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblProjektListaL, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblProjektListaL, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblProjektListaLS, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(lblPersonIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btAndra))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(8, 8, 8))
-                                .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblLedareProj, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblMinaProj, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)))
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(94, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43)
+                                .addComponent(lblProjektListaS, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2)
+                                .addGap(130, 130, 130))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(lblValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,32 +425,35 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnReturn)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblMinaProj)
                 .addGap(18, 18, 18)
                 .addComponent(lblValjProj)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblMinaProj)
-                .addGap(28, 28, 28)
-                .addComponent(lblLedareProj)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblProjekt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))
+                        .addGap(38, 38, 38))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblLedareProj)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblProjektListaLS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblProjektListaL, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(37, 37, 37)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblProjektListaLS, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                    .addComponent(lblProjektListaL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(lblProjekt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btAndra, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblPersonIdText, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
+                .addGap(26, 26, 26)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -443,53 +466,10 @@ public class MinaProjekt extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
-    private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
-        // new ProjektChef(idb, anvandarEpost).setVisible(true);
-/*
-        cbxValjProj.addActionListener(e -> {
-            String valtProjekt = (String) cbxValjProj.getSelectedItem();
-            
-            if (valtProjekt != null) {
-             try {
-                 String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
-                 
-                 if (projektPid != null) {
-                     new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
-                     this.dispose();
-                 }
-                 else {
-                     System.out.println("Inget pid hittades för projektet: " + valtProjekt);
-                 }
-             } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }  
-            }
-        });*/
-    }//GEN-LAST:event_btAndraActionPerformed
-
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         //new OmProjekt_1(idb, anvandarEpost, "3").setVisible(true);
         //this.dispose();
-        cbxValjProj.setVisible(true);
-        lblValjProj.setVisible(true);
-        cbxValjProj.addActionListener(e -> {
-            String valtProjekt = (String) cbxValjProj.getSelectedItem();
-
-            if (valtProjekt != null) {
-                try {
-                    String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
-
-                    if (projektPid != null) {
-                        new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
-                        this.dispose();
-                    } else {
-                        System.out.println("Inget pid hittades för projektet: " + valtProjekt);
-                    }
-                } catch (InfException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        });
+        
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /*
@@ -556,17 +536,16 @@ public class MinaProjekt extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAndra;
     private javax.swing.JButton btnReturn;
     private javax.swing.JComboBox<String> cbxValjProj;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblLedareProj;
     private javax.swing.JLabel lblMinaProj;
-    private javax.swing.JLabel lblPersonIdText;
     private javax.swing.JLabel lblProjekt;
     private javax.swing.JLabel lblProjektLista;
     private javax.swing.JLabel lblProjektListaL;
@@ -574,5 +553,6 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblProjektListaS;
     private javax.swing.JLabel lblValjProj;
     private javax.swing.JTextArea textArea1;
+    private javax.swing.JTextArea txtAreaChefsProj;
     // End of variables declaration//GEN-END:variables
 }
