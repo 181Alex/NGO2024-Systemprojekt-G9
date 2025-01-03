@@ -19,7 +19,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private String projektId;
     private String anvandarEpost;
     private String aid;
-    // ta bort ? private boolean projektLedare;
 
     /**
      * Creates new form OmProjekt
@@ -35,10 +34,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
         
-        //anropar kontroll för att se hurvida användaren är projektledare för projektet
-        // ta bort? projektLedare = projektLedarValidering();
-        
-        //projektLedare.arChef(anvandarEpost);
         andraButton();
     }
     
@@ -62,22 +57,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * Tar in parametervärdet för önskade projekts ID i datatyp String
-     *
-     * public String getAnstallda(String projektId) { String anstallda = " ";
-     * try { String sqlAnstallda = "SELECT fornamn, efternamn FROM anstalld JOIN
-     * ans_proj on ans_proj.aid = anstalld.aid JOIN projekt on ans_proj.pid =
-     * projekt.pid WHERE projekt.pid = '" + projektId + "'"; // anstallda =
-     * idb.fetchSingle(sqlAnstallda); //namnLista =
-     * idb.fetchColumn(sqlAnstallda); // change to hasmap. Get both names. Make
-     * list appear namnLista = idb.fetchSingle(sqlAnstallda); } catch
-     * (InfException ex) { System.out.println(ex.getMessage()); } return
-     * anstallda; }
-     *
-     *
-     */
-    /**
      * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare
      * att tyda tillkallar alla set text metoder för att hämta rätt information
      * från sql basen och initierar rätt text vid rätt fält
@@ -97,7 +76,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         getPartners(projektId);
     }
 
-    //private String getAnstallda()
     private String getAnstallda(String pid) {
         StringBuilder allaNamn = new StringBuilder();
         try {
@@ -113,7 +91,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
             for (HashMap<String, String> rad : resultat) {
                 String namn = rad.get("namn");
                 laggTillNyRad(namn);
-                //allaNamn.append(namn).append("\n"); 
                 allaNamn.append(namn).append("<br>");
             }
         } catch (InfException ex) {
@@ -126,7 +103,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private void laggTillNyRad(String namn) {
         lblProjAnstallda.setText(lblProjAnstallda.getText() + namn + "\n");
 
-        //lblProjAnstallda.setText("<html>" + namn.replace("\n", "<br>") + "</html>");
     }
 
     private String getPartners(String pid) {
