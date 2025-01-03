@@ -304,7 +304,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         lblH2Anstallda.setText("Anställda inom projektet:");
 
-        btnEdit.setText("Ändra projekt");
+        btnEdit.setText("Redigera Projekt");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
