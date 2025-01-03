@@ -296,6 +296,7 @@ private void fyllTabellAndra(){
             tfKostnad.setText(kostnad);
             tfNLand.setText(nLand);
             
+            
             //skriver ut nuvarande
             tfNprio.setText(nPrio);
             tfNstatus.setText(nStatus);
@@ -997,7 +998,8 @@ private void gorAndring(){
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblHallbarhet)
                                             .addComponent(lblProjektpartner)
-                                            .addComponent(lblHandlaggare))
+                                            .addComponent(lblHandlaggare)
+                                            .addComponent(lblMeddelande))
                                         .addGap(34, 34, 34)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btPartner)
@@ -1011,9 +1013,7 @@ private void gorAndring(){
                                     .addComponent(lblFelKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(102, 102, 102)
-                                .addComponent(lblMeddelande)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(102, 283, Short.MAX_VALUE)
                                 .addComponent(lblFelmeddelande)
                                 .addGap(85, 85, 85)))))
                 .addGap(19, 19, 19))
