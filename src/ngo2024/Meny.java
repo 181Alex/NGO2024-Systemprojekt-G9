@@ -139,7 +139,7 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
-       new MinProfil(idb).setVisible(true);
+       new MinProfil(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed

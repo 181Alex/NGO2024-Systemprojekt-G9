@@ -3,22 +3,93 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024;
-import oru.inf.InfDB;
-import oru.inf.InfException;
+ import javax.swing.JOptionPane;
+ import oru.inf.InfDB;
+ import oru.inf.InfException;
 
 /**
  *
- * @author Amalali
+ * @author Amali
  */
 public class MinProfil extends javax.swing.JFrame {
- private InfDB idb;
+  private InfDB idb;
+  private String epost;
+  private String name;
+  private String department;
     /**
      * Creates new form MinProfil
      */
-    public MinProfil(InfDB idb) {
-           this.idb=idb;
-        initComponents();
+ public MinProfil(InfDB idb, String epost) {
+  this.idb=idb;
+  this.epost=epost;
+  name = getname(epost);
+  department = getdepartment(epost);
+  initComponents();
     }
+
+    public MinProfil(InfDB idb) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+  
+    private String getname(String epost){
+       String txtName="";
+       try{
+        String sqlFraga = "SELECT namn FROM anstalld WHERE epost = '" + epost +"'";
+        txtName = idb.fetchSingle(sqlFraga);
+       } catch (InfException ex){
+        System.out.println(ex.getMessage());
+       } 
+       return txtName;
+        }
+
+
+    private String getdepartment (String epost){
+       String txtDepartment="";
+       try{
+        String sqlFraga = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE epost = '" + epost +"')";
+        txtDepartment = idb.fetchSingle(sqlFraga);
+       } catch (InfException ex){
+        System.out.println(ex.getMessage());
+       } 
+       return txtDepartment;
+        }
+        
+       
+   public MinProfil(){
+        initComponents();
+        txtName.setText(name);
+        txtEmail.setText(epost);
+           
+        txtDepartment.setText(department);
+           
+        txtName.setEditable(false);
+        txtEmail.setEditable(false);
+        }
+       
+    
+       private void onChangeClicked(){
+           txtName.setEditable(true);
+           txtEmail.setEditable(true);
+           
+           Change.setText("Spara");
+           Change.removeActionListener(Change.getActionListeners()[0]);
+           Change.addActionListener(evt -> onSavedClicked()); 
+       }
+       private void onSavedClicked(){
+           name = txtName.getText();
+           epost = txtEmail.getText();
+           
+           txtName.setEditable(false);
+           txtEmail.setEditable(false);
+           
+           Change.setText("Ändra");
+           Change.removeActionListener(Change.getActionListeners()[0]);
+           Change.addActionListener(evt -> onChangeClicked());
+           
+           JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
+       }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,57 +100,138 @@ public class MinProfil extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        MinProfil = new javax.swing.JLabel();
+        Namn = new javax.swing.JLabel();
+        Epost = new javax.swing.JLabel();
+        Avdelning = new javax.swing.JLabel();
+        Change = new javax.swing.JButton();
+        txtName = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtDepartment = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        MinProfil.setText("Min Profil");
+
+        Namn.setText("Namn:");
+
+        Epost.setText("Epost:");
+
+        Avdelning.setText("Avdelning:");
+
+        Change.setText("Ändra");
+        Change.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChangeActionPerformed(evt);
+            }
+        });
+
+        txtName.setEnabled(false);
+        txtName.setFocusable(false);
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+
+        txtEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtEmail.setEnabled(false);
+        txtEmail.setFocusable(false);
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+
+        txtDepartment.setEditable(false);
+        txtDepartment.setEnabled(false);
+        txtDepartment.setFocusable(false);
+        txtDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDepartmentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(MinProfil)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Namn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Epost, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtEmail))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Avdelning)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDepartment))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MinProfil)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Namn)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Epost)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Avdelning)
+                    .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(Change)
+                .addGap(18, 93, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDepartmentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDepartmentActionPerformed
+
+    private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ChangeActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MinProfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MinProfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MinProfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MinProfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               // new MinProfil().setVisible(true);
-            }
-        });
-    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Avdelning;
+    private javax.swing.JButton Change;
+    private javax.swing.JLabel Epost;
+    private javax.swing.JLabel MinProfil;
+    private javax.swing.JLabel Namn;
+    private javax.swing.JTextField txtDepartment;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }
