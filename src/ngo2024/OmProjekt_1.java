@@ -131,10 +131,11 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         StringBuilder allaNamn = new StringBuilder();
         try {
             String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn "
-                    + "FROM anstalld a "
-                    + "JOIN ans_proj on ans_proj.aid = a.aid "
-                    + "JOIN projekt on ans_proj.pid = projekt.pid "
-                    + "WHERE projekt.pid = '" + pid + "'";
+                 + "FROM anstalld a "
+                 + "JOIN ans_proj on ans_proj.aid = a.aid "
+                 + "JOIN projekt on ans_proj.pid = projekt.pid "
+                 + "WHERE projekt.pid = '" + pid + "' "
+                 + "ORDER BY a.fornamn ASC;";
             
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
