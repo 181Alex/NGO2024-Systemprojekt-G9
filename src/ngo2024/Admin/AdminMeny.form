@@ -27,30 +27,22 @@
               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnAndraAvdelning" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnMinProfil" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnLaggTillAvdelning" alignment="0" pref="176" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="28" pref="305" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
                                   <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
-                                  <Component id="btnLaggTillLand" max="32767" attributes="0"/>
-                                  <Component id="btnAndraLand" max="32767" attributes="0"/>
-                                  <Component id="jButton1" max="32767" attributes="0"/>
                                   <Component id="btnLaggTillPartner" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnLaggTillProjekt" min="-2" pref="175" max="-2" attributes="0"/>
+                                  <Component id="btnLaggTillProjekt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnAndraLand" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnLaggTillLand" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnGlobalaMal" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="btnMinAvdelning" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="brnMinaProjekt" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                                  <Component id="btnGlobalaMal" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnMinAvdelning" alignment="0" pref="156" max="32767" attributes="0"/>
+                                  <Component id="brnMinaProjekt" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -65,12 +57,15 @@
                       </Group>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnStad" min="-2" pref="127" max="-2" attributes="0"/>
-                          <Component id="btnTaBortPartner" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="btnTaBortPartner" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnStad" max="32767" attributes="0"/>
+                          <Component id="btnMinProfil" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLaggTillAvdelning" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAndraAvdelning" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="28" pref="305" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>

@@ -123,7 +123,6 @@ private void fyllTabellAndra(){
         String nPrio = " ";
         String nStatus = " ";
         String nLid = " ";
-        String projektnamn = " ";
 
         try{
             namn = idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid = " + pid);
@@ -712,12 +711,12 @@ private void gorAndring(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
-       this.dispose();
-       new OmProjekt_1(idb, epost, pid).setVisible(true);
+ 
     }//GEN-LAST:event_btCloseActionPerformed
 
     private void btTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTillbakaActionPerformed
         this.dispose();
+        new OmProjekt_1(idb, epost, pid).setVisible(true);
     }//GEN-LAST:event_btTillbakaActionPerformed
 
     private void btHallbarhetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHallbarhetActionPerformed
