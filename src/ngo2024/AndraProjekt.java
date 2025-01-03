@@ -16,11 +16,13 @@ public class AndraProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String pid;
+    private String epost;
     
     /** Creates new form AndraProjekt */
-    public AndraProjekt(InfDB idb, String pid) {
+    public AndraProjekt(InfDB idb, String pid, String epost) {
         this.idb = idb;
         this.pid = pid;
+        this.epost = epost;
         initComponents();
     }
 
@@ -49,7 +51,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
+                .addContainerGap(504, Short.MAX_VALUE)
                 .addComponent(btClose)
                 .addContainerGap())
         );
@@ -58,7 +60,7 @@ public class AndraProjekt extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btClose)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(409, Short.MAX_VALUE))
         );
 
         pack();
@@ -66,6 +68,7 @@ public class AndraProjekt extends javax.swing.JFrame {
 
     private void btCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCloseActionPerformed
        this.dispose();
+       new OmProjekt_1(idb, epost, pid).setVisible(true);
     }//GEN-LAST:event_btCloseActionPerformed
 
     /**
