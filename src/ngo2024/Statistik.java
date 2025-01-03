@@ -4,8 +4,13 @@
  */
 package ngo2024;
 
+import TabellDesign.MultiLineCellRenderer;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.HashMap;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -16,6 +21,7 @@ public class Statistik extends javax.swing.JFrame {
     
     private InfDB idb;
     private String epost;
+    private DefaultTableModel model;
 
     /**
      * Creates new form Statistik
@@ -24,7 +30,72 @@ public class Statistik extends javax.swing.JFrame {
         this.idb=idb;
         this.epost=epost;
         initComponents();
+        konstrueraTabell();
+        fyllTabell();
+        tabellDesign();
     }
+    
+    private void konstrueraTabell(){
+        model = (DefaultTableModel) tbStatistik.getModel();
+        model.setRowCount(0);
+    }
+    
+        private void tabellDesign() {
+        tbStatistik.getColumnModel().getColumn(0).setPreferredWidth(200);
+        tbStatistik.getColumnModel().getColumn(1).setPreferredWidth(316);
+
+
+        tbStatistik.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
+        tbStatistik.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+
+
+        for (int row = 0; row < tbStatistik.getRowCount(); row++) {
+            int rowHeight = tbStatistik.getRowHeight();
+            for (int column = 0; column < tbStatistik.getColumnCount(); column++) {
+                Component comp = tbStatistik.prepareRenderer(tbStatistik.getCellRenderer(row, column), row, column);
+                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+            }
+            tbStatistik.setRowHeight(row, rowHeight);
+        }
+}
+    
+    private String getChefId(String epost){
+        String aid = " ";
+        try {
+            
+        String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + epost + "'";
+        aid = idb.fetchSingle(sqlFraga);
+        
+        } catch (InfException ex) {
+            
+            System.out.println(ex.getMessage());
+        }
+        return aid;
+    }
+    
+    private void fyllTabell() {
+
+        try {
+            String sqlFraga = "SELECT kostnad, projektnamn FROM projekt "
+                    + "WHERE projektchef = " + getChefId(epost);
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                
+                    String projekt = rad.get("projektnamn");
+                    String kostnad = rad.get("kostnad");
+                   
+                    model.addRow(new Object[]{projekt, kostnad});
+
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+   
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,6 +107,14 @@ public class Statistik extends javax.swing.JFrame {
     private void initComponents() {
 
         btClose = new javax.swing.JButton();
+        spPanel = new javax.swing.JScrollPane();
+        tbStatistik = new javax.swing.JTable();
+        lblRubrik = new javax.swing.JLabel();
+        lblProjektchef = new javax.swing.JLabel();
+        lblTot = new javax.swing.JLabel();
+        lblMedel = new javax.swing.JLabel();
+        tfTot = new javax.swing.JTextField();
+        tfMedel = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,21 +125,85 @@ public class Statistik extends javax.swing.JFrame {
             }
         });
 
+        tbStatistik.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Projekt", "Kostnad"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        spPanel.setViewportView(tbStatistik);
+
+        lblRubrik.setText("Kostnaden för projekt:");
+
+        lblProjektchef.setText("Projektchef");
+
+        lblTot.setText("Totala kostnad:");
+
+        lblMedel.setText("Medel:");
+
+        tfTot.setEditable(false);
+
+        tfMedel.setEditable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
-                .addComponent(btClose)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRubrik)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lblMedel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfMedel, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblTot)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(tfTot, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btClose))
+                    .addComponent(lblProjektchef, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btClose)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(lblProjektchef)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btClose)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRubrik)
+                        .addGap(18, 18, 18)
+                        .addComponent(spPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTot)
+                    .addComponent(tfTot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblMedel)
+                    .addComponent(tfMedel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,5 +250,13 @@ public class Statistik extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btClose;
+    private javax.swing.JLabel lblMedel;
+    private javax.swing.JLabel lblProjektchef;
+    private javax.swing.JLabel lblRubrik;
+    private javax.swing.JLabel lblTot;
+    private javax.swing.JScrollPane spPanel;
+    private javax.swing.JTable tbStatistik;
+    private javax.swing.JTextField tfMedel;
+    private javax.swing.JTextField tfTot;
     // End of variables declaration//GEN-END:variables
 }
