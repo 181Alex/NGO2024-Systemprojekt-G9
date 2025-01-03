@@ -427,7 +427,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        new AndraProjekt(idb, projektId).setVisible(true);
+        this.dispose();
+        new AndraProjekt(idb, projektId, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     /**
