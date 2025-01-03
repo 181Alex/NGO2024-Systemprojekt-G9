@@ -33,6 +33,9 @@ public class AndraAvdelning extends javax.swing.JFrame {
         anstalldLista = new HashMap<>();
         stadLista = new HashMap<>();
         avdLista = new HashMap<>();
+        fyllProjektChef();
+        fyllStad();
+        fyllAvdelning();
     }
     
      private void fyllProjektChef(){
@@ -196,6 +199,11 @@ public class AndraAvdelning extends javax.swing.JFrame {
         cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
 
         btnValj.setText("Välj");
+        btnValj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnValjActionPerformed(evt);
+            }
+        });
 
         btnAndra.setText("Ändra");
 
@@ -313,6 +321,58 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private void tfEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEpostActionPerformed
 
     }//GEN-LAST:event_tfEpostActionPerformed
+
+    private void valjAvdelning(){
+        String avdNamn= (String) cbAvdelning.getSelectedItem();
+        String namn=avdNamn;
+        String beskrivning=" ";
+        String adress=" ";
+        String epost=" ";
+        String telefon=" ";
+        String chef=" ";
+        String stad=" ";
+        
+        
+        
+        
+        try{
+            beskrivning=idb.fetchSingle("SELECT beskrivning FROM avdelning WHERE namn= '" + avdNamn + "'");
+            adress=idb.fetchSingle("SELECT adress FROM avdelning WHERE namn= '" + avdNamn + "'");
+            epost=idb.fetchSingle("SELECT epost FROM avdelning WHERE namn= '" + avdNamn + "'");
+            telefon=idb.fetchSingle("SELECT telefon FROM avdelning WHERE namn= '" + avdNamn + "'");
+            chef=idb.fetchSingle("SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "'");
+            stad=idb.fetchSingle("SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "'");
+            
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+        tfNamn.setText(avdNamn);
+        tfBeskrivning.setText(beskrivning);
+        tfAdress.setText(adress);
+        tfEpost.setText(epost);
+        tfTelefon.setText(telefon);
+        
+        int chefS=Integer.parseInt(chef)-1;
+        int stadS=Integer.parseInt(stad)-1;
+        
+        cbStad.setSelectedIndex(stadS);
+        cbChef.setSelectedIndex(chefS);
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
+       valjAvdelning();
+    }//GEN-LAST:event_btnValjActionPerformed
 
         //kontroller kommer här
     
