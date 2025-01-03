@@ -189,7 +189,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btProjektActionPerformed
 
     private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed
-        // TODO add your handling code here:
+       new Statistik(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btStatistikActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
