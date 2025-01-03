@@ -27,12 +27,15 @@ public class MinProfil extends javax.swing.JFrame {
   this.firstname = getfirstname(epost);
   this.lastname = getlastname(epost);
   this.department = getdepartment(epost);
+  String password = getPassword(epost);
   initComponents();
   
   txtFirstName.setText(firstname != null ? firstname : "");
   txtLastName.setText(lastname != null ? lastname : "");
   txtEmail.setText(epost != null ? epost : "");
   txtDepartment.setText(department != null ? department : "");
+  txtPassword.setText(password != null ? password : "");
+  txtPassword.setEchoChar('*');
     }
 
     public MinProfil(InfDB idb) {
@@ -72,6 +75,17 @@ public class MinProfil extends javax.swing.JFrame {
        } 
        return txtDepartment;
         }
+    
+    private String getPassword(String epost) {
+        String password = "";
+        try {
+            String sqlQuery = "SELECT losenord FROM anstalld WHERE epost ='" + epost + "'";
+            password = idb.fetchSingle(sqlQuery);
+        }   catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+            return password;
+    }
         
        
    public MinProfil(){
@@ -89,8 +103,6 @@ public class MinProfil extends javax.swing.JFrame {
         txtEmail.setEditable(false);
         txtPassword.setEditable(false);
         
-        txtPassword.setVisible(false);
-        Losenord.setVisible(false);
         }
        
     
@@ -112,9 +124,6 @@ public class MinProfil extends javax.swing.JFrame {
            txtLastName.setEditable(false);
            txtEmail.setEditable(false);
            txtPassword.setEditable(false);
-        
-           txtPassword.setVisible(false);
-           Losenord.setVisible(false);
            
            Change.setText("Ändra");
            Change.removeActionListener(Change.getActionListeners()[0]);
@@ -334,15 +343,17 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setEditable(false);
             txtPassword.setFocusable(false);
             txtPassword.setEnabled(false);
-            txtPassword.setVisible(false);
-            
-            Losenord.setVisible(false);
+            txtPassword.setEchoChar('*');
             
             Change.setText("Ändra");
             
         JOptionPane.showMessageDialog(this, "Ändringar sparade!");
             isEditing = false;
         } else {
+            
+            String currentPassword = getPassword(this.epost);
+            txtPassword.setText(currentPassword);
+            
             txtFirstName.setEditable(true);
             txtFirstName.setFocusable(true);
             txtFirstName.setEnabled(true);
@@ -358,9 +369,7 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setEditable(true);
             txtPassword.setFocusable(true);
             txtPassword.setEnabled(true);
-            txtPassword.setVisible(true);
-            
-            Losenord.setVisible(true);
+            txtPassword.setEchoChar('\u0000');
             
             Change.setText("Spara");
             
