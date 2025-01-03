@@ -40,9 +40,9 @@
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnGlobalaMal" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="btnMinAvdelning" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="brnMinaProjekt" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                                  <Component id="btnGlobalaMal" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnMinAvdelning" alignment="0" pref="156" max="32767" attributes="0"/>
+                                  <Component id="brnMinaProjekt" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
