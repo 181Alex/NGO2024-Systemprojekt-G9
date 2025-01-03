@@ -466,7 +466,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LaggTillAvdelning().setVisible(true);
+                //new LaggTillAvdelning().setVisible(true);
             }
         });
     }
