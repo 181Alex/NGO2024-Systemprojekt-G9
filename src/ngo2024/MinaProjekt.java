@@ -66,6 +66,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         */
         
         setInfo();
+        getCbxInfo();
 
     }
 
@@ -92,6 +93,26 @@ public class MinaProjekt extends javax.swing.JFrame {
         return stringAid;
     }
     
+       private void getCbxInfo() {
+        cbxValjProj.removeAllItems();
+        String sqlFraga = "SELECT projektnamn FROM projekt "
+                + "LEFT JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                + "WHERE projektchef = '" + personAid + "' "
+                + "OR ans_proj.aid = '" + personAid + "' "
+                + "GROUP BY projekt.projektnamn";
+
+        ArrayList<String> projNamnLista = new ArrayList<>();
+
+        try {
+            projNamnLista = idb.fetchColumn(sqlFraga);
+            for (String projektnamn : projNamnLista) {
+                cbxValjProj.addItem(projektnamn);
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     
     private ArrayList getAnvandarPid(){
     ArrayList<String> pidLista = new ArrayList<>();
@@ -272,6 +293,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblProjektListaLS = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea1 = new javax.swing.JTextArea();
+        cbxValjProj = new javax.swing.JComboBox<>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -312,7 +334,7 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("TEST KNAPP");
+        jToggleButton1.setText("Ändra Projekt");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
@@ -330,6 +352,8 @@ public class MinaProjekt extends javax.swing.JFrame {
         textArea1.setColumns(20);
         textArea1.setRows(5);
         jScrollPane2.setViewportView(textArea1);
+
+        cbxValjProj.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -350,7 +374,9 @@ public class MinaProjekt extends javax.swing.JFrame {
                             .addComponent(btAndra))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                            .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(8, 8, 8))
                         .addComponent(lblProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,8 +385,8 @@ public class MinaProjekt extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))))
-                .addContainerGap(104, Short.MAX_VALUE))
+                            .addComponent(lblProjektListaS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,7 +397,9 @@ public class MinaProjekt extends javax.swing.JFrame {
                         .addComponent(btnReturn))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMinaProj)
                 .addGap(28, 28, 28)
@@ -482,6 +510,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAndra;
     private javax.swing.JButton btnReturn;
+    private javax.swing.JComboBox<String> cbxValjProj;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
