@@ -31,6 +31,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     private String anvandarEpost;
     private ArrayList<String> anvandarEpost1;
     private String personAid;
+    private ArrayList<String> projNamnLista;
 
     /**
      * Creates new form MinaProjekt
@@ -39,6 +40,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         this.idb = idb;
         anvandarEpost = inloggadAnvandare;
         personAid = getAidString();
+        projNamnLista = new ArrayList<String>();
 
         initComponents();
 
@@ -63,8 +65,7 @@ public class MinaProjekt extends javax.swing.JFrame {
             colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
         });
         timer3.start();
-        */
-        
+         */
         setInfo();
         getCbxInfo();
 
@@ -78,7 +79,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         getLedarProjektnamn();
         getLedarProjektStatus();
         lblPersonIdText.setText(getAidString());
-        
+
         textArea1.setText(String.join("\n", getAnvandarPid()));
     }
 
@@ -92,8 +93,8 @@ public class MinaProjekt extends javax.swing.JFrame {
         }
         return stringAid;
     }
-    
-       private void getCbxInfo() {
+
+    public void getCbxInfo() {
         cbxValjProj.removeAllItems();
         String sqlFraga = "SELECT projektnamn FROM projekt "
                 + "LEFT JOIN ans_proj ON projekt.pid = ans_proj.pid "
@@ -101,7 +102,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                 + "OR ans_proj.aid = '" + personAid + "' "
                 + "GROUP BY projekt.projektnamn";
 
-        ArrayList<String> projNamnLista = new ArrayList<>();
+        //ArrayList<String> projNamnLista = new ArrayList<>();
 
         try {
             projNamnLista = idb.fetchColumn(sqlFraga);
@@ -112,35 +113,31 @@ public class MinaProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
 
-    
-    private ArrayList getAnvandarPid(){
-    ArrayList<String> pidLista = new ArrayList<>();
-    ArrayList<String> projektnamnLista = new ArrayList<>();
-    try {
-        String sqlFragaPid = "SELECT projekt.pid "
-                + "FROM projekt "
-                + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
-                + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
-                + "WHERE anstalld.aid = '" + personAid + "'";
-            
-        pidLista = idb.fetchColumn(sqlFragaPid);
-    
-        for (String pid : pidLista) {
+    private ArrayList getAnvandarPid() {
+        ArrayList<String> pidLista = new ArrayList<>();
+        ArrayList<String> projektnamnLista = new ArrayList<>();
+        try {
+            String sqlFragaPid = "SELECT projekt.pid "
+                    + "FROM projekt "
+                    + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
+                    + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
+                    + "WHERE anstalld.aid = '" + personAid + "'";
+
+            pidLista = idb.fetchColumn(sqlFragaPid);
+
+            for (String pid : pidLista) {
                 //hämta namn från pid
                 //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
-                projektnamnLista.add(idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'"));
+                projektnamnLista.add(idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'"));
             }
-        }
-        catch (InfException ex) {
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-    return projektnamnLista;
-    
+        return projektnamnLista;
+
     }
-    
-    
-    
 
     private String getProjektnamn() {
         StringBuilder allaNamn = new StringBuilder();
@@ -435,13 +432,49 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
         // new ProjektChef(idb, anvandarEpost).setVisible(true);
-
+/*
+        cbxValjProj.addActionListener(e -> {
+            String valtProjekt = (String) cbxValjProj.getSelectedItem();
+            
+            if (valtProjekt != null) {
+             try {
+                 String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
+                 
+                 if (projektPid != null) {
+                     new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
+                     this.dispose();
+                 }
+                 else {
+                     System.out.println("Inget pid hittades för projektet: " + valtProjekt);
+                 }
+             } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }  
+            }
+        });*/
     }//GEN-LAST:event_btAndraActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        new OmProjekt_1(idb, anvandarEpost, "3").setVisible(true);
-        this.dispose();
+        //new OmProjekt_1(idb, anvandarEpost, "3").setVisible(true);
+        //this.dispose();
+        cbxValjProj.addActionListener(e -> {
+            String valtProjekt = (String) cbxValjProj.getSelectedItem();
 
+            if (valtProjekt != null) {
+                try {
+                    String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
+
+                    if (projektPid != null) {
+                        new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
+                        this.dispose();
+                    } else {
+                        System.out.println("Inget pid hittades för projektet: " + valtProjekt);
+                    }
+                } catch (InfException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /*
