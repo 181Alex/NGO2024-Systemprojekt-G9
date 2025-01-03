@@ -495,7 +495,7 @@ private String inloggadAnvandare;
         }}
     
         
-     public boolean telefonKontroll(InfDB idb) {
+    public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
     if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
