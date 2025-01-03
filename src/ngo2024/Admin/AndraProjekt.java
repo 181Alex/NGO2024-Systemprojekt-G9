@@ -125,6 +125,7 @@ private String getPid(){
     }
     return pid;
 }
+
 private String getChefAid(String pid){
     String aid = " ";
     
@@ -571,6 +572,7 @@ private boolean totalKontroll(){
     if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
             && slDatumKontroll() && kostnadKontroll() && mellanDatum()){
         ok = true;
+        gomBad();
         lblFelmeddelande.setVisible(false);
     } else {
         lblMeddelande.setVisible(false);
@@ -643,6 +645,7 @@ private void gorAndring(){
             System.out.println(ex.getMessage());
         } 
 }
+
 
 
     /**
@@ -1109,7 +1112,7 @@ private void gorAndring(){
          lblPid.setText(getPid());
           int i=cbxProjekt.getSelectedIndex();
           lblPnamn.setText(cbxProjekt.getItemAt(i));
-      }else if(chbAndra.isSelected()){         
+      }else if(chbAndra.isSelected()){ 
            fyllTabellAndra();
            visaAid();
            visaLid();
@@ -1124,11 +1127,11 @@ private void gorAndring(){
     }//GEN-LAST:event_btValjActionPerformed
 
     private void btHallbarhetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHallbarhetActionPerformed
-       new ProjektHallbarhet(idb, getPid());
+    new ProjektHallbarhet(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btHallbarhetActionPerformed
 
     private void btPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPartnerActionPerformed
-        // TODO add your handling code here:
+       new ProjektPartner(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btPartnerActionPerformed
 
     private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed

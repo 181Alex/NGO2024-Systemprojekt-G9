@@ -6,6 +6,7 @@ package ngo2024;
 
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import ngo2024.Validering;
 /**
  *
  * @author linneagottling
@@ -23,6 +24,17 @@ public class Meny extends javax.swing.JFrame {
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         lblInloggadAnvandare.setText(inloggadAnvandare);
+        statistikKnapp();
+        
+    }
+    
+    private void statistikKnapp(){
+        Validering enValidering = new Validering(idb);
+        if(enValidering.arChef(inloggadAnvandare)){
+            btStatistik.setVisible(true);
+        } else {
+            btStatistik.setVisible(false);
+        }
     }
 
     /**
@@ -46,6 +58,8 @@ public class Meny extends javax.swing.JFrame {
         btProjekt = new javax.swing.JButton();
         btAvdelning = new javax.swing.JButton();
         btMal = new javax.swing.JButton();
+        btStatistik = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,37 +108,55 @@ public class Meny extends javax.swing.JFrame {
             }
         });
 
+        btStatistik.setText("Statistik");
+        btStatistik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btStatistikActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("<- Tillbaka");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btMal)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btAvdelning)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btAvdelning)
+                            .addComponent(btStatistik)
+                            .addComponent(btMal))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblInloggadAnvandare)
-                            .addComponent(btProjekt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
+                            .addComponent(btProjekt)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(109, 109, 109)
+                                .addComponent(lblInloggadAnvandare)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btProfil)
-                            .addComponent(lblHandlaggare))
-                        .addGap(30, 30, 30))))
+                            .addComponent(lblHandlaggare, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btProfil, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(43, 43, 43))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
                     .addComponent(lblInloggadAnvandare)
                     .addComponent(lblHandlaggare))
-                .addGap(18, 18, 18)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btProfil)
                     .addComponent(btProjekt))
@@ -132,7 +164,9 @@ public class Meny extends javax.swing.JFrame {
                 .addComponent(btAvdelning)
                 .addGap(18, 18, 18)
                 .addComponent(btMal)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btStatistik)
+                .addContainerGap(195, Short.MAX_VALUE))
         );
 
         pack();
@@ -153,6 +187,15 @@ public class Meny extends javax.swing.JFrame {
     private void btProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProjektActionPerformed
         new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btProjektActionPerformed
+
+    private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed
+       new Statistik(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btStatistikActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+       new Inloggning(idb).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,10 +237,12 @@ public class Meny extends javax.swing.JFrame {
     private javax.swing.JButton btMal;
     private javax.swing.JButton btProfil;
     private javax.swing.JButton btProjekt;
+    private javax.swing.JButton btStatistik;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblHandlaggare;
