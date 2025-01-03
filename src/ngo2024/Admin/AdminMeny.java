@@ -310,7 +310,6 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private void brnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnMinaProjektActionPerformed
         new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_brnMinaProjektActionPerformed
 
     private void btnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnerActionPerformed
