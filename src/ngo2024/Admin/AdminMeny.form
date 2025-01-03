@@ -24,41 +24,44 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="btnMinProfil" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblEpost" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="303" max="32767" attributes="0"/>
-                      <Component id="lblAdmin" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace pref="397" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
-                              <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
-                              <Component id="btnLaggTillLand" max="32767" attributes="0"/>
-                              <Component id="btnAndraLand" max="32767" attributes="0"/>
-                              <Component id="jButton1" max="32767" attributes="0"/>
-                              <Component id="btnLaggTillPartner" alignment="0" max="32767" attributes="0"/>
-                              <Component id="btnLaggTillProjekt" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="lblEpost" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                              <Component id="lblAdmin" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="btnTaBortPartner" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="75" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="btnStad" pref="127" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnGlobalaMal" alignment="1" max="32767" attributes="0"/>
-                              <Component id="btnMinAvdelning" alignment="1" pref="127" max="32767" attributes="0"/>
-                              <Component id="brnMinaProjekt" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="btnLaggTillAnstalld" max="32767" attributes="0"/>
+                                      <Component id="btnTaBortAnstalld" max="32767" attributes="0"/>
+                                      <Component id="btnLaggTillLand" max="32767" attributes="0"/>
+                                      <Component id="btnAndraLand" max="32767" attributes="0"/>
+                                      <Component id="jButton1" max="32767" attributes="0"/>
+                                      <Component id="btnLaggTillPartner" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnLaggTillProjekt" min="-2" pref="175" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnTaBortPartner" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="75" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnStad" max="32767" attributes="0"/>
+                                  <Component id="btnGlobalaMal" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="btnMinAvdelning" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="brnMinaProjekt" alignment="1" min="-2" pref="127" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -66,13 +69,14 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnMinProfil" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -102,7 +106,7 @@
                   <Component id="btnTaBortPartner" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnStad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -220,6 +224,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaBortPartnerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;- Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
