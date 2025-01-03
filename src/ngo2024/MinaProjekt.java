@@ -75,6 +75,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     private void setInfo() {
         getProjektnamn(); //loop här
         getProjektStatus();
+        getLedarProjektnamn();
 
         //lägg till kontrol av att det finns ledar projekt
         getLedarProjektnamn();
