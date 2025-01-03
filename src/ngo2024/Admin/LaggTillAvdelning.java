@@ -408,9 +408,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
         totalKontroll();
         int hogsta=hogstaAvdid();
-        String sqlFraga="INSERT INTO land VALUES(" + hogsta + ",'" + tfNamn.getText() + "','"
-        + tfSprak.getText() + "'," + getValuta() + ", '" + tfTidzon.getText() + "','"
-        + tfPolitik.getText() + "','" + tfEkonomi.getText() + "')";
+        String sqlFraga="INSERT INTO avdelning";
         if(kontrollOk==true){
             try{
 

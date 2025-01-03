@@ -238,7 +238,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMinProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinProfilActionPerformed
-        new MinProfil(idb).setVisible(true);
+        new MinProfil(idb, inloggadAnvandare).setVisible(true);
     }//GEN-LAST:event_btnMinProfilActionPerformed
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
