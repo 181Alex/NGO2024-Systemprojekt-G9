@@ -55,6 +55,7 @@ public class AdminMeny extends javax.swing.JFrame {
         brnMinaProjekt = new javax.swing.JButton();
         btnTaBortPartner = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnLaggTillAvdelning = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,6 +161,13 @@ public class AdminMeny extends javax.swing.JFrame {
             }
         });
 
+        btnLaggTillAvdelning.setText("Lägg till avdelning");
+        btnLaggTillAvdelning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillAvdelningActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,9 +175,6 @@ public class AdminMeny extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnMinProfil)
-                        .addContainerGap(397, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -189,13 +194,18 @@ public class AdminMeny extends javax.swing.JFrame {
                                         .addComponent(btnLaggTillPartner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnLaggTillProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btnTaBortPartner))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(75, 150, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(btnStad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnGlobalaMal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnMinAvdelning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(brnMinaProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(28, 28, 28))))
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMinProfil)
+                            .addComponent(btnLaggTillAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +241,9 @@ public class AdminMeny extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaBortPartner)
                     .addComponent(btnStad))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLaggTillAvdelning)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -295,6 +307,10 @@ public class AdminMeny extends javax.swing.JFrame {
        new Inloggning(idb).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnLaggTillAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAvdelningActionPerformed
+       new LaggTillAvdelning(idb, inloggadAnvandare).setVisible(true);
+    }//GEN-LAST:event_btnLaggTillAvdelningActionPerformed
+
     
     
     
@@ -342,6 +358,7 @@ public class AdminMeny extends javax.swing.JFrame {
     private javax.swing.JButton btnAndraLand;
     private javax.swing.JButton btnGlobalaMal;
     private javax.swing.JButton btnLaggTillAnstalld;
+    private javax.swing.JButton btnLaggTillAvdelning;
     private javax.swing.JButton btnLaggTillLand;
     private javax.swing.JButton btnLaggTillPartner;
     private javax.swing.JButton btnLaggTillProjekt;
