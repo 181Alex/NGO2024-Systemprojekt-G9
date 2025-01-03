@@ -153,11 +153,13 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblHallbarhet" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblProjektpartner" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblHandlaggare" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="btPartner" min="-2" max="-2" attributes="0"/>
                                           <Component id="btHallbarhet" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btHandlaggare" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                                   </Group>
@@ -255,6 +257,11 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblProjektpartner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btPartner" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblHandlaggare" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btHandlaggare" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -617,6 +624,16 @@
     <Component class="javax.swing.JLabel" name="lblNLid">
       <Properties>
         <Property name="text" type="java.lang.String" value="lid"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblHandlaggare">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btHandlaggare">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xe4;gg till/ta bort fr&#xe5;n projekt"/>
       </Properties>
     </Component>
   </SubComponents>

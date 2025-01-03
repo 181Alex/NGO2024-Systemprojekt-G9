@@ -109,6 +109,8 @@ private void gomAlla(){
         cbxLand.setVisible(false);
         lblLid.setVisible(false);
         lblNLid.setVisible(false);
+        lblHandlaggare.setVisible(false);
+        btHandlaggare.setVisible(false);
     }   
 
     
@@ -367,6 +369,8 @@ private void gomTaBort(){
     btPartner.setVisible(false);
     lblProjektpartner.setVisible(false);
     lblHallbarhet.setVisible(false);
+    lblHandlaggare.setVisible(false);
+    btHandlaggare.setVisible(false);
     
 }
 
@@ -374,6 +378,8 @@ private void gomAndra(){
     // Göm allt om Ändra
     btAndra.setVisible(false);
     btHallbarhet.setVisible(false);
+    lblHandlaggare.setVisible(false);
+    btHandlaggare.setVisible(false);
     btPartner.setVisible(false);
     cbxPrioritet.setVisible(false);  
     cbxStatus.setVisible(false);
@@ -707,6 +713,8 @@ private void gorAndring(){
         tfNLand = new javax.swing.JTextField();
         lblLid = new javax.swing.JLabel();
         lblNLid = new javax.swing.JLabel();
+        lblHandlaggare = new javax.swing.JLabel();
+        btHandlaggare = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -875,6 +883,10 @@ private void gorAndring(){
 
         lblNLid.setText("lid");
 
+        lblHandlaggare.setText("Handläggare");
+
+        btHandlaggare.setText("Lägg till/ta bort från projekt");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -952,7 +964,6 @@ private void gorAndring(){
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblFelBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblFelNamn))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(62, 62, 62)
@@ -980,11 +991,13 @@ private void gorAndring(){
                                         .addGap(122, 122, 122)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblHallbarhet)
-                                            .addComponent(lblProjektpartner))
+                                            .addComponent(lblProjektpartner)
+                                            .addComponent(lblHandlaggare))
                                         .addGap(34, 34, 34)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(btPartner)
-                                            .addComponent(btHallbarhet))
+                                            .addComponent(btHallbarhet)
+                                            .addComponent(btHandlaggare))
                                         .addGap(0, 6, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1059,6 +1072,10 @@ private void gorAndring(){
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblProjektpartner)
                             .addComponent(btPartner))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblHandlaggare)
+                            .addComponent(btHandlaggare))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNLand)
@@ -1120,6 +1137,8 @@ private void gorAndring(){
            btPartner.setVisible(true);
            lblProjektpartner.setVisible(true);
            lblHallbarhet.setVisible(true);
+           lblHandlaggare.setVisible(true);
+           btHandlaggare.setVisible(true);
     
            
        }
@@ -1216,6 +1235,7 @@ private void gorAndring(){
     private javax.swing.JButton btAndra;
     private javax.swing.JButton btClose;
     private javax.swing.JButton btHallbarhet;
+    private javax.swing.JButton btHandlaggare;
     private javax.swing.JButton btPartner;
     private javax.swing.JButton btTaBort;
     private javax.swing.JButton btValj;
@@ -1235,6 +1255,7 @@ private void gorAndring(){
     private javax.swing.JLabel lblFelStartdatum;
     private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblHallbarhet;
+    private javax.swing.JLabel lblHandlaggare;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblLid;
