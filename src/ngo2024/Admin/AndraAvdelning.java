@@ -36,6 +36,8 @@ public class AndraAvdelning extends javax.swing.JFrame {
         fyllProjektChef();
         fyllStad();
         fyllAvdelning();
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
     }
     
      private void fyllProjektChef(){
@@ -138,6 +140,9 @@ public class AndraAvdelning extends javax.swing.JFrame {
         cbAvdelning = new javax.swing.JComboBox<>();
         btnValj = new javax.swing.JButton();
         btnAndra = new javax.swing.JButton();
+        lblLyckades = new javax.swing.JLabel();
+        lblError = new javax.swing.JLabel();
+        btnTillbaka = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -206,6 +211,24 @@ public class AndraAvdelning extends javax.swing.JFrame {
         });
 
         btnAndra.setText("Ändra");
+        btnAndra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAndraActionPerformed(evt);
+            }
+        });
+
+        lblLyckades.setForeground(new java.awt.Color(0, 204, 0));
+        lblLyckades.setText("Lyckades");
+
+        lblError.setForeground(new java.awt.Color(255, 51, 0));
+        lblError.setText("Error!");
+
+        btnTillbaka.setText("X");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,60 +237,74 @@ public class AndraAvdelning extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnValj))
-                    .addComponent(lblEpost)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblChef)
-                        .addGap(70, 70, 70)
-                        .addComponent(cbChef, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblAdress)
-                        .addGap(56, 56, 56)
-                        .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblAdressBad))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblStad)
-                        .addGap(70, 70, 70)
-                        .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTelefon)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnValj))
+                            .addComponent(lblEpost)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblAdress)
+                                .addGap(56, 56, 56)
+                                .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblAdressBad))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblStad)
+                                .addGap(70, 70, 70)
+                                .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTelefon)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(97, 97, 97)
+                                        .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblTelefonBad))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(97, 97, 97)
-                                .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTelefonBad))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEpostBad))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblBeskrivning)
-                            .addComponent(lblNamn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNamnBad)
-                            .addComponent(lblBeskrivningBad)))
-                    .addComponent(btnAndra))
-                .addContainerGap(160, Short.MAX_VALUE))
+                                .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblEpostBad))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblBeskrivning)
+                                    .addComponent(lblNamn))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNamnBad)
+                                    .addComponent(lblBeskrivningBad)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblChef)
+                                    .addComponent(btnAndra))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblLyckades)
+                                        .addGap(47, 47, 47)
+                                        .addComponent(lblError))
+                                    .addComponent(cbChef, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 154, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnTillbaka))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnValj))
@@ -307,7 +344,10 @@ public class AndraAvdelning extends javax.swing.JFrame {
                     .addComponent(lblChef)
                     .addComponent(cbChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(btnAndra)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAndra)
+                    .addComponent(lblLyckades)
+                    .addComponent(lblError))
                 .addContainerGap())
         );
 
@@ -324,14 +364,12 @@ public class AndraAvdelning extends javax.swing.JFrame {
 
     private void valjAvdelning(){
         String avdNamn= (String) cbAvdelning.getSelectedItem();
-        String namn=avdNamn;
         String beskrivning=" ";
         String adress=" ";
         String epost=" ";
         String telefon=" ";
-        String chef=" ";
         String stad=" ";
-        
+        String nChef=" ";
         
         
         
@@ -340,26 +378,47 @@ public class AndraAvdelning extends javax.swing.JFrame {
             adress=idb.fetchSingle("SELECT adress FROM avdelning WHERE namn= '" + avdNamn + "'");
             epost=idb.fetchSingle("SELECT epost FROM avdelning WHERE namn= '" + avdNamn + "'");
             telefon=idb.fetchSingle("SELECT telefon FROM avdelning WHERE namn= '" + avdNamn + "'");
-            chef=idb.fetchSingle("SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "'");
-            stad=idb.fetchSingle("SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "'");
-            
+            nChef = idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) "
+                                 + "FROM anstalld WHERE aid = (SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "')");
+            stad=idb.fetchSingle("SELECT namn "
+                                 + "FROM stad WHERE sid = (SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "')");
+
             
         }catch(InfException ex){
             System.out.println(ex.getMessage());
-        
-        
+}
         tfNamn.setText(avdNamn);
         tfBeskrivning.setText(beskrivning);
         tfAdress.setText(adress);
         tfEpost.setText(epost);
         tfTelefon.setText(telefon);
-        cbStad.setSelectedIndex(Integer.parseInt(stad));
-        cbChef.setSelectedIndex(Integer.parseInt(chef));
+        if (stad != null) {
+            cbStad.setSelectedItem(stad);
+        } else {
+            cbStad.setSelectedIndex(-1); 
+        }
+
+        if (nChef != null) {
+            cbChef.setSelectedItem(nChef);
+        } else {
+            cbChef.setSelectedIndex(-1); 
+        }
        
-    }}
+    }
     
     
-    
+   public String getAvdid(){
+       String avdNamn= (String) cbAvdelning.getSelectedItem();
+       String avddd=" ";
+       String sqlFraga="SELECT avdid FROM avdelning WHERE namn= '" + avdNamn + "'";
+       try{
+           avddd=idb.fetchSingle(sqlFraga);
+       }
+       catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+       return avddd;
+   }
     
     
     
@@ -370,6 +429,75 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
        valjAvdelning();
     }//GEN-LAST:event_btnValjActionPerformed
+
+    private String getChef(){
+        String nChef=(String) cbChef.getSelectedItem();
+        String sqlFraga="SELECT aid FROM anstalld WHERE CONCAT(fornamn, ' ', efternamn)= '" + nChef + "'";
+        String aid=" ";
+        try{
+            aid=idb.fetchSingle(sqlFraga);
+            
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return aid;
+    }
+    
+    private String getStadSid(){
+        String stad=(String) cbStad.getSelectedItem();
+        String sqlFraga="SELECT sid FROM stad WHERE namn= '" + stad + "'";
+        String sid=" ";
+        try{
+            sid=idb.fetchSingle(sqlFraga);
+            
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return sid;
+    }
+    
+    
+    
+    public void gorAndring(){
+        int avdid=Integer.parseInt(getAvdid());
+        String avdNamn= tfNamn.getText();
+        String beskrivning=tfBeskrivning.getText();
+        String adress=tfAdress.getText();
+        String epost=tfEpost.getText();
+        String telefon=tfTelefon.getText();
+        String stad= getStadSid();
+        String nChef=getChef();
+        
+        String sqlFraga="UPDATE avdelning SET namn = '" + avdNamn + "', beskrivning= '" + beskrivning
+                + "', adress= '" + adress + "', epost= '" + epost + "', telefon = '" + telefon
+                + "', stad= " + stad + ", chef= " + nChef + " where avdid =" + avdid;
+        
+        try{
+            idb.update(sqlFraga);
+        }catch(InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        
+    }
+    
+    
+    
+    private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
+        totalKontroll();
+            if(kontrollOk==true){
+                gorAndring();
+                lblLyckades.setVisible(true);
+                lblError.setVisible(false);
+                fyllAvdelning();
+            }
+            else{
+                lblError.setVisible(true);
+                lblLyckades.setVisible(false);}
+    }//GEN-LAST:event_btnAndraActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
         //kontroller kommer här
     
@@ -526,6 +654,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAndra;
+    private javax.swing.JButton btnTillbaka;
     private javax.swing.JButton btnValj;
     private javax.swing.JComboBox<String> cbAvdelning;
     private javax.swing.JComboBox<String> cbChef;
@@ -538,6 +667,8 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private javax.swing.JLabel lblChef;
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblEpostBad;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblNamn;
     private javax.swing.JLabel lblNamnBad;
     private javax.swing.JLabel lblStad;
