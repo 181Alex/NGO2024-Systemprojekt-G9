@@ -27,12 +27,6 @@ public class LaggTillLand extends javax.swing.JFrame {
         kontrollOk=false;
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
-        jLabel1.setVisible(false);
-        jLabel2.setVisible(false);
-        jLabel3.setVisible(false);
-        jLabel4.setVisible(false);
-        jLabel5.setVisible(false);
-        jLabel6.setVisible(false);
     }
     
     public void totalKontroll() {
