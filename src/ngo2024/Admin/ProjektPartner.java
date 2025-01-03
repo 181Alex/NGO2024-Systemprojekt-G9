@@ -133,7 +133,7 @@ public class ProjektPartner extends javax.swing.JFrame {
             lblMeddelande.setText("Tillagd");
             lblMeddelande.setVisible(true);
             } else {
-                lblFelmeddelande.setText("Detta mål finns redan för detta projekt");
+                lblFelmeddelande.setText("Denna partner finns redan för detta projekt");
                 lblFelmeddelande.setVisible(true);
                 lblMeddelande.setVisible(false);
             }

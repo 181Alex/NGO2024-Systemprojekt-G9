@@ -886,6 +886,11 @@ private void gorAndring(){
         lblHandlaggare.setText("Handläggare");
 
         btHandlaggare.setText("Lägg till/ta bort från projekt");
+        btHandlaggare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btHandlaggareActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1195,6 +1200,10 @@ private void gorAndring(){
            lblFelmeddelande.setVisible(true);
        }
     }//GEN-LAST:event_btAndraActionPerformed
+
+    private void btHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHandlaggareActionPerformed
+       new ProjektHandlaggare(idb, getPid()).setVisible(true);
+    }//GEN-LAST:event_btHandlaggareActionPerformed
 
     /**
      * @param args the command line arguments
