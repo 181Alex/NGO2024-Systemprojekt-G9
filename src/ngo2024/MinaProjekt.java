@@ -431,7 +431,6 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
         btnReturn.setBorderPainted(false);
-        new Meny(idb, anvandarEpost).setVisible(true); //kanske inte m?ste vara new
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
