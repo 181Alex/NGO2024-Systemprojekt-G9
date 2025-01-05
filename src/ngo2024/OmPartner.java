@@ -137,8 +137,10 @@ public class OmPartner extends javax.swing.JFrame {
             }
         });
 
+        txtAreaKontaktPers.setEditable(false);
         txtAreaKontaktPers.setColumns(20);
         txtAreaKontaktPers.setRows(5);
+        txtAreaKontaktPers.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(txtAreaKontaktPers);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
