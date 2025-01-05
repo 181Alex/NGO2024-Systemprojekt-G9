@@ -68,25 +68,24 @@ public class MinaProjekt extends javax.swing.JFrame {
         timer3.start();
          */
         setInfo();
-        getCbxInfo();
-        
 
     }
 
     private void setInfo() {
-       // getProjektnamn(); //loop här
+        // getProjektnamn(); //loop här
         //getProjektStatus();
-      //  getLedarProjektnamn();
+        //  getLedarProjektnamn();
 
         //lägg till kontrol av att det finns ledar projekt
-     //   getLedarProjektnamn();
-     //   getLedarProjektStatus();
+        //   getLedarProjektnamn();
+        //   getLedarProjektStatus();
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
         txtAreaProj.setText(String.join("\n", getAnvandarPid()));
         txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         cbxValjProj.setVisible(false);
         lblValjProj.setVisible(false);
+        getCbxInfo();
     }
 
     private String getAidString() {
@@ -109,7 +108,6 @@ public class MinaProjekt extends javax.swing.JFrame {
                 + "GROUP BY projekt.projektnamn";
 
         //ArrayList<String> projNamnLista = new ArrayList<>();
-
         try {
             projNamnLista = idb.fetchColumn(sqlFraga);
             for (String projektnamn : projNamnLista) {
@@ -118,8 +116,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
-        
+
         cbxValjProj.setVisible(true);
         lblValjProj.setVisible(true);
         cbxValjProj.addActionListener(e -> {
@@ -141,7 +138,6 @@ public class MinaProjekt extends javax.swing.JFrame {
             }
         });
     }
-    
 
     private ArrayList getAnvandarPid() {
         ArrayList<String> pidLista = new ArrayList<>();
@@ -158,7 +154,7 @@ public class MinaProjekt extends javax.swing.JFrame {
             for (String pid : pidLista) {
                 //hämta namn från pid
                 //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
-                
+
                 projektnamnLista.add(" " + idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'") + "\t" + idb.fetchSingle("SELECT status FROM projekt WHERE pid ='" + pid + "'"));
             }
         } catch (InfException ex) {
@@ -167,7 +163,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         return projektnamnLista;
 
     }
-    
+
     private ArrayList getChefsProjekt() {
         ArrayList<String> pidLista = new ArrayList<>();
         ArrayList<String> chefProjektLista = new ArrayList<>();
@@ -189,9 +185,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
 
-    
-    
-/*
+    /*
     private String getProjektStatus() {
         StringBuilder allaStatus = new StringBuilder();
         try {
@@ -268,7 +262,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblProjektListaLS.setText(lblProjektListaLS.getText() + status + "\n");
     } */
 
-    /*
+ /*
     private void konstrueraTabell() {
         model = (DefaultTableModel) tblProjekts.getModel();
         model.setRowCount (0);
@@ -359,6 +353,11 @@ public class MinaProjekt extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtAreaProj);
 
         cbxValjProj.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxValjProj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxValjProjActionPerformed(evt);
+            }
+        });
 
         lblValjProj.setText("Välj det projekt du vill öppna:");
 
@@ -437,8 +436,12 @@ public class MinaProjekt extends javax.swing.JFrame {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         //new OmProjekt_1(idb, anvandarEpost, "3").setVisible(true);
         //this.dispose();
-        
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void cbxValjProjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxValjProjActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxValjProjActionPerformed
 
     /*
     public void tblProjektModel() {
