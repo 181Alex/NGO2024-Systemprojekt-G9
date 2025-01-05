@@ -309,7 +309,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
 
-        lblH1ProjNamn.setFont(new java.awt.Font("Typo Round Bold Demo", 1, 24)); // NOI18N
+        lblH1ProjNamn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblH1ProjNamn.setForeground(new java.awt.Color(102, 0, 102));
 
         lblBeskrivning.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N

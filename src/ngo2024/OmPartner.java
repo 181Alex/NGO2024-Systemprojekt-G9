@@ -119,7 +119,7 @@ public class OmPartner extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
 
-        lblH1PartnerNamn.setFont(new java.awt.Font("Typo Round Bold Demo", 1, 18)); // NOI18N
+        lblH1PartnerNamn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblH1PartnerNamn.setForeground(new java.awt.Color(102, 0, 102));
 
         lblH2Branch.setText("Branch:");
@@ -180,8 +180,8 @@ public class OmPartner extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(btnTillbaka)
-                .addGap(35, 35, 35)
-                .addComponent(lblH1PartnerNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblH1PartnerNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblH2Adress)
@@ -198,7 +198,7 @@ public class OmPartner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblH2Kontaktperson)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
