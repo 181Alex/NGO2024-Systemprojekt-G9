@@ -31,6 +31,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         this.pid = pid;
         this.epost = epost;
         initComponents();
+        this.setLocationRelativeTo(null);
         landLista = new HashMap<>();
         gomBad();
         fyllTabellAndra();
