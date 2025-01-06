@@ -27,6 +27,7 @@ public class MinProfil extends javax.swing.JFrame {
   this.firstname = getfirstname(epost);
   this.lastname = getlastname(epost);
   this.department = getdepartment(epost);
+  
   String password = getPassword(epost);
   initComponents();
   
@@ -64,6 +65,26 @@ public class MinProfil extends javax.swing.JFrame {
        } 
        return txtLastName;
         }
+    
+    private boolean isEmailTaken(String epost) {
+        try{
+            String sqlQuery = "SELECT epost FROM anstalld WHERE epost = '" + epost +  "'";
+            String result = idb.fetchSingle(sqlQuery);
+            return result !=null;
+          }catch (InfException ex) {
+              System.out.println("Fel vid kontroll av eposten:" + ex.getMessage());
+              return false;
+        }
+    }
+    
+    public boolean checkEmsil(String epost){
+        boolean matches=false;
+        String checker="^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$";
+        if(epost.matches(checker)){
+            matches=true;
+        }
+        return matches;
+        }
 
     private String getdepartment (String epost){
        String txtDepartment="";
@@ -76,10 +97,10 @@ public class MinProfil extends javax.swing.JFrame {
        return txtDepartment;
         }
     
-    private String getPassword(String epost) {
+    private String getPassword(String email) {
         String password = "";
         try {
-            String sqlQuery = "SELECT losenord FROM anstalld WHERE epost ='" + epost + "'";
+            String sqlQuery = "SELECT losenord FROM anstalld WHERE epost ='" + email + "'";
             password = idb.fetchSingle(sqlQuery);
         }   catch (InfException ex){
             System.out.println(ex.getMessage());
@@ -314,17 +335,21 @@ public class MinProfil extends javax.swing.JFrame {
         if (isEditing) {
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
-            epost = txtEmail.getText();
+            String newEmail = txtEmail.getText();
             String newPassword = new String(txtPassword.getPassword());
             
+            if (!newEmail.equals(this.epost) && isEmailTaken(newEmail)){
+                JOptionPane.showMessageDialog (this, "Eposten används redan av en annnan användare", "Fel", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             try {
-                String updateQuery = "UPDATE anstalld SET fornamn = '"+ firstname +"', efternamn = '" + lastname + "', anstalld.epost = '" + epost + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
+                String updateQuery = "UPDATE anstalld SET fornamn = '"+ firstname +"', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
                 idb.update(updateQuery);
                 
-                this.epost = epost;
+                this.epost = newEmail;
            } catch (InfException ex) {
-               JOptionPane.showMessageDialog (this, "Fel vid uppdatering av databasen:" );
-                String message = ex.getMessage();
+               JOptionPane.showMessageDialog (this, "Fel vid uppdatering av databasen:",  "Fel", JOptionPane.ERROR_MESSAGE);
                return;
             }
             
