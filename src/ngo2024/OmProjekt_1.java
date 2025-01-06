@@ -74,7 +74,31 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         // lblProjAnstallda.setText(getAnstallda(projektId));
         getAnstallda(projektId);
         getPartners(projektId);
-        getCbxInfo();
+        getCbxInfo(projektId);
+        getGlobalaMal();
+    }
+    
+    private String getGlobalaMal() {
+        StringBuilder allaMal = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT h.namn FROM hallbarhetsmal h "
+                    + "JOIN proj_hallbarhet ph ON h.hid = ph.hid "
+                    + "JOIN projekt p ON ph.pid = p.pid "
+                    + "WHERE p.pid = '" + projektId + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad2(namn);
+
+                allaMal.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblGoal.setText("<html>" + allaMal.toString() + "</html>");
+        return allaMal.toString();
     }
 
     private String getAnstallda(String pid) {
@@ -233,13 +257,10 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         return projektProjektChef;
     }
     
-    public void getCbxInfo() {
+    public void getCbxInfo(String projektId) {
         cbxValjPartner.removeAllItems();
         ArrayList<String> partnerLista = new ArrayList<String>();
-        String sqlFraga = "SELECT namn FROM partner "
-                + "JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid "
-                + "JOIN projekt ON projekt_partner.pid = projekt.pid "
-                + "WHERE projekt.pid = '" + projektId + "'";
+        String sqlFraga = "SELECT namn FROM partner JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid JOIN projekt ON projekt_partner.pid = projekt.pid WHERE projekt.pid = '" + projektId + "'";
 
         try {
             partnerLista = idb.fetchColumn(sqlFraga);
@@ -249,8 +270,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-    //cbxValjProj.setVisible(true);
-        //lblValjProj.setVisible(true);
+
         cbxValjPartner.addActionListener(e -> {
             String valdPartner = (String) cbxValjPartner.getSelectedItem();
 
@@ -260,7 +280,6 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
                     if (partnerPid != null) {
                         new OmPartner(idb, partnerPid, anvandarEpost, projektId).setVisible(true);
-                        //new Inloggning(idb).setVisible(true);
                         this.dispose();
                     } else {
                         System.out.println("Inget pid hittades för projektet: " + valdPartner);
@@ -305,6 +324,8 @@ public class OmProjekt_1 extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         cbxValjPartner = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        lblH2Goal = new javax.swing.JLabel();
+        lblGoal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -365,6 +386,13 @@ public class OmProjekt_1 extends javax.swing.JFrame {
 
         jLabel3.setText("Se mer information om samarbetspartner:");
 
+        lblH2Goal.setText("Mål:");
+
+        lblGoal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblGoal.setText("Globala mål");
+        lblGoal.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblGoal.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -385,24 +413,24 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                         .addGap(280, 280, 280))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblH2Partners, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblH2ProjChef, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblProjektChef, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblH2Anstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(448, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProjAnstallda, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblStartDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblSlutDatum, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -418,20 +446,18 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(lblH2Prio, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(lblPrioritet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(lblH2Kostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(lblKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbxValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(317, 317, 317))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblH2Partners, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(lblH2Anstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblGoal, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblH2Goal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(89, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,9 +488,13 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                         .addComponent(lblH2Status))
                     .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addComponent(lblH2Anstallda)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblH2Anstallda)
+                    .addComponent(lblH2Goal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblProjAnstallda, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGoal, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -543,8 +573,10 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblBeskrivning;
+    private javax.swing.JLabel lblGoal;
     private javax.swing.JLabel lblH1ProjNamn;
     private javax.swing.JLabel lblH2Anstallda;
+    private javax.swing.JLabel lblH2Goal;
     private javax.swing.JLabel lblH2Kostnad;
     private javax.swing.JLabel lblH2Partners;
     private javax.swing.JLabel lblH2Prio;

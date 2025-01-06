@@ -45,28 +45,27 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblH2Partners" min="-2" pref="112" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="lblH2ProjChef" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblProjektChef" min="-2" pref="211" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblH2Anstallda" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
-                          <Component id="lblPartners" alignment="0" min="-2" pref="287" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="448" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblProjAnstallda" alignment="0" pref="430" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
+                              <Component id="lblStartDatum" min="-2" pref="66" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" pref="23" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblSlutDatum" min="-2" pref="66" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="cbxValjPartner" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblPartners" alignment="0" min="-2" pref="287" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="lblStartDatum" min="-2" pref="66" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel1" min="-2" pref="23" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblSlutDatum" min="-2" pref="66" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -85,7 +84,7 @@
                                           <Group type="102" attributes="0">
                                               <Component id="lblH2Prio" min="-2" pref="54" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblPrioritet" min="-2" pref="113" max="-2" attributes="0"/>
+                                              <Component id="lblPrioritet" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lblH2Kostnad" min="-2" pref="55" max="-2" attributes="0"/>
@@ -94,20 +93,17 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cbxValjPartner" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblH2Anstallda" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
+                                  <Component id="lblProjAnstallda" alignment="0" min="-2" pref="308" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblGoal" min="-2" pref="284" max="-2" attributes="0"/>
+                                  <Component id="lblH2Goal" min="-2" pref="42" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="317" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="lblH2Partners" min="-2" pref="112" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -136,7 +132,7 @@
                   <Component id="lblH2ProjChef" min="-2" max="-2" attributes="0"/>
                   <Component id="lblProjektChef" min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblBeskrivning" min="-2" pref="29" max="-2" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -148,9 +144,15 @@
                   <Component id="lblStatus" min="-2" pref="16" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-              <Component id="lblH2Anstallda" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblH2Anstallda" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblH2Goal" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblProjAnstallda" min="-2" pref="82" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblProjAnstallda" min="-2" pref="82" max="-2" attributes="0"/>
+                  <Component id="lblGoal" min="-2" pref="73" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="1" groupAlignment="3" attributes="0">
@@ -309,6 +311,19 @@
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Se mer information om samarbetspartner:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblH2Goal">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="M&#xe5;l:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblGoal">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Globala m&#xe5;l"/>
+        <Property name="verticalAlignment" type="int" value="1"/>
+        <Property name="verticalTextPosition" type="int" value="1"/>
       </Properties>
     </Component>
   </SubComponents>

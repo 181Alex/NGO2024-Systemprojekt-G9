@@ -54,10 +54,10 @@ public class Validering {
     public boolean isProjektetsChef(String ePost, String projektId){
         boolean isProjektetsChef=false;
         try {
-            String sqlFraga = "SELECT pid FROM projekt WHERE projektchef IN(SELECT aid FROM anstalld where epost = '" + ePost + "')";
-            String valideringsPid = idb.fetchSingle(sqlFraga);
+            String sqlFraga = "SELECT a.epost FROM anstalld a JOIN projekt p ON a.aid = p.projektchef WHERE p.pid = '" + projektId + "'";
+            String valideringsEpost = idb.fetchSingle(sqlFraga);
         
-            if (valideringsPid != null && valideringsPid.equals(projektId)) {
+            if (valideringsEpost != null && valideringsEpost.equals(ePost)) {
                 isProjektetsChef = true;
             }
         
