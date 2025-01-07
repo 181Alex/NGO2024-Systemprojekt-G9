@@ -138,7 +138,7 @@ public class Inloggning extends javax.swing.JFrame {
               this.setVisible(false);
           }
           else if(losen.equals(dbLosen) && validering.arAdmin(ePost)==true){
-              new AdminMeny(idb, ePost).setVisible(true);
+              new AdminMeny(idb, ePost, getAidString(ePost)).setVisible(true);
               this.setVisible(false);
           }
           else{

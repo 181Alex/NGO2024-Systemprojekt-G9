@@ -19,15 +19,17 @@ public class AdminMeny extends javax.swing.JFrame {
 
     private InfDB idb;
     private String inloggadAnvandare;
+    private String aid;
     
     /**
      * Creates new form AdminMeny
      */
-    public AdminMeny(InfDB idb, String inloggadAnvandare) {
+    public AdminMeny(InfDB idb, String inloggadAnvandare, String aid) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         lblEpost.setText(inloggadAnvandare);
+        this.aid = aid;
     }
 
     /**
