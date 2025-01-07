@@ -4,6 +4,7 @@
  */
 package ngo2024;
  import javax.swing.JOptionPane;
+import ngo2024.Admin.AdminMeny;
  import oru.inf.InfDB;
  import oru.inf.InfException;
 
@@ -14,6 +15,7 @@ package ngo2024;
 public class MinProfil extends javax.swing.JFrame {
   private InfDB idb;
   private String epost;
+  private String aid;
   private String firstname;
   private String lastname;
   private String department;
@@ -24,6 +26,7 @@ public class MinProfil extends javax.swing.JFrame {
  public MinProfil(InfDB idb, String aid, String epost) {
   this.idb=idb;
   this.epost=epost;
+  this.aid=aid;
   this.firstname = getfirstname(aid);
   this.lastname = getlastname(aid);
   this.department = getdepartment(aid);
@@ -119,12 +122,14 @@ public class MinProfil extends javax.swing.JFrame {
         txtPassword.setEditable(false);
         
         }
-       
+   
     
        private void onChangeClicked(){
            txtFirstName.setEditable(true);
            txtLastName.setEditable(true);
            txtEmail.setEditable(true);
+           txtPassword.setEditable(true);
+           txtPassword.setText(getPassword(aid));
            
            Change.setText("Spara");
            Change.removeActionListener(Change.getActionListeners()[0]);
@@ -139,6 +144,7 @@ public class MinProfil extends javax.swing.JFrame {
            txtLastName.setEditable(false);
            txtEmail.setEditable(false);
            txtPassword.setEditable(false);
+           
            
            Change.setText("Ändra");
            Change.removeActionListener(Change.getActionListeners()[0]);
@@ -427,7 +433,7 @@ public class MinProfil extends javax.swing.JFrame {
             lblFelInmatning.setVisible(true);
         } else {
             
-            String currentPassword = getPassword(this.epost);
+            String currentPassword = getPassword(aid);
             txtPassword.setText(currentPassword);
             
             txtFirstName.setEditable(true);
@@ -462,6 +468,20 @@ public class MinProfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void TillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TillbakaActionPerformed
+           Validering valid = new Validering(idb); 
+        boolean admins=valid.arAdmin(epost);
+        if(admins==true){
+            this.dispose();
+            new AdminMeny(idb, epost, aid).setVisible(true);
+        }
+        else{
+            this.dispose();
+            new Meny(idb, epost, aid).setVisible(true);
+        }
+        
+        
+        
+        
         this.dispose();
     }//GEN-LAST:event_TillbakaActionPerformed
 
