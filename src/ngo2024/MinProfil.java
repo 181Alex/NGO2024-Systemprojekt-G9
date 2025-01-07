@@ -21,7 +21,7 @@ public class MinProfil extends javax.swing.JFrame {
     /**
      * Creates new form MinProfil
      */
- public MinProfil(InfDB idb, String aid) {
+ public MinProfil(InfDB idb, String aid, String epost) {
   this.idb=idb;
   this.epost=epost;
   this.firstname = getfirstname(aid);
