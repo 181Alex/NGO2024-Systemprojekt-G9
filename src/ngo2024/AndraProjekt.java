@@ -77,9 +77,9 @@ public class AndraProjekt extends javax.swing.JFrame {
         }
         return lid;
     }
-
-    /**
-     * Fyller combo box med alla länder från databasen
+/**
+     *  Fyller i combo box med alla länder från databasen
+     * @param pid ID för projekt som eftersöks
      */
     private void setCbxLand() {
 
@@ -103,10 +103,10 @@ public class AndraProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-
     /**
-     * Fyller combo box med alla prioriteringsvärden från databasen
+     *  Fyller i combo box med alla prioriteringsvärden från databasen
      */
+
     private void setCbxPrio() {
 
         cbxPrioritet.removeAllItems();

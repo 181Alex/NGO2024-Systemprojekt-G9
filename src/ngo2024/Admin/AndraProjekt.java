@@ -23,7 +23,11 @@ public class AndraProjekt extends javax.swing.JFrame {
     private HashMap<String, String> landLista;
 
     /**
-     * Creates new form AndraProjekt
+     * Initierar AndraProjekt objekt 
+     * Används av administratören för att göra ändringar i ett specifikt projekt
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param epost 
      */
     public AndraProjekt(InfDB idb, String epost) {
         this.idb = idb;
