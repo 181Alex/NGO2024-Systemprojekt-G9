@@ -27,9 +27,10 @@ public class MinaProjekt extends javax.swing.JFrame {
      * @param idb
      * @param aid
      */
-    public MinaProjekt(InfDB idb, String aid, String anvandarEpost) {
+    public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;
         this.aid = aid;
+        anvandarEpost = getAnvandarEpost();
         projNamnLista = new ArrayList<String>();
 
         initComponents();
@@ -54,6 +55,16 @@ public class MinaProjekt extends javax.swing.JFrame {
             lblStats.setVisible(false); 
         }
         
+    }
+    
+    private String getAnvandarEpost () {
+        String sqlFraga = " ";
+        try {
+            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return sqlFraga;
     }
 
     public void getCbxInfo() {

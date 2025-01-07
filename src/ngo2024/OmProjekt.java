@@ -271,10 +271,10 @@ public class OmProjekt extends javax.swing.JFrame {
 
             if (valdPartner != null) {
                 try {
-                    String partnerPid = idb.fetchSingle("SELECT pid FROM partner WHERE partner.namn = '" + valdPartner + "'");
+                    String partnerID = idb.fetchSingle("SELECT pid FROM partner WHERE partner.namn = '" + valdPartner + "'");
 
-                    if (partnerPid != null) {
-                        new OmPartner(idb, partnerPid, aid, projektId).setVisible(true);
+                    if (partnerID != null) {
+                        new OmPartner(idb, partnerID, aid, projektId).setVisible(true);
                         this.dispose();
                     } else {
                         System.out.println("Inget pid hittades för projektet: " + valdPartner);
@@ -512,14 +512,7 @@ public class OmProjekt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        String sqlFraga = " ";
-        try {
-            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        
-        new MinaProjekt(idb, aid, sqlFraga).setVisible(true);
+        new MinaProjekt(idb, aid).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
