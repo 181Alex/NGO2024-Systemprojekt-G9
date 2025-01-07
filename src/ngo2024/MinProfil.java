@@ -77,7 +77,7 @@ public class MinProfil extends javax.swing.JFrame {
         }
     }
     
-    public boolean checkEmsil(String epost){
+    public boolean checkEmail(String epost){
         boolean matches=false;
         String checker="^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$";
         if(epost.matches(checker)){
