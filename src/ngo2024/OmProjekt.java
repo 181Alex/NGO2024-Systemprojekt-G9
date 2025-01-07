@@ -13,7 +13,7 @@ import java.util.HashMap;
 /**
   * @author frida.selin
   */
-public class OmProjekt_1 extends javax.swing.JFrame {
+public class OmProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String projektId;
@@ -23,32 +23,20 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     /**
      * Creates new form OmProjekt
      */
-    public OmProjekt_1(InfDB idb, String anvandarEpost, String projektId) {
+    public OmProjekt(InfDB idb, String aid, String projektId) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.projektId = projektId;
         this.anvandarEpost = anvandarEpost;
         this.idb = idb;
-        this.aid = getAidString();
+        this.aid = aid;
 
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
 
         andraButton();
     }
-    
-     private String getAidString() {
-        String stringAid = "";
-        try {
-            String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + anvandarEpost + "'";
-            stringAid = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return stringAid;
-    }
-
- 
+   
     private void andraButton() {
         Validering valid = new Validering(idb);
         if (!valid.isProjektetsChef(aid, projektId)){
@@ -279,7 +267,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
                     String partnerPid = idb.fetchSingle("SELECT pid FROM partner WHERE partner.namn = '" + valdPartner + "'");
 
                     if (partnerPid != null) {
-                        new OmPartner(idb, partnerPid, anvandarEpost, projektId).setVisible(true);
+                        new OmPartner(idb, partnerPid, aid, projektId).setVisible(true);
                         this.dispose();
                     } else {
                         System.out.println("Inget pid hittades för projektet: " + valdPartner);
@@ -517,13 +505,13 @@ public class OmProjekt_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new MinaProjekt(idb, anvandarEpost).setVisible(true);
+        new MinaProjekt(idb, aid).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         this.dispose();
-        new AndraProjekt(idb, projektId, anvandarEpost).setVisible(true);
+        new AndraProjekt(idb, projektId, aid).setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void cbxValjPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxValjPartnerActionPerformed

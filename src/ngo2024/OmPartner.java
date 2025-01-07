@@ -202,7 +202,7 @@ public class OmPartner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new OmProjekt_1(idb, anvandarEpost, projektId).setVisible(true);
+        new OmProjekt(idb, anvandarEpost, projektId).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 

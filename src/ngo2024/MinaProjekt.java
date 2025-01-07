@@ -5,21 +5,11 @@
  */
 package ngo2024;
 
-import javax.swing.table.DefaultTableModel;
 import ngo2024.Meny;
 import ngo2024.Validering;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.*;
-import TabellDesign.MultiLineCellRenderer;
-import java.awt.Component;
-
-//ska ta bort
-import javax.swing.Timer;
-import java.awt.Color;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  *
@@ -29,66 +19,32 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String anvandarEpost;
-    private ArrayList<String> anvandarEpost1;
-    private String personAid;
+    private String aid;
     private ArrayList<String> projNamnLista;
 
     /**
      * Creates new form MinaProjekt
+     * @param idb
+     * @param aid
      */
     public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;
-        personAid = aid;
+        this.aid = aid;
         projNamnLista = new ArrayList<String>();
 
         initComponents();
         this.setLocationRelativeTo(null);
-
-        /*
-        //ska ta bort
-        Color[] colors = {Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.RED};
-        int[] colorIndex = {0}; // Use an array for mutability inside the timer
-        Timer timer = new Timer(500, e -> {
-            jToggleButton1.setBackground(colors[colorIndex[0]]);
-            colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
-        });
-        timer.start();
-        
-        Timer timer2 = new Timer(1000, e -> {
-           getContentPane().setBackground(colors[colorIndex[0]]);
-            colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
-        });
-        timer2.start();
-        
-        Timer timer3 = new Timer(200, e -> {
-            lblMinaProj.setForeground(colors[colorIndex[0]]);
-            colorIndex[0] = (colorIndex[0] + 1) % colors.length; // Cycle through colors
-        });
-        timer3.start();
-         */
         setInfo();
-        
-        
-
     }
 
     private void setInfo() {
-        // getProjektnamn(); //loop här
-        //getProjektStatus();
-        //  getLedarProjektnamn();
-
-        //lägg till kontrol av att det finns ledar projekt
-        //   getLedarProjektnamn();
-        //   getLedarProjektStatus();
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
         txtAreaProj.setText(String.join("\n", getAnvandarPid()));
-        //cbxValjProj.setVisible(false);
-        //lblValjProj.setVisible(false);
         getCbxInfo();
         
         Validering valid = new Validering(idb);
-        if (valid.arChef(anvandarEpost)){
+        if (valid.arChef2(aid)){
             txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         }    
         else {
@@ -100,26 +56,14 @@ public class MinaProjekt extends javax.swing.JFrame {
         
     }
 
-    private String getAidString() {
-        String stringAid = "";
-        try {
-            String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + anvandarEpost + "'";
-            stringAid = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return stringAid;
-    }
-
     public void getCbxInfo() {
         cbxValjProj.removeAllItems();
         String sqlFraga = "SELECT projektnamn FROM projekt "
                 + "LEFT JOIN ans_proj ON projekt.pid = ans_proj.pid "
-                + "WHERE projektchef = '" + personAid + "' "
-                + "OR ans_proj.aid = '" + personAid + "' "
+                + "WHERE projektchef = '" + aid + "' "
+                + "OR ans_proj.aid = '" + aid + "' "
                 + "GROUP BY projekt.projektnamn";
 
-        //ArrayList<String> projNamnLista = new ArrayList<>();
         try {
             projNamnLista = idb.fetchColumn(sqlFraga);
             for (String projektnamn : projNamnLista) {
@@ -139,7 +83,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                     String projektPid = idb.fetchSingle("SELECT pid FROM projekt WHERE projektnamn = '" + valtProjekt + "'");
 
                     if (projektPid != null) {
-                        new OmProjekt_1(idb, anvandarEpost, projektPid).setVisible(true);
+                        new OmProjekt(idb, aid, projektPid).setVisible(true);
                         this.dispose();
                     } else {
                         System.out.println("Inget pid hittades för projektet: " + valtProjekt);
@@ -159,7 +103,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                     + "FROM projekt "
                     + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
                     + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
-                    + "WHERE anstalld.aid = '" + personAid + "'";
+                    + "WHERE anstalld.aid = '" + aid + "'";
 
             pidLista = idb.fetchColumn(sqlFragaPid);
 
@@ -181,7 +125,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         ArrayList<String> chefProjektLista = new ArrayList<>();
         try {
             String sqlFragaPid = "SELECT projekt.pid FROM projekt "
-                    + "WHERE projektchef = '" + personAid + "'";
+                    + "WHERE projektchef = '" + aid + "'";
 
             pidLista = idb.fetchColumn(sqlFragaPid);
 
@@ -197,107 +141,6 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
 
-    /*
-    private String getProjektStatus() {
-        StringBuilder allaStatus = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT projekt.pid, projekt.status "
-                    + "FROM projekt "
-                    + "JOIN ans_proj ON projekt.pid = ans_proj.pid "
-                    + "JOIN anstalld ON ans_proj.aid = anstalld.aid "
-                    + "WHERE anstalld.aid = '" + personAid + "'";
-
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String status = rad.get("status");
-                laggTillNyRadStatus(status);
-                allaStatus.append(status).append("<br>");
-            }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblProjektListaS.setText("<html>" + allaStatus.toString() + "</html>");
-        return allaStatus.toString();
-    }
-
-    private void laggTillNyRadStatus(String status) {
-        lblProjektListaS.setText(lblProjektListaS.getText() + status + "\n");
-    }
-
-    private String getLedarProjektnamn() {
-        StringBuilder allaNamn = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT projekt.pid, projekt.projektnamn "
-                    + "FROM projekt WHERE projektchef = '" + personAid + "'";
-
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("projektnamn");
-                laggTillNyRadLP(namn);
-                allaNamn.append(namn).append("<br>");
-            }
-            
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblProjektListaL.setText("<html>" + allaNamn.toString() + "</html>");
-        return allaNamn.toString();
-    }
-
-    private void laggTillNyRadLP(String namn) {
-        lblProjektListaL.setText(lblProjektListaL.getText() + namn + "\n");
-    }
-
-    private String getLedarProjektStatus() {
-        StringBuilder allaStatus = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT projekt.pid, projekt.status "
-                    + "FROM projekt WHERE projektchef = '" + personAid + "'";
-
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String status = rad.get("status");
-                laggTillNyRadLedarStatus(status);
-                allaStatus.append(status).append("<br>");
-            }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblProjektListaLS.setText("<html>" + allaStatus.toString() + "</html>");
-        return allaStatus.toString();
-    }
-
-    private void laggTillNyRadLedarStatus(String status) {
-        lblProjektListaLS.setText(lblProjektListaLS.getText() + status + "\n");
-    } */
-
- /*
-    private void konstrueraTabell() {
-        model = (DefaultTableModel) tblProjekts.getModel();
-        model.setRowCount (0);
-        tabellDesign();
-    }
-    
-    private void tabellDesign() {
-        tblProjekts.getColumnModel().getColumn(0).setPreferredWidth(100);
-        tblProjekts.getColumnModel().getColumn(1).setPreferredWidth(80);
-
-        tblProjekts.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
-        tblProjekts.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
-        
-        for (int rad = 0; rad < tblProjekts.getColumnCount() ; rad++){
-            int radHojd = tblProjekts.getRowHeight();
-            for(int kolumn = 0; kolumn < tblProjekts.getColumnCount() ; kolumn++){
-                Component comp = tblProjekts.prepareRenderer(tblProjekts.getCellRenderer(rad, kolumn), rad, kolumn);
-                radHojd = Math.max(radHojd, comp.getPreferredSize().height);
-            }
-        }
-    
-    }
-     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -458,40 +301,13 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void btnStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatsActionPerformed
         Validering valid = new Validering(idb);
-        if (valid.arChef(anvandarEpost)){
-            new Statistik(idb, anvandarEpost).setVisible(true);
+        if (valid.arChef2(aid)){
+            new Statistik(idb, aid).setVisible(true);
             this.dispose();
         }
         
     }//GEN-LAST:event_btnStatsActionPerformed
 
-    /*
-    public void tblProjektModel() {
-        DefaultTableModel tblModel = (DefaultTableModel) tblProjekt.getModel();
-        tblModel.setRowCount(0);
-        
-        try {
-            String sqlFraga = "SELECT projektnamn, status FROM projekt";
-            
-            List<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-            
-            if (resultat != null) {
-                for (HashMap<String, String> rad : resultat) {
-                    String projektNamn = rad.get("projektnamn");
-                    String projektStatus = rad.get("status");
-                    
-                    tblModel.addRow(new Object[]{projektNamn, projektStatus});
-                }
-                
-            }
-            else {
-                System.out.println("No rows found");
-            } 
-        } catch (InfException ex) {
-                    System.out.println("Error " + ex.getMessage());
-                    }
-    }
-     */
     /**
      * @param args the command line arguments
      */
