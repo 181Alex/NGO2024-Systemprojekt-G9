@@ -25,7 +25,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     /**
      * Creates new form MinaProjekt
      * @param idb
-     * @param aid
+     * @param aid inloggad användar ID
      */
     public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;

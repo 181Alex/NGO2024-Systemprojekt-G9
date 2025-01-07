@@ -30,7 +30,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid ID för projekt som ska ändras
-     * @param aid den inloggade användares ID
+     * @param aid inloggad användar ID
      */
     public AndraProjekt(InfDB idb, String pid, String aid) {
         this.idb = idb;
