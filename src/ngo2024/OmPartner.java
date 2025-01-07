@@ -19,33 +19,49 @@ public class OmPartner extends javax.swing.JFrame {
     private String aid;
 
     /**
-     * Skapar nytt OmPartner objekt
-     * @param idb
-     * @param partnerPid
-     * @param aid
-     * @param projektId
+     * Initierar OmPartner objekt 
+     * Visar detaljerad information om vald sammarbetspartner
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param partnerPid vald sammarbetspartner ID
+     * @param aid inloggad användar ID
+     * @param projektId ID för projektet som användaren kom ifrån (som partnern
+     * verkar inom)
      */
     public OmPartner(InfDB idb, String partnerPid, String aid, String projektId) {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.idb = idb;
         this.partnerID = partnerPid;
         this.aid = aid;
         this.projektId = projektId;
-        this.idb = idb;
 
         setInfo();
     }
 
+    /**
+     * anropar metoder som fyller i informationen korrekt på sidan
+     */
     private void setInfo() {
-
+        //anropar metoden get String för att hämta SQL frågas skellet
+        //anropar specifik metod för att hämta String som specificerar data att lägga in i sql fråga
+        //fyller sql frågans return som text
         lblH1PartnerNamn.setText(getString(partnerID, partnerNamn()));
         lblAdress.setText(getString(partnerID, adress()));
         lblBranch.setText(getString(partnerID, branch()));
+
         lblStad.setText(getStad(partnerID));
         txtAreaKontaktPers.setText(getKontaktInfo());
     }
-    
-    
+
+    /**
+     * retunerar sql String som används till att hämta ut data ur partner
+     * tabellen utifrån partner ID
+     *
+     * @param partnerPid vald partners ID
+     * @param info hämtar String av önskad data information att hämta ur partner
+     * tabellen
+     */
     private String getString(String partnerPid, String info) {
         String valdString = " ";
         try {
@@ -58,6 +74,9 @@ public class OmPartner extends javax.swing.JFrame {
         return valdString;
     }
 
+    /**
+     * hämtar String innehållande 'namn'
+     */
     private String partnerNamn() {
         String partnerNamn = "namn";
         return partnerNamn;
@@ -73,6 +92,9 @@ public class OmPartner extends javax.swing.JFrame {
         return partnerNamn;
     }
 
+    /**
+     * hämtar stad sammarbetspartner tillhör
+     */
     private String getStad(String partnerPid) {
         String stad = " ";
         try {
@@ -84,20 +106,22 @@ public class OmPartner extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
         return stad;
-    }    
-    
+    }
+
+    /**
+     * hämtar kontaktinformation tillhörande sammarbetspartner kontaktåerson,
+     * kontakt epost, telefon
+     */
     private String getKontaktInfo() {
         String valdString = " ";
         try {
-            valdString = (idb.fetchSingle("SELECT kontaktperson FROM partner where pid = '" + partnerID + "'") + "\n" + idb.fetchSingle("SELECT kontaktepost FROM partner where pid = '" + partnerID + "'")  + "\n" + idb.fetchSingle("SELECT telefon FROM partner where pid = '" + partnerID + "'"));
-            
-            
+            valdString = (idb.fetchSingle("SELECT kontaktperson FROM partner where pid = '" + partnerID + "'") + "\n" + idb.fetchSingle("SELECT kontaktepost FROM partner where pid = '" + partnerID + "'") + "\n" + idb.fetchSingle("SELECT telefon FROM partner where pid = '" + partnerID + "'"));
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-       return valdString; 
+        return valdString;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -206,6 +230,7 @@ public class OmPartner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        //går tillbaka till klassen/fönstret användaren härledes ifrån
         new OmProjekt(idb, aid, projektId).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed

@@ -25,7 +25,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     /**
      * Initierar MinaProjekt objekt
      * Visar lista över projekt perosn är med i eller leder
-     * Användare kan välja projekt att se mer information om 
+     * Användare kan välja projekt att se mer information om
      * 
      * @param idb initierar fält för att interagera med databasen
      * @param aid inloggad användar ID
@@ -170,7 +170,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     
     
     /**
-     * hämtar inloggad användares epost utifrån aid
+     * retunerar inloggad användares epost utifrån aid
      * behövs till validerings metodanrop 'arChef'
      */
      private String getAnvandarEpost () {
