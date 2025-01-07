@@ -21,14 +21,14 @@ public class MinProfil extends javax.swing.JFrame {
     /**
      * Creates new form MinProfil
      */
- public MinProfil(InfDB idb, String epost) {
+ public MinProfil(InfDB idb, String aid) {
   this.idb=idb;
   this.epost=epost;
-  this.firstname = getfirstname(epost);
-  this.lastname = getlastname(epost);
-  this.department = getdepartment(epost);
+  this.firstname = getfirstname(aid);
+  this.lastname = getlastname(aid);
+  this.department = getdepartment(aid);
   
-  String password = getPassword(epost);
+  String password = getPassword(aid);
   initComponents();
   
   txtFirstName.setText(firstname != null ? firstname : "");
@@ -44,10 +44,10 @@ public class MinProfil extends javax.swing.JFrame {
     }
     
   
-    private String getfirstname(String epost){
+    private String getfirstname(String aid){
        String txtFirstName="";
        try{
-        String sqlQuery = "SELECT fornamn FROM anstalld WHERE epost = '" + epost +"'";
+        String sqlQuery = "SELECT fornamn FROM anstalld WHERE aid = '" + aid +"'";
         txtFirstName = idb.fetchSingle(sqlQuery);
        } catch (InfException ex){
         System.out.println(ex.getMessage());
@@ -55,10 +55,10 @@ public class MinProfil extends javax.swing.JFrame {
        return txtFirstName;
         }
 
-    private String getlastname(String epost){
+    private String getlastname(String aid){
        String txtLastName="";
        try{
-        String sqlQuery = "SELECT efternamn FROM anstalld WHERE epost = '" + epost +"'";
+        String sqlQuery = "SELECT efternamn FROM anstalld WHERE aid = '" + aid +"'";
         txtLastName = idb.fetchSingle(sqlQuery);
        } catch (InfException ex){
         System.out.println(ex.getMessage());
@@ -66,9 +66,9 @@ public class MinProfil extends javax.swing.JFrame {
        return txtLastName;
         }
     
-    private boolean isEmailTaken(String epost) {
+    private boolean isEmailTaken(String aid) {
         try{
-            String sqlQuery = "SELECT epost FROM anstalld WHERE epost = '" + epost +  "'";
+            String sqlQuery = "SELECT epost FROM anstalld WHERE aid = '" + aid +  "'";
             String result = idb.fetchSingle(sqlQuery);
             return result !=null;
           }catch (InfException ex) {
@@ -86,10 +86,10 @@ public class MinProfil extends javax.swing.JFrame {
         return matches;
         }
 
-    private String getdepartment (String epost){
+    private String getdepartment (String aid){
        String txtDepartment="";
        try{
-        String sqlQuery = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE epost = '" + epost +"')";
+        String sqlQuery = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE aid = '" + aid +"')";
         txtDepartment = idb.fetchSingle(sqlQuery);
        } catch (InfException ex){
         System.out.println(ex.getMessage());
@@ -97,10 +97,10 @@ public class MinProfil extends javax.swing.JFrame {
        return txtDepartment;
         }
     
-    private String getPassword(String email) {
+    private String getPassword(String aid) {
         String password = "";
         try {
-            String sqlQuery = "SELECT losenord FROM anstalld WHERE epost ='" + email + "'";
+            String sqlQuery = "SELECT losenord FROM anstalld WHERE aid ='" + aid + "'";
             password = idb.fetchSingle(sqlQuery);
         }   catch (InfException ex){
             System.out.println(ex.getMessage());
@@ -238,7 +238,7 @@ public class MinProfil extends javax.swing.JFrame {
             }
         });
 
-        Tillbaka.setText("X");
+        Tillbaka.setText("Tillbaka");
         Tillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TillbakaActionPerformed(evt);
@@ -262,9 +262,7 @@ public class MinProfil extends javax.swing.JFrame {
                                 .addComponent(Epost, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(MinProfil)
-                                .addGap(21, 21, 21)))
+                            .addComponent(MinProfil))
                         .addGap(0, 36, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
