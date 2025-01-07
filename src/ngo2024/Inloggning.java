@@ -17,11 +17,9 @@ public class Inloggning extends javax.swing.JFrame {
     
      /**
      * Initierar Inloggnings objekt 
-     * [Kort beskrivning av klass]
+     * Skapar fönster för inloggning. Tar emot användarens Epost och Lösenord för inlogg
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param [ett fält] [beskrivning av vilken data fältet bär]
-     * [ev. fler @param]
      */
     public Inloggning(InfDB idb) {
         this.idb=idb;
@@ -29,6 +27,10 @@ public class Inloggning extends javax.swing.JFrame {
         lblFelMeddelande.setVisible(false);
     }
     
+    /**
+     * Hämtar användarens ID från Epost
+     * @param epost användarens epost adress
+     */
     private String getAidString(String epost) {
         String stringAid = "";
         try {
@@ -135,9 +137,11 @@ public class Inloggning extends javax.swing.JFrame {
        Validering validering = new Validering(idb);
        
        try{
-           String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost + "'";
-          // System.out.println(sqlFraga);
+          String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost + "'";
           String dbLosen = idb.fetchSingle(sqlFraga);
+          
+          //kontrollerar att lösenord stämmer för användare
+          //om inlogg är korrekt och användaren är admin öppnas admin menyn; annars öppnas handläggar menyn
           if(losen.equals(dbLosen) && validering.arAdmin(ePost)==false){
               new Meny(idb, ePost, getAidString(ePost)).setVisible(true);
               this.setVisible(false);
