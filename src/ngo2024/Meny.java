@@ -14,27 +14,30 @@ import ngo2024.Validering;
 public class Meny extends javax.swing.JFrame {
     
     private InfDB idb;
-    private String inloggadAnvandare;
+    private String anvandarEpost;
     private String aid;
     
     /**
+     * Skapar nytt Meny objekt
      * 
-     * @param idb
-     * @param inloggadAnvandare
-     * @param aid 
+     * Meny fönster för handledare som leder vidare till MinaProjekt, MinAvdelning, GlobalaMal, MinProfil & Inloggning(logga ut)
+     * 
+     * @param idb koppling till databasen
+     * @param anvandarEpost inloggad användares Epost adress
+     * @param aid inloggad användares unika ID
      */
-    public Meny(InfDB idb, String inloggadAnvandare, String aid) {
+    public Meny(InfDB idb, String anvandarEpost, String aid) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.anvandarEpost=anvandarEpost;
         initComponents();
-        lblInloggadAnvandare.setText(inloggadAnvandare);
+        lblInloggadAnvandare.setText(anvandarEpost);
         statistikKnapp();
         this.aid = aid;
     }
     
     private void statistikKnapp(){
         Validering enValidering = new Validering(idb);
-        if(enValidering.arChef(inloggadAnvandare)){
+        if(enValidering.arChef(anvandarEpost)){
             btStatistik.setVisible(true);
         } else {
             btStatistik.setVisible(false);
@@ -191,11 +194,11 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
-       new MinProfil(idb, aid, inloggadAnvandare).setVisible(true);
+       new MinProfil(idb, aid, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
-        new MinAvdelning(idb,inloggadAnvandare).setVisible(true);
+        new MinAvdelning(idb,anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btAvdelningActionPerformed
 
     private void btMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMalActionPerformed
@@ -207,7 +210,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btProjektActionPerformed
 
     private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed
-       new Statistik(idb, inloggadAnvandare).setVisible(true);
+       new Statistik(idb, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btStatistikActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
