@@ -192,6 +192,7 @@ public class Meny extends javax.swing.JFrame {
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
        new MinProfil(idb, aid, inloggadAnvandare).setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
