@@ -12,36 +12,39 @@ import ngo2024.Validering;
  * @author linneagottling
  */
 public class Meny extends javax.swing.JFrame {
-    
+
     private InfDB idb;
-    private String inloggadAnvandare;
+    private String anvandarEpost;
     private String aid;
-    
+
     /**
-     * 
-     * @param idb
-     * @param inloggadAnvandare
-     * @param aid 
+     * Skapar nytt Meny objekt
+     *
+     * Meny fï¿½nster fï¿½r handledare som leder vidare till MinaProjekt, MinAvdelning, GlobalaMal, MinProfil & Inloggning(logga ut)
+     *
+     * @param idb koppling till databasen
+     * @param anvandarEpost inloggad anvï¿½ndares Epost adress
+     * @param aid inloggad anvï¿½ndares unika ID
      */
-    public Meny(InfDB idb, String inloggadAnvandare, String aid) {
+    public Meny(InfDB idb, String anvandarEpost, String aid) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.anvandarEpost=anvandarEpost;
         initComponents();
-        lblInloggadAnvandare.setText(inloggadAnvandare);
+        lblInloggadAnvandare.setText(anvandarEpost);
         statistikKnapp();
         this.aid = aid;
     }
-    
+
     private void statistikKnapp(){
         Validering enValidering = new Validering(idb);
-        if(enValidering.arChef(inloggadAnvandare)){
+        if(enValidering.arChef(anvandarEpost)){
             btStatistik.setVisible(true);
         } else {
             btStatistik.setVisible(false);
         }
     }
-    
-    
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,7 +94,7 @@ public class Meny extends javax.swing.JFrame {
             }
         });
 
-        lblHandlaggare.setText("Handläggare");
+        lblHandlaggare.setText("Handlï¿½ggare");
 
         btProjekt.setText("Mina projekt");
         btProjekt.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +110,7 @@ public class Meny extends javax.swing.JFrame {
             }
         });
 
-        btMal.setText("Se globala mål");
+        btMal.setText("Se globala mï¿½l");
         btMal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btMalActionPerformed(evt);
@@ -191,12 +194,11 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
-       new MinProfil(idb, aid, inloggadAnvandare).setVisible(true);
-       this.dispose();
+       new MinProfil(idb, aid, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
-        new MinAvdelning(idb,inloggadAnvandare).setVisible(true);
+        new MinAvdelning(idb,anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btAvdelningActionPerformed
 
     private void btMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMalActionPerformed
@@ -208,7 +210,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btProjektActionPerformed
 
     private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed
-       new Statistik(idb, inloggadAnvandare).setVisible(true);
+       new Statistik(idb, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btStatistikActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -223,7 +225,7 @@ public class Meny extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

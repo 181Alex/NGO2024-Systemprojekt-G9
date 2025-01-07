@@ -717,7 +717,7 @@ private void gorAndring(){
 
     private void btTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTillbakaActionPerformed
         this.dispose();
-        new OmProjekt_1(idb, epost, pid).setVisible(true);
+        new OmProjekt(idb, epost, pid).setVisible(true);
     }//GEN-LAST:event_btTillbakaActionPerformed
 
     private void btHallbarhetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHallbarhetActionPerformed

@@ -15,17 +15,21 @@ public class OmPartner extends javax.swing.JFrame {
 
     private InfDB idb;
     private String projektId;
-    private String partnerPid;
-    private String anvandarEpost;
+    private String partnerID;
+    private String aid;
 
     /**
-     * Creates new form OmProjekt
+     * Skapar nytt OmPartner objekt
+     * @param idb
+     * @param partnerPid
+     * @param aid
+     * @param projektId
      */
-    public OmPartner(InfDB idb, String partnerPid, String inloggadAnvandare, String projektId) {
+    public OmPartner(InfDB idb, String partnerPid, String aid, String projektId) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.partnerPid = partnerPid;
-        anvandarEpost = inloggadAnvandare;
+        this.partnerID = partnerPid;
+        this.aid = aid;
         this.projektId = projektId;
         this.idb = idb;
 
@@ -34,10 +38,10 @@ public class OmPartner extends javax.swing.JFrame {
 
     private void setInfo() {
 
-        lblH1PartnerNamn.setText(getString(partnerPid, partnerNamn()));
-        lblAdress.setText(getString(partnerPid, adress()));
-        lblBranch.setText(getString(partnerPid, branch()));
-        lblStad.setText(getStad(partnerPid));
+        lblH1PartnerNamn.setText(getString(partnerID, partnerNamn()));
+        lblAdress.setText(getString(partnerID, adress()));
+        lblBranch.setText(getString(partnerID, branch()));
+        lblStad.setText(getStad(partnerID));
         txtAreaKontaktPers.setText(getKontaktInfo());
     }
     
@@ -85,7 +89,7 @@ public class OmPartner extends javax.swing.JFrame {
     private String getKontaktInfo() {
         String valdString = " ";
         try {
-            valdString = (idb.fetchSingle("SELECT kontaktperson FROM partner where pid = '" + partnerPid + "'") + "\n" + idb.fetchSingle("SELECT kontaktepost FROM partner where pid = '" + partnerPid + "'")  + "\n" + idb.fetchSingle("SELECT telefon FROM partner where pid = '" + partnerPid + "'"));
+            valdString = (idb.fetchSingle("SELECT kontaktperson FROM partner where pid = '" + partnerID + "'") + "\n" + idb.fetchSingle("SELECT kontaktepost FROM partner where pid = '" + partnerID + "'")  + "\n" + idb.fetchSingle("SELECT telefon FROM partner where pid = '" + partnerID + "'"));
             
             
         } catch (InfException ex) {
@@ -202,7 +206,7 @@ public class OmPartner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new OmProjekt_1(idb, anvandarEpost, projektId).setVisible(true);
+        new OmProjekt(idb, aid, projektId).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
