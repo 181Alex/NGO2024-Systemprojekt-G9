@@ -16,6 +16,7 @@ import oru.inf.InfException;
  *
  * @author linneagottling
  */
+
 public class AvdProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
@@ -34,7 +35,11 @@ public class AvdProjekt extends javax.swing.JFrame {
     
     
     /**
-     * Creates new form AvdProjekt
+     * Initierar AvdProjekt objekt 
+     * Skapar tabell av alla projekt på den anställdas avdelning
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param avdNmr Användarens avdelnings nr
      */
     public AvdProjekt(InfDB idb, int avdNmr) {
         this.idb = idb;
@@ -44,6 +49,9 @@ public class AvdProjekt extends javax.swing.JFrame {
         projektTabell();
     }
 
+    /**
+     * Skapar tabellmodel för att hantera data om avdelningens anställda
+     */
     private void konstrueraTabell() {
         model = (DefaultTableModel) tblProjekt.getModel();
         model.setRowCount(0);
@@ -51,7 +59,9 @@ public class AvdProjekt extends javax.swing.JFrame {
         tabellDesign();
     }
     
-    
+    /**
+     * Bestämmer hur tabellen med anställdas information ska formateras
+     */
     private void tabellDesign() {
         tblProjekt.getColumnModel().getColumn(0).setPreferredWidth(90);
         tblProjekt.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -79,6 +89,9 @@ public class AvdProjekt extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Fyller tabell med data om avdelningens anställda
+     */
     private void projektTabell() {
 
         try {
@@ -118,10 +131,17 @@ public class AvdProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
+    /**
+     * lägger till rad i tabellen
+     */
     private void laggTillNyRad(String projekt, String status, String chef, String land,
             String prioritet, String startdatum, String slutdatum){
         model.addRow(new Object[]{projekt, status, chef, land, prioritet, startdatum, slutdatum});
     }
+    /**
+     * lägger till infon i separata listor
+     */
     private void laggTillRadInfo(String projekt, String status, String chef, String land,
             String prioritet, String startdatum, String slutdatum, int pid){
         projektLista.add(projekt);
@@ -290,6 +310,9 @@ public class AvdProjekt extends javax.swing.JFrame {
        filtreraTabell();
     }//GEN-LAST:event_cbxStatusActionPerformed
 
+    /**
+     * Filtrerar tabell efter datum och/eller status sökning
+     */
     private void filtreraTabell() {
     String sokFran = tfSokFran.getText();
     String sokTill = tfSokTill.getText();

@@ -27,7 +27,11 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private DefaultTableModel model;
 
     /**
-     * Creates new form AvdAnstallda
+     * Initierar AvdAnstallda objekt Användare kan se alla anställda på samma
+     * avdelning
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param avdNmr ID för användarens avdelning
      */
     public AvdAnstallda(InfDB idb, int avdNmr) {
         this.idb = idb;
@@ -37,15 +41,21 @@ public class AvdAnstallda extends javax.swing.JFrame {
         anstalldTabell();
 
     }
-    
-    private void konstrueraTabell(){
+
+    /**
+     * Skapar tabellmodel för att hantera data om avdelningens anställda
+     */
+    private void konstrueraTabell() {
         model = (DefaultTableModel) tblAnstallda.getModel();
         model.setRowCount(0);
         lblFelmeddelande.setVisible(false);
         btSeAlla.setVisible(false);
         tabellDesign();
     }
-    
+
+    /**
+     * Ställer in hur tabellen med anställdas information ska formateras
+     */
     private void tabellDesign() {
         tblAnstallda.getColumnModel().getColumn(0).setPreferredWidth(100);
         tblAnstallda.getColumnModel().getColumn(1).setPreferredWidth(168);
@@ -66,17 +76,20 @@ public class AvdAnstallda extends javax.swing.JFrame {
             tblAnstallda.setRowHeight(row, rowHeight);
         }
     }
-   
+
+    /**
+     * Fyller tabell med data om avdelningens anställda
+     */
     private void anstalldTabell() {
 
         try {
             String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn, "
-                         + "a.epost, a.telefon, CONCAT(b.fornamn, ' ', b.efternamn) AS mentor "
-                         + "FROM anstalld a "
-                         + "LEFT JOIN handlaggare h ON a.aid = h.aid "
-                         + "LEFT JOIN anstalld b ON h.mentor = b.aid "
-                         + "WHERE a.avdelning = " + avdNmr;
-            
+                    + "a.epost, a.telefon, CONCAT(b.fornamn, ' ', b.efternamn) AS mentor "
+                    + "FROM anstalld a "
+                    + "LEFT JOIN handlaggare h ON a.aid = h.aid "
+                    + "LEFT JOIN anstalld b ON h.mentor = b.aid "
+                    + "WHERE a.avdelning = " + avdNmr;
+
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
             for (HashMap<String, String> rad : resultat) {
@@ -85,8 +98,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 String telefon = rad.get("telefon");
                 String mentor = rad.get("mentor");
 
-                    laggTillNyRad(namn, epost, telefon, mentor);
-                    laggTillRadInfo(namn, epost, telefon, mentor);
+                laggTillNyRad(namn, epost, telefon, mentor);
+                laggTillRadInfo(namn, epost, telefon, mentor);
 
             }
         } catch (InfException ex) {
@@ -95,18 +108,21 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Lägger till rad information i rätt lista
+     */
     private void laggTillRadInfo(String namn, String epost, String telefon, String mentor) {
         epostLista.add(epost);
         namnLista.add(namn);
         telefonLista.add(telefon);
         mentorLista.add(mentor);
     }
-    
-    private void laggTillNyRad(String namn, String epost, String telefon, String mentor){
+
+
+    private void laggTillNyRad(String namn, String epost, String telefon, String mentor) {
         model.addRow(new Object[]{namn, epost, telefon, mentor});
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -262,23 +278,23 @@ public class AvdAnstallda extends javax.swing.JFrame {
 
         boolean hittad = false;
         model.setRowCount(0);
-        
+
         btSeAlla.setVisible(true);
 
         if (cbEpost.isSelected()) {
 
-            for (int i = 0; i<epostLista.size(); i++) {
+            for (int i = 0; i < epostLista.size(); i++) {
 
                 String epost = epostLista.get(i).toLowerCase();
 
-                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {                    
-                String namn = namnLista.get(i);  
-                String telefon = telefonLista.get(i); 
-                String mentor = mentorLista.get(i); 
+                if (epost.equals(sokOrd) || epost.startsWith(sokOrd)) {
+                    String namn = namnLista.get(i);
+                    String telefon = telefonLista.get(i);
+                    String mentor = mentorLista.get(i);
 
-                laggTillNyRad(namn, epost, telefon, mentor);
-                
-                hittad = true;    
+                    laggTillNyRad(namn, epost, telefon, mentor);
+
+                    hittad = true;
 
                 }
             }
@@ -290,26 +306,24 @@ public class AvdAnstallda extends javax.swing.JFrame {
                 String namn = namnLista.get(i).toLowerCase();
 
                 if (namn.equals(sokOrd) || namn.startsWith(sokOrd)) {
-                String epost = epostLista.get(i);  
-                String telefon = telefonLista.get(i); 
-                String mentor = mentorLista.get(i); 
+                    String epost = epostLista.get(i);
+                    String telefon = telefonLista.get(i);
+                    String mentor = mentorLista.get(i);
 
-                laggTillNyRad(namn, epost, telefon, mentor);
-                
-                hittad = true;  
+                    laggTillNyRad(namn, epost, telefon, mentor);
+
+                    hittad = true;
                 }
             }
         }
-            if (!cbNamn.isSelected() && !cbEpost.isSelected()) {
-                lblFelmeddelande.setText("Du måste välja antingen epost eller namn");
-                lblFelmeddelande.setVisible(true);
-            }
+        if (!cbNamn.isSelected() && !cbEpost.isSelected()) {
+            lblFelmeddelande.setText("Du måste välja antingen epost eller namn");
+            lblFelmeddelande.setVisible(true);
+        } else if (!hittad) {
+            lblFelmeddelande.setText("Inga resultat");
+            lblFelmeddelande.setVisible(true);
 
-            else if (!hittad) {
-                lblFelmeddelande.setText("Inga resultat");
-                lblFelmeddelande.setVisible(true);
-
-            }
+        }
 
     }//GEN-LAST:event_btSokActionPerformed
 

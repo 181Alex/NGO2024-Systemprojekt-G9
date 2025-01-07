@@ -31,10 +31,12 @@ public class Meny extends javax.swing.JFrame {
         this.anvandarEpost=anvandarEpost;
         initComponents();
         lblInloggadAnvandare.setText(anvandarEpost);
-        statistikKnapp();
+        statistikKnapp();  //EV TA BORT
         this.aid = aid;
     }
     
+    /** EV TA BORT*/
+     
     private void statistikKnapp(){
         Validering enValidering = new Validering(idb);
         if(enValidering.arChef(anvandarEpost)){
@@ -43,7 +45,7 @@ public class Meny extends javax.swing.JFrame {
             btStatistik.setVisible(false);
         }
     }
-    
+     
     
 
     /**

@@ -21,8 +21,11 @@ public class GlobalaMal extends javax.swing.JFrame {
     private InfDB idb;
     private DefaultTableModel model;
 
-    /**
-     * Creates new form GlobalaMal
+     /**
+     * Initierar GlobalaMal objekt 
+     * Ger sida med tabell med alla globala mål samt deras beskrivning
+     *
+     * @param idb initierar fält för att interagera med databasen
      */
     public GlobalaMal(InfDB idb) {
         this.idb = idb;
@@ -31,12 +34,18 @@ public class GlobalaMal extends javax.swing.JFrame {
         malTabell();
     }
 
+     /**
+     * Skapar tabellmodel för att hantera data om avdelningens anställda
+     */
     private void konstrueraTabell() {
         model = (DefaultTableModel) tblGlobalaMal.getModel();
         model.setRowCount(0);
         tabellDesign();
     }
 
+    /**
+     * Bestämmer hur tabellen med anställdas information ska formateras
+     */
     private void tabellDesign() {
         //fixar tabellens bredd
         tblGlobalaMal.getColumnModel().getColumn(0).setPreferredWidth(138);  // För kort text

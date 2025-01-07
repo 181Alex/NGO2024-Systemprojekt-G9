@@ -15,8 +15,13 @@ public class Inloggning extends javax.swing.JFrame {
 
     private InfDB idb;
     
-    /**
-     * Creates new form Inloggning
+     /**
+     * Initierar Inloggnings objekt 
+     * [Kort beskrivning av klass]
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param [ett fält] [beskrivning av vilken data fältet bär]
+     * [ev. fler @param]
      */
     public Inloggning(InfDB idb) {
         this.idb=idb;
