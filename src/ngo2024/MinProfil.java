@@ -27,7 +27,7 @@ public class MinProfil extends javax.swing.JFrame {
   this.firstname = getfirstname(aid);
   this.lastname = getlastname(aid);
   this.department = getdepartment(aid);
-  
+ 
   String password = getPassword(aid);
   initComponents();
   
@@ -37,6 +37,7 @@ public class MinProfil extends javax.swing.JFrame {
   txtDepartment.setText(department != null ? department : "");
   txtPassword.setText(password != null ? password : "");
   txtPassword.setEchoChar('*');
+  lblFelInmatning.setVisible(false);
     }
 
     public MinProfil(InfDB idb) {
@@ -77,14 +78,7 @@ public class MinProfil extends javax.swing.JFrame {
         }
     }
     
-    public boolean checkEmail(String epost){
-        boolean matches=false;
-        String checker="^[\\w.-]+@[\\w.-]+\\.[a-z]{2,}$";
-        if(epost.matches(checker)){
-            matches=true;
-        }
-        return matches;
-        }
+    
 
     private String getdepartment (String aid){
        String txtDepartment="";
@@ -152,7 +146,55 @@ public class MinProfil extends javax.swing.JFrame {
            
            JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
        }
-   
+       
+       // kontroller
+       public boolean fornamnKontroll() {
+        Validering valid = new Validering(idb);
+        String fornamn = txtFirstName.getText();
+    if (valid.checkFornamn(fornamn)&& valid.checkStorlek(100, fornamn)) {
+        return true;
+    } else {
+        return false;
+    }
+    }
+    
+    public boolean efternamnKontroll() {
+        Validering valid = new Validering(idb);
+        String efternamn = txtLastName.getText();
+    if (valid.checkEfternamn(efternamn) && valid.checkStorlek(100, efternamn)) {
+            return true;
+    } else {
+            return false;
+        }
+    }
+       
+   public boolean kontroll(){
+    Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = txtEmail.getText(); 
+    
+    // Kontrollera om e-postadressen är giltig
+    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+        return true;
+    } else {
+        return false;
+        
+    }}   
+       
+    public boolean totalKontroll(){
+        Boolean totOk=true;  
+        
+       if(kontroll()==false){
+            totOk=false;
+        }else if(!fornamnKontroll()) {
+        totOk = false;
+        }
+        else if(!efternamnKontroll()) {
+        totOk = false;
+        }
+       return totOk;
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,6 +217,7 @@ public class MinProfil extends javax.swing.JFrame {
         Losenord = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         Tillbaka = new javax.swing.JButton();
+        lblFelInmatning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -245,6 +288,9 @@ public class MinProfil extends javax.swing.JFrame {
             }
         });
 
+        lblFelInmatning.setForeground(new java.awt.Color(255, 0, 51));
+        lblFelInmatning.setText("Fel i inmatning");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,6 +298,11 @@ public class MinProfil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblFelInmatning)
+                        .addGap(90, 90, 90)
+                        .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -280,10 +331,6 @@ public class MinProfil extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtDepartment)))
                         .addGap(36, 36, 36))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +357,9 @@ public class MinProfil extends javax.swing.JFrame {
                     .addComponent(Losenord)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(Change)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Change)
+                    .addComponent(lblFelInmatning))
                 .addGap(29, 29, 29))
         );
 
@@ -330,7 +379,9 @@ public class MinProfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDepartmentActionPerformed
 
     private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
-        if (isEditing) {
+        boolean ok = totalKontroll();
+        if (isEditing && ok==true) {
+            lblFelInmatning.setVisible(false);
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
             String newEmail = txtEmail.getText();
@@ -372,6 +423,8 @@ public class MinProfil extends javax.swing.JFrame {
             
         JOptionPane.showMessageDialog(this, "Ändringar sparade!");
             isEditing = false;
+        } else if(!ok){
+            lblFelInmatning.setVisible(true);
         } else {
             
             String currentPassword = getPassword(this.epost);
@@ -424,6 +477,7 @@ public class MinProfil extends javax.swing.JFrame {
     private javax.swing.JLabel MinProfil;
     private javax.swing.JLabel Namn;
     private javax.swing.JButton Tillbaka;
+    private javax.swing.JLabel lblFelInmatning;
     private javax.swing.JTextField txtDepartment;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFirstName;
