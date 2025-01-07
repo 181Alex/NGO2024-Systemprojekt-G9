@@ -27,7 +27,7 @@ public class MinaProjekt extends javax.swing.JFrame {
      * @param idb
      * @param aid
      */
-    public MinaProjekt(InfDB idb, String aid) {
+    public MinaProjekt(InfDB idb, String aid, String anvandarEpost) {
         this.idb = idb;
         this.aid = aid;
         projNamnLista = new ArrayList<String>();
@@ -44,7 +44,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         getCbxInfo();
         
         Validering valid = new Validering(idb);
-        if (valid.arChef2(aid)){
+        if (valid.arChef(anvandarEpost)){
             txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         }    
         else {
@@ -301,7 +301,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     private void btnStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatsActionPerformed
         Validering valid = new Validering(idb);
-        if (valid.arChef2(aid)){
+        if (valid.arChef(anvandarEpost)){
             new Statistik(idb, aid).setVisible(true);
             this.dispose();
         }

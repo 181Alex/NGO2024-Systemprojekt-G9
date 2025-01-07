@@ -10,6 +10,8 @@ import oru.inf.InfException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
   * @author frida.selin
   */
@@ -17,17 +19,22 @@ public class OmProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String projektId;
-    private String anvandarEpost;
     private String aid;
 
     /**
-     * Creates new form OmProjekt
+     * Skapar new OmProjekt klass
+     *
+     * @param idb
+     * @param aid
+     * @param projektId
+     * 
+     * Tilhandahåller information om vilka projekt användaren medverkar i samt möjlighet att se mer information om dessa projekt.
+     * Projektledare ser knapp som leder till statisitk över sina projekt.
      */
     public OmProjekt(InfDB idb, String aid, String projektId) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.projektId = projektId;
-        this.anvandarEpost = anvandarEpost;
         this.idb = idb;
         this.aid = aid;
 
@@ -505,7 +512,14 @@ public class OmProjekt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new MinaProjekt(idb, aid).setVisible(true);
+        String sqlFraga = " ";
+        try {
+            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        new MinaProjekt(idb, aid, sqlFraga).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
