@@ -23,6 +23,17 @@ public class Inloggning extends javax.swing.JFrame {
         initComponents();
         lblFelMeddelande.setVisible(false);
     }
+    
+    private String getAidString(String epost) {
+        String stringAid = "";
+        try {
+            String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + epost + "'";
+            stringAid = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return stringAid;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,7 +134,7 @@ public class Inloggning extends javax.swing.JFrame {
           // System.out.println(sqlFraga);
           String dbLosen = idb.fetchSingle(sqlFraga);
           if(losen.equals(dbLosen) && validering.arAdmin(ePost)==false){
-              new Meny(idb, ePost).setVisible(true);
+              new Meny(idb, ePost, getAidString(ePost)).setVisible(true);
               this.setVisible(false);
           }
           else if(losen.equals(dbLosen) && validering.arAdmin(ePost)==true){

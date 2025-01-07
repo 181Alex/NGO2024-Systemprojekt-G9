@@ -15,17 +15,21 @@ public class Meny extends javax.swing.JFrame {
     
     private InfDB idb;
     private String inloggadAnvandare;
+    private String aid;
     
     /**
-     * Creates new form Meny
+     * 
+     * @param idb
+     * @param inloggadAnvandare
+     * @param aid 
      */
-    public Meny(InfDB idb, String inloggadAnvandare) {
+    public Meny(InfDB idb, String inloggadAnvandare, String aid) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
         lblInloggadAnvandare.setText(inloggadAnvandare);
         statistikKnapp();
-        
+        this.aid = aid;
     }
     
     private void statistikKnapp(){
@@ -36,6 +40,8 @@ public class Meny extends javax.swing.JFrame {
             btStatistik.setVisible(false);
         }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,7 +203,7 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btMalActionPerformed
 
     private void btProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProjektActionPerformed
-        new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
+        new MinaProjekt(idb, aid).setVisible(true);
     }//GEN-LAST:event_btProjektActionPerformed
 
     private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed

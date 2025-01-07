@@ -51,7 +51,7 @@ public class OmProjekt_1 extends javax.swing.JFrame {
  
     private void andraButton() {
         Validering valid = new Validering(idb);
-        if (!valid.isProjektetsChef(anvandarEpost, projektId)){
+        if (!valid.isProjektetsChef(aid, projektId)){
             btnEdit.setVisible(false);
         }
     }

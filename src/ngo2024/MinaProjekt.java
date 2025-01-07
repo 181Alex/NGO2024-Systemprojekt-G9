@@ -36,10 +36,9 @@ public class MinaProjekt extends javax.swing.JFrame {
     /**
      * Creates new form MinaProjekt
      */
-    public MinaProjekt(InfDB idb, String inloggadAnvandare) {
+    public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;
-        anvandarEpost = inloggadAnvandare;
-        personAid = getAidString();
+        personAid = aid;
         projNamnLista = new ArrayList<String>();
 
         initComponents();
