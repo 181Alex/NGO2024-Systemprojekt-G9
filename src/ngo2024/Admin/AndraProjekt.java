@@ -62,10 +62,13 @@ private void fyllCbProjekt(){
         
     }
     
+     /**
+     * Fyller i combo box med namn på projekt
+     */
+
     
 private void gomAlla(){
         
-        //göm allt innan man klickat i ett alternativ
         btAndra.setVisible(false);
         btTaBort.setVisible(false);
         btValj.setVisible(false);
@@ -117,6 +120,10 @@ private void gomAlla(){
         btHandlaggare.setVisible(false);
     }   
 
+    /**
+     * gömmer allt innan man har klickat i ett alternativ
+     */
+
     
 private String getPid(){
     String pid = " ";
@@ -131,6 +138,11 @@ private String getPid(){
     }
     return pid;
 }
+
+    /**
+     * ger projekt ID som eftersöks
+     */
+
 
 private String getChefAid(String pid){
     String aid = " ";
@@ -149,6 +161,12 @@ private String getChefAid(String pid){
     return aid;
 }
 
+    /**
+     *  Ger projektchefens anställds ID
+     * @param pid projektets ID
+     */
+
+
 private String getLid(String pid){
     String lid = " ";
     
@@ -165,6 +183,12 @@ private String getLid(String pid){
     }
     return lid;
 }
+
+    /**
+     *  ger landets ID
+     * @param pid projektets ID
+     */
+
     
 private void taBortProjekt(String pid){
     
@@ -177,6 +201,11 @@ private void taBortProjekt(String pid){
             
         }
 }
+
+/**
+     *  tar bort ett projekt
+     * @param pid projektets ID
+     */
 
 private void fyllCbLand(){
        
@@ -201,6 +230,9 @@ private void fyllCbLand(){
             System.out.println(ex.getMessage());
         }
 }
+     /**
+     * Fyller i combo box med namn på länder
+     */
 
 private void fyllCbProjektchef(){
     cbxProjektchef.removeAllItems();
@@ -228,6 +260,10 @@ private void fyllCbProjektchef(){
             
 }
 
+    /**
+     *  Fyller i combo box med projektchefer
+     */
+
 private void fyllCbPrio(){
     
     cbxPrioritet.removeAllItems();
@@ -236,6 +272,10 @@ private void fyllCbPrio(){
     cbxPrioritet.addItem("Låg");
     cbxPrioritet.addItem("Medel");
 }
+
+    /**
+     *  Fyller i combo box med prioriteringsnivåer
+     */
 
 private void fyllCbStatus(){
     cbxStatus.removeAllItems();
@@ -246,6 +286,11 @@ private void fyllCbStatus(){
     cbxStatus.addItem("Avslutat");
     cbxStatus.addItem("Pausad");
 }
+
+    /**
+     *  Fyller i combo box med statusnivå
+     */
+
 
 private void fyllTabellAndra(){
     fyllCbLand();
@@ -316,8 +361,13 @@ private void fyllTabellAndra(){
                     
 }
 
+    /**
+     *  Fyller i tabellen för att administratören ska kunna ändra
+     */
+
+
 private void gomTaBort(){
-    // Visa allt om Ändra
+   
     btAndra.setVisible(true);
     btValj.setVisible(true);
     cbxPrioritet.setVisible(true);
@@ -352,24 +402,35 @@ private void gomTaBort(){
     lblNLid.setVisible(true);
     tfBeskrivning.setVisible(true);
     
+    /**
+     *  Visa allt om Ändra
+     */
 
-    // Göm det som tillhör ta bort
     lblPid.setVisible(false);
     lblPnamn.setVisible(false);
     btTaBort.setVisible(false);
-   
-    //göm felgrejor
+    
+    /**
+     *  göm allt som tillhör ta bort
+     */
+
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
     lblFelNamn.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelStartdatum.setVisible(false);
     
-    //gömmer meddelande
+    /**
+     *  gömmer felmeddelande
+     */
+   
     lblMeddelande.setVisible(false);
     lblFelmeddelande.setVisible(false);
     
-    //gömmer hållbarhet och partner tills man klickar på välj
+    /**
+     *  gömmer meddelanden
+     */
+    
     btHallbarhet.setVisible(false);
     btPartner.setVisible(false);
     lblProjektpartner.setVisible(false);
@@ -377,10 +438,13 @@ private void gomTaBort(){
     lblHandlaggare.setVisible(false);
     btHandlaggare.setVisible(false);
     
+    /**
+     *  gömmer hållbarhet och partner tills man klickar på välj
+     */
+    
 }
 
 private void gomAndra(){
-    // Göm allt om Ändra
     btAndra.setVisible(false);
     btHallbarhet.setVisible(false);
     lblHandlaggare.setVisible(false);
@@ -419,29 +483,40 @@ private void gomAndra(){
     lblLid.setVisible(false);
     lblNLid.setVisible(false);
     
+    /**
+     *  gömmer allt om Ändra
+     */
 
-    // Visa det som tillhör ta bort
     lblPid.setVisible(true);
     lblPnamn.setVisible(true);
     btTaBort.setVisible(true);
     btValj.setVisible(true);
     cbxProjekt.setVisible(true);
     
-   
-    //göm felgrejor
+     /**
+     *  Visa det som tillhör ta bort
+     */
+
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
     lblFelNamn.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelStartdatum.setVisible(false);
     
-    //göm meddelande
+    /**
+     *  gömma felmeddelanden
+     */
+
     lblMeddelande.setVisible(false);
     lblFelmeddelande.setVisible(false);
+    
+    /**
+     *  gömma meddelanden
+     */
+
 }
 
 private void gomBad(){
-    //gömmer alla fel medelandena, används innan ett specefikt fel ska upplysas.
     lblFelNamn.setVisible(false);
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
@@ -450,10 +525,14 @@ private void gomBad(){
     lblFelmeddelande.setVisible(false);
 } 
 
+    /**
+     *  gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
+     */
+
+
 private boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfProjektnamn.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(255, namn)) {
             lblFelNamn.setVisible(false);
             return true;
@@ -462,6 +541,11 @@ private boolean namnKontroll(){
             return false;
     }
 }
+
+    /**
+     *  kontrollerar att förnamn är valid
+     */
+
 
 private boolean inteSammaNamnKontroll(){
         boolean inteSamma=true;
@@ -503,10 +587,14 @@ private boolean inteSammaNamnKontroll(){
         return retur;
 }
 
+    /**
+     *  Kollar så att inte samma projektnamn används för olika projekt
+     */
+
+
 private boolean beskrivningKontroll(){
         Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
             lblFelBeskrivning.setVisible(false);
             return true;
@@ -516,37 +604,48 @@ private boolean beskrivningKontroll(){
     }
     }
 
+    /**
+     *  kontrollerar att beskrivningen är rätt
+     */
+
+
 private boolean stDatumKontroll(){
 Validering valid = new Validering(idb); 
     
-    // Hämta text från textfältet
     String datum = tfStartdatum.getText(); 
     
-    // Kontrollera om e-postadressen är giltig
     if (valid.checkDatum(datum)) {
-        lblFelStartdatum.setVisible(false); // Göm varning
+        lblFelStartdatum.setVisible(false); 
         return true;
     } else {
-        lblFelStartdatum.setVisible(true); // Visa varning
+        lblFelStartdatum.setVisible(true);
         return false;
     }
 }
 
+    /**
+     *  kontrollerar att stardatum är rätt annars visas ett felmeddelande
+     */
+
+
 private boolean slDatumKontroll(){
 Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
+
     String datum = tfSlutdatum.getText(); 
     
-    // Kontrollera om e-postadressen är giltig
     if (valid.checkDatum(datum)) {
-        lblFelSlutdatum.setVisible(false); // Göm varning
+        lblFelSlutdatum.setVisible(false); 
         return true;
     } else {
-        lblFelSlutdatum.setVisible(true); // Visa varning
+        lblFelSlutdatum.setVisible(true); 
         return false;
     }
 }
+
+    /**
+     *  kontrollerar att slutdatum är rätt annars visas ett felmeddelande
+     */
+
 
 private boolean kostnadKontroll(){
     Validering enValidering = new Validering(idb);
@@ -560,6 +659,11 @@ private boolean kostnadKontroll(){
 
     }
 }
+
+    /**
+     *  kontrollerar att kostnaden stämmer
+     */
+
 
 private boolean mellanDatum(){
         Validering valid = new Validering(idb);
@@ -577,6 +681,11 @@ private boolean mellanDatum(){
     }
 }
 
+    /**
+     *  kontrollerar mellan datum
+     */
+
+
 private boolean totalKontroll(){
     boolean ok;
     
@@ -592,10 +701,20 @@ private boolean totalKontroll(){
     return ok;
 }
 
+    /**
+     *  kontrollerar så att allt stämmer
+     */
+
+
 private void visaAid(){
         
     lblAid.setText(getSelectedAid());
 }
+
+    /**
+     *  visa anställda ID
+     */
+
 
 private String getSelectedAid(){
     String selectedPerson = (String) cbxProjektchef.getSelectedItem();
@@ -609,10 +728,19 @@ private String getSelectedAid(){
         return aid;
 }
 
+    /**
+     *  ger en valds persons anställd ID
+     */
+
+
 private void visaLid(){
    
         lblLid.setText(getSelectedLid());
 }
+
+    /**
+     *  visa land ID
+     */
 
 private String getSelectedLid(){
         String selectedLand = (String) cbxLand.getSelectedItem();
@@ -625,6 +753,10 @@ private String getSelectedLid(){
         }
         return lid;
 }
+
+    /**
+     *  ger ett valt lands ID
+     */
 
 private void gorAndring(){
     String pid=getPid();
@@ -658,6 +790,9 @@ private void gorAndring(){
 }
 
 
+    /**
+     *  uppdaterar med ändringarna
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.

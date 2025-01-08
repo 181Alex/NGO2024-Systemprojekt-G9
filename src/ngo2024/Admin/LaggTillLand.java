@@ -17,9 +17,15 @@ public class LaggTillLand extends javax.swing.JFrame {
     private InfDB idb;
     private String inloggadAnvandare;  
     boolean kontrollOk;
+    
     /**
-     * Creates new form LaggTillLand
+     * Initierar LaggTillLand objekt 
+     * Låter en administratör lägga till ett land
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten till den inloggade användaren
      */
+
     public LaggTillLand(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -55,10 +61,12 @@ public class LaggTillLand extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
     
-    
+    /**
+     * kontrollerar så att allt stämmer
+     */
+
     
     public int hogstaLid(){
-        // hämtar ut högsta lid
         int hogsta=0;
         String sqlFraga="Select MAX(lid) FROM Land";
         try{
@@ -72,10 +80,13 @@ public class LaggTillLand extends javax.swing.JFrame {
         return hogsta+1;
     }
     
+    /**
+     * hämtar ut högsta lands ID
+     */
+    
     public boolean valutaKontroll(){
         Validering valid = new Validering(idb);
         String valuta = tfValuta.getText();
-        // kotnroll av valuta så att endast nummer och komma skrivs
     if (valid.checkValuta(valuta)) {
             lblValutaBad.setVisible(false);
             return true;
@@ -85,7 +96,9 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     }
     
-    
+    /**
+     * kontrollerar valuta så att endast nummer och komma skrivs
+     */
     
     public double getValuta(){
         String skriv=tfValuta.getText();
@@ -95,11 +108,13 @@ public class LaggTillLand extends javax.swing.JFrame {
         return returer;
     }
     
+    /**
+     * Ger valutan från ett land
+     */
     
     public boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkFornamn(namn)&& valid.checkStorlek(100, namn)) {
             lblNamnBad.setVisible(false);
             return true;
@@ -108,6 +123,10 @@ public class LaggTillLand extends javax.swing.JFrame {
             return false;
     }
     }
+    
+    /**
+     * kontrollerar namn så att det valid
+     */
     
     public boolean sammaNamnKontroll(){
         boolean samma=false;
@@ -130,12 +149,13 @@ public class LaggTillLand extends javax.swing.JFrame {
         return samma;
     }
     
-    
+    /**
+     * kontrollerar så att inte samma namn används på flera ställen
+     */
     
     public boolean sprakKontroll(){
         Validering valid = new Validering(idb);
         String sprak = tfSprak.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkFornamn(sprak)&& valid.checkStorlek(100, sprak)) {
             lblSprakBad.setVisible(false);
             return true;
@@ -145,10 +165,13 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     }
     
+    /**
+     * kontrollerar så att språk för ett viss land är valid
+     */
+    
     public boolean politikKontroll(){
         Validering valid = new Validering(idb);
         String politik = tfPolitik.getText();
-        // liknande politik 1, en mening sedan siffra
     if (valid.checkMeningOSiffra(politik)&& valid.checkStorlek(255, politik)) {
             lblPolitikBad.setVisible(false);
             return true;
@@ -158,10 +181,13 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     }
     
+    /**
+     * kontrollerar politiken i ett land???
+     */
+    
     public boolean ekonomiKontroll(){
         Validering valid = new Validering(idb);
         String ekonomi = tfEkonomi.getText();
-        // liknande ekonomi 1 dvs en mening sedan en siffra
     if (valid.checkMeningOSiffra(ekonomi)&& valid.checkStorlek(200, ekonomi)) {
             lblEkonomiBad.setVisible(false);
             return true;
@@ -170,6 +196,10 @@ public class LaggTillLand extends javax.swing.JFrame {
             return false;
     }
     }
+    
+    /**
+     * kontrollerar den ekonomiska statusen i ett land
+     */
     
     public boolean tidzonKontroll(){
         Validering valid = new Validering(idb);
@@ -184,11 +214,9 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     }
     
-    
-    
-    
-    
-    
+    /**
+     * kontrollerar vilken tidzon ett land finns i
+     */
     
 
     /**

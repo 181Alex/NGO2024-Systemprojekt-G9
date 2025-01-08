@@ -19,9 +19,14 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private String inloggadAnvandare;  
     boolean kontrollOk;
     
-    /**
-     * Creates new form LaggTillPartner
+   /**
+     * Initierar LaggTillPartner objekt 
+     * låter administratören lägga till en ny partner
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten till den inloggade användaren
      */
+
     public LaggTillPartner(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -58,10 +63,9 @@ public class LaggTillPartner extends javax.swing.JFrame {
         }
     }
     
-    
-    
-    
-    
+    /**
+     * fyller i combo box med namn på städer
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -311,8 +315,12 @@ public class LaggTillPartner extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
     
+    /**
+     * kontrollerar så att allt är valid
+     */
+
+    
 public int hogstaPid(){
-        // hämtar ut högsta pid
         int hogsta=0;
         String sqlFraga="Select MAX(pid) FROM partner";
         try{
@@ -325,6 +333,10 @@ public int hogstaPid(){
         System.out.println(hogsta);
         return hogsta+1;
     }
+
+    /**
+     * hämtar ut högsta partner ID
+     */
     
     public boolean kPersonKontroll(){
         Validering valid = new Validering(idb);
@@ -339,6 +351,9 @@ public int hogstaPid(){
     }
     }
     
+    /**
+     * kontrollerar kontaktperson
+     */
     
     public boolean namnKontroll(){
         Validering valid = new Validering(idb);
@@ -353,11 +368,15 @@ public int hogstaPid(){
     }
     }
     
+    /**
+     * kontrollerar namn för att se till att det är valid
+     */
+
+    
     
     public boolean epostKontroll(){
         Validering valid = new Validering(idb);
         String epost = tfEpost.getText();
-        // kontrollerar epost format
     if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
             lblEpostBad.setVisible(false);
             return true;
@@ -367,10 +386,13 @@ public int hogstaPid(){
     }
     }
     
+    /**
+     * kontrollerar så att eposten är valid
+     */
+    
     public boolean telefonKontroll(){
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-        // kontrollerar telefon format
     if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
@@ -379,6 +401,11 @@ public int hogstaPid(){
             return false;
     }
     }
+    
+    /**
+     * kontrollerar så att telefon nummer är valid
+     */
+
     
     public boolean adressKontroll(){
         Validering valid = new Validering(idb);
