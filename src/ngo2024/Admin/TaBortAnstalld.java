@@ -130,7 +130,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     
     public String vilkenBehorighet(){
          Validering valid = new Validering(idb);
-         boolean arAdmin=valid.arAdmin(getEpost());
+         boolean arAdmin=valid.isAdmin(getEpost());
          String behorighet=" ";
          if(arAdmin==true){
             behorighet="admin";
