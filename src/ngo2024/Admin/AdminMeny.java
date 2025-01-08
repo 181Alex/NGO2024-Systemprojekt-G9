@@ -294,7 +294,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillPartnerActionPerformed
-        new epost(idb, epost).setVisible(true);
+        new LaggTillPartner(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillPartnerActionPerformed
 
     private void btnStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStadActionPerformed

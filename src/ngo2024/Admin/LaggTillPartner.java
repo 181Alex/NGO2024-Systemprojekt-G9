@@ -13,10 +13,10 @@ import java.util.ArrayList;
  *
  * @author alexanderabboud
  */
-public class epost extends javax.swing.JFrame {
+public class LaggTillPartner extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String inloggadAnvandare;  
+    private String epost;  
     boolean kontrollOk;
     
    /**
@@ -27,9 +27,9 @@ public class epost extends javax.swing.JFrame {
      * @param inloggadAnvandare eposten till den inloggade användaren
      */
 
-    public epost(InfDB idb, String inloggadAnvandare) {
+    public LaggTillPartner(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
         lblError.setVisible(false);
@@ -512,21 +512,23 @@ public int hogstaPid(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new epost().setVisible(true);
+                //new LaggTillPartner().setVisible(true);
             }
         });
     }

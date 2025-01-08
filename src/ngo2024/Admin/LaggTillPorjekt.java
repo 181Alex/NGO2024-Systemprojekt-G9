@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class LaggTillPorjekt extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> landLista;
