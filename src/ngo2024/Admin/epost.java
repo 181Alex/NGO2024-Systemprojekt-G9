@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author alexanderabboud
  */
-public class LaggTillPartner extends javax.swing.JFrame {
+public class epost extends javax.swing.JFrame {
 
     private InfDB idb;
     private String inloggadAnvandare;  
@@ -27,7 +27,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
      * @param inloggadAnvandare eposten till den inloggade användaren
      */
 
-    public LaggTillPartner(InfDB idb, String inloggadAnvandare) {
+    public epost(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
         initComponents();
@@ -276,7 +276,6 @@ public class LaggTillPartner extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(107, 107, 107))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(236, 236, 236)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSkapa)
                             .addComponent(lblSkapad)
@@ -513,20 +512,21 @@ public int hogstaPid(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPartner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(epost.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new LaggTillPartner().setVisible(true);
+                //new epost().setVisible(true);
             }
         });
     }

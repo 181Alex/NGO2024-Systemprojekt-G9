@@ -16,7 +16,7 @@ private InfDB idb;
 private boolean created;
 private Random randomizer;
 boolean kontrollOk;
-private String inloggadAnvandare;
+private String epost;
 
      /**
      * Initierar LaggTillAnstalld objekt 
@@ -40,7 +40,7 @@ private String inloggadAnvandare;
         lblEfternamnBad.setVisible(false);
         lblFornamnBad.setVisible(false);
         randomizer=new Random();
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
     }
     
     

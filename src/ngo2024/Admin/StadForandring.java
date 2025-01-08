@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class StadForandring extends javax.swing.JFrame {
     private InfDB idb;
-    private String inloggadAnvandare;  
+    private String epost;  
     boolean kontrollOk;
     
      /**
@@ -28,7 +28,7 @@ public class StadForandring extends javax.swing.JFrame {
 
     public StadForandring(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         fyllValjLand();
         fyllValjStad();

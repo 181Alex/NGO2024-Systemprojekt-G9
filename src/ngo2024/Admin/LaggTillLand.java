@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class LaggTillLand extends javax.swing.JFrame {
     private InfDB idb;
-    private String inloggadAnvandare;  
+    private String epost;  
     boolean kontrollOk;
     
     /**
@@ -28,7 +28,7 @@ public class LaggTillLand extends javax.swing.JFrame {
 
     public LaggTillLand(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
         lblError.setVisible(false);
@@ -463,7 +463,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSkapaActionPerformed
 
     private void btnAndraStaderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraStaderActionPerformed
-       new StadForandring(idb, inloggadAnvandare).setVisible(true);
+       new StadForandring(idb, epost).setVisible(true);
        this.setVisible(false);
     }//GEN-LAST:event_btnAndraStaderActionPerformed
 

@@ -17,7 +17,7 @@ import oru.inf.InfException;
 public class LaggTillAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String inloggadAnvandare;  
+    private String epost;  
     boolean kontrollOk;
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> stadLista;
@@ -33,7 +33,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     
     public LaggTillAvdelning(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         kontrollOk=false;
         initComponents();
         anstalldLista = new HashMap<>();

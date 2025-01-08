@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TaBortAnstalld extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String inloggadAnvandare;
+    private String epost;
     
     /**
      * Initierar TaBortAnstalld objekt 
@@ -29,7 +29,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
 
     public TaBortAnstalld(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         lblBorttagen.setVisible(false);
         fyllCb();
