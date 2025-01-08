@@ -30,7 +30,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid ID för projekt som ska ändras
-     * @param aid den inloggade användares ID
+     * @param aid inloggad användar ID
      */
     public AndraProjekt(InfDB idb, String pid, String aid) {
         this.idb = idb;
@@ -78,7 +78,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         return lid;
     }
 /**
-     *  Fyller i combo box med alla länder från databasen
+     * Fyller i combo box med alla länder från databasen
      * @param pid ID för projekt som eftersöks
      */
     private void setCbxLand() {
@@ -189,8 +189,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering för kontroll av namn triggar felmeddelande om
-     * validering ger false
+     * anropar validering för kontroll så projektnamn enbart kan inehålla vissa tecken
+     * triggar felmeddelande om validering ger false
      */
     private boolean namnKontroll() {
         Validering valid = new Validering(idb);
@@ -206,10 +206,10 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * kontroll så att nytt projektnman inte är identiskt ett redan existerande
+     * kontroll så att nytt projektnamn inte är identiskt ett redan existerande
      * projektnamn triggar felmeddelande om validering ger false
      */
-    private boolean inteSammaNamnKontroll() {
+    private boolean ingaDubletterNamnKontroll() {
         boolean inteSamma = true;
         boolean sInteSamma = false;
         boolean retur = true;
@@ -347,7 +347,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     private boolean totalKontroll() {
         boolean ok;
 
-        if (namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
+        if (namnKontroll() && ingaDubletterNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
                 && slDatumKontroll() && kostnadKontroll() && mellanDatum()) {
             ok = true;
             setFelmeddelandeFalse();

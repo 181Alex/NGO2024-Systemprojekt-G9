@@ -24,7 +24,14 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private HashMap<String, String> stadLista;
     private HashMap<String, String> avdLista;
     
-    /** Creates new form AndraAvdelning */
+    /**
+     * Initierar AndraAvdelning objekt 
+     * låter en administratör ändra en avdelning
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten till den inloggade användaren
+     */
+
     public AndraAvdelning(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -40,9 +47,12 @@ public class AndraAvdelning extends javax.swing.JFrame {
         lblError.setVisible(false);
     }
     
+    /**
+     * fyller i combo box med hela namn på projektchefer
+     */
+
      private void fyllProjektChef(){
         cbChef.removeAllItems();
-        //fyller projektchefs lsitan
         String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
         
         try{
@@ -61,6 +71,10 @@ public class AndraAvdelning extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }}
     
+     /**
+     * fyller i combo box med namn på städer
+     */
+
     private void fyllStad(){
         cbStad.removeAllItems();
         //fyller stads listan
@@ -82,7 +96,10 @@ public class AndraAvdelning extends javax.swing.JFrame {
         }
     }
     
-    
+    /**
+     * fyller i combo box med namn på avdelningar
+     */
+
     private void fyllAvdelning(){
         cbAvdelning.removeAllItems();
         //fyller stads listan

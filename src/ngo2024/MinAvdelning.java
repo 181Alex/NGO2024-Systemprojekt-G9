@@ -17,7 +17,12 @@ public class MinAvdelning extends javax.swing.JFrame {
     private int avdNmr;
 
     /**
-     * Creates new form MinAvdelning
+     * Initierar MinAvdelning objekt 
+     * 
+     * Klass visar fönster som leder vidare till användarens avdelnings projekt och anställda
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param ePost inloggad användar epost
      */
     public MinAvdelning(InfDB idb, String ePost) {
         this.idb = idb;
@@ -26,28 +31,40 @@ public class MinAvdelning extends javax.swing.JFrame {
         setAvdNummer(ePost);
     }
 
-    private String avdNamn(String ePost){
-        String avdelning=" ";
-        try{
+    /**
+     * hämtar inloggan användares avdelningsnamn
+     *
+     * @param ePost användarens epost används för att söka i databasen efter
+     * rätt användares avdelning
+     */
+    private String avdNamn(String ePost) {
+        String avdelning = " ";
+        try {
             String sqlFraga = "SELECT namn FROM avdelning WHERE avdid = "
-                + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
-        avdelning = idb.fetchSingle(sqlFraga);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+                    + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
+            avdelning = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         return avdelning;
     }
-    
-    private void setAvdNummer(String ePost){
+
+    /**
+     * hämtar inloggan användares avdelnings nummer
+     *
+     * @param ePost användarens epost används för att söka i databasen efter
+     * rätt användares avdelning
+     */
+    private void setAvdNummer(String ePost) {
         int nmr = 0;
-        try{
+        try {
             String sqlFraga = "SELECT avdid FROM avdelning WHERE avdid = "
-                + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
-        String svar = idb.fetchSingle(sqlFraga);
-        nmr = Integer.parseInt(svar);
-        } catch (InfException ex){
-           System.out.println(ex.getMessage());
+                    + "(SELECT avdelning FROM anstalld WHERE ePost= '" + ePost + "')";
+            String svar = idb.fetchSingle(sqlFraga);
+            nmr = Integer.parseInt(svar);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
 
         avdNmr = nmr;
@@ -134,11 +151,11 @@ public class MinAvdelning extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSeAnstalldaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeAnstalldaActionPerformed
-      new AvdAnstallda(idb, avdNmr).setVisible(true);       
+        new AvdAnstallda(idb, avdNmr).setVisible(true);
     }//GEN-LAST:event_btSeAnstalldaActionPerformed
 
     private void btSeProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSeProjektActionPerformed
-      new AvdProjekt(idb, avdNmr).setVisible(true);
+        new AvdProjekt(idb, avdNmr).setVisible(true);
     }//GEN-LAST:event_btSeProjektActionPerformed
 
     private void btBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBackActionPerformed

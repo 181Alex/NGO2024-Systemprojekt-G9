@@ -16,13 +16,12 @@ import oru.inf.InfException;
  *
  * @author linneagottling
  */
-
 public class AvdProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private int avdNmr;
     private DefaultTableModel model;
-    
+
     //Listor för att spara värdena i tabellen
     private ArrayList<String> projektLista = new ArrayList<>();
     private ArrayList<String> statusLista = new ArrayList<>();
@@ -32,8 +31,7 @@ public class AvdProjekt extends javax.swing.JFrame {
     private ArrayList<String> startdatumLista = new ArrayList<>();
     private ArrayList<String> slutdatumLista = new ArrayList<>();
     private ArrayList<Integer> pidLista = new ArrayList<>();
-    
-    
+
     /**
      * Initierar AvdProjekt objekt 
      * Skapar tabell av alla projekt på den anställdas avdelning
@@ -58,7 +56,7 @@ public class AvdProjekt extends javax.swing.JFrame {
         lblFelmeddelande.setVisible(false);
         tabellDesign();
     }
-    
+
     /**
      * Bestämmer hur tabellen med anställdas information ska formateras
      */
@@ -77,7 +75,6 @@ public class AvdProjekt extends javax.swing.JFrame {
         tblProjekt.getColumnModel().getColumn(4).setCellRenderer(new MultiLineCellRenderer());
         tblProjekt.getColumnModel().getColumn(5).setCellRenderer(new MultiLineCellRenderer());
         tblProjekt.getColumnModel().getColumn(6).setCellRenderer(new MultiLineCellRenderer());
-
 
         for (int row = 0; row < tblProjekt.getRowCount(); row++) {
             int rowHeight = tblProjekt.getRowHeight();
@@ -109,41 +106,42 @@ public class AvdProjekt extends javax.swing.JFrame {
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
             for (HashMap<String, String> rad : resultat) {
-                
-                    String projekt = rad.get("projektnamn");
-                    String status = rad.get("status");
-                    String chef = rad.get("helanamnet");
-                    String land = rad.get("namn");
-                    String prioritet = rad.get("prioritet");
-                    String startdatum = rad.get("startdatum");
-                    String slutdatum = rad.get("slutdatum");  
-                    String p_id = rad.get("pid");
-                    int pid = Integer.parseInt(p_id);
 
-                    //lägger till rad i tabellen
-                    laggTillNyRad(projekt, status, chef, land, prioritet, startdatum, slutdatum);
-                    
-                    //lägger till infon i separata listor
-                    laggTillRadInfo(projekt, status, chef, land, prioritet, startdatum, slutdatum, pid);               
+                String projekt = rad.get("projektnamn");
+                String status = rad.get("status");
+                String chef = rad.get("helanamnet");
+                String land = rad.get("namn");
+                String prioritet = rad.get("prioritet");
+                String startdatum = rad.get("startdatum");
+                String slutdatum = rad.get("slutdatum");
+                String p_id = rad.get("pid");
+                int pid = Integer.parseInt(p_id);
+
+                //lägger till rad i tabellen
+                laggTillNyRad(projekt, status, chef, land, prioritet, startdatum, slutdatum);
+
+                //lägger till infon i separata listor
+                laggTillRadInfo(projekt, status, chef, land, prioritet, startdatum, slutdatum, pid);
 
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * lägger till rad i tabellen
      */
     private void laggTillNyRad(String projekt, String status, String chef, String land,
-            String prioritet, String startdatum, String slutdatum){
+            String prioritet, String startdatum, String slutdatum) {
         model.addRow(new Object[]{projekt, status, chef, land, prioritet, startdatum, slutdatum});
     }
+
     /**
      * lägger till infon i separata listor
      */
     private void laggTillRadInfo(String projekt, String status, String chef, String land,
-            String prioritet, String startdatum, String slutdatum, int pid){
+            String prioritet, String startdatum, String slutdatum, int pid) {
         projektLista.add(projekt);
         statusLista.add(status);
         chefLista.add(chef);
@@ -153,7 +151,6 @@ public class AvdProjekt extends javax.swing.JFrame {
         slutdatumLista.add(slutdatum);
         pidLista.add(pid);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -303,87 +300,88 @@ public class AvdProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btReturnActionPerformed
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
-       filtreraTabell();
+        filtreraTabell();
     }//GEN-LAST:event_btSokActionPerformed
 
     private void cbxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxStatusActionPerformed
-       filtreraTabell();
+        filtreraTabell();
     }//GEN-LAST:event_cbxStatusActionPerformed
 
     /**
      * Filtrerar tabell efter datum och/eller status sökning
      */
     private void filtreraTabell() {
-    String sokFran = tfSokFran.getText();
-    String sokTill = tfSokTill.getText();
-    String selectedItem = (String) cbxStatus.getSelectedItem();
+        String sokFran = tfSokFran.getText();
+        String sokTill = tfSokTill.getText();
+        String selectedItem = (String) cbxStatus.getSelectedItem();
 
-    konstrueraTabell();
-    lblFelmeddelande.setVisible(false);
-    
-    Validering enValidering = new Validering(idb);
+        konstrueraTabell();
+        lblFelmeddelande.setVisible(false);
 
-    // Validera datum
-    if ((!sokFran.isEmpty() && !enValidering.checkDatum(sokFran)) ||
-        (!sokTill.isEmpty() && !enValidering.checkDatum(sokTill))) {
-        lblFelmeddelande.setText("Vänligen ange datum i formatet yyyy-mm-dd");
-        lblFelmeddelande.setVisible(true);
-        return;
-    }
+        Validering enValidering = new Validering(idb);
 
-    if (!sokFran.isEmpty() && !sokTill.isEmpty() &&
-        !enValidering.checkDatumSkillnad(sokFran, sokTill)) {
-        lblFelmeddelande.setText("Slutdatum måste vara senare än startdatum");
-        lblFelmeddelande.setVisible(true);
-        return;
-    }
-
-    for (int i = 0; i < pidLista.size(); i++) {
-        String startdatum = startdatumLista.get(i);
-        String slutdatum = slutdatumLista.get(i);
-        String status = statusLista.get(i);
-        
-        boolean datumMatchar = true;
-        
-        //villkor för att statusMatchar = true om selectedItem "Alla" är vald
-        boolean statusMatchar = "Alla".equals(selectedItem);
-
-        // Kontrollera datumfilter
-        if (!sokFran.isEmpty() && !sokTill.isEmpty()) {
-            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran,  sokTill);
-        } else if(!sokFran.isEmpty() && sokTill.isEmpty()){
-            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null); 
-        } else if(sokFran.isEmpty() && !sokTill.isEmpty()){
-            datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill);
+        // Validera datum
+        if ((!sokFran.isEmpty() && !enValidering.checkDatum(sokFran))
+                || (!sokTill.isEmpty() && !enValidering.checkDatum(sokTill))) {
+            lblFelmeddelande.setText("Vänligen ange datum i formatet yyyy-mm-dd");
+            lblFelmeddelande.setVisible(true);
+            return;
         }
 
-        // Kontrollera statusfilter
-        if (!"Alla".equals(selectedItem)) {
-            switch (selectedItem) {
-                case "Planerade":
-                    statusMatchar = enValidering.checkPlanerade(status);
-                    break;
-                case "Pågående":
-                    statusMatchar = enValidering.checkPagaende(status);
-                    break;
-                case "Avslutade":
-                    statusMatchar = enValidering.checkAvslutad(status);
-                    break;
-                case "Aktiva":
-                    statusMatchar = enValidering.checkAktiv(status);
-                    break;
-                case"Pausad":
-                    statusMatchar = enValidering.checkPausad(status);
+        if (!sokFran.isEmpty() && !sokTill.isEmpty()
+                && !enValidering.checkDatumSkillnad(sokFran, sokTill)) {
+            lblFelmeddelande.setText("Slutdatum måste vara senare än startdatum");
+            lblFelmeddelande.setVisible(true);
+            return;
+        }
+
+        for (int i = 0; i < pidLista.size(); i++) {
+            String startdatum = startdatumLista.get(i);
+            String slutdatum = slutdatumLista.get(i);
+            String status = statusLista.get(i);
+
+            boolean datumMatchar = true;
+
+            //villkor för att statusMatchar = true om selectedItem "Alla" är vald
+            boolean statusMatchar = "Alla".equals(selectedItem);
+
+            // Kontrollera datumfilter
+            if (!sokFran.isEmpty() && !sokTill.isEmpty()) {
+                datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, sokTill);
+            } else if (!sokFran.isEmpty() && sokTill.isEmpty()) {
+                datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, sokFran, null);
+            } else if (sokFran.isEmpty() && !sokTill.isEmpty()) {
+                datumMatchar = enValidering.checkMellanDatumSkillnad(startdatum, slutdatum, null, sokTill);
+            }
+
+            // Kontrollera statusfilter
+            if (!"Alla".equals(selectedItem)) {
+                switch (selectedItem) {
+                    case "Planerade":
+                        statusMatchar = enValidering.checkPlanerade(status);
+                        break;
+                    case "Pågående":
+                        statusMatchar = enValidering.checkPagaende(status);
+                        break;
+                    case "Avslutade":
+                        statusMatchar = enValidering.checkAvslutad(status);
+                        break;
+                    case "Aktiva":
+                        statusMatchar = enValidering.checkAktiv(status);
+                        break;
+                    case "Pausad":
+                        statusMatchar = enValidering.checkPausad(status);
+                }
+            }
+
+            // Lägg till rad om både datum och status matchar
+            if (datumMatchar && statusMatchar) {
+                laggTillNyRad(projektLista.get(i), status, chefLista.get(i),
+                        landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
             }
         }
-
-        // Lägg till rad om både datum och status matchar
-        if (datumMatchar && statusMatchar) {
-            laggTillNyRad(projektLista.get(i), status, chefLista.get(i), 
-                          landLista.get(i), prioritetLista.get(i), startdatum, slutdatum);
-        }
     }
-}    
+
     /**
      * @param args the command line arguments
      */

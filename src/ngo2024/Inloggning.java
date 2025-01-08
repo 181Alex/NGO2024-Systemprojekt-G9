@@ -7,6 +7,7 @@ package ngo2024;
 import ngo2024.Admin.AdminMeny;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
 /**
  *
  * @author alexanderabboud
@@ -14,21 +15,22 @@ import oru.inf.InfException;
 public class Inloggning extends javax.swing.JFrame {
 
     private InfDB idb;
-    
-     /**
+
+    /**
      * Initierar Inloggnings objekt 
      * Skapar fönster för inloggning. Tar emot användarens Epost och Lösenord för inlogg
      *
      * @param idb initierar fält för att interagera med databasen
      */
     public Inloggning(InfDB idb) {
-        this.idb=idb;
+        this.idb = idb;
         initComponents();
         lblFelMeddelande.setVisible(false);
     }
-    
+
     /**
      * Hämtar användarens ID från Epost
+     *
      * @param epost användarens epost adress
      */
     private String getAidString(String epost) {
@@ -132,32 +134,29 @@ public class Inloggning extends javax.swing.JFrame {
     }//GEN-LAST:event_tfEpostActionPerformed
 
     private void btnLoggaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoggaInActionPerformed
-       String ePost=tfEpost.getText();
-       String losen=tfLosenord.getText();
-       Validering validering = new Validering(idb);
-       
-       try{
-          String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost + "'";
-          String dbLosen = idb.fetchSingle(sqlFraga);
-          
-          //kontrollerar att lösenord stämmer för användare
-          //om inlogg är korrekt och användaren är admin öppnas admin menyn; annars öppnas handläggar menyn
-          if(losen.equals(dbLosen) && validering.arAdmin(ePost)==false){
-              new Meny(idb, ePost, getAidString(ePost)).setVisible(true);
-              this.setVisible(false);
-          }
-          else if(losen.equals(dbLosen) && validering.arAdmin(ePost)==true){
-              new AdminMeny(idb, ePost, getAidString(ePost)).setVisible(true);
-              this.setVisible(false);
-          }
-          else{
-              lblFelMeddelande.setVisible(true);
-          }
-       }
-       catch(InfException ex){
-           System.out.println(ex.getMessage());
-           
-       }
+        String ePost = tfEpost.getText();
+        String losen = tfLosenord.getText();
+        Validering validering = new Validering(idb);
+
+        try {
+            String sqlFraga = "SELECT losenord FROM anstalld WHERE epost = '" + ePost + "'";
+            String dbLosen = idb.fetchSingle(sqlFraga);
+
+            //kontrollerar att lösenord stämmer för användare
+            //om inlogg är korrekt och användaren är admin öppnas admin menyn; annars öppnas handläggar menyn
+            if (losen.equals(dbLosen) && validering.isAdmin(ePost) == false) {
+                new Meny(idb, ePost, getAidString(ePost)).setVisible(true);
+                this.setVisible(false);
+            } else if (losen.equals(dbLosen) && validering.isAdmin(ePost) == true) {
+                new AdminMeny(idb, ePost, getAidString(ePost)).setVisible(true);
+                this.setVisible(false);
+            } else {
+                lblFelMeddelande.setVisible(true);
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+
+        }
     }//GEN-LAST:event_btnLoggaInActionPerformed
 
     /**
@@ -190,7 +189,7 @@ public class Inloggning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new Inloggning().setVisible(true);
+                // new Inloggning().setVisible(true);
             }
         });
     }

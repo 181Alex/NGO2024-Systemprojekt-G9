@@ -18,9 +18,14 @@ private Random randomizer;
 boolean kontrollOk;
 private String inloggadAnvandare;
 
-    /**
-     * Creates new form LaggTillAnstalld
+     /**
+     * Initierar LaggTillAnstalld objekt 
+     * Låter en administratör lägga till nya anställda
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param ???
      */
+
     public LaggTillAnstalld(InfDB idb,String inloggadAnvandare) {
         this.idb=idb;
         initComponents();

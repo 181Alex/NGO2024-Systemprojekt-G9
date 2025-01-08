@@ -3,204 +3,207 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ngo2024;
- import javax.swing.JOptionPane;
+
+import javax.swing.JOptionPane;
 import ngo2024.Admin.AdminMeny;
- import oru.inf.InfDB;
- import oru.inf.InfException;
+import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
  * @author Amali
  */
 public class MinProfil extends javax.swing.JFrame {
-  private InfDB idb;
-  private String epost;
-  private String aid;
-  private String firstname;
-  private String lastname;
-  private String department;
-  private boolean isEditing = false;
-    /**
-     * Creates new form MinProfil
+
+    private InfDB idb;
+    private String epost;
+    private String aid;
+    private String firstname;
+    private String lastname;
+    private String department;
+    private boolean isEditing = false;
+
+     /**
+     * Initierar MinProfil objekt 
+     * Fönster med inloggad användares information
+     * Möjlighet att redigera användar information
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param aid inloggad användar ID
+     * @param epost inloggad användar epost
      */
- public MinProfil(InfDB idb, String aid, String epost) {
-  this.idb=idb;
-  this.epost=epost;
-  this.aid=aid;
-  this.firstname = getfirstname(aid);
-  this.lastname = getlastname(aid);
-  this.department = getdepartment(aid);
- 
-  String password = getPassword(aid);
-  initComponents();
-  
-  txtFirstName.setText(firstname != null ? firstname : "");
-  txtLastName.setText(lastname != null ? lastname : "");
-  txtEmail.setText(epost != null ? epost : "");
-  txtDepartment.setText(department != null ? department : "");
-  txtPassword.setText(password != null ? password : "");
-  txtPassword.setEchoChar('*');
-  lblFelInmatning.setVisible(false);
+    public MinProfil(InfDB idb, String aid, String epost) {
+        this.idb = idb;
+        this.epost = epost;
+        this.aid = aid;
+        this.firstname = getfirstname(aid);
+        this.lastname = getlastname(aid);
+        this.department = getdepartment(aid);
+
+        String password = getPassword(aid);
+        initComponents();
+
+        txtFirstName.setText(firstname != null ? firstname : "");
+        txtLastName.setText(lastname != null ? lastname : "");
+        txtEmail.setText(epost != null ? epost : "");
+        txtDepartment.setText(department != null ? department : "");
+        txtPassword.setText(password != null ? password : "");
+        txtPassword.setEchoChar('*');
+        lblFelInmatning.setVisible(false);
     }
 
     public MinProfil(InfDB idb) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-  
-    private String getfirstname(String aid){
-       String txtFirstName="";
-       try{
-        String sqlQuery = "SELECT fornamn FROM anstalld WHERE aid = '" + aid +"'";
-        txtFirstName = idb.fetchSingle(sqlQuery);
-       } catch (InfException ex){
-        System.out.println(ex.getMessage());
-       } 
-       return txtFirstName;
-        }
 
-    private String getlastname(String aid){
-       String txtLastName="";
-       try{
-        String sqlQuery = "SELECT efternamn FROM anstalld WHERE aid = '" + aid +"'";
-        txtLastName = idb.fetchSingle(sqlQuery);
-       } catch (InfException ex){
-        System.out.println(ex.getMessage());
-       } 
-       return txtLastName;
+    private String getfirstname(String aid) {
+        String txtFirstName = "";
+        try {
+            String sqlQuery = "SELECT fornamn FROM anstalld WHERE aid = '" + aid + "'";
+            txtFirstName = idb.fetchSingle(sqlQuery);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
-    
+        return txtFirstName;
+    }
+
+    private String getlastname(String aid) {
+        String txtLastName = "";
+        try {
+            String sqlQuery = "SELECT efternamn FROM anstalld WHERE aid = '" + aid + "'";
+            txtLastName = idb.fetchSingle(sqlQuery);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return txtLastName;
+    }
+
     private boolean isEmailTaken(String aid) {
-        try{
-            String sqlQuery = "SELECT epost FROM anstalld WHERE aid = '" + aid +  "'";
+        try {
+            String sqlQuery = "SELECT epost FROM anstalld WHERE aid = '" + aid + "'";
             String result = idb.fetchSingle(sqlQuery);
-            return result !=null;
-          }catch (InfException ex) {
-              System.out.println("Fel vid kontroll av eposten:" + ex.getMessage());
-              return false;
+            return result != null;
+        } catch (InfException ex) {
+            System.out.println("Fel vid kontroll av eposten:" + ex.getMessage());
+            return false;
         }
     }
-    
-    
 
-    private String getdepartment (String aid){
-       String txtDepartment="";
-       try{
-        String sqlQuery = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE aid = '" + aid +"')";
-        txtDepartment = idb.fetchSingle(sqlQuery);
-       } catch (InfException ex){
-        System.out.println(ex.getMessage());
-       } 
-       return txtDepartment;
+    private String getdepartment(String aid) {
+        String txtDepartment = "";
+        try {
+            String sqlQuery = "SELECT namn FROM avdelning WHERE avdid=" + "(SELECT avdelning FROM anstalld WHERE aid = '" + aid + "')";
+            txtDepartment = idb.fetchSingle(sqlQuery);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
-    
+        return txtDepartment;
+    }
+
     private String getPassword(String aid) {
         String password = "";
         try {
             String sqlQuery = "SELECT losenord FROM anstalld WHERE aid ='" + aid + "'";
             password = idb.fetchSingle(sqlQuery);
-        }   catch (InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-            return password;
+        return password;
     }
-        
-       
-   public MinProfil(){
+
+    public MinProfil() {
         initComponents();
         txtFirstName.setText(firstname);
         txtLastName.setText(lastname);
         txtEmail.setText(epost);
         txtPassword.setText("");
-       
-           
+
         txtDepartment.setText(department);
-           
+
         txtFirstName.setEditable(false);
         txtLastName.setEditable(false);
         txtEmail.setEditable(false);
         txtPassword.setEditable(false);
-        
-        }
-   
-    
-       private void onChangeClicked(){
-           txtFirstName.setEditable(true);
-           txtLastName.setEditable(true);
-           txtEmail.setEditable(true);
-           txtPassword.setEditable(true);
-           txtPassword.setText(getPassword(aid));
-           
-           Change.setText("Spara");
-           Change.removeActionListener(Change.getActionListeners()[0]);
-           Change.addActionListener(evt -> onSavedClicked()); 
-       }
-       private void onSavedClicked(){
-           firstname = txtFirstName.getText();
-           lastname = txtLastName.getText();
-           epost = txtEmail.getText();
-           
-           txtFirstName.setEditable(false);
-           txtLastName.setEditable(false);
-           txtEmail.setEditable(false);
-           txtPassword.setEditable(false);
-           
-           
-           Change.setText("Ändra");
-           Change.removeActionListener(Change.getActionListeners()[0]);
-           Change.addActionListener(evt -> onChangeClicked());
-           
-           JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
-       }
-       
-       // kontroller
-       public boolean fornamnKontroll() {
+
+    }
+
+    private void onChangeClicked() {
+        txtFirstName.setEditable(true);
+        txtLastName.setEditable(true);
+        txtEmail.setEditable(true);
+        txtPassword.setEditable(true);
+        txtPassword.setText(getPassword(aid));
+
+        Change.setText("Spara");
+        Change.removeActionListener(Change.getActionListeners()[0]);
+        Change.addActionListener(evt -> onSavedClicked());
+    }
+
+    private void onSavedClicked() {
+        firstname = txtFirstName.getText();
+        lastname = txtLastName.getText();
+        epost = txtEmail.getText();
+
+        txtFirstName.setEditable(false);
+        txtLastName.setEditable(false);
+        txtEmail.setEditable(false);
+        txtPassword.setEditable(false);
+
+        Change.setText("Ändra");
+        Change.removeActionListener(Change.getActionListeners()[0]);
+        Change.addActionListener(evt -> onChangeClicked());
+
+        JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
+    }
+
+    // kontroller
+    public boolean fornamnKontroll() {
         Validering valid = new Validering(idb);
         String fornamn = txtFirstName.getText();
-    if (valid.checkFornamn(fornamn)&& valid.checkStorlek(100, fornamn)) {
-        return true;
-    } else {
-        return false;
-    }
-    }
-    
-    public boolean efternamnKontroll() {
-        Validering valid = new Validering(idb);
-        String efternamn = txtLastName.getText();
-    if (valid.checkEfternamn(efternamn) && valid.checkStorlek(100, efternamn)) {
+        if (valid.checkFornamn(fornamn) && valid.checkStorlek(100, fornamn)) {
             return true;
-    } else {
+        } else {
             return false;
         }
     }
-       
-   public boolean kontroll(){
-    Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = txtEmail.getText(); 
-    
-    // Kontrollera om e-postadressen är giltig
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
-        return true;
-    } else {
-        return false;
-        
-    }}   
-       
-    public boolean totalKontroll(){
-        Boolean totOk=true;  
-        
-       if(kontroll()==false){
-            totOk=false;
-        }else if(!fornamnKontroll()) {
-        totOk = false;
+
+    public boolean efternamnKontroll() {
+        Validering valid = new Validering(idb);
+        String efternamn = txtLastName.getText();
+        if (valid.checkEfternamn(efternamn) && valid.checkStorlek(100, efternamn)) {
+            return true;
+        } else {
+            return false;
         }
-        else if(!efternamnKontroll()) {
-        totOk = false;
+    }
+
+    public boolean kontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = txtEmail.getText();
+
+        // Kontrollera om e-postadressen är giltig
+        if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
+            return true;
+        } else {
+            return false;
+
         }
-       return totOk;
-    }   
+    }
+
+    public boolean totalKontroll() {
+        Boolean totOk = true;
+
+        if (kontroll() == false) {
+            totOk = false;
+        } else if (!fornamnKontroll()) {
+            totOk = false;
+        } else if (!efternamnKontroll()) {
+            totOk = false;
+        }
+        return totOk;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -386,75 +389,75 @@ public class MinProfil extends javax.swing.JFrame {
 
     private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
         boolean ok = totalKontroll();
-        if (isEditing && ok==true) {
+        if (isEditing && ok == true) {
             lblFelInmatning.setVisible(false);
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
             String newEmail = txtEmail.getText();
             String newPassword = new String(txtPassword.getPassword());
-            
-            if (!newEmail.equals(this.epost) && isEmailTaken(newEmail)){
-                JOptionPane.showMessageDialog (this, "Eposten används redan av en annnan användare", "Fel", JOptionPane.ERROR_MESSAGE);
+
+            if (!newEmail.equals(this.epost) && isEmailTaken(newEmail)) {
+                JOptionPane.showMessageDialog(this, "Eposten används redan av en annnan användare", "Fel", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             try {
-                String updateQuery = "UPDATE anstalld SET fornamn = '"+ firstname +"', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
+                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
                 idb.update(updateQuery);
-                
+
                 this.epost = newEmail;
-           } catch (InfException ex) {
-               JOptionPane.showMessageDialog (this, "Fel vid uppdatering av databasen:",  "Fel", JOptionPane.ERROR_MESSAGE);
-               return;
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(this, "Fel vid uppdatering av databasen:", "Fel", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            
+
             txtFirstName.setEditable(false);
             txtFirstName.setFocusable(false);
             txtFirstName.setEnabled(false);
-            
+
             txtLastName.setEditable(false);
             txtLastName.setFocusable(false);
             txtLastName.setEnabled(false);
-            
+
             txtEmail.setEditable(false);
             txtEmail.setFocusable(false);
             txtEmail.setEnabled(false);
-            
+
             txtPassword.setEditable(false);
             txtPassword.setFocusable(false);
             txtPassword.setEnabled(false);
             txtPassword.setEchoChar('*');
-            
+
             Change.setText("Ändra");
-            
-        JOptionPane.showMessageDialog(this, "Ändringar sparade!");
+
+            JOptionPane.showMessageDialog(this, "Ändringar sparade!");
             isEditing = false;
-        } else if(!ok){
+        } else if (!ok) {
             lblFelInmatning.setVisible(true);
         } else {
-            
+
             String currentPassword = getPassword(aid);
             txtPassword.setText(currentPassword);
-            
+
             txtFirstName.setEditable(true);
             txtFirstName.setFocusable(true);
             txtFirstName.setEnabled(true);
-            
+
             txtLastName.setEditable(true);
             txtLastName.setFocusable(true);
             txtLastName.setEnabled(true);
-            
+
             txtEmail.setEditable(true);
             txtEmail.setFocusable(true);
             txtEmail.setEnabled(true);
-            
+
             txtPassword.setEditable(true);
             txtPassword.setFocusable(true);
             txtPassword.setEnabled(true);
             txtPassword.setEchoChar('\u0000');
-            
+
             Change.setText("Spara");
-            
+
             isEditing = true;
         }
     }//GEN-LAST:event_ChangeActionPerformed
@@ -468,27 +471,23 @@ public class MinProfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void TillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TillbakaActionPerformed
-           Validering valid = new Validering(idb); 
-        boolean admins=valid.arAdmin(epost);
-        if(admins==true){
+        Validering valid = new Validering(idb);
+        boolean admins = valid.isAdmin(epost);
+        if (admins == true) {
             this.dispose();
             new AdminMeny(idb, epost, aid).setVisible(true);
-        }
-        else{
+        } else {
             this.dispose();
             new Meny(idb, epost, aid).setVisible(true);
         }
-        
-        
-        
-        
+
         this.dispose();
     }//GEN-LAST:event_TillbakaActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Avdelning;
     private javax.swing.JButton Change;

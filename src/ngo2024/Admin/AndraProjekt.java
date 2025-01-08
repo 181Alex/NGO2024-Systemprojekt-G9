@@ -27,7 +27,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      * Används av administratören för att göra ändringar i ett specifikt projekt
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param epost 
+     * @param epost ???
      */
     public AndraProjekt(InfDB idb, String epost) {
         this.idb = idb;
@@ -41,6 +41,10 @@ public class AndraProjekt extends javax.swing.JFrame {
 
         
     }
+    
+     /**
+     * Fyller i combo box med namn på projekt
+     */
     
 private void fyllCbProjekt(){
         cbxProjekt.removeAllItems();
@@ -61,11 +65,13 @@ private void fyllCbProjekt(){
         }
         
     }
-    
-    
+
+    /**
+     * gömmer allt innan man har klickat i ett alternativ
+     */
+
 private void gomAlla(){
         
-        //göm allt innan man klickat i ett alternativ
         btAndra.setVisible(false);
         btTaBort.setVisible(false);
         btValj.setVisible(false);
@@ -117,7 +123,10 @@ private void gomAlla(){
         btHandlaggare.setVisible(false);
     }   
 
-    
+    /**
+     * hämtar projekt ID
+     */
+
 private String getPid(){
     String pid = " ";
     
@@ -131,6 +140,11 @@ private String getPid(){
     }
     return pid;
 }
+
+    /**
+     *  Ger projektchefens anställds ID
+     * @param pid projektets ID
+     */
 
 private String getChefAid(String pid){
     String aid = " ";
@@ -149,6 +163,11 @@ private String getChefAid(String pid){
     return aid;
 }
 
+    /**
+     *  ger landets ID
+     * @param pid projektets ID
+     */
+
 private String getLid(String pid){
     String lid = " ";
     
@@ -165,7 +184,12 @@ private String getLid(String pid){
     }
     return lid;
 }
-    
+
+/**
+     *  tar bort ett projekt
+     * @param pid projektets ID
+     */
+
 private void taBortProjekt(String pid){
     
         String sqlFraga = "DELETE FROM projekt WHERE pid = " + pid;
@@ -176,7 +200,10 @@ private void taBortProjekt(String pid){
         } catch (InfException ex) {
             
         }
-}
+} 
+    /**
+     * Fyller i combo box med namn på länder
+     */
 
 private void fyllCbLand(){
        
@@ -201,6 +228,10 @@ private void fyllCbLand(){
             System.out.println(ex.getMessage());
         }
 }
+    
+    /**
+     *  Fyller i combo box med projektchefer
+     */
 
 private void fyllCbProjektchef(){
     cbxProjektchef.removeAllItems();
@@ -228,6 +259,10 @@ private void fyllCbProjektchef(){
             
 }
 
+    /**
+     *  Fyller i combo box med prioriteringsnivåer
+     */
+
 private void fyllCbPrio(){
     
     cbxPrioritet.removeAllItems();
@@ -236,6 +271,10 @@ private void fyllCbPrio(){
     cbxPrioritet.addItem("Låg");
     cbxPrioritet.addItem("Medel");
 }
+
+    /**
+     *  Fyller i combo box med statusnivå
+     */
 
 private void fyllCbStatus(){
     cbxStatus.removeAllItems();
@@ -246,6 +285,10 @@ private void fyllCbStatus(){
     cbxStatus.addItem("Avslutat");
     cbxStatus.addItem("Pausad");
 }
+
+    /**
+     *  Fyller i tabellen för att administratören ska kunna ändra
+     */
 
 private void fyllTabellAndra(){
     fyllCbLand();
@@ -315,9 +358,13 @@ private void fyllTabellAndra(){
             cbxProjektchef.setSelectedItem(nChef);
                     
 }
+ 
+    /**
+     *  Visa allt om Ändra
+     */
 
 private void gomTaBort(){
-    // Visa allt om Ändra
+   
     btAndra.setVisible(true);
     btValj.setVisible(true);
     cbxPrioritet.setVisible(true);
@@ -351,25 +398,32 @@ private void gomTaBort(){
     lblLid.setVisible(true);
     lblNLid.setVisible(true);
     tfBeskrivning.setVisible(true);
-    
-
-    // Göm det som tillhör ta bort
+   
     lblPid.setVisible(false);
     lblPnamn.setVisible(false);
     btTaBort.setVisible(false);
-   
-    //göm felgrejor
+    
+    /**
+     *  göm allt som tillhör ta bort
+     */
+
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
     lblFelNamn.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelStartdatum.setVisible(false);
     
-    //gömmer meddelande
+    /**
+     *  gömmer felmeddelande
+     */
+   
     lblMeddelande.setVisible(false);
     lblFelmeddelande.setVisible(false);
     
-    //gömmer hållbarhet och partner tills man klickar på välj
+    /**
+     *  gömmer meddelanden
+     */
+    
     btHallbarhet.setVisible(false);
     btPartner.setVisible(false);
     lblProjektpartner.setVisible(false);
@@ -377,10 +431,17 @@ private void gomTaBort(){
     lblHandlaggare.setVisible(false);
     btHandlaggare.setVisible(false);
     
+    /**
+     *  gömmer hållbarhet och partner tills man klickar på välj
+     */
+    
 }
 
+    /**
+     *  Gömmer allt om Ändra
+     */
+
 private void gomAndra(){
-    // Göm allt om Ändra
     btAndra.setVisible(false);
     btHallbarhet.setVisible(false);
     lblHandlaggare.setVisible(false);
@@ -419,29 +480,44 @@ private void gomAndra(){
     lblLid.setVisible(false);
     lblNLid.setVisible(false);
     
+    /**
+     *  gömmer allt om Ändra
+     */
 
-    // Visa det som tillhör ta bort
     lblPid.setVisible(true);
     lblPnamn.setVisible(true);
     btTaBort.setVisible(true);
     btValj.setVisible(true);
     cbxProjekt.setVisible(true);
     
-   
-    //göm felgrejor
+     /**
+     *  Visa det som tillhör ta bort
+     */
+
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
     lblFelNamn.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelStartdatum.setVisible(false);
     
-    //göm meddelande
+    /**
+     *  gömma felmeddelanden
+     */
+
     lblMeddelande.setVisible(false);
     lblFelmeddelande.setVisible(false);
+    
+    /**
+     *  gömma meddelanden
+     */
+
 }
 
+    /**
+     *  gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
+     */
+
 private void gomBad(){
-    //gömmer alla fel medelandena, används innan ett specefikt fel ska upplysas.
     lblFelNamn.setVisible(false);
     lblFelBeskrivning.setVisible(false);
     lblFelKostnad.setVisible(false);
@@ -450,10 +526,13 @@ private void gomBad(){
     lblFelmeddelande.setVisible(false);
 } 
 
+    /**
+     *  kontrollerar att förnamn är valid
+     */
+
 private boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfProjektnamn.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(255, namn)) {
             lblFelNamn.setVisible(false);
             return true;
@@ -462,6 +541,10 @@ private boolean namnKontroll(){
             return false;
     }
 }
+
+    /**
+     *  Kollar så att inte samma projektnamn används för olika projekt
+     */
 
 private boolean inteSammaNamnKontroll(){
         boolean inteSamma=true;
@@ -503,10 +586,13 @@ private boolean inteSammaNamnKontroll(){
         return retur;
 }
 
+    /**
+     *  kontrollerar att beskrivningen är rätt
+     */
+
 private boolean beskrivningKontroll(){
         Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
             lblFelBeskrivning.setVisible(false);
             return true;
@@ -516,37 +602,45 @@ private boolean beskrivningKontroll(){
     }
     }
 
+    /**
+     *  kontrollerar att stardatum är rätt annars visas ett felmeddelande
+     */
+
 private boolean stDatumKontroll(){
 Validering valid = new Validering(idb); 
     
-    // Hämta text från textfältet
     String datum = tfStartdatum.getText(); 
     
-    // Kontrollera om e-postadressen är giltig
     if (valid.checkDatum(datum)) {
-        lblFelStartdatum.setVisible(false); // Göm varning
+        lblFelStartdatum.setVisible(false); 
         return true;
     } else {
-        lblFelStartdatum.setVisible(true); // Visa varning
+        lblFelStartdatum.setVisible(true);
         return false;
     }
 }
 
+    /**
+     *  kontrollerar att slutdatum är rätt annars visas ett felmeddelande
+     */  
+
 private boolean slDatumKontroll(){
 Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
+
     String datum = tfSlutdatum.getText(); 
     
-    // Kontrollera om e-postadressen är giltig
     if (valid.checkDatum(datum)) {
-        lblFelSlutdatum.setVisible(false); // Göm varning
+        lblFelSlutdatum.setVisible(false); 
         return true;
     } else {
-        lblFelSlutdatum.setVisible(true); // Visa varning
+        lblFelSlutdatum.setVisible(true); 
         return false;
     }
 }
+
+    /**
+     *  kontrollerar att kostnaden stämmer
+     */
 
 private boolean kostnadKontroll(){
     Validering enValidering = new Validering(idb);
@@ -560,6 +654,11 @@ private boolean kostnadKontroll(){
 
     }
 }
+
+    /**
+     *  kontrollerar mellan datum
+     */
+
 
 private boolean mellanDatum(){
         Validering valid = new Validering(idb);
@@ -577,6 +676,10 @@ private boolean mellanDatum(){
     }
 }
 
+     /**
+     *  kontrollerar så att allt stämmer
+     */
+
 private boolean totalKontroll(){
     boolean ok;
     
@@ -591,11 +694,19 @@ private boolean totalKontroll(){
     }
     return ok;
 }
+   
+ /**
+     *  visa anställda ID
+     */
 
 private void visaAid(){
         
     lblAid.setText(getSelectedAid());
 }
+
+    /**
+     *  ger en valds persons anställd ID
+     */
 
 private String getSelectedAid(){
     String selectedPerson = (String) cbxProjektchef.getSelectedItem();
@@ -609,10 +720,19 @@ private String getSelectedAid(){
         return aid;
 }
 
+    /**
+     *  visa land ID
+     */ 
+
 private void visaLid(){
    
         lblLid.setText(getSelectedLid());
 }
+
+    /**
+     *  ger ett valt lands ID
+     */
+
 
 private String getSelectedLid(){
         String selectedLand = (String) cbxLand.getSelectedItem();
@@ -625,6 +745,10 @@ private String getSelectedLid(){
         }
         return lid;
 }
+
+     /**
+     *  uppdaterar med ändringarna
+     */
 
 private void gorAndring(){
     String pid=getPid();
@@ -656,6 +780,7 @@ private void gorAndring(){
             System.out.println(ex.getMessage());
         } 
 }
+
 
 
 

@@ -10,11 +10,10 @@ import oru.inf.InfException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 /**
-  * @author frida.selin
-  */
+ * @author frida.selin
+ */
 public class OmProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
@@ -22,14 +21,13 @@ public class OmProjekt extends javax.swing.JFrame {
     private String aid;
 
     /**
-     * Skapar new OmProjekt klass
+     * Initierar OmProjekt objekt 
+     * Visar detaljerad information om specifikt projekt 
+     * Möjlighet för användare att via combo box välja sammarbetspartner för mer info
      *
-     * @param idb
-     * @param aid
-     * @param projektId
-     * 
-     * Tilhandahåller information om vilka projekt användaren medverkar i samt möjlighet att se mer information om dessa projekt.
-     * Projektledare ser knapp som leder till statisitk över sina projekt.
+     * @param idb initierar fält för att interagera med databasen
+     * @param aid ID för inloggad användare
+     * @param projektId ID för valt projekt
      */
     public OmProjekt(InfDB idb, String aid, String projektId) {
         initComponents();
@@ -40,127 +38,73 @@ public class OmProjekt extends javax.swing.JFrame {
 
         //initierar rätt text vid rätt fält
         setAllTextFeilds();
-
         andraButton();
     }
-   
+
+    /**
+     * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare
+     * att tyda. Anropar alla setText metoder för att hämta rätt information
+     * från sql basen och initierar rätt text vid rätt fält
+     */
+    private void setAllTextFeilds() {
+        lblH1ProjNamn.setText(setProjNamnUpperCase());
+        lblBeskrivning.setText(getFromProjekt(projBeskrivning()));
+        lblPrioritet.setText(getFromProjekt(prioritet()));
+        lblStatus.setText(getFromProjekt(status()));
+        lblSlutDatum.setText(getFromProjekt(slutdatum()));
+        lblStartDatum.setText(getFromProjekt(startdatum()));
+        lblKostnad.setText(getFromProjekt(kostnad()));
+        lblLand.setText(getLand());
+        lblProjektChef.setText(getProjektChef());
+
+        getAnstallda();
+        getGlobalaMal();
+        getPartners();
+        getCbxInfo();
+    }
+
+    /**
+     * Gör ändra knapp synlig (om användare är projektledare) eller osynlig
+     */
     private void andraButton() {
         Validering valid = new Validering(idb);
-        if (!valid.isProjektetsChef(aid, projektId)){
+        if (!valid.isProjektetsChef(aid, projektId)) {
             btnEdit.setVisible(false);
         }
     }
 
     /**
-     * Metod som kan kallas i konstruktorn i syte att göra konstruktorn lättare
-     * att tyda tillkallar alla set text metoder för att hämta rätt information
-     * från sql basen och initierar rätt text vid rätt fält
+     * Fyller label med Projekt Anställda med namn och gör rad matning efter
+     * varje
      */
-    private void setAllTextFeilds() {
-        lblH1ProjNamn.setText(setProjNamnUpperCase());
-        lblBeskrivning.setText(getFromProjekt(projektId, projBeskrivning()));
-        lblPrioritet.setText(getFromProjekt(projektId, prioritet()));
-        lblStatus.setText(getFromProjekt(projektId, status()));
-        lblSlutDatum.setText(getFromProjekt(projektId, slutdatum()));
-        lblStartDatum.setText(getFromProjekt(projektId, startdatum()));
-        lblKostnad.setText(getFromProjekt(projektId, kostnad()));
-        lblLand.setText(getLand(projektId));
-        lblProjektChef.setText(getProjektChef(projektId));
-        // lblProjAnstallda.setText(getAnstallda(projektId));
-        getAnstallda(projektId);
-        getPartners(projektId);
-        getCbxInfo(projektId);
-        getGlobalaMal();
-    }
-    
-    private String getGlobalaMal() {
-        StringBuilder allaMal = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT h.namn FROM hallbarhetsmal h "
-                    + "JOIN proj_hallbarhet ph ON h.hid = ph.hid "
-                    + "JOIN projekt p ON ph.pid = p.pid "
-                    + "WHERE p.pid = '" + projektId + "'";
-
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("namn");
-                laggTillNyRad2(namn);
-
-                allaMal.append(namn).append("<br>");
-            }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblGoal.setText("<html>" + allaMal.toString() + "</html>");
-        return allaMal.toString();
-    }
-
-    private String getAnstallda(String pid) {
-        StringBuilder allaNamn = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn "
-                 + "FROM anstalld a "
-                 + "JOIN ans_proj on ans_proj.aid = a.aid "
-                 + "JOIN projekt on ans_proj.pid = projekt.pid "
-                 + "WHERE projekt.pid = '" + pid + "' "
-                 + "ORDER BY a.fornamn ASC;";
-            
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("namn");
-                laggTillNyRad(namn);
-                allaNamn.append(namn).append("<br>");
-            }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblProjAnstallda.setText("<html>" + allaNamn.toString() + "</html>");
-        return allaNamn.toString();
-    }
-
     private void laggTillNyRad(String namn) {
         lblProjAnstallda.setText(lblProjAnstallda.getText() + namn + "\n");
-
     }
 
-    private String getPartners(String pid) {
-        StringBuilder allaObjekt = new StringBuilder();
-        try {
-            String sqlFraga = "SELECT namn FROM partner "
-                    + "JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid "
-                    + "JOIN projekt ON projekt_partner.pid = projekt.pid "
-                    + "WHERE projekt.pid = '" + pid + "'";
-
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
-
-            for (HashMap<String, String> rad : resultat) {
-                String namn = rad.get("namn");
-                laggTillNyRad2(namn);
-
-                allaObjekt.append(namn).append("<br>");
-            }
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        lblPartners.setText("<html>" + allaObjekt.toString() + "</html>");
-        return allaObjekt.toString();
-    }
-
+    /**
+     * Fyller label med Sammarbetspartners med namn och gör rad matning efter
+     * varje
+     */
     private void laggTillNyRad2(String namn) {
         lblPartners.setText(lblPartners.getText() + namn + "\n");
     }
 
     /**
-     * Metod som inehåller en SQL bas fråga som återanvänds ofta för att hämta
+     * Metod som gör rubrik projektnamn till upper case
+     */
+    private String setProjNamnUpperCase() {
+        String UpperCaseName = getFromProjekt(projNamn()).toUpperCase();
+        return UpperCaseName;
+    }
+
+    /**
+     * Metod som innehåller en SQL bas fråga som återanvänds ofta för att hämta
      * önskad String
      *
-     * Parameter 1: önskade projekts ID i datatyp String Parameter 2: String
-     * hämtar önskad kolumn i databasen som vill hämtas. Ex. 'projektnamn',
-     * 'beskrivning'
+     * @param specifikInfo hämtar String av önskad kolumn i databasen som vill
+     * hämtas: Ex. 'projektnamn', 'beskrivning'
      */
-    private String getFromProjekt(String projektId, String specifikInfo) {
+    private String getFromProjekt(String specifikInfo) {
         String minInfo = " ";
         try {
             String sqlFraga = "SELECT " + specifikInfo + " FROM projekt where pid = '" + projektId + "'";
@@ -172,16 +116,8 @@ public class OmProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Metod som förändrar rubriken med projekt namnet till upper case
-     */
-    private String setProjNamnUpperCase() {
-        String UpperCaseName = getFromProjekt(projektId, projNamn()).toUpperCase();
-        return UpperCaseName;
-    }
-
-    /**
-     * Metod hämtar String med innehåll 'projektnamn' vilket är en kolumn i
-     * tabellen projekt i databasen
+     * retunerar String med innehåll 'projektnamn' vilket är en kolumn i
+     * tabellen 'projekt' i databasen
      */
     private String projNamn() {
         String projNamn = "projektnamn";
@@ -219,10 +155,9 @@ public class OmProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Metod hämtar landet ett specifikt porjekt utförs i Parametervärde String
-     * av önskade projekts ID
+     * Retunerar landet projektet utförs inom
      */
-    private String getLand(String projektId) {
+    private String getLand() {
         String projektLand = " ";
         try {
             String sqlFraga = "SELECT namn FROM land JOIN projekt ON projekt.land = land.lid WHERE pid = '" + projektId + "'";
@@ -235,11 +170,10 @@ public class OmProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Metod hämtar projektchef för specifikt projekt ifrån databasen
-     * Parametervärde tar String av önskat porjekts ID Skriver samman för och
-     * efternamn från databasen till utskriften
+     * Retunerar projektchef för projektet från databasen Gör ny String av för
+     * och efternamn från databasen till utskriften
      */
-    private String getProjektChef(String projektId) {
+    private String getProjektChef() {
         String projektProjektChef = " ";
         try {
             String sqlFragaFornamn = "SELECT fornamn FROM anstalld JOIN projekt ON projekt.projektchef = anstalld.aid WHERE pid = '" + projektId + "'";
@@ -251,12 +185,103 @@ public class OmProjekt extends javax.swing.JFrame {
 
         return projektProjektChef;
     }
-    
-    public void getCbxInfo(String projektId) {
+
+    /**
+     * Retunerar anställda inom projektet Lägger till alla namn och lite html
+     * för utskriften
+     */
+    private String getAnstallda() {
+        StringBuilder allaNamn = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT a.aid, CONCAT(a.fornamn, ' ', a.efternamn) AS namn "
+                    + "FROM anstalld a "
+                    + "JOIN ans_proj on ans_proj.aid = a.aid "
+                    + "JOIN projekt on ans_proj.pid = projekt.pid "
+                    + "WHERE projekt.pid = '" + projektId + "' "
+                    + "ORDER BY a.fornamn ASC;";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad(namn);
+                allaNamn.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblProjAnstallda.setText("<html>" + allaNamn.toString() + "</html>");
+        return allaNamn.toString();
+    }
+
+    /**
+     * Retunerar globala mål projektet arbetar mot Lägger till alla mål och html
+     * för korrekt utskrift i label
+     */
+    private String getGlobalaMal() {
+        StringBuilder allaMal = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT h.namn FROM hallbarhetsmal h "
+                    + "JOIN proj_hallbarhet ph ON h.hid = ph.hid "
+                    + "JOIN projekt p ON ph.pid = p.pid "
+                    + "WHERE p.pid = '" + projektId + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad2(namn);
+
+                allaMal.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblGoal.setText("<html>" + allaMal.toString() + "</html>");
+        return allaMal.toString();
+    }
+
+    /**
+     * Retunerar projektets sammarbetspartners Lägger till alla partners namn
+     * och html kod för korrekt utskrift i label
+     */
+    private String getPartners() {
+        StringBuilder allaObjekt = new StringBuilder();
+        try {
+            String sqlFraga = "SELECT namn FROM partner "
+                    + "JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid "
+                    + "JOIN projekt ON projekt_partner.pid = projekt.pid "
+                    + "WHERE projekt.pid = '" + projektId + "'";
+
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
+
+            for (HashMap<String, String> rad : resultat) {
+                String namn = rad.get("namn");
+                laggTillNyRad2(namn);
+
+                allaObjekt.append(namn).append("<br>");
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        lblPartners.setText("<html>" + allaObjekt.toString() + "</html>");
+        return allaObjekt.toString();
+    }
+
+    /**
+     * hämtar vilka sammarbetspartner som stöttar i projekt lägger till dessa i
+     * en combo box med projekt lista
+     *
+     * action listener: när användare väljer sammarbetspartner öppnas nytt
+     * fönster med mer info
+     */
+    public void getCbxInfo() {
         cbxValjPartner.removeAllItems();
         ArrayList<String> partnerLista = new ArrayList<String>();
+        // sql fråga som hämtar namn av partner som stöttar projektet från idb
         String sqlFraga = "SELECT namn FROM partner JOIN projekt_partner ON partner.pid = projekt_partner.partner_pid JOIN projekt ON projekt_partner.pid = projekt.pid WHERE projekt.pid = '" + projektId + "'";
 
+        //anropar sql fråga samt lägger till kolumnen som hämtas i cbxValjPartner
         try {
             partnerLista = idb.fetchColumn(sqlFraga);
             for (String projektnamn : partnerLista) {
@@ -266,6 +291,8 @@ public class OmProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
 
+        //action listener hämtar pid från vald partner
+        //samt öppnar ny 'OmPartner' som visar info om valda partnern
         cbxValjPartner.addActionListener(e -> {
             String valdPartner = (String) cbxValjPartner.getSelectedItem();
 
@@ -285,7 +312,6 @@ public class OmProjekt extends javax.swing.JFrame {
             }
         });
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -512,11 +538,13 @@ public class OmProjekt extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        //går tillbaka till sidan användaren kom ifrån
         new MinaProjekt(idb, aid).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        //öppnar klass som kan ändra i projektet
         this.dispose();
         new AndraProjekt(idb, projektId, aid).setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
