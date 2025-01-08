@@ -543,10 +543,10 @@ private String inloggadAnvandare;
     public boolean AnsvarKontroll(InfDB idb){
             Validering valid = new Validering(idb); 
           // Hämta text från textfältet
-    String epost = tfAnsvarighetsOmrade.getText(); 
+    String ansvar = tfAnsvarighetsOmrade.getText(); 
     
     // Kontrollera om ANsvarighetsområdet är ok är giltig
-    if(valid.checkAnsvar(epost)&& valid.checkStorlek(255, epost)) {
+    if(valid.checkAnsvar(ansvar)&& valid.checkStorlek(255, ansvar)) {
         return true;
     } else {
         return false;
