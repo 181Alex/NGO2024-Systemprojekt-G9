@@ -18,7 +18,6 @@ import java.util.*;
 public class MinaProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String anvandarEpost;
     private String aid;
     private ArrayList<String> projNamnLista;
 
@@ -33,7 +32,6 @@ public class MinaProjekt extends javax.swing.JFrame {
     public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;
         this.aid = aid;
-        anvandarEpost = getAnvandarEpost();
         projNamnLista = new ArrayList<String>();
 
         initComponents();
@@ -50,20 +48,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
         txtAreaProj.setText(String.join("\n", getProjekt()));
-        setCbxProjekt();
-        
-        //kontrollerar om användaren är projektledare i något projekt 
-        Validering valid = new Validering(idb);
-        if (valid.isChef(anvandarEpost)){
-            txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
-        }    
-        else {
-            txtAreaChefsProj.setText("Du är inte projektledare inom något projekt.");
-            
-            btnStats.setVisible(false);
-            lblStats.setVisible(false); 
-        }
-        
+        setCbxProjekt(); 
     }
 
     /**
@@ -168,21 +153,6 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     }
     
-    
-    /**
-     * retunerar inloggad användares epost utifrån aid
- behövs till validerings metodanrop 'isChef'
-     */
-     private String getAnvandarEpost () {
-        String sqlFraga = " ";
-        try {
-            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return sqlFraga;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -204,8 +174,6 @@ public class MinaProjekt extends javax.swing.JFrame {
         lblValjProj = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtAreaChefsProj = new javax.swing.JTextArea();
-        btnStats = new javax.swing.JButton();
-        lblStats = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -257,15 +225,6 @@ public class MinaProjekt extends javax.swing.JFrame {
         txtAreaChefsProj.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jScrollPane4.setViewportView(txtAreaChefsProj);
 
-        btnStats.setText("Statisikt");
-        btnStats.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStatsActionPerformed(evt);
-            }
-        });
-
-        lblStats.setText("Se statistik över projekt jag leder:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -292,10 +251,6 @@ public class MinaProjekt extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnStats)
-                            .addComponent(lblStats, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
@@ -310,14 +265,10 @@ public class MinaProjekt extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblMinaProj)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValjProj)
-                    .addComponent(lblStats))
+                .addComponent(lblValjProj)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStats))
-                .addGap(32, 32, 32)
+                .addComponent(cbxValjProj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblProjekt)
                     .addComponent(lblLedareProj))
@@ -339,16 +290,6 @@ public class MinaProjekt extends javax.swing.JFrame {
     private void cbxValjProjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxValjProjActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxValjProjActionPerformed
-
-    private void btnStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatsActionPerformed
-        //Anropar validering. Statistik knapp dyker upp för användare som leder minst ett projekt
-        Validering valid = new Validering(idb);
-        if (valid.isChef(anvandarEpost)){
-            new Statistik(idb, aid).setVisible(true);
-            this.dispose();
-        }
-        
-    }//GEN-LAST:event_btnStatsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,7 +329,6 @@ public class MinaProjekt extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReturn;
-    private javax.swing.JButton btnStats;
     private javax.swing.JComboBox<String> cbxValjProj;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -397,7 +337,6 @@ public class MinaProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblLedareProj;
     private javax.swing.JLabel lblMinaProj;
     private javax.swing.JLabel lblProjekt;
-    private javax.swing.JLabel lblStats;
     private javax.swing.JLabel lblValjProj;
     private javax.swing.JTextArea txtAreaChefsProj;
     private javax.swing.JTextArea txtAreaProj;
