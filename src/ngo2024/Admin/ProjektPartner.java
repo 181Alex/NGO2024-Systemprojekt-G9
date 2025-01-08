@@ -19,8 +19,13 @@ public class ProjektPartner extends javax.swing.JFrame {
         private HashMap<String, String> partnerLista;
 
     /**
-     * Creates new form ProjektPartner
+     * Initierar ProjektPartner objekt 
+     * låter administratören lägga till och ta bort partner för ett projekt
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param pid partner ID
      */
+        
     public ProjektPartner(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -36,6 +41,11 @@ public class ProjektPartner extends javax.swing.JFrame {
         fyllHashMap();
     }
     
+    /**
+     * ger projektnamn på ett visst projekt namn
+     * @param pid projekt ID
+     */
+    
         private void setProjektnamn(String pid){
         try{
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
@@ -47,6 +57,10 @@ public class ProjektPartner extends javax.swing.JFrame {
         }
     }
         
+    /**
+     * fyller i Hash Map med alla partners namn
+     */
+        
         private void fyllHashMap(){
             
             try{
@@ -54,7 +68,6 @@ public class ProjektPartner extends javax.swing.JFrame {
 
             ArrayList<String> allaPartners = idb.fetchColumn(sqlFraga);
 
-            //fyller i alla mål
             for (String pNamn : allaPartners) {
                 String sqlPid = "SELECT pid FROM partner WHERE "
                         + "namn = '" + pNamn + "'";
@@ -66,6 +79,9 @@ public class ProjektPartner extends javax.swing.JFrame {
             }
         }
             
+    /**
+     * fyller i combo box med alla partners namn
+     */   
         
           private void fyllCbLaggTill() {
         cbPartners.removeAllItems();
@@ -88,6 +104,10 @@ public class ProjektPartner extends javax.swing.JFrame {
         }
     }
           
+     /**
+     * ???
+     */   
+          
           private void fyllCbTaBort() {
         cbPartners.removeAllItems();
 
@@ -106,6 +126,10 @@ public class ProjektPartner extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
+    /**
+     * hämtar vald partner ID
+     */   
           
             private String getSelectedPaid() {
         String selectedMal = (String) cbPartners.getSelectedItem();
@@ -118,6 +142,10 @@ public class ProjektPartner extends javax.swing.JFrame {
         }
         return paid;
     }
+            
+    /**
+     * lägg till partner till ett projekt
+     */
             
                 private void laggTill(){
         String paid = getSelectedPaid();
@@ -145,6 +173,10 @@ public class ProjektPartner extends javax.swing.JFrame {
         
     }
                 
+    /**
+     * tar bort partner från ett projekt
+     */
+                
                     private void taBort(){
         String paid = getSelectedPaid();
         String sPid = lblPid.getText();
@@ -161,6 +193,10 @@ public class ProjektPartner extends javax.swing.JFrame {
         }
         
     }
+                    
+    /**
+     * kontrollerar så att det finns inga dubletter av partner ID finns
+     */
                     
                         private boolean kontrollInteSamma(String paid){
         boolean finnsEj = true;

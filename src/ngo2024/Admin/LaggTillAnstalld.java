@@ -23,10 +23,10 @@ private String epost;
      * Låter en administratör lägga till nya anställda
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param ???
+     * @param epost eposten till den inloggade användaren
      */
 
-    public LaggTillAnstalld(InfDB idb,String inloggadAnvandare) {
+    public LaggTillAnstalld(InfDB idb,String epost) {
         this.idb=idb;
         initComponents();
         created=false;
@@ -40,7 +40,7 @@ private String epost;
         lblEfternamnBad.setVisible(false);
         lblFornamnBad.setVisible(false);
         randomizer=new Random();
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
     }
     
     

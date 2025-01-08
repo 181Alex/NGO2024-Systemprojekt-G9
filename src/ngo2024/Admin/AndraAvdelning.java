@@ -29,12 +29,12 @@ public class AndraAvdelning extends javax.swing.JFrame {
      * låter en administratör ändra en avdelning
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten till den inloggade användaren
+     * @param epost eposten till den inloggade användaren
      */
 
-    public AndraAvdelning(InfDB idb, String inloggadAnvandare) {
+    public AndraAvdelning(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         kontrollOk=false;
         initComponents();
         anstalldLista = new HashMap<>();

@@ -24,12 +24,12 @@ public class LaggTillPartner extends javax.swing.JFrame {
      * låter administratören lägga till en ny partner
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten till den inloggade användaren
+     * @param epost eposten till den inloggade användaren
      */
 
-    public LaggTillPartner(InfDB idb, String inloggadAnvandare) {
+    public LaggTillPartner(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
         kontrollOk=false;
         lblError.setVisible(false);
@@ -318,7 +318,9 @@ public class LaggTillPartner extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
     
-    
+    /**
+     * hämtar ut högsta partner ID
+     */
 
     
 public int hogstaPid(){
@@ -336,7 +338,7 @@ public int hogstaPid(){
     }
 
     /**
-     * hämtar ut högsta partner ID
+     * kontrollerar kontaktperson
      */
     
     public boolean kPersonKontroll(){
@@ -353,7 +355,7 @@ public int hogstaPid(){
     }
     
     /**
-     * kontrollerar kontaktperson
+     * kontrollerar namn för att se till att det är valid
      */
     
     public boolean namnKontroll(){
@@ -368,12 +370,10 @@ public int hogstaPid(){
             return false;
     }
     }
-    
-    /**
-     * kontrollerar namn för att se till att det är valid
-     */
 
-    
+    /**
+     * kontrollerar så att eposten är valid
+     */
     
     public boolean epostKontroll(){
         Validering valid = new Validering(idb);
@@ -388,7 +388,7 @@ public int hogstaPid(){
     }
     
     /**
-     * kontrollerar så att eposten är valid
+     * kontrollerar så att telefon nummer är valid
      */
     
     public boolean telefonKontroll(){
@@ -403,9 +403,7 @@ public int hogstaPid(){
     }
     }
     
-    /**
-     * kontrollerar så att telefon nummer är valid!!!!!!!!!!!
-     */
+    
 
     /**
      * kontrollerar så att adress är valid

@@ -23,12 +23,12 @@ public class LaggTillLand extends javax.swing.JFrame {
      * Låter en administratör lägga till ett land
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten till den inloggade användaren
+     * @param epost eposten till den inloggade användaren
      */
 
-    public LaggTillLand(InfDB idb, String inloggadAnvandare) {
+    public LaggTillLand(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
         kontrollOk=false;
         lblError.setVisible(false);
@@ -169,7 +169,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar politiken i ett land???
+     * kontrollerar politiska strukturen i ett land
      */
     
     public boolean politikKontroll(){

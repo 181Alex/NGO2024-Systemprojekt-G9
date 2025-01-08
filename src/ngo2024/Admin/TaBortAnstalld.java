@@ -24,12 +24,12 @@ public class TaBortAnstalld extends javax.swing.JFrame {
      * Låter administratör ta bort anställda
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten till den inloggade användaren
+     * @param epost eposten till den inloggade användaren
      */
 
-    public TaBortAnstalld(InfDB idb, String inloggadAnvandare) {
+    public TaBortAnstalld(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
         lblBorttagen.setVisible(false);
         fyllCb();
@@ -87,7 +87,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     
     /**
      *  hämtar ut anställdas ID
-     * @param namn den anställdas namn???
+     * @param namn den anställdas namn
      */
 
     public String selectAid(String namn){

@@ -20,8 +20,13 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     private HashMap<String, String> malLista;
 
     /**
-     * Creates new form ProjektHallbarhet
+     * Initierar ProjektHallbarhet objekt 
+     * låter administratören lägga till och ta bort hållbarhetsmål för ett projekt
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param pid projekt ID
      */
+    
     public ProjektHallbarhet(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -37,6 +42,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         fyllHashMap();
     }
 
+    /**
+     * fyller i Hash Map med alla mål
+     */
+    
     private void fyllHashMap(){
             
             try{
@@ -44,7 +53,6 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
             ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
 
-            //fyller i alla mål
             for (String malNamn : allaMal) {
                 String sqlHid = "SELECT hid FROM hallbarhetsmal WHERE "
                         + "namn = '" + malNamn + "'";
@@ -56,6 +64,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             }
         }
             
+    /**
+     * ger projektnamn på ett viss projekt
+     * @param pid projekt ID
+     */
     
     private void setProjektnamn(String pid) {
         try {
@@ -68,6 +80,9 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * fyller i combo box med alla mål
+     */
 
     private void fyllCbLaggTill() {
         cbHallbarhetsMal.removeAllItems();
@@ -77,7 +92,6 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
             ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
 
-            //fyller i alla mål
             for (String malNamn : allaMal) {
                 cbHallbarhetsMal.addItem(malNamn);
             }
@@ -87,6 +101,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * ???
+     */
+    
     private void fyllCbTaBort() {
         cbHallbarhetsMal.removeAllItems();
 
@@ -105,6 +123,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
+    /**
+     * hämtar hållbarhetsmål ID
+     */
 
     private String getSelectedHid() {
         String selectedMal = (String) cbHallbarhetsMal.getSelectedItem();
@@ -117,6 +139,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         }
         return hid;
     }
+    
+    /**
+     * lägger till hållbarhetsmål för ett projekt
+     */
     
     private void laggTill(){
         String hid = getSelectedHid();
@@ -144,6 +170,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Tar bort hållbarhetsmål från ett projekt
+     */
+    
     private void taBort(){
         String hid = getSelectedHid();
         String sPid = lblPid.getText();
@@ -160,6 +190,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         }
         
     }
+    
+    /**
+     * kontrollerar så det inte finns dubletter av hållbarhetsmål
+     */
     
     private boolean kontrollInteSamma(String hid){
         boolean finnsEj = true;

@@ -27,7 +27,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      * Används av administratören för att göra ändringar i ett specifikt projekt
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param epost ???
+     * @param epost eposten till den inloggade användaren
      */
     public AndraProjekt(InfDB idb, String epost) {
         this.idb = idb;
