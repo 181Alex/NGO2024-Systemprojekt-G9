@@ -24,9 +24,14 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> landLista;
     
-    /**
-     * Creates new form LaggTillPorjekt
+     /**
+     * Initierar LaggTillPorjekt objekt 
+     * låter administratören lägga till projekt
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten till den inloggade användaren
      */
+
     public LaggTillPorjekt(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -41,6 +46,10 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         
     }
     
+    /**
+     * gömmer alla felmeddelanden
+     */
+    
     private void gomBad(){
         lblNamnBad.setVisible(false);
         lblBeskrivningBad.setVisible(false);
@@ -49,6 +58,10 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
         lblKostnadBad.setVisible(false);
     }
         
+    /**
+     * fyller i combo box med statusnivåer
+     */
+    
 private void fyllStatus(){
         cbStatus.removeAllItems();
         
@@ -58,6 +71,10 @@ private void fyllStatus(){
         cbStatus.addItem("Pausad");
     }
        
+    /**
+     * fyller i combo box med projektchefer
+     */
+
 private void fyllProjektChef(){
         cbProjektChef.removeAllItems();
         
@@ -78,6 +95,11 @@ private void fyllProjektChef(){
         }catch(InfException ex){
             System.out.println(ex.getMessage());
         }}
+
+    /**
+     * fyller i combo box med prioritetnivåer
+     */
+
         
 private void fyllPrioritet(){
         cbPrioritet.removeAllItems();
@@ -86,6 +108,10 @@ private void fyllPrioritet(){
         cbPrioritet.addItem("Medel");
         cbPrioritet.addItem("hög");
     }
+
+    /**
+     * fyller i combo boc med namn på länder
+     */
     
 private void fyllLand(){
         cbLand.removeAllItems();
@@ -107,6 +133,10 @@ private void fyllLand(){
             System.out.println(ex.getMessage());
         }
     }
+
+    /**
+     * fyller i allt
+     */
     
 private void fyllAllt(){
         fyllStatus();
@@ -116,9 +146,12 @@ private void fyllAllt(){
         lblAid.setText(getPChef());
         lblLid.setText(getLandid());
 }
+
+    /**
+     * hämtar ut högsta projekt ID
+     */
     
 private int hogstaPid(){
-        // hämtar ut högsta pid
         int hogsta=0;
         String sqlFraga="Select MAX(pid) FROM projekt";
         try{
@@ -132,6 +165,10 @@ private int hogstaPid(){
         return hogsta+1;
 }
     
+    /**
+     * kontroll så att namn är valid
+     */
+
 private boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
@@ -144,6 +181,10 @@ private boolean namnKontroll(){
             return false;
     }
 }
+
+    /**
+     * hämtar mellan datum
+     */
 
 private boolean mellanDatum(){
         Validering valid = new Validering(idb);
@@ -161,7 +202,10 @@ private boolean mellanDatum(){
     }
 }
     
-    
+    /**
+     * kontrollera att beskrivning är valid
+     */
+
 private boolean beskrivningKontroll(){
            Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
@@ -175,6 +219,9 @@ private boolean beskrivningKontroll(){
     }
 }
     
+    /**
+     * kontrollerar start datum
+     */
     
 private boolean stDatumKontroll(){
 Validering valid = new Validering(idb); 
@@ -192,6 +239,10 @@ Validering valid = new Validering(idb);
     }
 }
 
+    /**
+     * kontrollerar slut datum
+     */
+
 private boolean slDatumKontroll(){
 Validering valid = new Validering(idb); 
     
@@ -208,6 +259,10 @@ Validering valid = new Validering(idb);
     }
 }
 
+    /**
+     * kontrollerar kostnad
+     */
+
 private boolean kostnadKontroll(){
     Validering enValidering = new Validering(idb);
     String kostnad = tfKostnad.getText();
@@ -221,6 +276,10 @@ private boolean kostnadKontroll(){
     }
 }
     
+    /**
+     * kontrollerar allt
+     */
+
 private void totalKontroll() {
     Boolean totOk = true;
 
@@ -246,6 +305,10 @@ private void totalKontroll() {
     kontrollOk=totOk;
     }
 
+    /**
+     * hämtar land ID
+     */
+
 private String getLandid(){
         String selectedLand = (String) cbLand.getSelectedItem();
         String lid = " ";
@@ -258,6 +321,10 @@ private String getLandid(){
         return lid;
 }
     
+    /**
+     * hämtar projektchef
+     */
+
 private String getPChef(){
         String selectedPerson = (String) cbProjektChef.getSelectedItem();
         String aid = " ";
@@ -269,6 +336,11 @@ private String getPChef(){
         } 
         return aid;
     }
+
+    /**
+     * ???
+     */
+
 
 public void skapaNu(){
         String status=(String) cbStatus.getSelectedItem();

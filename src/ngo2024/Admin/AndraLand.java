@@ -18,9 +18,15 @@ public class AndraLand extends javax.swing.JFrame {
     private InfDB idb;
     private String inloggadAnvandare; 
     private boolean kontrollOk;
-    /**
-     * Creates new form AndraLand
+    
+     /**
+     * Initierar AndraLand objekt 
+     * låter administratör ändra information om ett land
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten för den inloggade användaren
      */
+
     public AndraLand(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -34,6 +40,10 @@ public class AndraLand extends javax.swing.JFrame {
 
     }
     
+    /**
+     * fyller i combo box med namn på länder
+     */
+
     public void fyllCb(){
         cbValjLand.removeAllItems();
         String sqlFraga="SELECT namn FROM land";
@@ -52,9 +62,11 @@ public class AndraLand extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * gömmer allt som har med valen att göra
+     */
+
     public void gomAlla(){
-        
-        //göm allt som har med valen att göra
         lblEkonomiBad.setVisible(false);
         lblNamnBad.setVisible(false);
         lblPolitikBad.setVisible(false);
@@ -83,7 +95,9 @@ public class AndraLand extends javax.swing.JFrame {
         cbValjLand.setVisible(false);
     }
     
-    
+    /**
+     * hämtar ut land ID
+     */
     
     public String selectLid(){
         String lid="111";
@@ -96,7 +110,12 @@ public class AndraLand extends javax.swing.JFrame {
         }
         return lid;
         }
-    
+   
+    /**
+     *  tar bort ett land
+     * @param lid Land ID
+     */
+
     public void taBortLand(int lid){
         
         String sqlFraga="DELETE FROM land WHERE lid=" + lid;
@@ -110,8 +129,11 @@ public class AndraLand extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * fyller i fälten som en användaren sla ändra med det valda landet
+     */
+
     public void fyllTabellAndra(){
-        // fyller fälten som användaren ska ändra med det valda landet.
         String sLid=selectLid();
         int lidL=Integer.parseInt(sLid);
         String namnS=" ";
@@ -143,6 +165,10 @@ public class AndraLand extends javax.swing.JFrame {
                     
     }
     
+    /**
+     * låter användaren göra ändringar på land
+     */
+
     public void gorAndring(){
         String sLid=selectLid();
         int lidL=Integer.parseInt(sLid);
@@ -165,8 +191,11 @@ public class AndraLand extends javax.swing.JFrame {
         } 
     }
     
+    /**
+     * gömmer alla felmeddelanden
+     */
+
 public void gomBad(){
-    //gömmer alla fel medelandena, används innan ett specefikt fel ska upplysas.
     lblEkonomiBad.setVisible(false);
         lblNamnBad.setVisible(false);
         lblPolitikBad.setVisible(false);
@@ -174,6 +203,10 @@ public void gomBad(){
         lblTidzonBad.setVisible(false);
         lblValutaBad.setVisible(false);
 }    
+
+    /**
+     * kontrollerar allt
+     */
 
 public void totalKontroll() {
     Boolean totOk = true;
@@ -199,11 +232,13 @@ public void totalKontroll() {
     }
     kontrollOk = totOk;}
 
+    /**
+     * kontrollerar namn
+     */
 
     public boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(100, namn)) {
             lblNamnBad.setVisible(false);
             return true;
@@ -214,6 +249,10 @@ public void totalKontroll() {
     }
     }
     
+    /**
+     * kontrollera ???
+     */
+
     public boolean sammaNamnKontroll(){
         boolean samma=false;
         boolean sSamma=true;
@@ -248,12 +287,13 @@ public void totalKontroll() {
         return retur;
     }
     
-    
-    
+    /**
+     * kontrollera språket i ett land
+     */
+
     public boolean sprakKontroll(){
         Validering valid = new Validering(idb);
         String sprak = tfSprak.getText();
-        // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
     if (valid.checkMeningOSiffra(sprak)&& valid.checkStorlek(100, sprak)) {
             lblSprakBad.setVisible(false);
             return true;
@@ -264,10 +304,13 @@ public void totalKontroll() {
     }
     }
     
+    /**
+     * kontrollerar politik???
+     */
+
     public boolean politikKontroll(){
         Validering valid = new Validering(idb);
         String politik = tfPolitik.getText();
-        // liknande politik 1, en mening sedan siffra
     if (valid.checkMeningOSiffra(politik)&& valid.checkStorlek(255, politik)) {
             lblPolitikBad.setVisible(false);
             return true;
@@ -278,10 +321,13 @@ public void totalKontroll() {
     }
     }
     
+    /**
+     * kontrollerar ett lands ekonomiska status
+     */
+
     public boolean ekonomiKontroll(){
         Validering valid = new Validering(idb);
         String ekonomi = tfEkonomi.getText();
-        // liknande ekonomi 1 dvs en mening sedan en siffra
     if (valid.checkMeningOSiffra(ekonomi)&& valid.checkStorlek(255, ekonomi)) {
             lblEkonomiBad.setVisible(false);
             return true;
@@ -293,10 +339,13 @@ public void totalKontroll() {
     }
     }
     
+    /**
+     * kontrollerar vilken tidzon ett land ligger i
+     */
+
     public boolean tidzonKontroll(){
         Validering valid = new Validering(idb);
         String tidzon = tfTidzon.getText();
-        // liknande ekonomi 1 dvs en mening sedan en siffra
     if (valid.checkMeningOSiffra(tidzon)&& valid.checkStorlek(20, tidzon)) {
             lblTidzonBad.setVisible(false);
             return true;
@@ -307,10 +356,13 @@ public void totalKontroll() {
     }
     }
 
+    /**
+     * kontrollerar vilken valuta ett land har
+     */
+
     public boolean valutaKontroll(){
         Validering valid = new Validering(idb);
         String valuta = tfValuta.getText();
-        // kotnroll av valuta så att endast nummer och komma skrivs
     if (valid.checkValuta(valuta)) {
             lblValutaBad.setVisible(false);
             return true;

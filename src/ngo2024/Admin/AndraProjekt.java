@@ -27,7 +27,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      * Används av administratören för att göra ändringar i ett specifikt projekt
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param epost 
+     * @param epost ???
      */
     public AndraProjekt(InfDB idb, String epost) {
         this.idb = idb;
@@ -41,6 +41,10 @@ public class AndraProjekt extends javax.swing.JFrame {
 
         
     }
+    
+     /**
+     * Fyller i combo box med namn på projekt
+     */
     
 private void fyllCbProjekt(){
         cbxProjekt.removeAllItems();
@@ -61,12 +65,11 @@ private void fyllCbProjekt(){
         }
         
     }
-    
-     /**
-     * Fyller i combo box med namn på projekt
+
+    /**
+     * gömmer allt innan man har klickat i ett alternativ
      */
 
-    
 private void gomAlla(){
         
         btAndra.setVisible(false);
@@ -121,10 +124,9 @@ private void gomAlla(){
     }   
 
     /**
-     * gömmer allt innan man har klickat i ett alternativ
+     * hämtar projekt ID
      */
 
-    
 private String getPid(){
     String pid = " ";
     
@@ -140,9 +142,9 @@ private String getPid(){
 }
 
     /**
-     * ger projekt ID som eftersöks
+     *  Ger projektchefens anställds ID
+     * @param pid projektets ID
      */
-
 
 private String getChefAid(String pid){
     String aid = " ";
@@ -162,10 +164,9 @@ private String getChefAid(String pid){
 }
 
     /**
-     *  Ger projektchefens anställds ID
+     *  ger landets ID
      * @param pid projektets ID
      */
-
 
 private String getLid(String pid){
     String lid = " ";
@@ -184,12 +185,11 @@ private String getLid(String pid){
     return lid;
 }
 
-    /**
-     *  ger landets ID
+/**
+     *  tar bort ett projekt
      * @param pid projektets ID
      */
 
-    
 private void taBortProjekt(String pid){
     
         String sqlFraga = "DELETE FROM projekt WHERE pid = " + pid;
@@ -200,11 +200,9 @@ private void taBortProjekt(String pid){
         } catch (InfException ex) {
             
         }
-}
-
-/**
-     *  tar bort ett projekt
-     * @param pid projektets ID
+} 
+    /**
+     * Fyller i combo box med namn på länder
      */
 
 private void fyllCbLand(){
@@ -230,8 +228,9 @@ private void fyllCbLand(){
             System.out.println(ex.getMessage());
         }
 }
-     /**
-     * Fyller i combo box med namn på länder
+    
+    /**
+     *  Fyller i combo box med projektchefer
      */
 
 private void fyllCbProjektchef(){
@@ -261,7 +260,7 @@ private void fyllCbProjektchef(){
 }
 
     /**
-     *  Fyller i combo box med projektchefer
+     *  Fyller i combo box med prioriteringsnivåer
      */
 
 private void fyllCbPrio(){
@@ -274,7 +273,7 @@ private void fyllCbPrio(){
 }
 
     /**
-     *  Fyller i combo box med prioriteringsnivåer
+     *  Fyller i combo box med statusnivå
      */
 
 private void fyllCbStatus(){
@@ -288,9 +287,8 @@ private void fyllCbStatus(){
 }
 
     /**
-     *  Fyller i combo box med statusnivå
+     *  Fyller i tabellen för att administratören ska kunna ändra
      */
-
 
 private void fyllTabellAndra(){
     fyllCbLand();
@@ -360,11 +358,10 @@ private void fyllTabellAndra(){
             cbxProjektchef.setSelectedItem(nChef);
                     
 }
-
+ 
     /**
-     *  Fyller i tabellen för att administratören ska kunna ändra
+     *  Visa allt om Ändra
      */
-
 
 private void gomTaBort(){
    
@@ -401,11 +398,7 @@ private void gomTaBort(){
     lblLid.setVisible(true);
     lblNLid.setVisible(true);
     tfBeskrivning.setVisible(true);
-    
-    /**
-     *  Visa allt om Ändra
-     */
-
+   
     lblPid.setVisible(false);
     lblPnamn.setVisible(false);
     btTaBort.setVisible(false);
@@ -443,6 +436,10 @@ private void gomTaBort(){
      */
     
 }
+
+    /**
+     *  Gömmer allt om Ändra
+     */
 
 private void gomAndra(){
     btAndra.setVisible(false);
@@ -516,6 +513,10 @@ private void gomAndra(){
 
 }
 
+    /**
+     *  gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
+     */
+
 private void gomBad(){
     lblFelNamn.setVisible(false);
     lblFelBeskrivning.setVisible(false);
@@ -526,9 +527,8 @@ private void gomBad(){
 } 
 
     /**
-     *  gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
+     *  kontrollerar att förnamn är valid
      */
-
 
 private boolean namnKontroll(){
         Validering valid = new Validering(idb);
@@ -543,9 +543,8 @@ private boolean namnKontroll(){
 }
 
     /**
-     *  kontrollerar att förnamn är valid
+     *  Kollar så att inte samma projektnamn används för olika projekt
      */
-
 
 private boolean inteSammaNamnKontroll(){
         boolean inteSamma=true;
@@ -588,9 +587,8 @@ private boolean inteSammaNamnKontroll(){
 }
 
     /**
-     *  Kollar så att inte samma projektnamn används för olika projekt
+     *  kontrollerar att beskrivningen är rätt
      */
-
 
 private boolean beskrivningKontroll(){
         Validering valid = new Validering(idb);
@@ -605,9 +603,8 @@ private boolean beskrivningKontroll(){
     }
 
     /**
-     *  kontrollerar att beskrivningen är rätt
+     *  kontrollerar att stardatum är rätt annars visas ett felmeddelande
      */
-
 
 private boolean stDatumKontroll(){
 Validering valid = new Validering(idb); 
@@ -624,9 +621,8 @@ Validering valid = new Validering(idb);
 }
 
     /**
-     *  kontrollerar att stardatum är rätt annars visas ett felmeddelande
-     */
-
+     *  kontrollerar att slutdatum är rätt annars visas ett felmeddelande
+     */  
 
 private boolean slDatumKontroll(){
 Validering valid = new Validering(idb); 
@@ -643,9 +639,8 @@ Validering valid = new Validering(idb);
 }
 
     /**
-     *  kontrollerar att slutdatum är rätt annars visas ett felmeddelande
+     *  kontrollerar att kostnaden stämmer
      */
-
 
 private boolean kostnadKontroll(){
     Validering enValidering = new Validering(idb);
@@ -661,7 +656,7 @@ private boolean kostnadKontroll(){
 }
 
     /**
-     *  kontrollerar att kostnaden stämmer
+     *  kontrollerar mellan datum
      */
 
 
@@ -681,10 +676,9 @@ private boolean mellanDatum(){
     }
 }
 
-    /**
-     *  kontrollerar mellan datum
+     /**
+     *  kontrollerar så att allt stämmer
      */
-
 
 private boolean totalKontroll(){
     boolean ok;
@@ -700,11 +694,10 @@ private boolean totalKontroll(){
     }
     return ok;
 }
-
-    /**
-     *  kontrollerar så att allt stämmer
+   
+ /**
+     *  visa anställda ID
      */
-
 
 private void visaAid(){
         
@@ -712,9 +705,8 @@ private void visaAid(){
 }
 
     /**
-     *  visa anställda ID
+     *  ger en valds persons anställd ID
      */
-
 
 private String getSelectedAid(){
     String selectedPerson = (String) cbxProjektchef.getSelectedItem();
@@ -729,9 +721,8 @@ private String getSelectedAid(){
 }
 
     /**
-     *  ger en valds persons anställd ID
-     */
-
+     *  visa land ID
+     */ 
 
 private void visaLid(){
    
@@ -739,8 +730,9 @@ private void visaLid(){
 }
 
     /**
-     *  visa land ID
+     *  ger ett valt lands ID
      */
+
 
 private String getSelectedLid(){
         String selectedLand = (String) cbxLand.getSelectedItem();
@@ -754,8 +746,8 @@ private String getSelectedLid(){
         return lid;
 }
 
-    /**
-     *  ger ett valt lands ID
+     /**
+     *  uppdaterar med ändringarna
      */
 
 private void gorAndring(){
@@ -790,9 +782,7 @@ private void gorAndring(){
 }
 
 
-    /**
-     *  uppdaterar med ändringarna
-     */
+
 
     /**
      * This method is called from within the constructor to initialize the form.

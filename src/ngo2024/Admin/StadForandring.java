@@ -18,9 +18,14 @@ public class StadForandring extends javax.swing.JFrame {
     private String inloggadAnvandare;  
     boolean kontrollOk;
     
-    /**
-     * Creates new form StadForandring
+     /**
+     * Initierar StadForandring objekt 
+     * administratör kan lägga till och ändra information om städer
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten för den inloggade användaren
      */
+
     public StadForandring(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -30,6 +35,10 @@ public class StadForandring extends javax.swing.JFrame {
         gomAlla();
         kontrollOk=true;
     }
+    
+    /**
+     * fyller i combo box med namn på städer
+     */
     
     public void fyllValjStad(){
         cbValjStad.removeAllItems();
@@ -49,6 +58,10 @@ public class StadForandring extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * fyller combo box med namn på länder
+     */
+
     public void fyllValjLand(){
         cbValjLand.removeAllItems();
         String sqlFraga="SELECT namn FROM land";
@@ -67,11 +80,13 @@ public class StadForandring extends javax.swing.JFrame {
         }
     }
     
-    
+    /**
+     * kontrollerar  so att namn på städer är valid
+     */
+
     public boolean kontrollStadText(){
          Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-        // kollar så staden ahr rätt tecken, vissa special tecken tillåtna samt bindestreck och mellanrum ok.
     if (valid.checkStad(namn)&& valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
@@ -80,6 +95,10 @@ public class StadForandring extends javax.swing.JFrame {
             return false;
     }
     }
+    
+    /**
+     * hämtar namn på ett land
+     */
     
     public String selectLand(){
       String sqlFraga="SELECT namn FROM land where lid= (Select land from stad where namn='" 
@@ -96,8 +115,9 @@ public class StadForandring extends javax.swing.JFrame {
       
     }
     
-    
-    
+    /**
+     * kontrollerar allt
+     */
     
     public void totalKontroll() {
     Boolean totOk = true;
@@ -108,6 +128,10 @@ public class StadForandring extends javax.swing.JFrame {
     kontrollOk=totOk;
     }
     
+    /**
+     * hämtar ut land ID
+     */
+
     public int selectLid(){
         String slid="111";
         try{
@@ -120,9 +144,12 @@ public class StadForandring extends javax.swing.JFrame {
         int lid=Integer.parseInt(slid);
         return lid;
         }
-    
+        
+    /**
+     * hämtar högsta land id
+     */
+
     public int hogstaSid(){
-        // hämtar ut högsta lid
         int hogsta=0;
         String sqlFraga="Select MAX(sid) FROM stad";
         try{
@@ -135,6 +162,11 @@ public class StadForandring extends javax.swing.JFrame {
         System.out.println(hogsta);
         return hogsta+1;
     }
+    
+    /**
+     * hämtar ut stads ID
+     */
+
     public int selectSid(){
         String sSid="111";
         try{
@@ -148,7 +180,10 @@ public class StadForandring extends javax.swing.JFrame {
         return sid;
         }
     
-    
+    /**
+     * gömmer allt
+     */
+
     public void gomAlla(){
         btnAndra.setVisible(false);
         btnTaBort.setVisible(false);
@@ -181,6 +216,10 @@ public class StadForandring extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * visa ändra
+     */
+
     public void visaAndra(){
         if(cbhAndra.isSelected()){
             cbhTaBort.setSelected(false);
@@ -198,6 +237,10 @@ public class StadForandring extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Visa ta bort???
+     */
+
     public void visaTaBort(){
         if(cbhTaBort.isSelected()){
             cbhAndra.setSelected(false);

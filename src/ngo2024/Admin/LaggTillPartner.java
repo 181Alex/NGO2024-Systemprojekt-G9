@@ -44,6 +44,10 @@ public class LaggTillPartner extends javax.swing.JFrame {
 
     }
     
+    /**
+     * fyller i combo box med namn på städer
+     */
+    
     public void fyllCb(){
         
         cbStad.removeAllItems();
@@ -63,9 +67,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * fyller i combo box med namn på städer
-     */
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -285,7 +287,9 @@ public class LaggTillPartner extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    /**
+     * kontrollerar så att allt är valid
+     */
     
     public void totalKontroll() {
     Boolean totOk = true;
@@ -315,9 +319,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
     
-    /**
-     * kontrollerar så att allt är valid
-     */
+    
 
     
 public int hogstaPid(){
@@ -403,14 +405,17 @@ public int hogstaPid(){
     }
     
     /**
-     * kontrollerar så att telefon nummer är valid
+     * kontrollerar så att telefon nummer är valid!!!!!!!!!!!
+     */
+
+    /**
+     * kontrollerar så att adress är valid
      */
 
     
     public boolean adressKontroll(){
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        // kontrolelrar adress format
     if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
@@ -420,10 +425,13 @@ public int hogstaPid(){
     }
     }
     
+    /**
+     * kontrollerar så att bransch är valid
+     */
+    
     public boolean branschKontroll(){
         Validering valid = new Validering(idb);
         String bransch = tfBransch.getText();
-        // liknande fornamn, då endast bokstäver
     if (valid.checkFornamn(bransch)&& valid.checkStorlek(255, bransch)) {
             lblBranschBad.setVisible(false);
             return true;
@@ -433,6 +441,9 @@ public int hogstaPid(){
     }
     }
     
+    /**
+     * ???
+     */
     
     public int getStad(){
         int i=cbStad.getSelectedIndex();

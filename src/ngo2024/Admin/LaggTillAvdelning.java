@@ -41,6 +41,10 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         instansering();
     }
     
+     /**
+     * ger projektchef och stad
+     */
+    
     private void instansering(){
         fyllProjektChef();
         fyllStad();
@@ -49,7 +53,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     }
     
     /**
-     * ???
+     * fyller i combo box för projektchefer
      */
     
     private void fyllProjektChef(){
@@ -73,7 +77,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         }}
     
     /**
-     * fyller i combo box för projektchefer
+     * fyller i combo box för städer
      */
     
     private void fyllStad(){
@@ -98,7 +102,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     }
     
     /**
-     * fyller i combo box för städer
+     * hämtar högsta avdelnings ID
      */
     
     private int hogstaAvdid(){
@@ -116,7 +120,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 }
     
     /**
-     * hämtar högsta avdelnings ID
+     * kontrollerar så att allt är valid
      */
     
     private void totalKontroll() {
@@ -143,7 +147,8 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 }
 
     /**
-     * kontrollerar så att allt är valid
+     *  kontrollerar adress för att se att det är valid
+     * @param idb initierar fält för att interagera med databasen
      */
     
     public boolean adressKontroll(InfDB idb) {
@@ -158,7 +163,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         }}
     
     /**
-     *  kontrollerar adress för att se att det är valid
+     *  kontrollerar telefon nummer för att se att det är valid
      * @param idb initierar fält för att interagera med databasen
      */
     
@@ -175,7 +180,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     }
     
     /**
-     *  kontrollerar telefon nummer för att se att det är valid
+     *  kontrollerar eposten för att se att det är valid
      * @param idb initierar fält för att interagera med databasen
      */
     
@@ -194,8 +199,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     }}
     
     /**
-     *  kontrollerar eposten för att se att det är valid
-     * @param idb initierar fält för att interagera med databasen
+     *  kontrollerar namn för att se att det är valid
      */
     
     private boolean namnKontroll(){
@@ -212,7 +216,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 }
     
     /**
-     *  kontrollerar namn för att se att det är valid
+     *  kontrollerar beskrivningen för att se att det är valid
      */
     
    private boolean beskrivningKontroll(){
@@ -228,8 +232,8 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     }
 } 
    
-   /**
-     *  kontrollerar beskrivningen för att se att det är valid
+    /**
+     *  Ger projektchefen???
      */
     
    private String getPChef(){
@@ -244,8 +248,8 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         return aid;
     }
    
-   /**
-     *  Ger projektchefen???
+    /**
+     *  Ger stads ID
      */
    
    private String getStad(){
@@ -260,11 +264,6 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         return sid;
    }
    
-    /**
-     *  Ger stad???
-     */
-   
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

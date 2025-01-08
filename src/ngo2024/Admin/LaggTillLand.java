@@ -35,6 +35,10 @@ public class LaggTillLand extends javax.swing.JFrame {
         lblSkapad.setVisible(false);
     }
     
+    /**
+     * kontrollerar så att allt stämmer
+     */
+    
     public void totalKontroll() {
     Boolean totOk = true;
 
@@ -61,10 +65,9 @@ public class LaggTillLand extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
     
-    /**
-     * kontrollerar så att allt stämmer
+     /**
+     * hämtar ut högsta lands ID
      */
-
     
     public int hogstaLid(){
         int hogsta=0;
@@ -81,7 +84,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * hämtar ut högsta lands ID
+     * kontrollerar valuta så att endast nummer och komma skrivs
      */
     
     public boolean valutaKontroll(){
@@ -97,7 +100,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar valuta så att endast nummer och komma skrivs
+     * Ger valutan från ett land
      */
     
     public double getValuta(){
@@ -109,7 +112,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * Ger valutan från ett land
+     * kontrollerar namn så att det valid
      */
     
     public boolean namnKontroll(){
@@ -125,7 +128,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar namn så att det valid
+     * kontrollerar så att inte samma namn används på flera ställen
      */
     
     public boolean sammaNamnKontroll(){
@@ -150,7 +153,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar så att inte samma namn används på flera ställen
+     * kontrollerar så att språk för ett viss land är valid
      */
     
     public boolean sprakKontroll(){
@@ -166,7 +169,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar så att språk för ett viss land är valid
+     * kontrollerar politiken i ett land???
      */
     
     public boolean politikKontroll(){
@@ -182,7 +185,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar politiken i ett land???
+     * kontrollerar den ekonomiska statusen i ett land
      */
     
     public boolean ekonomiKontroll(){
@@ -198,7 +201,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     
     /**
-     * kontrollerar den ekonomiska statusen i ett land
+     * kontrollerar vilken tidzon ett land finns i
      */
     
     public boolean tidzonKontroll(){
@@ -214,9 +217,7 @@ public class LaggTillLand extends javax.swing.JFrame {
     }
     }
     
-    /**
-     * kontrollerar vilken tidzon ett land finns i
-     */
+    
     
 
     /**

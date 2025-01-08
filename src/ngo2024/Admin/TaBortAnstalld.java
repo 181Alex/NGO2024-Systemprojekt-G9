@@ -20,8 +20,13 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     private String inloggadAnvandare;
     
     /**
-     * Creates new form TaBortAnstalld
+     * Initierar TaBortAnstalld objekt 
+     * Låter administratör ta bort anställda
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param inloggadAnvandare eposten till den inloggade användaren
      */
+
     public TaBortAnstalld(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
         this.inloggadAnvandare=inloggadAnvandare;
@@ -29,6 +34,10 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         lblBorttagen.setVisible(false);
         fyllCb();
     }
+    
+    /**
+     * fyller i combo box med för och efternamn på anställda
+     */
     
     public void fyllCb(){
         cbValjAnstalld.removeAllItems();
@@ -48,6 +57,11 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         }
     }
     
+    /**
+     *  Hämtar ut förnamn
+     * @param fullName hämtar ut hela namnet
+     */
+
     public String getFirstName(String fullName) {
         String[] nameParts = fullName.split(" ");
         if (nameParts.length > 0) {
@@ -56,6 +70,11 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             return "";
         }
     }
+
+    /**
+     *  hämtar ut efternamn
+     * @param fullName hämtar ut hela namnet
+     */
 
     public String getLastName(String fullName) {
         String[] nameParts = fullName.split(" ");
@@ -66,7 +85,11 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         }
     }
     
-    
+    /**
+     *  hämtar ut anställdas ID
+     * @param namn den anställdas namn???
+     */
+
     public String selectAid(String namn){
         String fNamn=getFirstName(namn);
         String eNamn=getLastName(namn);
@@ -81,6 +104,10 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         return sAid;
     }
     
+    /**
+     * hämtar ut en anställds epost
+     */
+
     public String getEpost(){
        String namn=cbValjAnstalld.getSelectedItem().toString();
        String sAid=selectAid(namn);
@@ -97,7 +124,9 @@ public class TaBortAnstalld extends javax.swing.JFrame {
        return epost;
     }
     
-    
+    /**
+     * hämtar ut vilken behörighet en anställd har
+     */
     
     public String vilkenBehorighet(){
          Validering valid = new Validering(idb);
@@ -113,7 +142,10 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         
     }
     
-    
+    /**
+     * tar bort en administratör
+     */
+
     public void taBortAdmin(int aid){
         
         String sqlFraga="DELETE FROM admin WHERE aid=" + aid;
@@ -126,7 +158,10 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         }
     }
     
-    
+    /**
+     * tar bort en handläggare
+     */
+
     public void taBortHandlaggare(int aid){
         
         String sqlFraga="DELETE FROM handlaggare WHERE aid=" + aid;
