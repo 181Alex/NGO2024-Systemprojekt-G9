@@ -21,7 +21,7 @@ public class GlobalaMal extends javax.swing.JFrame {
     private InfDB idb;
     private DefaultTableModel model;
 
-     /**
+    /**
      * Initierar GlobalaMal objekt 
      * Ger sida med tabell med alla globala mål samt deras beskrivning
      *
@@ -34,7 +34,7 @@ public class GlobalaMal extends javax.swing.JFrame {
         malTabell();
     }
 
-     /**
+    /**
      * Skapar tabellmodel för att hantera data om avdelningens anställda
      */
     private void konstrueraTabell() {
@@ -50,8 +50,8 @@ public class GlobalaMal extends javax.swing.JFrame {
         //fixar tabellens bredd
         tblGlobalaMal.getColumnModel().getColumn(0).setPreferredWidth(138);  // För kort text
         tblGlobalaMal.getColumnModel().getColumn(1).setPreferredWidth(138); // För längre text
-        tblGlobalaMal.getColumnModel().getColumn(2).setPreferredWidth(300); 
-        tblGlobalaMal.getColumnModel().getColumn(3).setPreferredWidth(138); 
+        tblGlobalaMal.getColumnModel().getColumn(2).setPreferredWidth(300);
+        tblGlobalaMal.getColumnModel().getColumn(3).setPreferredWidth(138);
 
         tblGlobalaMal.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
         tblGlobalaMal.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());

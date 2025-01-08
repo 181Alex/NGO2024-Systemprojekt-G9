@@ -27,8 +27,8 @@ public class AvdAnstallda extends javax.swing.JFrame {
     private DefaultTableModel model;
 
     /**
-     * Initierar AvdAnstallda objekt Användare kan se alla anställda på samma
-     * avdelning
+     * Initierar AvdAnstallda objekt
+     * Användare kan se alla anställda på samma avdelning
      *
      * @param idb initierar fält för att interagera med databasen
      * @param avdNmr ID för användarens avdelning
@@ -117,7 +117,6 @@ public class AvdAnstallda extends javax.swing.JFrame {
         telefonLista.add(telefon);
         mentorLista.add(mentor);
     }
-
 
     private void laggTillNyRad(String namn, String epost, String telefon, String mentor) {
         model.addRow(new Object[]{namn, epost, telefon, mentor});

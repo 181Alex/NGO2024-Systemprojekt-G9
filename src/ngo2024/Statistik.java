@@ -12,47 +12,51 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author linneagottling
  */
 public class Statistik extends javax.swing.JFrame {
-    
+
     private InfDB idb;
     private String epost;
     private DefaultTableModel model;
 
     /**
-     * Creates new form Statistik
+     * Initierar Statistik objekt 
+     * Visar statistik från alla projekt inloggad projektchef leder
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param epost inloggad användares epost
      */
     public Statistik(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
         konstrueraTabell();
         fyllTabell();
         tabellDesign();
-        totKostnad();
-        medelKostnad();
-        totalKostnadAvslutade();
+        SetTotKostnad();
+        SetMedelKostnad();
+        SetTotalKostnadAvslutade();
     }
-    
-    private void konstrueraTabell(){
+
+    /**
+     * skapar tabell och definierar hur denna ska formateras
+     */
+    private void konstrueraTabell() {
         model = (DefaultTableModel) tbStatistik.getModel();
         model.setRowCount(0);
     }
-    
-        private void tabellDesign() {
+
+    private void tabellDesign() {
         tbStatistik.getColumnModel().getColumn(0).setPreferredWidth(100);
         tbStatistik.getColumnModel().getColumn(1).setPreferredWidth(200);
         tbStatistik.getColumnModel().getColumn(2).setPreferredWidth(100);
 
-
         tbStatistik.getColumnModel().getColumn(0).setCellRenderer(new MultiLineCellRenderer());
         tbStatistik.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
         tbStatistik.getColumnModel().getColumn(2).setCellRenderer(new MultiLineCellRenderer());
-
 
         for (int row = 0; row < tbStatistik.getRowCount(); row++) {
             int rowHeight = tbStatistik.getRowHeight();
@@ -62,22 +66,30 @@ public class Statistik extends javax.swing.JFrame {
             }
             tbStatistik.setRowHeight(row, rowHeight);
         }
-}
-    
-    private String getChefId(String epost){
+    }
+
+    /**
+     * retunerar inloggad användare ID (aid)
+     *
+     * @param epost inloggad användare epost
+     */
+    private String getChefId(String epost) {
         String aid = " ";
         try {
-            
-        String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + epost + "'";
-        aid = idb.fetchSingle(sqlFraga);
-        
+
+            String sqlFraga = "SELECT aid FROM anstalld WHERE epost = '" + epost + "'";
+            aid = idb.fetchSingle(sqlFraga);
+
         } catch (InfException ex) {
-            
+
             System.out.println(ex.getMessage());
         }
         return aid;
     }
-    
+
+    /**
+     * Fyller statistik tabell med korrekt information om projekt
+     */
     private void fyllTabell() {
 
         try {
@@ -87,54 +99,63 @@ public class Statistik extends javax.swing.JFrame {
             ArrayList<HashMap<String, String>> resultat = idb.fetchRows(sqlFraga);
 
             for (HashMap<String, String> rad : resultat) {
-                
-                    String projekt = rad.get("projektnamn");
-                    String kostnad = rad.get("kostnad");
-                    String status = rad.get("status");
-                   
-                    model.addRow(new Object[]{projekt, kostnad, status});
+
+                String projekt = rad.get("projektnamn");
+                String kostnad = rad.get("kostnad");
+                String status = rad.get("status");
+
+                model.addRow(new Object[]{projekt, kostnad, status});
 
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-   
-    private void totKostnad(){
-        String sqlFraga = "SELECT SUM(kostnad) FROM projekt WHERE projektchef = " 
+
+    /**
+     * fyller i total konstnad för projektchefs alla projekt
+     */
+    private void SetTotKostnad() {
+        String sqlFraga = "SELECT SUM(kostnad) FROM projekt WHERE projektchef = "
                 + getChefId(epost);
-        
+
         try {
             String tot = idb.fetchSingle(sqlFraga);
             tfTot.setText(tot);
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }
-    }
-   
-    private void medelKostnad(){
-        String sqlFraga = "SELECT ROUND(AVG(kostnad), 2) as medelvärde"
-                + " FROM projekt WHERE projektchef = "
-                +getChefId(epost);
-        
-        try{
-            String medel = idb.fetchSingle(sqlFraga);
-            tfMedel.setText(medel);
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    private void totalKostnadAvslutade(){
+
+    /**
+     * fyller i medelvärde av kostnad för projektchefs alla projekt
+     */
+    private void SetMedelKostnad() {
+        String sqlFraga = "SELECT ROUND(AVG(kostnad), 2) as medelvärde"
+                + " FROM projekt WHERE projektchef = "
+                + getChefId(epost);
+
+        try {
+            String medel = idb.fetchSingle(sqlFraga);
+            tfMedel.setText(medel);
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * fyller i total kostnad för projektchefs alla avslutade projekt
+     */
+    private void SetTotalKostnadAvslutade() {
         String sqlFraga = "SELECT SUM(kostnad) FROM projekt "
                 + "WHERE projektchef = " + getChefId(epost)
                 + " AND status = 'Avslutat'";
-        try{
+        try {
             String totAvs = idb.fetchSingle(sqlFraga);
-            if(totAvs != null){
-            tfTotAvs.setText(totAvs);
+            if (totAvs != null) {
+                tfTotAvs.setText(totAvs);
             } else {
                 tfTotAvs.setText("0.00");
             }
@@ -142,7 +163,6 @@ public class Statistik extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.

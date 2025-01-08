@@ -23,9 +23,12 @@ public class MinaProjekt extends javax.swing.JFrame {
     private ArrayList<String> projNamnLista;
 
     /**
-     * Creates new form MinaProjekt
-     * @param idb
-     * @param aid
+     * Initierar MinaProjekt objekt
+     * Visar lista över projekt perosn är med i eller leder
+     * Användare kan välja projekt att se mer information om
+     * 
+     * @param idb initierar fält för att interagera med databasen
+     * @param aid inloggad användar ID
      */
     public MinaProjekt(InfDB idb, String aid) {
         this.idb = idb;
@@ -35,15 +38,21 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         initComponents();
         this.setLocationRelativeTo(null);
+        //kontrollerar och bestämmer vilken infromation som ska synas i gränssnittet
         setInfo();
     }
 
+    /**
+     * sätter rätt information i rätt text fält
+     * Kontrollerar knapp som inte ska synas (anropar validerings metod)
+     */
     private void setInfo() {
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
-        txtAreaProj.setText(String.join("\n", getAnvandarPid()));
-        getCbxInfo();
+        txtAreaProj.setText(String.join("\n", getProjekt()));
+        setCbxProjekt();
         
+        //kontrollerar om användaren är projektledare i något projekt 
         Validering valid = new Validering(idb);
         if (valid.arChef(anvandarEpost)){
             txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
@@ -56,25 +65,21 @@ public class MinaProjekt extends javax.swing.JFrame {
         }
         
     }
-    
-    private String getAnvandarEpost () {
-        String sqlFraga = " ";
-        try {
-            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
-        } catch (InfException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return sqlFraga;
-    }
 
-    public void getCbxInfo() {
+    /**
+     * hämtar vilka projekt användare medverkar i
+     * lägger till dessa i en combo box med projekt lista
+     */
+    public void setCbxProjekt() {
         cbxValjProj.removeAllItems();
+        // sql fråga som hämtar projekt användare leder eller arbetar med från idb
         String sqlFraga = "SELECT projektnamn FROM projekt "
                 + "LEFT JOIN ans_proj ON projekt.pid = ans_proj.pid "
                 + "WHERE projektchef = '" + aid + "' "
                 + "OR ans_proj.aid = '" + aid + "' "
                 + "GROUP BY projekt.projektnamn";
-
+        
+        //använder sql fråga samt lägger till kolumnen som hämtas i cbxValjProj
         try {
             projNamnLista = idb.fetchColumn(sqlFraga);
             for (String projektnamn : projNamnLista) {
@@ -86,6 +91,8 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         cbxValjProj.setVisible(true);
         lblValjProj.setVisible(true);
+        
+        //action listener hämtar pid från valt projekt samt öppnar ny 'OmProjekt' för mer info om valt projekt
         cbxValjProj.addActionListener(e -> {
             String valtProjekt = (String) cbxValjProj.getSelectedItem();
 
@@ -106,9 +113,15 @@ public class MinaProjekt extends javax.swing.JFrame {
         });
     }
 
-    private ArrayList getAnvandarPid() {
+    
+    /**
+     * hämtar namn och status från projekt användare medverkar i (icke leder)
+     */
+    private ArrayList getProjekt() {
         ArrayList<String> pidLista = new ArrayList<>();
         ArrayList<String> projektnamnLista = new ArrayList<>();
+        
+        //sparar pid från alla projekt användare arbetar med (inte leder!) till arrayList
         try {
             String sqlFragaPid = "SELECT projekt.pid "
                     + "FROM projekt "
@@ -118,31 +131,34 @@ public class MinaProjekt extends javax.swing.JFrame {
 
             pidLista = idb.fetchColumn(sqlFragaPid);
 
+            //hämtar projektnamn och status från alla projekt användare arbetar med
+            //Formaterar i förberedelse för textArea utskrift
             for (String pid : pidLista) {
-                //hämta namn från pid
-                //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
-
                 projektnamnLista.add(" " + idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'") + "\t" + idb.fetchSingle("SELECT status FROM projekt WHERE pid ='" + pid + "'"));
             }
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         return projektnamnLista;
-
     }
 
+    /**
+     * hämtar namn och status från projekt användare är projektchef för
+     */
     private ArrayList getChefsProjekt() {
         ArrayList<String> pidLista = new ArrayList<>();
         ArrayList<String> chefProjektLista = new ArrayList<>();
+        
+        //sparar pid från alla projekt användare arbetar med (inte leder!) till arrayList
         try {
             String sqlFragaPid = "SELECT projekt.pid FROM projekt "
                     + "WHERE projektchef = '" + aid + "'";
 
             pidLista = idb.fetchColumn(sqlFragaPid);
 
+            //hämtar projektnamn och status från alla projekt användare arbetar med
+            //Formaterar i förberedelse för textArea utskrift
             for (String pid : pidLista) {
-                //hämta namn från pid
-                //String sqlFragaNamn =  idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid +"'");
                 chefProjektLista.add(idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid ='" + pid + "'") + "\t" + idb.fetchSingle("SELECT status FROM projekt WHERE pid ='" + pid + "'"));
             }
         } catch (InfException ex) {
@@ -150,6 +166,21 @@ public class MinaProjekt extends javax.swing.JFrame {
         }
         return chefProjektLista;
 
+    }
+    
+    
+    /**
+     * retunerar inloggad användares epost utifrån aid
+     * behövs till validerings metodanrop 'arChef'
+     */
+     private String getAnvandarEpost () {
+        String sqlFraga = " ";
+        try {
+            sqlFraga = idb.fetchSingle("SELECT epost FROM anstalld WHERE aid ='" + aid + "'");
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return sqlFraga;
     }
 
     /**
@@ -302,7 +333,6 @@ public class MinaProjekt extends javax.swing.JFrame {
 
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
-        btnReturn.setBorderPainted(false);
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
@@ -311,6 +341,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxValjProjActionPerformed
 
     private void btnStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatsActionPerformed
+        //Anropar validering. Statistik knapp dyker upp för användare som leder minst ett projekt
         Validering valid = new Validering(idb);
         if (valid.arChef(anvandarEpost)){
             new Statistik(idb, aid).setVisible(true);

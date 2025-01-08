@@ -7,46 +7,47 @@ package ngo2024;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import ngo2024.Validering;
+
 /**
  *
  * @author linneagottling
  */
 public class Meny extends javax.swing.JFrame {
-    
+
     private InfDB idb;
     private String anvandarEpost;
     private String aid;
-    
+
     /**
      * Skapar nytt Meny objekt
      * 
-     * Meny fönster för handledare som leder vidare till MinaProjekt, MinAvdelning, GlobalaMal, MinProfil & Inloggning(logga ut)
-     * 
+     * Meny fönster för handledare som leder vidare till MinaProjekt,
+     * MinAvdelning, GlobalaMal, MinProfil & Inloggning(logga ut)
+     *
      * @param idb koppling till databasen
-     * @param anvandarEpost inloggad användares Epost adress
-     * @param aid inloggad användares unika ID
+     * @param anvandarEpost inloggad användar epost
+     * @param aid inloggad användar ID
      */
     public Meny(InfDB idb, String anvandarEpost, String aid) {
-        this.idb=idb;
-        this.anvandarEpost=anvandarEpost;
+        this.idb = idb;
+        this.anvandarEpost = anvandarEpost;
         initComponents();
         lblInloggadAnvandare.setText(anvandarEpost);
         statistikKnapp();  //EV TA BORT
         this.aid = aid;
     }
-    
-    /** EV TA BORT*/
-     
-    private void statistikKnapp(){
+
+    /**
+     * EV TA BORT
+     */
+    private void statistikKnapp() {
         Validering enValidering = new Validering(idb);
-        if(enValidering.arChef(anvandarEpost)){
+        if (enValidering.arChef(anvandarEpost)) {
             btStatistik.setVisible(true);
         } else {
             btStatistik.setVisible(false);
         }
     }
-     
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -196,15 +197,16 @@ public class Meny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProfilActionPerformed
-       new MinProfil(idb, aid, anvandarEpost).setVisible(true);
+        new MinProfil(idb, aid, anvandarEpost).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btProfilActionPerformed
 
     private void btAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAvdelningActionPerformed
-        new MinAvdelning(idb,anvandarEpost).setVisible(true);
+        new MinAvdelning(idb, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btAvdelningActionPerformed
 
     private void btMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMalActionPerformed
-         new GlobalaMal(idb).setVisible(true);
+        new GlobalaMal(idb).setVisible(true);
     }//GEN-LAST:event_btMalActionPerformed
 
     private void btProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProjektActionPerformed
@@ -212,12 +214,12 @@ public class Meny extends javax.swing.JFrame {
     }//GEN-LAST:event_btProjektActionPerformed
 
     private void btStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatistikActionPerformed
-       new Statistik(idb, anvandarEpost).setVisible(true);
+        new Statistik(idb, anvandarEpost).setVisible(true);
     }//GEN-LAST:event_btStatistikActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       this.dispose();
-       new Inloggning(idb).setVisible(true);
+        this.dispose();
+        new Inloggning(idb).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
