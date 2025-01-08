@@ -189,7 +189,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         btnReturn.setText("<- tillbaka");
         btnReturn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
-        btnReturn.setCursor(new java.awt.Cursor(java.awt.Cursor.SW_RESIZE_CURSOR));
+        btnReturn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReturnActionPerformed(evt);
@@ -212,6 +212,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtAreaProj);
 
         cbxValjProj.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxValjProj.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbxValjProj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxValjProjActionPerformed(evt);

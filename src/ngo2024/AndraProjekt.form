@@ -88,7 +88,7 @@
                               <Component id="lblProjektpartner" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="tfBeskrivning" min="-2" pref="179" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -97,7 +97,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="tfProjektnamn" min="-2" pref="179" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lblFelNamn" min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Component id="lblFelNamn" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>

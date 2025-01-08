@@ -32,13 +32,14 @@ public class Meny extends javax.swing.JFrame {
         this.idb = idb;
         this.anvandarEpost = anvandarEpost;
         initComponents();
+        this.setLocationRelativeTo(null);
         lblInloggadAnvandare.setText(anvandarEpost);
-        statistikKnapp();  //EV TA BORT
+        statistikKnapp();
         this.aid = aid;
     }
 
     /**
-     * EV TA BORT
+     * initierar statistik knapp om användare är projektchef för minst ett projekt
      */
     private void statistikKnapp() {
         Validering enValidering = new Validering(idb);
@@ -87,10 +88,12 @@ public class Meny extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(510, 510));
 
         lblInloggadAnvandare.setText("E-post");
 
         btProfil.setText("Min profil");
+        btProfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btProfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btProfilActionPerformed(evt);
@@ -100,6 +103,7 @@ public class Meny extends javax.swing.JFrame {
         lblHandlaggare.setText("Handläggare");
 
         btProjekt.setText("Mina projekt");
+        btProjekt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btProjekt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btProjektActionPerformed(evt);
@@ -107,6 +111,7 @@ public class Meny extends javax.swing.JFrame {
         });
 
         btAvdelning.setText("Min avdelning");
+        btAvdelning.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btAvdelning.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAvdelningActionPerformed(evt);
@@ -114,6 +119,7 @@ public class Meny extends javax.swing.JFrame {
         });
 
         btMal.setText("Se globala mål");
+        btMal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btMal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btMalActionPerformed(evt);
@@ -121,6 +127,7 @@ public class Meny extends javax.swing.JFrame {
         });
 
         btStatistik.setText("Statistik");
+        btStatistik.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btStatistik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btStatistikActionPerformed(evt);
@@ -128,6 +135,7 @@ public class Meny extends javax.swing.JFrame {
         });
 
         jButton1.setText("Logga ut");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -155,8 +163,7 @@ public class Meny extends javax.swing.JFrame {
                                 .addGap(122, 122, 122))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(16, 16, 16)
-                                .addComponent(lblInloggadAnvandare)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lblInloggadAnvandare)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(83, 83, 83)

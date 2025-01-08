@@ -379,6 +379,7 @@ public class OmProjekt extends javax.swing.JFrame {
         btnTillbaka.setText("<- tillbaka");
         btnTillbaka.setToolTipText("");
         btnTillbaka.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
+        btnTillbaka.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTillbakaActionPerformed(evt);
@@ -392,6 +393,7 @@ public class OmProjekt extends javax.swing.JFrame {
         lblH2Anstallda.setText("Anställda inom projektet:");
 
         btnEdit.setText("Redigera Projekt");
+        btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -399,6 +401,7 @@ public class OmProjekt extends javax.swing.JFrame {
         });
 
         cbxValjPartner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxValjPartner.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbxValjPartner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxValjPartnerActionPerformed(evt);
@@ -478,7 +481,7 @@ public class OmProjekt extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblGoal, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblH2Goal, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(89, Short.MAX_VALUE))))
+                        .addContainerGap(191, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,7 +534,7 @@ public class OmProjekt extends javax.swing.JFrame {
                 .addComponent(lblH2Partners)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPartners, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
