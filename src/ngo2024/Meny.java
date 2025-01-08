@@ -42,7 +42,7 @@ public class Meny extends javax.swing.JFrame {
      */
     private void statistikKnapp() {
         Validering enValidering = new Validering(idb);
-        if (enValidering.arChef(anvandarEpost)) {
+        if (enValidering.isChef(anvandarEpost)) {
             btStatistik.setVisible(true);
         } else {
             btStatistik.setVisible(false);

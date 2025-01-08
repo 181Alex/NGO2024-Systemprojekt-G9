@@ -144,10 +144,10 @@ public class Inloggning extends javax.swing.JFrame {
 
             //kontrollerar att lösenord stämmer för användare
             //om inlogg är korrekt och användaren är admin öppnas admin menyn; annars öppnas handläggar menyn
-            if (losen.equals(dbLosen) && validering.arAdmin(ePost) == false) {
+            if (losen.equals(dbLosen) && validering.isAdmin(ePost) == false) {
                 new Meny(idb, ePost, getAidString(ePost)).setVisible(true);
                 this.setVisible(false);
-            } else if (losen.equals(dbLosen) && validering.arAdmin(ePost) == true) {
+            } else if (losen.equals(dbLosen) && validering.isAdmin(ePost) == true) {
                 new AdminMeny(idb, ePost, getAidString(ePost)).setVisible(true);
                 this.setVisible(false);
             } else {

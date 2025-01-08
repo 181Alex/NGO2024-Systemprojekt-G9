@@ -54,7 +54,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         
         //kontrollerar om användaren är projektledare i något projekt 
         Validering valid = new Validering(idb);
-        if (valid.arChef(anvandarEpost)){
+        if (valid.isChef(anvandarEpost)){
             txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         }    
         else {
@@ -171,7 +171,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     
     /**
      * retunerar inloggad användares epost utifrån aid
-     * behövs till validerings metodanrop 'arChef'
+ behövs till validerings metodanrop 'isChef'
      */
      private String getAnvandarEpost () {
         String sqlFraga = " ";
@@ -343,7 +343,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     private void btnStatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatsActionPerformed
         //Anropar validering. Statistik knapp dyker upp för användare som leder minst ett projekt
         Validering valid = new Validering(idb);
-        if (valid.arChef(anvandarEpost)){
+        if (valid.isChef(anvandarEpost)){
             new Statistik(idb, aid).setVisible(true);
             this.dispose();
         }

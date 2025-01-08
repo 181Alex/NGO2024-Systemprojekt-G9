@@ -472,7 +472,7 @@ public class MinProfil extends javax.swing.JFrame {
 
     private void TillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TillbakaActionPerformed
         Validering valid = new Validering(idb);
-        boolean admins = valid.arAdmin(epost);
+        boolean admins = valid.isAdmin(epost);
         if (admins == true) {
             this.dispose();
             new AdminMeny(idb, epost, aid).setVisible(true);

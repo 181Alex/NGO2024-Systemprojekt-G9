@@ -11,11 +11,17 @@ public class Validering {
 
     private InfDB idb;
 
+     /**
+     * Initierar Validering objekt 
+     * Validerings klass för validering av behörighet och inmatade Strings
+     *
+     * @param idb initierar fält för att interagera med databasen
+     */
     public Validering(InfDB idb) {
         this.idb = idb;
     }
 
-    public boolean arAdmin(String ePost) {
+    public boolean isAdmin(String ePost) {
         boolean isAdmin = false;
         try {
             String sqlFraga = "SELECT behorighetsniva FROM admin WHERE aid = (SELECT aid FROM anstalld where epost = '" + ePost + "')";
@@ -30,7 +36,12 @@ public class Validering {
         return isAdmin;
     }
 
-    public boolean arChef(String ePost) {
+    /**
+     * Kontrollerar om inloggad användare är chef över ett eller fler projekt
+     * 
+     * @param ePost inloggad användares epost som validering sker utifrån
+     */
+    public boolean isChef(String ePost) {
         boolean isChef = false;
         try {
             String sqlFraga = "SELECT projektchef FROM projekt WHERE projektchef IN(SELECT aid FROM anstalld where epost = '" + ePost + "')";
@@ -46,7 +57,9 @@ public class Validering {
 
     /**
      * Kontrolerar om användaren är projektledare för ett specifikt projekt
-     * Används i klassen OmProjekt_1
+     * 
+     * @param aid inloggad användares ID
+     * @param projektId ID på projekt som uppgift ska kontrolleras mot
      */
     public boolean isProjektetsChef(String aid, String projektId) {
         boolean isProjektetsChef = false;
@@ -64,6 +77,11 @@ public class Validering {
         return isProjektetsChef;
     }
 
+    /**
+     * Kontrollerar att String är korrekt formaterad som epost
+     * 
+     * @param ePost epost String som ska kontrolleras
+     */
     public boolean checkEpost(String ePost) {
         boolean matches = false;
         // måste skriva valfritt@xxxxx.com, alla special tecken msåte finnas där.
@@ -74,6 +92,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att datum String är korrekt formaterad
+     * 
+     * @param datum datum String som ska kontrolleras
+     */
     public boolean checkDatum(String datum) {
         boolean matches = false;
         // måste skrivas yyyy-mm-dd
@@ -84,6 +107,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att adress String är korrekt formaterad
+     * 
+     * @param adress adress String som ska kontrolleras
+     */
     public boolean checkAdress(String adress) {
         boolean matches = false;
         // Adress: "123 Gatunamn, Stad" (tre siffror, gatunamn, kommatecken, stad).
@@ -94,6 +122,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att efternamn String är korrekt formaterad
+     * 
+     * @param efternamn String som ska kontrolleras
+     */
     public boolean checkEfternamn(String efternamn) {
         boolean matches = false;
         //alla bokstäver ok inga siffror
@@ -104,6 +137,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att namn på stad String är korrekt formaterad
+     * 
+     * @param namn String av namn på stad som ska kontrolleras
+     */
     public boolean checkStad(String namn) {
         boolean matches = false;
         //kontrollerar alla bokstäver i vanliga svenska alfabetet plus andra tecken som kan 
@@ -115,6 +153,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att namn String är korrekt formaterad
+     * 
+     * @param namn String som ska kontrolleras
+     */
     public boolean checkNamn(String namn) {
         boolean matches = false;
         if (namn == null || namn.trim().isEmpty()) {
@@ -129,6 +172,7 @@ public class Validering {
         }
         return matches;
     }
+
 
     public boolean checkAnsvar(String Ansvar) {
         boolean matches = false;
@@ -153,7 +197,6 @@ public class Validering {
             }
             return matches;
         }
-
     }
 
     public boolean checkTelefon(String telefon) {
@@ -176,6 +219,12 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar om en anställd tillhör en viss avdelning
+     * 
+     * @param avdNummer ID (avdid) nummer för avdelningen som ska kontrolleras
+     * @param aid ID för användare för kontroll om användare tillhör avdelning
+     */
     public boolean tillhorAvdelning(int avdNummer, int aid) {
         int hämtadI = 0;
         String sqlFraga = "SELECT aid FROM anstalld where avdelning =" + avdNummer + " AND aid= " + aid;
@@ -197,6 +246,11 @@ public class Validering {
 
     }
 
+    /**
+     * Kontrollerar att valuta String är korrekt formaterad
+     * 
+     * @param valuta String som ska kontrolleras
+     */
     public boolean checkValuta(String valuta) {
         boolean matches = false;
         // Regex för siffror, en punkt och upp till fyra decimaler
@@ -207,6 +261,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att kostnad String är korrekt formaterad
+     * 
+     * @param kostnad String som ska kontrolleras
+     */
     public boolean checkKostnad(String kostnad) {
         boolean matches = false;
         // Regex för upp till 12 siffror före punkt och 1-4 decimaler
@@ -217,6 +276,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att String är korrekt formaterad. Kan ta in flera ord, siffra, etc.
+     * 
+     * @param mening String som ska kontrolleras
+     */
     public boolean checkMeningOSiffra(String mening) {
         boolean matches = false;
         // en mening/ ord sedan en siffra i slutet, vissa tecken, som t.ex komma och bindesstreck är också ok
@@ -227,6 +291,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att beskrivning String är korrekt formaterad
+     * 
+     * @param beskrivning String som ska kontrolleras
+     */
     public boolean checkBeskrivning(String beskrivning) {
         boolean matches = false;
         // Regex för att tillåta text med tillåtna tecken
@@ -237,6 +306,12 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att start datum är före slutdatum
+     * 
+     * @param franDatum Startdatum String som ska kontrolleras
+     * @param tillDatum Slutdatum String som ska kontrolleras
+     */
     public boolean checkDatumSkillnad(String franDatum, String tillDatum) {
         boolean mindre = false;
         // start måste vara mindre än slut
@@ -248,6 +323,14 @@ public class Validering {
         return mindre;
     }
 
+    /**
+     * Kontrollerar att start datum är före slutdatum
+     * 
+     * @param franDatum Startdatum String  för projekt
+     * @param tillDatum Slutdatum String för projekt
+     * @param franSok Söker från och med datum String
+     * @param tillSok Söker till och med datum String
+     */
     public boolean checkMellanDatumSkillnad(String franDatum, String tillDatum, String franSok, String tillSok) {
         if (franSok == null) {
             franSok = "1000-01-01";
@@ -268,6 +351,11 @@ public class Validering {
         return inomIntervall;
     }
 
+    /**
+     * Kontrollerar om projekt är avslutat
+     * 
+     * @param status String som vill kontrolleras
+     */
     public boolean checkAvslutad(String status) {
         boolean avslutad = false;
         if (status.equals("Avslutat")) {
@@ -276,6 +364,11 @@ public class Validering {
         return avslutad;
     }
 
+    /**
+     * Kontrollerar om projekt är planerat
+     * 
+     * @param status String som vill kontrolleras
+     */
     public boolean checkPlanerade(String status) {
         boolean planerade = false;
         if (status.equals("Planerat")) {
@@ -284,6 +377,11 @@ public class Validering {
         return planerade;
     }
 
+    /**
+     * Kontrollerar om projekt är pågående
+     * 
+     * @param status String som vill kontrolleras
+     */
     public boolean checkPagaende(String status) {
         boolean pagaende = false;
         if (status.equals("Pågående")) {
@@ -292,6 +390,11 @@ public class Validering {
         return pagaende;
     }
 
+    /**
+     * Kontrollerar om projekt är pausat
+     * 
+     * @param status String som vill kontrolleras
+     */
     public boolean checkPausad(String status) {
         boolean pausad = false;
         if (status.equals("Pausad")) {
@@ -300,6 +403,11 @@ public class Validering {
         return pausad;
     }
 
+    /**
+     * Kontrollerar om projekt är aktivt
+     * 
+     * @param status String som vill kontrolleras
+     */
     public boolean checkAktiv(String status) {
         boolean aktiv = true;
         if (status.equals("Avslutat") || status.equals("Pausad")) {
@@ -308,6 +416,12 @@ public class Validering {
         return aktiv;
     }
 
+    /**
+     * Kontrollerar att String inte överskridet tecken antal
+     * 
+     * @param max int med max antal tecken
+     * @param inmatning String som kontrolleras
+     */
     public boolean checkStorlek(int max, String inmatning) {
         boolean mindre = false;
         int in = inmatning.length();
