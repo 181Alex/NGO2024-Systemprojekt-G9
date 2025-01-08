@@ -18,7 +18,7 @@ import ngo2024.Inloggning;
 public class AdminMeny extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String inloggadAnvandare;
+    private String epost;
     private String aid;
     
     /**
@@ -31,7 +31,7 @@ public class AdminMeny extends javax.swing.JFrame {
      */
     public AdminMeny(InfDB idb, String inloggadAnvandare, String aid) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         lblEpost.setText(inloggadAnvandare);
         this.aid = aid;
@@ -269,40 +269,40 @@ public class AdminMeny extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMinProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinProfilActionPerformed
-        new MinProfil(idb, aid, inloggadAnvandare).setVisible(true);
+        new MinProfil(idb, aid, epost).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMinProfilActionPerformed
 
     private void btnTaBortAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortAnstalldActionPerformed
-        new TaBortAnstalld(idb, inloggadAnvandare).setVisible(true);
+        new TaBortAnstalld(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
-       new LaggTillAnstalld(idb, inloggadAnvandare).setVisible(true);
+       new LaggTillAnstalld(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillLandActionPerformed
-       new LaggTillLand(idb, inloggadAnvandare).setVisible(true);
+       new LaggTillLand(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillLandActionPerformed
 
     private void btnAndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLandActionPerformed
-        new AndraLand(idb, inloggadAnvandare).setVisible(true);
+        new AndraLand(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnAndraLandActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      new AndraProjekt(idb, inloggadAnvandare).setVisible(true);
+      new AndraProjekt(idb, epost).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillPartnerActionPerformed
-        new LaggTillPartner(idb, inloggadAnvandare).setVisible(true);
+        new LaggTillPartner(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillPartnerActionPerformed
 
     private void btnStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStadActionPerformed
-       new StadForandring(idb, inloggadAnvandare).setVisible(true);
+       new StadForandring(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnStadActionPerformed
 
     private void btnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillProjektActionPerformed
-        new LaggTillPorjekt(idb, inloggadAnvandare).setVisible(true);
+        new LaggTillPorjekt(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillProjektActionPerformed
 
     private void btnGlobalaMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGlobalaMalActionPerformed
@@ -310,15 +310,15 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGlobalaMalActionPerformed
 
     private void btnMinAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinAvdelningActionPerformed
-        new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
+        new MinAvdelning(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnMinAvdelningActionPerformed
 
     private void brnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnMinaProjektActionPerformed
-        new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
+        new MinaProjekt(idb, epost).setVisible(true);
     }//GEN-LAST:event_brnMinaProjektActionPerformed
 
     private void btnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnerActionPerformed
-        new AndraPartner(idb, inloggadAnvandare).setVisible(true);
+        new AndraPartner(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnTaBortPartnerActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -327,11 +327,11 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnLaggTillAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAvdelningActionPerformed
-       new LaggTillAvdelning(idb, inloggadAnvandare).setVisible(true);
+       new LaggTillAvdelning(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAvdelningActionPerformed
 
     private void btnAndraAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraAvdelningActionPerformed
-       new AndraAvdelning(idb, inloggadAnvandare).setVisible(true);
+       new AndraAvdelning(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnAndraAvdelningActionPerformed
 
     

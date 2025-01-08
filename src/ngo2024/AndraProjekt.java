@@ -77,7 +77,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         }
         return lid;
     }
-/**
+    /**
      * Fyller i combo box med alla länder från databasen
      * @param pid ID för projekt som eftersöks
      */
