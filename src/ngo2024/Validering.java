@@ -173,7 +173,11 @@ public class Validering {
         return matches;
     }
 
-
+    /**
+     * Kontrollerar att String enbart inehåller bokstäver
+     * 
+     * @param ansvar String som kontrolleras
+     */
     public boolean checkAnsvar(String Ansvar) {
         boolean matches = false;
         //alla bokstäver ok inga siffror
@@ -184,6 +188,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar om mentor finns samt om parameter String enbart innehåller siffror
+     * 
+     * @param mentor String som kontrolleras
+     */
     public boolean checkMentor(String mentor) {
         // kollar om en mentor finns
         if (mentor == null) {
@@ -199,6 +208,11 @@ public class Validering {
         }
     }
 
+    /**
+     * Kontrollerar att String för telefonnummer är korrekt formaterad
+     * 
+     * @param telefon String som kontrolleras
+     */
     public boolean checkTelefon(String telefon) {
         boolean matches = false;
         //7-15 siffror med binder streck efter 3 siffror, sen igen efter 3 siffror sen fyra i slutet
@@ -209,6 +223,11 @@ public class Validering {
         return matches;
     }
 
+    /**
+     * Kontrollerar att String med förnamn är korrekt formaterad (bara bokstäver)
+     * 
+     * @param fornamn String med förnamn som kontrolleras
+     */
     public boolean checkFornamn(String fornamn) {
         boolean matches = false;
         // alla bokstäver ok inga siffror
@@ -243,7 +262,6 @@ public class Validering {
         } else {
             return false;
         }
-
     }
 
     /**
