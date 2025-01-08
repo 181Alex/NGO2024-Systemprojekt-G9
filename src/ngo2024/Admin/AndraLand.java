@@ -16,7 +16,7 @@ import oru.inf.InfException;
 public class AndraLand extends javax.swing.JFrame {
     
     private InfDB idb;
-    private String inloggadAnvandare; 
+    private String epost; 
     private boolean kontrollOk;
     
      /**
@@ -29,7 +29,7 @@ public class AndraLand extends javax.swing.JFrame {
 
     public AndraLand(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         kontrollOk=true;
         
         initComponents();

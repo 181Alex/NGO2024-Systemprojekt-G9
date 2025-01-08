@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class AndraPartner extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String inloggadAnvandare;  
+    private String epost;  
     boolean kontrollOk;
    
     
@@ -26,7 +26,7 @@ public class AndraPartner extends javax.swing.JFrame {
      */
     public AndraPartner(InfDB idb, String inloggadAnvandare) {
         this.idb=idb;
-        this.inloggadAnvandare=inloggadAnvandare;
+        this.epost=inloggadAnvandare;
         initComponents();
         kontrollOk=false;
         fyllStad();
