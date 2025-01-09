@@ -605,6 +605,7 @@ private HashMap<String, String> mentorLista;
         
     }}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
     
     public boolean mentorKontroll(InfDB idb){
@@ -623,6 +624,8 @@ private HashMap<String, String> mentorLista;
         return false;
     }
     }}
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     
@@ -689,10 +692,15 @@ private int getAvdelning(){
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /**
      * Genererar slumpat lösenord 
      */
     public String randomPassword(){
+=======
+
+    private String randomPassword(){
+>>>>>>> Stashed changes
 =======
 
     private String randomPassword(){
@@ -705,6 +713,7 @@ private int getAvdelning(){
         }
         return losen;
     }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     
     
@@ -738,6 +747,10 @@ public int getMentor(){
 =======
    
 
+=======
+   
+
+>>>>>>> Stashed changes
 private void fyllCbMentor(){
     String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn FROM anstalld WHERE aid IN "
             + "(SELECT aid FROM handlaggare)";
@@ -751,6 +764,9 @@ private void fyllCbMentor(){
         String aid = idb.fetchSingle(sqlAid);
         cbMentor.addItem(namn);
         mentorLista.put(aid, namn);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
     
@@ -761,11 +777,14 @@ private void fyllCbMentor(){
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /**
      * kontrollerar om användare är admin
      */   
 public boolean isAdmin(){
 =======
+=======
+>>>>>>> Stashed changes
 private String getSelectedAid(){
         String selectedMentor = (String) cbMentor.getSelectedItem();
         String aid = " ";
@@ -780,6 +799,9 @@ private String getSelectedAid(){
 }
     
 private boolean isAdmin(){
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     boolean svar=false;
     if(chbHandlaggare.isSelected()){
