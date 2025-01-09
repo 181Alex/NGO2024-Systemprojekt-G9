@@ -444,16 +444,16 @@ public int hogstaPid(){
     
     public int getStad(){
         int i=cbStad.getSelectedIndex();
-        int aid=0;
+        int sid=0;
         String sql="SELECT sid FROM stad WHERE namn='" + cbStad.getItemAt(i) + "'";
         System.out.println(sql);
         try{
-            String sAid=idb.fetchSingle(sql);
-            aid=Integer.parseInt(sAid);
+            String sSid=idb.fetchSingle(sql);
+            sid=Integer.parseInt(sSid);
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
-        return aid;
+        return sid;
     }
     
     
