@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
-    </Component>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup3">
-    </Component>
-  </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -31,24 +23,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="lblLyckades" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                       <Component id="lblError" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="chbAdmin" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="chbHandlaggare" min="-2" max="-2" attributes="0"/>
@@ -56,8 +48,8 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="tfAnsvarighetsOmrade" min="-2" pref="209" max="-2" attributes="0"/>
-                                  <Component id="btnSkapa" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfAnsvarighetsOmrade" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
+                                  <Component id="btnSkapa" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblAnsvarBad" min="-2" pref="17" max="-2" attributes="0"/>
@@ -76,9 +68,9 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="tfAnstallDatum" max="32767" attributes="0"/>
+                                          <Component id="tfAnstallDatum" alignment="0" max="32767" attributes="0"/>
                                           <Component id="tfLosenord" alignment="0" max="32767" attributes="0"/>
                                           <Component id="tfTelefon" alignment="0" max="32767" attributes="0"/>
                                           <Component id="tfEpost" alignment="0" max="32767" attributes="0"/>
@@ -90,11 +82,11 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblEfternamnBad" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblFornamnBad" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblEpostBad" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblDatumBad1" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblTelefonBad" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblAdressBad" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" attributes="0">
+                                          <Component id="lblEpostBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblDatumBad1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblTelefonBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblAdressBad" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                                               <Component id="btnRandom" min="-2" pref="83" max="-2" attributes="0"/>
                                           </Group>
@@ -102,8 +94,8 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="cbMentor" pref="238" max="32767" attributes="0"/>
-                                          <Component id="cbAvdelning" max="32767" attributes="0"/>
+                                          <Component id="cbMentor" alignment="0" pref="238" max="32767" attributes="0"/>
+                                          <Component id="cbAvdelning" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblAid" min="-2" max="-2" attributes="0"/>
@@ -113,7 +105,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -129,7 +121,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblFornamn" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFornamn" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="tfFornamn" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblFornamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -137,7 +129,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblEfternamn" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEfternamn" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="lblEfternamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="tfEfternamn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -145,7 +137,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblAdress" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdress" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                               <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblAdressBad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,7 +197,7 @@
                   <Component id="tfAnsvarighetsOmrade" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblAnsvarBad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSkapa" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLyckades" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -217,6 +209,32 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblEfternamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Efternamn"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEfternamnBad">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFornamn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="F&#xf6;rnamn"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAdressBad">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JButton" name="btnSkapa">
       <Properties>
         <Property name="text" type="java.lang.String" value="Skapa"/>
@@ -225,99 +243,44 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSkapaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFornamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="F&#xf6;rnamn"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEfternamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Efternamn"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAdress">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Adress"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEpost">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Epost"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblTelefon">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Telefon"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAnstallDatum">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Anst&#xe4;llningsdatum"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblLosenord">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xf6;senord"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblAvdelning">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Avdelning"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfAnstallDatum">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="yyyy-mm-dd"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAnstallDatumActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfTelefon">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="123-123-1234"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfTelefonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfEpost">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="example@mail.com"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEpostActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfAdress">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="123 blabla, bobla"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfEfternamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Efternamn"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfFornamn">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="F&#xf6;rnamn"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfLosenord">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xf6;senord"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblEpostBad">
+    <Component class="javax.swing.JLabel" name="lblTelefonBad">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblDatumBad1">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRandom">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Random"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRandomActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblError">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Error!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLyckades">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="cc" red="33" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Lyckades!"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbAvdelning">
@@ -330,97 +293,77 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblLyckades">
-      <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="cc" red="33" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Lyckades!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblError">
+    <Component class="javax.swing.JLabel" name="lblEpostBad">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Error!"/>
+        <Property name="text" type="java.lang.String" value="!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnRandom">
+    <Component class="javax.swing.JTextField" name="tfLosenord">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Random"/>
+        <Property name="text" type="java.lang.String" value="L&#xf6;senord"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRandomActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblDatumBad1">
+    <Component class="javax.swing.JTextField" name="tfFornamn">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
+        <Property name="text" type="java.lang.String" value="F&#xf6;rnamn"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblTelefonBad">
+    <Component class="javax.swing.JTextField" name="tfEfternamn">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
+        <Property name="text" type="java.lang.String" value="Efternamn"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAdressBad">
+    <Component class="javax.swing.JTextField" name="tfAdress">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
+        <Property name="text" type="java.lang.String" value="123 blabla, bobla"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblEfternamnBad">
+    <Component class="javax.swing.JLabel" name="lblAid">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
+        <Property name="text" type="java.lang.String" value="aid"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFornamnBad">
+    <Component class="javax.swing.JTextField" name="tfEpost">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnTillbaka">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X"/>
+        <Property name="text" type="java.lang.String" value="example@mail.com"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEpostActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="chbAdmin">
+    <Component class="javax.swing.JLabel" name="lblAnsvarBad">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Admin"/>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfTelefon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="123-123-1234"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbAdminActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfTelefonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="chbHandlaggare">
+    <Component class="javax.swing.JCheckBox" name="cbIngenMentor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
+        <Property name="text" type="java.lang.String" value="Ingen mentor"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbHandlaggareActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbIngenMentorActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfAnsvarighetsOmrade">
+    <Component class="javax.swing.JLabel" name="lblMentor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AnsvarighetsOmr&#xe5;de"/>
+        <Property name="text" type="java.lang.String" value="Mentor"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbMentor">
@@ -436,30 +379,79 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblMentor">
+    <Component class="javax.swing.JTextField" name="tfAnstallDatum">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mentor"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="cbIngenMentor">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ingen mentor"/>
+        <Property name="text" type="java.lang.String" value="yyyy-mm-dd"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbIngenMentorActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAnstallDatumActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAnsvarBad">
+    <Component class="javax.swing.JLabel" name="lblAvdelning">
       <Properties>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="!"/>
+        <Property name="text" type="java.lang.String" value="Avdelning"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblAid">
+    <Component class="javax.swing.JLabel" name="lblLosenord">
       <Properties>
-        <Property name="text" type="java.lang.String" value="aid"/>
+        <Property name="text" type="java.lang.String" value="L&#xf6;senord"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfAnsvarighetsOmrade">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="AnsvarighetsOmr&#xe5;de"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAnstallDatum">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Anst&#xe4;llningsdatum"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbHandlaggare">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbHandlaggareActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTelefon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefon"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="chbAdmin">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Admin"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbAdminActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblEpost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Epost"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTillbaka">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="X"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAdress">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adress"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFornamnBad">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="!"/>
       </Properties>
     </Component>
   </SubComponents>

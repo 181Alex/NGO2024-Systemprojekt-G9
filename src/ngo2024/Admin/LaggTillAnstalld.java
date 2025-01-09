@@ -22,14 +22,9 @@ boolean kontrollOk;
 private String epost;
 private HashMap<String, String> mentorLista;
 
-     /**
-     * Initierar LaggTillAnstalld objekt 
-     * Låter en administratör lägga till nya anställda
-     *
-     * @param idb initierar fält för att interagera med databasen
-     * @param epost eposten till den inloggade användaren
+    /**
+     * Creates new form LaggTillAnstalld1
      */
-
     public LaggTillAnstalld(InfDB idb,String epost) {
         this.idb=idb;
         mentorLista = new HashMap<>();
@@ -71,6 +66,7 @@ private HashMap<String, String> mentorLista;
         tfAnsvarighetsOmrade.setVisible(true);
     }
     
+//
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,46 +77,53 @@ private HashMap<String, String> mentorLista;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
-        buttonGroup3 = new javax.swing.ButtonGroup();
-        btnSkapa = new javax.swing.JButton();
-        lblFornamn = new javax.swing.JLabel();
         lblEfternamn = new javax.swing.JLabel();
-        lblAdress = new javax.swing.JLabel();
-        lblEpost = new javax.swing.JLabel();
-        lblTelefon = new javax.swing.JLabel();
-        lblAnstallDatum = new javax.swing.JLabel();
-        lblLosenord = new javax.swing.JLabel();
-        lblAvdelning = new javax.swing.JLabel();
-        tfAnstallDatum = new javax.swing.JTextField();
-        tfTelefon = new javax.swing.JTextField();
-        tfEpost = new javax.swing.JTextField();
-        tfAdress = new javax.swing.JTextField();
-        tfEfternamn = new javax.swing.JTextField();
-        tfFornamn = new javax.swing.JTextField();
-        tfLosenord = new javax.swing.JTextField();
-        lblEpostBad = new javax.swing.JLabel();
-        cbAvdelning = new javax.swing.JComboBox<>();
-        lblLyckades = new javax.swing.JLabel();
-        lblError = new javax.swing.JLabel();
-        btnRandom = new javax.swing.JButton();
-        lblDatumBad1 = new javax.swing.JLabel();
-        lblTelefonBad = new javax.swing.JLabel();
-        lblAdressBad = new javax.swing.JLabel();
         lblEfternamnBad = new javax.swing.JLabel();
-        lblFornamnBad = new javax.swing.JLabel();
-        btnTillbaka = new javax.swing.JButton();
-        chbAdmin = new javax.swing.JCheckBox();
-        chbHandlaggare = new javax.swing.JCheckBox();
-        tfAnsvarighetsOmrade = new javax.swing.JTextField();
-        cbMentor = new javax.swing.JComboBox<>();
-        lblMentor = new javax.swing.JLabel();
-        cbIngenMentor = new javax.swing.JCheckBox();
-        lblAnsvarBad = new javax.swing.JLabel();
+        lblFornamn = new javax.swing.JLabel();
+        lblAdressBad = new javax.swing.JLabel();
+        btnSkapa = new javax.swing.JButton();
+        lblTelefonBad = new javax.swing.JLabel();
+        lblDatumBad1 = new javax.swing.JLabel();
+        btnRandom = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+        lblLyckades = new javax.swing.JLabel();
+        cbAvdelning = new javax.swing.JComboBox<>();
+        lblEpostBad = new javax.swing.JLabel();
+        tfLosenord = new javax.swing.JTextField();
+        tfFornamn = new javax.swing.JTextField();
+        tfEfternamn = new javax.swing.JTextField();
+        tfAdress = new javax.swing.JTextField();
         lblAid = new javax.swing.JLabel();
+        tfEpost = new javax.swing.JTextField();
+        lblAnsvarBad = new javax.swing.JLabel();
+        tfTelefon = new javax.swing.JTextField();
+        cbIngenMentor = new javax.swing.JCheckBox();
+        lblMentor = new javax.swing.JLabel();
+        cbMentor = new javax.swing.JComboBox<>();
+        tfAnstallDatum = new javax.swing.JTextField();
+        lblAvdelning = new javax.swing.JLabel();
+        lblLosenord = new javax.swing.JLabel();
+        tfAnsvarighetsOmrade = new javax.swing.JTextField();
+        lblAnstallDatum = new javax.swing.JLabel();
+        chbHandlaggare = new javax.swing.JCheckBox();
+        lblTelefon = new javax.swing.JLabel();
+        chbAdmin = new javax.swing.JCheckBox();
+        lblEpost = new javax.swing.JLabel();
+        btnTillbaka = new javax.swing.JButton();
+        lblAdress = new javax.swing.JLabel();
+        lblFornamnBad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblEfternamn.setText("Efternamn");
+
+        lblEfternamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblEfternamnBad.setText("!");
+
+        lblFornamn.setText("Förnamn");
+
+        lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblAdressBad.setText("!");
 
         btnSkapa.setText("Skapa");
         btnSkapa.addActionListener(new java.awt.event.ActionListener() {
@@ -129,66 +132,11 @@ private HashMap<String, String> mentorLista;
             }
         });
 
-        lblFornamn.setText("Förnamn");
+        lblTelefonBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblTelefonBad.setText("!");
 
-        lblEfternamn.setText("Efternamn");
-
-        lblAdress.setText("Adress");
-
-        lblEpost.setText("Epost");
-
-        lblTelefon.setText("Telefon");
-
-        lblAnstallDatum.setText("Anställningsdatum");
-
-        lblLosenord.setText("Lösenord");
-
-        lblAvdelning.setText("Avdelning");
-
-        tfAnstallDatum.setText("yyyy-mm-dd");
-        tfAnstallDatum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfAnstallDatumActionPerformed(evt);
-            }
-        });
-
-        tfTelefon.setText("123-123-1234");
-        tfTelefon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTelefonActionPerformed(evt);
-            }
-        });
-
-        tfEpost.setText("example@mail.com");
-        tfEpost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfEpostActionPerformed(evt);
-            }
-        });
-
-        tfAdress.setText("123 blabla, bobla");
-
-        tfEfternamn.setText("Efternamn");
-
-        tfFornamn.setText("Förnamn");
-
-        tfLosenord.setText("Lösenord");
-        tfLosenord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLosenordActionPerformed(evt);
-            }
-        });
-
-        lblEpostBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblEpostBad.setText("!");
-
-        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Klimat", "Samhälle", "Teknik" }));
-
-        lblLyckades.setForeground(new java.awt.Color(51, 204, 0));
-        lblLyckades.setText("Lyckades!");
-
-        lblError.setForeground(new java.awt.Color(255, 0, 51));
-        lblError.setText("Error!");
+        lblDatumBad1.setForeground(new java.awt.Color(255, 0, 51));
+        lblDatumBad1.setText("!");
 
         btnRandom.setText("Random");
         btnRandom.addActionListener(new java.awt.event.ActionListener() {
@@ -197,51 +145,48 @@ private HashMap<String, String> mentorLista;
             }
         });
 
-        lblDatumBad1.setForeground(new java.awt.Color(255, 0, 51));
-        lblDatumBad1.setText("!");
+        lblError.setForeground(new java.awt.Color(255, 0, 51));
+        lblError.setText("Error!");
 
-        lblTelefonBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblTelefonBad.setText("!");
+        lblLyckades.setForeground(new java.awt.Color(51, 204, 0));
+        lblLyckades.setText("Lyckades!");
 
-        lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblAdressBad.setText("!");
+        cbAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Klimat", "Samhälle", "Teknik" }));
 
-        lblEfternamnBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblEfternamnBad.setText("!");
+        lblEpostBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblEpostBad.setText("!");
 
-        lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
-        lblFornamnBad.setText("!");
-
-        btnTillbaka.setText("X");
-        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+        tfLosenord.setText("Lösenord");
+        tfLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTillbakaActionPerformed(evt);
+                tfLosenordActionPerformed(evt);
             }
         });
 
-        chbAdmin.setText("Admin");
-        chbAdmin.addActionListener(new java.awt.event.ActionListener() {
+        tfFornamn.setText("Förnamn");
+
+        tfEfternamn.setText("Efternamn");
+
+        tfAdress.setText("123 blabla, bobla");
+
+        lblAid.setText("aid");
+
+        tfEpost.setText("example@mail.com");
+        tfEpost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbAdminActionPerformed(evt);
+                tfEpostActionPerformed(evt);
             }
         });
 
-        chbHandlaggare.setText("Handläggare");
-        chbHandlaggare.addActionListener(new java.awt.event.ActionListener() {
+        lblAnsvarBad.setForeground(new java.awt.Color(255, 0, 0));
+        lblAnsvarBad.setText("!");
+
+        tfTelefon.setText("123-123-1234");
+        tfTelefon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbHandlaggareActionPerformed(evt);
+                tfTelefonActionPerformed(evt);
             }
         });
-
-        tfAnsvarighetsOmrade.setText("AnsvarighetsOmråde");
-
-        cbMentor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMentorActionPerformed(evt);
-            }
-        });
-
-        lblMentor.setText("Mentor");
 
         cbIngenMentor.setText("Ingen mentor");
         cbIngenMentor.addActionListener(new java.awt.event.ActionListener() {
@@ -250,10 +195,58 @@ private HashMap<String, String> mentorLista;
             }
         });
 
-        lblAnsvarBad.setForeground(new java.awt.Color(255, 0, 0));
-        lblAnsvarBad.setText("!");
+        lblMentor.setText("Mentor");
 
-        lblAid.setText("aid");
+        cbMentor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMentorActionPerformed(evt);
+            }
+        });
+
+        tfAnstallDatum.setText("yyyy-mm-dd");
+        tfAnstallDatum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAnstallDatumActionPerformed(evt);
+            }
+        });
+
+        lblAvdelning.setText("Avdelning");
+
+        lblLosenord.setText("Lösenord");
+
+        tfAnsvarighetsOmrade.setText("AnsvarighetsOmråde");
+
+        lblAnstallDatum.setText("Anställningsdatum");
+
+        chbHandlaggare.setText("Handläggare");
+        chbHandlaggare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbHandlaggareActionPerformed(evt);
+            }
+        });
+
+        lblTelefon.setText("Telefon");
+
+        chbAdmin.setText("Admin");
+        chbAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbAdminActionPerformed(evt);
+            }
+        });
+
+        lblEpost.setText("Epost");
+
+        btnTillbaka.setText("X");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        lblAdress.setText("Adress");
+
+        lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblFornamnBad.setText("!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,7 +318,7 @@ private HashMap<String, String> mentorLista;
                                         .addComponent(lblAid)
                                         .addGap(18, 18, 18)
                                         .addComponent(cbIngenMentor)))))
-                        .addGap(0, 13, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -394,7 +387,7 @@ private HashMap<String, String> mentorLista;
                     .addComponent(chbHandlaggare)
                     .addComponent(tfAnsvarighetsOmrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAnsvarBad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSkapa)
                     .addComponent(lblLyckades)
@@ -405,63 +398,49 @@ private HashMap<String, String> mentorLista;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfTelefonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTelefonActionPerformed
-
-    
-    private void tfEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEpostActionPerformed
-    
-    }//GEN-LAST:event_tfEpostActionPerformed
-    // TODO add your handling code here:
-
-    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLosenordActionPerformed
-
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
-            totalKontroll(idb);
-            boolean admin=isAdmin();
-            int hogsta=hogstaAid(idb);
-          
+        totalKontroll(idb);
+        boolean admin=isAdmin();
+        int hogsta=hogstaAid(idb);
+
         if(kontrollOk==true && alltMed()==true){
             try{
-            String sqlFraga="INSERT INTO anstalld VALUES(" + hogsta + ", '" + tfFornamn.getText() +"', '" 
-                    + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '"+tfEpost.getText() + "', '" + tfTelefon.getText() + "', '" 
-                    + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
-            String sqlA=" ";
-            String sqlH=" ";
-            if(admin==true){
-                sqlA="INSERT INTO admin VALUES(" + hogsta + ", " + 1 + ")";
-                idb.insert(sqlFraga);
-                idb.insert(sqlA);
-                System.out.println(sqlA);
-                
-            }
-            else if(admin==false){
-                if(!cbIngenMentor.isSelected()){
-                sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', " + getSelectedAid() + ")";
-                idb.insert(sqlFraga);
-                idb.insert(sqlH);
-                System.out.println(sqlH);}
-                else {
-                    sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', null)";
-                idb.insert(sqlFraga);
-                idb.insert(sqlH);
-                System.out.println(sqlH);}
+                String sqlFraga="INSERT INTO anstalld VALUES(" + hogsta + ", '" + tfFornamn.getText() +"', '"
+                + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '"+tfEpost.getText() + "', '" + tfTelefon.getText() + "', '"
+                + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
+                String sqlA=" ";
+                String sqlH=" ";
+                if(admin==true){
+                    sqlA="INSERT INTO admin VALUES(" + hogsta + ", " + 1 + ")";
+                    idb.insert(sqlFraga);
+                    idb.insert(sqlA);
+                    System.out.println(sqlA);
+
+                }
+                else if(admin==false){
+                    if(!cbIngenMentor.isSelected()){
+                        sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', " + getSelectedAid() + ")";
+                        idb.insert(sqlFraga);
+                        idb.insert(sqlH);
+                        System.out.println(sqlH);}
+                    else {
+                        sqlH="INSERT INTO handlaggare VALUES(" + hogsta + ", '" + tfAnsvarighetsOmrade.getText() + "', null)";
+                        idb.insert(sqlFraga);
+                        idb.insert(sqlH);
+                        System.out.println(sqlH);}
                 }
             }
-        
+
             catch(InfException ex){
                 System.out.println(ex.getMessage());
-                }
+            }
             lblLyckades.setVisible(true);
             lblError.setVisible(false);
-            }
-        
+        }
+
         else if (kontrollOk==false){
             lblError.setVisible(true);
-            
+
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
 
@@ -683,26 +662,6 @@ private int getAvdelning(){
     }
     
     
-/**
-     * kontrollerar om användare är mentor
-     */
-    private boolean arMentor(String mentor){
-        int mentors=Integer.parseInt(mentor);
-        String sqlFraga="SELECT mentor FROM handlaggare WHERE aid=" + mentors;
-        String svar=null;
-        try{
-            svar=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        if(svar==null){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
 private void fyllCbMentor(){
     String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn FROM anstalld WHERE aid IN "
@@ -769,33 +728,21 @@ public boolean alltMed(){
     return alltMed;
 }    
 
-    
     private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
-       tfLosenord.setText(randomPassword());
+        tfLosenord.setText(randomPassword());
     }//GEN-LAST:event_btnRandomActionPerformed
 
-    private void tfAnstallDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAnstallDatumActionPerformed
+    private void tfLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLosenordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfAnstallDatumActionPerformed
+    }//GEN-LAST:event_tfLosenordActionPerformed
 
-    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-       this.dispose();
-    }//GEN-LAST:event_btnTillbakaActionPerformed
+    private void tfEpostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEpostActionPerformed
 
-    private void chbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAdminActionPerformed
-        if(chbAdmin.isSelected()){
-        chbHandlaggare.setSelected(false);
-        gomFalt();
-        }
-    }//GEN-LAST:event_chbAdminActionPerformed
+    }//GEN-LAST:event_tfEpostActionPerformed
 
-    private void chbHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbHandlaggareActionPerformed
-        if(chbHandlaggare.isSelected()){
-        chbAdmin.setSelected(false);
-        visaFalt();
-        fyllCbMentor();
-        }
-    }//GEN-LAST:event_chbHandlaggareActionPerformed
+    private void tfTelefonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTelefonActionPerformed
 
     private void cbIngenMentorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbIngenMentorActionPerformed
         if(cbIngenMentor.isSelected()){
@@ -808,10 +755,31 @@ public boolean alltMed(){
     }//GEN-LAST:event_cbIngenMentorActionPerformed
 
     private void cbMentorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMentorActionPerformed
-       lblAid.setText(getSelectedAid());
+        lblAid.setText(getSelectedAid());
     }//GEN-LAST:event_cbMentorActionPerformed
 
+    private void tfAnstallDatumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAnstallDatumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAnstallDatumActionPerformed
 
+    private void chbHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbHandlaggareActionPerformed
+        if(chbHandlaggare.isSelected()){
+            chbAdmin.setSelected(false);
+            visaFalt();
+            fyllCbMentor();
+        }
+    }//GEN-LAST:event_chbHandlaggareActionPerformed
+
+    private void chbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAdminActionPerformed
+        if(chbAdmin.isSelected()){
+            chbHandlaggare.setSelected(false);
+            gomFalt();
+        }
+    }//GEN-LAST:event_chbAdminActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -822,6 +790,25 @@ public boolean alltMed(){
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -829,17 +816,13 @@ public boolean alltMed(){
             public void run() {
                 //new LaggTillAnstalld().setVisible(true);
             }
-});
+        });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRandom;
     private javax.swing.JButton btnSkapa;
     private javax.swing.JButton btnTillbaka;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JComboBox<String> cbAvdelning;
     private javax.swing.JCheckBox cbIngenMentor;
     private javax.swing.JComboBox<String> cbMentor;
