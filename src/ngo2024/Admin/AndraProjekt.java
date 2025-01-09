@@ -199,7 +199,7 @@ private void taBortProjekt(String pid){
             lblMeddelande.setVisible(true);
             
         } catch (InfException ex) {
-            
+            System.out.println(ex.getMessage());
         }
 } 
     /**
