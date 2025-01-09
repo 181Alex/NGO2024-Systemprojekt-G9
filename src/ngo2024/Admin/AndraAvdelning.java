@@ -45,6 +45,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
         fyllAvdelning();
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
+        gomBad();
     }
     
     /**
@@ -121,7 +122,13 @@ public class AndraAvdelning extends javax.swing.JFrame {
         }
     }
     
-    
+    public void gomBad(){
+        lblNamnBad.setVisible(false);
+        lblBeskrivningBad.setVisible(false);
+        lblAdressBad.setVisible(false);
+        lblEpostBad.setVisible(false);
+        lblTelefonBad.setVisible(false);
+    }
     
     
 
@@ -545,7 +552,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAvdAdress(adress)&& valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
         } else {
@@ -556,7 +563,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+    if (valid.checkAvdTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
     } else {

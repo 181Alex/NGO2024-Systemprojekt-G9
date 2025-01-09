@@ -76,7 +76,6 @@ public class Validering {
         }
         return isProjektetsChef;
     }
-
     /**
      * Kontrollerar att String är korrekt formaterad som epost
      * 
@@ -115,12 +114,29 @@ public class Validering {
     public boolean checkAdress(String adress) {
         boolean matches = false;
         // Adress: "123 Gatunamn, Stad" (tre siffror, gatunamn, kommatecken, stad).
-        String checker = "^\\d{3}\\s[A-Za-zåäöÅÄÖ]+,\\s[A-Za-zåäöÅÄÖ]+$";
+        String checker = "^\\d{1,4}\\s[A-Za-zåäöÅÄÖ]+,\\s[A-Za-zåäöÅÄÖ]+$";
         if (adress.matches(checker)) {
             matches = true;
         }
         return matches;
     }
+    /**
+     * kontrollerar så att adress antingen skrivs "123 Gatunamn, Stad" eller "gatu-namn 123"
+     * @param adress
+     * 
+     */
+    public boolean checkAvdAdress(String adress) {
+        boolean matches = false;
+        // Adress: "123 Gatunamn, Stad" (tre siffror, gatunamn, kommatecken, stad).
+        String checker = "^\\d{1,4}\\s[A-Za-zåäöÅÄÖ]+,\\s[A-Za-zåäöÅÄÖ]+$";
+        String checkers="^[a-zA-ZåäöÅÄÖ-]+ [1-9][0-9]{0,2}$";
+        if (adress.matches(checker) || adress.matches(checkers)) {
+            matches = true;
+        }
+        return matches;
+    }
+    
+    
 
     /**
      * Kontrollerar att efternamn String är korrekt formaterad
@@ -219,6 +235,20 @@ public class Validering {
         String checker = "^\\d{3}-\\d{3}-\\d{4}$";
         if (telefon.matches(checker)) {
             matches = true;
+        }
+        return matches;
+    }
+    /**
+     * Kontrollerar så att det inmatningen antingen är 123-123-1234 eller max 20 valfria siffror
+     * @param telefon
+     */
+    
+    public boolean checkAvdTelefon(String telefon){
+        boolean matches=false;
+        String checker="^\\d{0,20}$";
+        String checkers="^\\d{3}-\\d{3}-\\d{4}$";
+        if(telefon.matches(checker) || telefon.matches(checkers)){
+            matches=true;
         }
         return matches;
     }
