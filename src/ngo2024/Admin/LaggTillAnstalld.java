@@ -467,6 +467,12 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att nytt förnamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean fornamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String fornamn = tfFornamn.getText();
@@ -479,6 +485,12 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att nytt efternamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean efternamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String efternamn = tfEfternamn.getText();
@@ -491,6 +503,13 @@ private String epost;
         }
     }
     
+    /**
+     * Anropar kontroll av att adress är korrekt formaterad
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
@@ -502,7 +521,13 @@ private String epost;
             return false;
         }}
     
-        
+    /**
+     * Anropar kontroll av att nytt telefonnummer är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
@@ -515,14 +540,21 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att ny epost är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean kontroll(InfDB idb){
     Validering valid = new Validering(idb); 
     
     // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
+    String tfepost = tfEpost.getText(); 
     
     // Kontrollera om e-postadressen är giltig
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+    if (valid.checkEpost(tfepost)&& valid.checkStorlek(255, tfepost)) {
         lblEpostBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -530,7 +562,7 @@ private String epost;
         return false;
         
     }}
-    
+
     public boolean mentorKontroll(InfDB idb){
     Validering valid = new Validering(idb); 
     if(chbAdmin.isSelected()==true){
