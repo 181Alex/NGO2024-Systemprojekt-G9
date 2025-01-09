@@ -37,22 +37,22 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Component id="lblKP" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefon" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Component id="lblAdress" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Component id="lblBransch" alignment="0" min="-2" pref="85" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="89" max="-2" attributes="0"/>
+                          <Component id="lblNamn" min="-2" pref="89" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" pref="110" max="-2" attributes="0"/>
+                      <Component id="lblEpost" min="-2" pref="110" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -108,7 +108,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfNamn" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="lblNamnBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNamn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -116,32 +116,32 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfKPerson" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblKPersonBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="lblKP" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEpostBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTelefonBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblAdressBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAdress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="tfBransch" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbStad" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblBranschBad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBransch" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                   </Group>
@@ -167,7 +167,7 @@
         <Property name="text" type="java.lang.String" value="Error!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="lblAdress">
       <Properties>
         <Property name="text" type="java.lang.String" value="Adress"/>
       </Properties>
@@ -177,22 +177,22 @@
         <Property name="text" type="java.lang.String" value="123 exempel, bobla"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="lblBransch">
       <Properties>
         <Property name="text" type="java.lang.String" value="Bransch"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="lblTelefon">
       <Properties>
         <Property name="text" type="java.lang.String" value="Telefon"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblNamn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Namn"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="lblKP">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kontaktperson"/>
       </Properties>
@@ -218,7 +218,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="lblEpost">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kontakt epost"/>
       </Properties>

@@ -34,13 +34,14 @@ public class LaggTillPartner extends javax.swing.JFrame {
         kontrollOk=false;
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
-        jLabel1.setVisible(true);
-        jLabel2.setVisible(true);
-        jLabel3.setVisible(true);
-        jLabel4.setVisible(true);
-        jLabel5.setVisible(true);
-        jLabel6.setVisible(true);
+        lblNamn.setVisible(true);
+        lblKP.setVisible(true);
+        lblEpost.setVisible(true);
+        lblTelefon.setVisible(true);
+        lblAdress.setVisible(true);
+        lblBransch.setVisible(true);
         fyllCb();
+        gomBad();
 
     }
     
@@ -67,6 +68,15 @@ public class LaggTillPartner extends javax.swing.JFrame {
         }
     }
     
+    public void gomBad(){
+        lblNamnBad.setVisible(false);
+        lblKPersonBad.setVisible(false);
+        lblEpostBad.setVisible(false);
+        lblTelefonBad.setVisible(false);
+        lblAdressBad.setVisible(false);
+        lblBranschBad.setVisible(false);
+    }
+    
     
 
     /**
@@ -79,16 +89,16 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private void initComponents() {
 
         lblError = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblAdress = new javax.swing.JLabel();
         tfAdress = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblBransch = new javax.swing.JLabel();
+        lblTelefon = new javax.swing.JLabel();
+        lblNamn = new javax.swing.JLabel();
+        lblKP = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblSkapad = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        lblEpost = new javax.swing.JLabel();
         tfBransch = new javax.swing.JTextField();
         btnSkapa = new javax.swing.JButton();
         tfNamn = new javax.swing.JTextField();
@@ -108,17 +118,17 @@ public class LaggTillPartner extends javax.swing.JFrame {
         lblError.setForeground(new java.awt.Color(255, 0, 51));
         lblError.setText("Error!");
 
-        jLabel5.setText("Adress");
+        lblAdress.setText("Adress");
 
         tfAdress.setText("123 exempel, bobla");
 
-        jLabel6.setText("Bransch");
+        lblBransch.setText("Bransch");
 
-        jLabel4.setText("Telefon");
+        lblTelefon.setText("Telefon");
 
-        jLabel1.setText("Namn");
+        lblNamn.setText("Namn");
 
-        jLabel2.setText("Kontaktperson");
+        lblKP.setText("Kontaktperson");
 
         jLabel7.setText("Lägg till partner");
 
@@ -132,7 +142,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Kontakt epost");
+        lblEpost.setText("Kontakt epost");
 
         tfBransch.setText("Bransch");
 
@@ -192,18 +202,18 @@ public class LaggTillPartner extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblKP)
+                            .addComponent(lblTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBransch, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -245,35 +255,35 @@ public class LaggTillPartner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNamnBad)
-                    .addComponent(jLabel1))
+                    .addComponent(lblNamn))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfKPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblKPersonBad)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblKP, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEpostBad)
-                            .addComponent(jLabel3))
+                            .addComponent(lblEpost))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTelefonBad)
-                            .addComponent(jLabel4))
+                            .addComponent(lblTelefon))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblAdressBad)
-                            .addComponent(jLabel5))
+                            .addComponent(lblAdress))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(tfBransch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblBranschBad)
-                            .addComponent(jLabel6))
+                            .addComponent(lblBransch))
                         .addGap(107, 107, 107))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -535,20 +545,20 @@ public int hogstaPid(){
     private javax.swing.JButton btnSkapa;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> cbStad;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblAdress;
     private javax.swing.JLabel lblAdressBad;
+    private javax.swing.JLabel lblBransch;
     private javax.swing.JLabel lblBranschBad;
+    private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblEpostBad;
     private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblKP;
     private javax.swing.JLabel lblKPersonBad;
+    private javax.swing.JLabel lblNamn;
     private javax.swing.JLabel lblNamnBad;
     private javax.swing.JLabel lblSkapad;
+    private javax.swing.JLabel lblTelefon;
     private javax.swing.JLabel lblTelefonBad;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfBransch;
