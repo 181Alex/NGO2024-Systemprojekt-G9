@@ -105,7 +105,7 @@ public class ProjektPartner extends javax.swing.JFrame {
     }
           
      /**
-     * ???
+     * fyller i combo box för att ta bort
      */   
           
           private void fyllCbTaBort() {

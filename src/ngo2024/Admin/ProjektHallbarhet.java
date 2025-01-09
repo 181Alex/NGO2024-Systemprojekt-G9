@@ -102,7 +102,7 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     }
 
     /**
-     * ???
+     * fyller på combo box för ta bort
      */
     
     private void fyllCbTaBort() {
