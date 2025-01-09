@@ -302,7 +302,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStadActionPerformed
 
     private void btnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillProjektActionPerformed
-        new LaggTillPorjekt(idb, epost).setVisible(true);
+        new LaggTillProjekt(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillProjektActionPerformed
 
     private void btnGlobalaMalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGlobalaMalActionPerformed

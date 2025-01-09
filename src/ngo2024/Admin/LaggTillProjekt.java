@@ -16,7 +16,7 @@ import java.util.HashMap;
  *
  * @author alexanderabboud & linneagottling
  */
-public class LaggTillPorjekt extends javax.swing.JFrame {
+public class LaggTillProjekt extends javax.swing.JFrame {
 
     private InfDB idb;
     private String epost;
@@ -32,7 +32,7 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
      * @param epost eposten till den inloggade användaren
      */
 
-    public LaggTillPorjekt(InfDB idb, String epost) {
+    public LaggTillProjekt(InfDB idb, String epost) {
         this.idb=idb;
         this.epost=epost;
         anstalldLista = new HashMap<>();
@@ -669,20 +669,21 @@ public void skapaNu(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPorjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPorjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPorjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LaggTillPorjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LaggTillProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new LaggTillPorjekt().setVisible(true);
+                //new LaggTillProjekt().setVisible(true);
             }
         });
     }
