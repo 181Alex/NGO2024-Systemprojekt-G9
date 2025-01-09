@@ -91,28 +91,10 @@ public class Validering {
         }
         return matches;
     }
-     public boolean checkInteSammaEpostAnstalld(String epost){
-        String sqlFraga = "SELECT epost FROM anstalld";
-        boolean ok = true;
-        
-        try {
-            ArrayList<String> epostLista = idb.fetchColumn(sqlFraga);
-            
-            for(String aEpost: epostLista){
-                if(epost.equalsIgnoreCase(aEpost)){
-                    ok = false;
-               }                   
-            }
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }
-        return ok;
-        
-    }
-     
-    public boolean checkInteSammaEpostAvdelning(String epost){
-        String sqlFraga = "SELECT epost FROM avdelning";
+     public boolean checkInteSammaEpost(String epost){
+        String sqlFraga = "SELECT epost FROM anstalld "
+                + "UNION SELECT epost FROM avdelning "
+                + "UNION SELECT kontaktepost FROM partner";
         boolean ok = true;
         
         try {
@@ -131,8 +113,10 @@ public class Validering {
         
     }
        
-public boolean checkInteSammaTelefonAnstalld(String telefon){
-           String sqlFraga = "SELECT telefon FROM anstalld";
+public boolean checkInteSammaTelefon(String telefon){
+           String sqlFraga = "SELECT telefon FROM anstalld "
+                   + "UNION SELECT telefon FROM avdelning "
+                   + "UNION SELECT telefon FROM partner ";
         boolean ok = true;
         
         try {
@@ -150,25 +134,8 @@ public boolean checkInteSammaTelefonAnstalld(String telefon){
         return ok;
         
     }
-public boolean checkInteSammaTelefonAvdelning(String telefon){
-           String sqlFraga = "SELECT telefon FROM avdelning";
-        boolean ok = true;
-        
-        try {
-            ArrayList<String> telefonLista = idb.fetchColumn(sqlFraga);
-            
-            for(String tel: telefonLista){
-                if(telefon.equalsIgnoreCase(tel)){
-                    ok = false;
-               }                   
-            }
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }
-        return ok;
-        
-    }
+
+
 
     /**
      * Kontrollerar att datum String är korrekt formaterad
