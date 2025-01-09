@@ -48,6 +48,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
         txtAreaProj.setText(String.join("\n", getProjekt()));
+        txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
         setCbxProjekt(); 
     }
 
