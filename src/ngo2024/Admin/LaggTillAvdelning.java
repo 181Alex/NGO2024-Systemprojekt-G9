@@ -222,7 +222,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     
     // Hämta text från textfältet
     String telefon = tfTelefon.getText(); 
-    if(valid.checkInteSammaTelefonAvdelning(telefon)){
+    if(valid.checkInteSammaTelefon(telefon)){
       lblTelefonBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -243,7 +243,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     
     // Hämta text från textfältet
     String epost = tfEpost.getText(); 
-    if(valid.checkInteSammaEpostAvdelning(epost)){
+    if(valid.checkInteSammaEpost(epost)){
       lblEpostBad.setVisible(false); // Göm varning
         return true;
     } else {
