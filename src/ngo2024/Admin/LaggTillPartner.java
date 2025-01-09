@@ -439,7 +439,7 @@ public int hogstaPid(){
     }
     
     /**
-     * ???
+     * hämtar ut stads id
      */
     
     public int getStad(){

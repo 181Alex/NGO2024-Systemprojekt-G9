@@ -106,7 +106,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }
     
     /**
-     * ???
+     * fyller i combo box för ta bort
      */
             
                 private void fyllCbTaBort() {
@@ -129,7 +129,7 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     }
                 
     /**
-     * ger valda anställd ID???
+     * ger valda anställd ID
      */
                 
 private String getSelectedAid() {

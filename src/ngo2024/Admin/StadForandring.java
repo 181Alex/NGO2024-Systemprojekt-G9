@@ -238,7 +238,7 @@ public class StadForandring extends javax.swing.JFrame {
     }
     
     /**
-     * Visa ta bort???
+     * Visar allt för att ta bort
      */
 
     public void visaTaBort(){
