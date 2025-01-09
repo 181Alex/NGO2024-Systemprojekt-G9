@@ -461,6 +461,7 @@ private HashMap<String, String> mentorLista;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
+        gomBad();
         totalKontroll(idb);
         boolean admin=isAdmin();
         int hogsta=hogstaAid(idb);
@@ -470,7 +471,7 @@ private HashMap<String, String> mentorLista;
                 String sqlFraga="INSERT INTO anstalld VALUES(" + hogsta + ", '" + tfFornamn.getText() +"', '"
                 + tfEfternamn.getText() + "', '" + tfAdress.getText() + "', '"+tfEpost.getText() + "', '" + tfTelefon.getText() + "', '"
                 + tfAnstallDatum.getText() + "', '" + tfLosenord.getText() + "', " + getAvdelning() + ")";
-
+                    lblError.setVisible(false);
                 if(admin==true){
                     String sqlAdmin="INSERT INTO admin VALUES(" + hogsta + ", " + getSelectedBehorighet() + ")";
                     idb.insert(sqlFraga);
@@ -501,6 +502,7 @@ private HashMap<String, String> mentorLista;
 
         else if (kontrollOk==false){
             lblError.setVisible(true);
+            lblLyckades.setVisible(false);
 
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
