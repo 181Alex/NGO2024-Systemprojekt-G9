@@ -489,7 +489,7 @@ private String epost;
      * Anropar kontroll av att nytt efternamn innehåller accepterade tecken 
      * Ger false om valideringen visar att fel uppstått
      * 
-     * @param idb databasen som kallas för validering
+     * @param idb databasen som används för validering
      */
     public boolean efternamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
@@ -504,11 +504,11 @@ private String epost;
     }
     
     /**
-     * Anropar kontroll av att adress är korrekt formaterad
+     * Anropar kontroll av att ny adress är korrekt formaterad
      * samt innehåller accepterade tecken 
      * Ger false om valideringen visar att fel uppstått
      * 
-     * @param idb databasen som kallas för validering
+     * @param idb databasen som används för validering
      */
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
@@ -526,7 +526,7 @@ private String epost;
      * samt innehåller accepterade tecken 
      * Ger false om valideringen visar att fel uppstått
      * 
-     * @param idb databasen som kallas för validering
+     * @param idb databasen som används för validering
      */
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
@@ -545,7 +545,7 @@ private String epost;
      * samt innehåller accepterade tecken 
      * Ger false om valideringen visar att fel uppstått
      * 
-     * @param idb databasen som kallas för validering
+     * @param idb databasen som används för validering
      */
     public boolean kontroll(InfDB idb){
     Validering valid = new Validering(idb); 
@@ -563,6 +563,7 @@ private String epost;
         
     }}
 
+    
     public boolean mentorKontroll(InfDB idb){
     Validering valid = new Validering(idb); 
     if(chbAdmin.isSelected()==true){
@@ -597,7 +598,14 @@ private String epost;
     } else {
         return false;
         
-    }}                                  
+    }}  
+    
+    /**
+     * Skapar nytt aid till ny användare. 
+     * Tilldelar nummer som är +1 efter högsta nuvarande aid
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public int hogstaAid(InfDB idb){
         int hogsta=0;
         String sqlFraga="Select MAX(aid) FROM anstalld";
@@ -612,6 +620,10 @@ private String epost;
         return hogsta+1;
     }
     
+    /**
+     * Hämtar vilken avdelning användaren ska tilldelas
+     * hämtas från combo box vald avdelning
+     */
 private int getAvdelning(){
     int avdelning=0;
     String val=cbAvdelning.getSelectedItem().toString();
