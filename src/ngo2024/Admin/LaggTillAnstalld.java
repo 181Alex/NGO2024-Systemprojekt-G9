@@ -548,6 +548,12 @@ private String epost;
     }
     }}
     
+    /**
+     * Kontrollerar att Ansvarighets Område label fylls med accepterade tecken 
+     * samt inte överskrider visst antal tecken
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean AnsvarKontroll(InfDB idb){
             Validering valid = new Validering(idb); 
           // Hämta text från textfältet
