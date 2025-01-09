@@ -30,7 +30,7 @@ public class AndraProjekt extends javax.swing.JFrame {
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid ID för projekt som ska ändras
-     * @param aid inloggad användar ID
+     * @param aid inloggad användares ID
      */
     public AndraProjekt(InfDB idb, String pid, String aid) {
         this.idb = idb;
@@ -44,8 +44,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Gömmer alla felmeddelande vid objektets initiering Används innan ett
-     * specefikt fel ska upplysas
+     * Döljer alla felmeddelande vid objektets initiering. 
+     * Används vid initialisering innan specefikt fel kan komma upplysas
      */
     private void setFelmeddelandeFalse() {
         lblFelNamn.setVisible(false);
@@ -77,6 +77,7 @@ public class AndraProjekt extends javax.swing.JFrame {
         }
         return lid;
     }
+    
     /**
      * Fyller i combo box med alla länder från databasen
      * @param pid ID för projekt som eftersöks
