@@ -197,6 +197,7 @@ private void taBortProjekt(String pid){
             idb.delete(sqlFraga);
             lblMeddelande.setText(cbxProjekt.getSelectedIndex()+ "är borttagen");
             lblMeddelande.setVisible(true);
+            
         } catch (InfException ex) {
             
         }
