@@ -39,6 +39,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         anstalldLista = new HashMap<>();
         stadLista = new HashMap<>();
         instansering();
+        gomBad();
     }
     
      /**
@@ -99,6 +100,13 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         }catch(InfException ex){
             System.out.println(ex.getMessage());
         }
+    }
+    public void gomBad(){
+        lblNamnBad.setVisible(false);
+        lblBeskrivningBad.setVisible(false);
+        lblAdressBad.setVisible(false);
+        lblEpostBad.setVisible(false);
+        lblTelefonBad.setVisible(false);
     }
     
     /**
