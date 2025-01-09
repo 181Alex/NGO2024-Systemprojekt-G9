@@ -92,6 +92,8 @@ public class Validering {
         return matches;
     }
     
+    
+    //kontrollerar så att man inte kan ha samma epost som någon annan anställd, avdelning eller partner
      public boolean checkInteSammaEpost(String epost){
         String sqlFraga = "SELECT epost FROM anstalld "
                 + "UNION SELECT epost FROM avdelning "
@@ -114,28 +116,6 @@ public class Validering {
         
     }
        
-public boolean checkInteSammaTelefon(String telefon){
-           String sqlFraga = "SELECT telefon FROM anstalld                                                                "
-                   + "UNION SELECT telefon FROM avdelning "
-                   + "UNION SELECT telefon FROM partner ";
-        boolean ok = true;
-        
-        try {
-            ArrayList<String> telefonLista = idb.fetchColumn(sqlFraga);
-            
-            for(String tel: telefonLista){
-                if(telefon.equalsIgnoreCase(tel)){
-                    ok = false;
-               }                   
-            }
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }
-        return ok;
-        
-    }
-
 
     /**
      * Kontrollerar att datum String är korrekt formaterad
