@@ -55,6 +55,8 @@ public class MinProfil extends javax.swing.JFrame {
         txtPassword.setText(password != null ? password : "");
         txtPassword.setEchoChar('*');
         lblFelInmatning.setVisible(false);
+        tfTelefon.setText(telefon != null ? telefon : "");
+        tfAdress.setText(adress != null ? adress : "");
         gomBad();
     }
 
@@ -63,11 +65,12 @@ public class MinProfil extends javax.swing.JFrame {
     }
     
     private void gomBad(){
-        lblFornamnBad.setVisible(false);
+        lblFornamnBad1.setVisible(false);
         lblEfternamnBad.setVisible(false);
         lblTelefonBad.setVisible(false);
         lblEpostBad.setVisible(false);
         lblAdressBad.setVisible(false);
+        lblLosenBad.setVisible(false);
     }
 
     private String getfirstname(String aid) {
@@ -207,10 +210,10 @@ public class MinProfil extends javax.swing.JFrame {
         Validering valid = new Validering(idb);
         String fornamn = txtFirstName.getText();
         if (valid.checkFornamn(fornamn) && valid.checkStorlek(100, fornamn)) {
-            lblFornamnBad.setVisible(false);
+            lblFornamnBad1.setVisible(false);
             return true;
         } else {
-            lblFornamnBad.setVisible(true);
+            lblFornamnBad1.setVisible(true);
             return false;
         }
     }
@@ -242,6 +245,23 @@ public class MinProfil extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    public boolean losenKontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String losen = txtPassword.getText();
+
+        // Kontrollera om e-postadressen är giltig
+        if (valid.checkLosenord(losen) && valid.checkStorlek(255, losen)) {
+          lblLosenBad.setVisible(false);
+            return true;
+        } else {
+            lblLosenBad.setVisible(true);
+            return false;
+        }
+    }
+    
     
       /**
      * Anropar kontroll av att ny adress är korrekt formaterad
@@ -294,6 +314,8 @@ public class MinProfil extends javax.swing.JFrame {
         }
         else if(!adressKontroll()){
             totOk=false;
+        }else if(!losenKontroll()){
+            totOk=false;
         }
         return totOk;
     }
@@ -330,6 +352,7 @@ public class MinProfil extends javax.swing.JFrame {
         tfAdress = new javax.swing.JTextField();
         lblAdress = new javax.swing.JLabel();
         lblAdressBad = new javax.swing.JLabel();
+        lblLosenBad = new javax.swing.JLabel();
 
         lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
         lblFornamnBad.setText("!");
@@ -416,6 +439,8 @@ public class MinProfil extends javax.swing.JFrame {
         lblEpostBad.setText("!");
 
         tfTelefon.setText("123-123-1234");
+        tfTelefon.setEnabled(false);
+        tfTelefon.setFocusable(false);
         tfTelefon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfTelefonActionPerformed(evt);
@@ -428,20 +453,25 @@ public class MinProfil extends javax.swing.JFrame {
         lblTelefonBad.setText("!");
 
         tfAdress.setText("123 blabla, bobla");
+        tfAdress.setEnabled(false);
+        tfAdress.setFocusable(false);
 
         lblAdress.setText("Adress");
 
         lblAdressBad.setForeground(new java.awt.Color(255, 0, 51));
         lblAdressBad.setText("!");
 
+        lblLosenBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblLosenBad.setText("!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(MinProfil)
@@ -450,27 +480,25 @@ public class MinProfil extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(Losenord)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtPassword))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(Avdelning)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(tfAdress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                                                    .addComponent(tfTelefon, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtDepartment)
-                                                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Avdelning)
+                                            .addComponent(Losenord))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txtPassword)
+                                            .addComponent(tfAdress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                                            .addComponent(tfTelefon, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtDepartment)
+                                            .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(57, 57, 57)
                                                 .addComponent(lblEpostBad))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblAdressBad))))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblAdressBad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(lblLosenBad, javax.swing.GroupLayout.Alignment.TRAILING)))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(Namn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -487,21 +515,18 @@ public class MinProfil extends javax.swing.JFrame {
                                 .addGap(15, 15, 15)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblFelInmatning)
+                        .addGap(90, 90, 90)
+                        .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAdress, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTelefon, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblFelInmatning)
-                                .addGap(90, 90, 90)
-                                .addComponent(Change, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblAdress, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTelefon, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Epost, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(299, 299, 299)))
-                                .addGap(0, 147, Short.MAX_VALUE))))))
+                                .addComponent(Epost, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(299, 299, 299)))
+                        .addGap(0, 163, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,7 +564,8 @@ public class MinProfil extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Losenord)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLosenBad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Change)
@@ -568,6 +594,8 @@ public class MinProfil extends javax.swing.JFrame {
             lblFelInmatning.setVisible(false);
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
+            adress=tfAdress.getText();
+            telefon=tfTelefon.getText();
             String newEmail = txtEmail.getText();
             String newPassword = new String(txtPassword.getPassword());
 
@@ -577,7 +605,8 @@ public class MinProfil extends javax.swing.JFrame {
             }
 
             try {
-                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" + newPassword + "' WHERE anstalld.epost = '" + this.epost + "'";
+                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" 
+                        + newPassword + "', telefon= '" + telefon + "', adress= '" + adress + "' WHERE anstalld.epost = '" + this.epost + "'";
                 idb.update(updateQuery);
 
                 this.epost = newEmail;
@@ -602,6 +631,14 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setFocusable(false);
             txtPassword.setEnabled(false);
             txtPassword.setEchoChar('*');
+            
+            tfAdress.setEditable(false);
+            tfAdress.setFocusable(false);
+            tfAdress.setEnabled(false);
+            
+            tfTelefon.setEditable(false);
+            tfTelefon.setFocusable(false);
+            tfTelefon.setEnabled(false);
 
             Change.setText("Ändra");
 
@@ -630,6 +667,14 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setFocusable(true);
             txtPassword.setEnabled(true);
             txtPassword.setEchoChar('\u0000');
+            
+            tfAdress.setEditable(true);
+            tfAdress.setFocusable(true);
+            tfAdress.setEnabled(true);
+            
+            tfTelefon.setEditable(true);
+            tfTelefon.setFocusable(true);
+            tfTelefon.setEnabled(true);
 
             Change.setText("Spara");
 
@@ -682,6 +727,7 @@ public class MinProfil extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelInmatning;
     private javax.swing.JLabel lblFornamnBad;
     private javax.swing.JLabel lblFornamnBad1;
+    private javax.swing.JLabel lblLosenBad;
     private javax.swing.JLabel lblTelefon;
     private javax.swing.JLabel lblTelefonBad;
     private javax.swing.JTextField tfAdress;

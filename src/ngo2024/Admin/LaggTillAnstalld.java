@@ -56,6 +56,7 @@ private HashMap<String, String> mentorLista;
         lblEfternamnBad.setVisible(false);
         lblFornamnBad.setVisible(false);
         lblAnsvarBad.setVisible(false);
+        lblLosenBad.setVisible(false);
     }
     
     /**
@@ -148,6 +149,7 @@ private HashMap<String, String> mentorLista;
         lblFornamnBad = new javax.swing.JLabel();
         lblBehorighet = new javax.swing.JLabel();
         cbBehorighet = new javax.swing.JComboBox<>();
+        lblLosenBad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -288,6 +290,9 @@ private HashMap<String, String> mentorLista;
 
         cbBehorighet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
 
+        lblLosenBad.setForeground(new java.awt.Color(255, 0, 51));
+        lblLosenBad.setText("!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -357,7 +362,8 @@ private HashMap<String, String> mentorLista;
                                                     .addComponent(lblDatumBad1)
                                                     .addComponent(lblAdressBad)
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addGap(21, 21, 21)
+                                                        .addComponent(lblLosenBad)
+                                                        .addGap(18, 18, 18)
                                                         .addComponent(btnRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addComponent(lblEpostBad)
                                                     .addComponent(lblTelefonBad)))
@@ -418,7 +424,8 @@ private HashMap<String, String> mentorLista;
                     .addComponent(lblLosenord, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRandom)))
+                        .addComponent(btnRandom)
+                        .addComponent(lblLosenBad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAvdelning)
@@ -519,6 +526,9 @@ private HashMap<String, String> mentorLista;
         totOk = false;
         }
         else if(!AnsvarKontroll(idb)){
+            totOk=false;
+        }
+        else if(!losenKontroll()){
             totOk=false;
         }
         
@@ -637,7 +647,21 @@ private HashMap<String, String> mentorLista;
         return false;
         
     }}
+public boolean losenKontroll() {
+        Validering valid = new Validering(idb);
 
+        // Hämta text från textfältet
+        String losen = tfLosenord.getText();
+
+        // Kontrollera om e-postadressen är giltig
+        if (valid.checkLosenord(losen) && valid.checkStorlek(255, losen)) {
+          lblLosenBad.setVisible(false);
+            return true;
+        } else {
+            lblLosenBad.setVisible(true);
+            return false;
+        }
+    }
     
     /**
      * Kontrollerar att Ansvarighets Område label fylls med accepterade tecken 
@@ -903,6 +927,7 @@ public boolean alltMed(){
     private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFornamn;
     private javax.swing.JLabel lblFornamnBad;
+    private javax.swing.JLabel lblLosenBad;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JLabel lblLyckades;
     private javax.swing.JLabel lblMentor;

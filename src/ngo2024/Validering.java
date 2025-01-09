@@ -105,6 +105,22 @@ public class Validering {
         }
         return matches;
     }
+    
+    /**
+ * Kontrollerar att ett lösenord är korrekt formaterat.
+ * 
+ * @param losenord Lösenordet som ska kontrolleras.
+ * @return true om lösenordet uppfyller kriterierna, annars false.
+ */
+    public boolean checkLosenord(String losen){
+        boolean matches = false;
+        // Minst 8 tecken, måste innehålla minst en bokstav. Siffror och specialtecken är valfria.
+        String checker = "^(\\d{8,}|(?=.*[A-Za-z]).{8,})$";
+        if (losen.matches(checker)) {
+            matches = true;
+        }
+        return matches;
+    }
 
     /**
      * Kontrollerar att adress String är korrekt formaterad
