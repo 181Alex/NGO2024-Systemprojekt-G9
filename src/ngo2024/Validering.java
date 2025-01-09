@@ -91,6 +91,7 @@ public class Validering {
         }
         return matches;
     }
+    
      public boolean checkInteSammaEpost(String epost){
         String sqlFraga = "SELECT epost FROM anstalld "
                 + "UNION SELECT epost FROM avdelning "
@@ -114,7 +115,7 @@ public class Validering {
     }
        
 public boolean checkInteSammaTelefon(String telefon){
-           String sqlFraga = "SELECT telefon FROM anstalld "
+           String sqlFraga = "SELECT telefon FROM anstalld                                                                "
                    + "UNION SELECT telefon FROM avdelning "
                    + "UNION SELECT telefon FROM partner ";
         boolean ok = true;
@@ -134,7 +135,6 @@ public boolean checkInteSammaTelefon(String telefon){
         return ok;
         
     }
-
 
 
     /**
