@@ -33,7 +33,7 @@ public class StadForandring extends javax.swing.JFrame {
         fyllValjLand();
         fyllValjStad();
         gomAlla();
-        kontrollOk=true;
+        kontrollOk=false;
     }
     
     /**
@@ -85,15 +85,18 @@ public class StadForandring extends javax.swing.JFrame {
      */
 
     public boolean kontrollStadText(){
+        boolean ok=false;
          Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
     if (valid.checkStad(namn)&& valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
-            return true;
+            ok=true;
+        
     } else {
             lblNamnBad.setVisible(true);
-            return false;
+            ok=false;
     }
+    return ok;
     }
     
     /**
@@ -197,6 +200,7 @@ public class StadForandring extends javax.swing.JFrame {
         lblError.setVisible(false);
         lblLyckades.setVisible(false);
         lblNuLand.setVisible(false);
+        btnValj.setVisible(false);
     }
     
     public void visaLaggTill(){
@@ -491,6 +495,7 @@ public class StadForandring extends javax.swing.JFrame {
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
        String sqlFraga="INSERT INTO stad VALUES(" + hogstaSid() + ", '" + tfNamn.getText() + "', " + selectLid() + ")";
         //Lägger till staden
+        totalKontroll();
        if(kontrollOk){
             try{
           System.out.println(sqlFraga);;
@@ -511,6 +516,7 @@ public class StadForandring extends javax.swing.JFrame {
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
         String sqlFraga="UPDATE stad SET namn= '"+ tfNamn.getText() + "' WHERE sid= " + selectSid() ;
         //uppdaterar staden
+        totalKontroll();
        if(kontrollOk){
             try{
           System.out.println(sqlFraga);;
@@ -531,7 +537,7 @@ public class StadForandring extends javax.swing.JFrame {
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
      String sqlFraga="DELETE FROM stad WHERE sid=" + selectSid();
     
-
+        totalKontroll();
         //tar bort den valda staden
        if(kontrollOk){
             try{
