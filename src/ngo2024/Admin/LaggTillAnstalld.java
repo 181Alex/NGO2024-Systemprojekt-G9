@@ -643,7 +643,9 @@ private int getAvdelning(){
    return avdelning;
 }
 
-
+/**
+     * Genererar slumpat lösenord 
+     */
     public String randomPassword(){
         String losen="";
         for(int i=0; i<11; i++){
@@ -654,6 +656,10 @@ private int getAvdelning(){
         return losen;
     }
     
+    
+/**
+     * kontrollerar om användare är mentor
+     */
     private boolean arMentor(String mentor){
         int mentors=Integer.parseInt(mentor);
         String sqlFraga="SELECT mentor FROM handlaggare WHERE aid=" + mentors;
@@ -672,6 +678,7 @@ private int getAvdelning(){
         }
     }
 
+ 
 public int getMentor(){
     String st=tfMentor.getText();
     int it=0;
