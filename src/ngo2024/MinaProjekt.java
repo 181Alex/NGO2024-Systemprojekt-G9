@@ -286,6 +286,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
 
     private void btnReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnActionPerformed
+        //Stänger fönster så användare återgår till menyn
         this.dispose();
     }//GEN-LAST:event_btnReturnActionPerformed
 
