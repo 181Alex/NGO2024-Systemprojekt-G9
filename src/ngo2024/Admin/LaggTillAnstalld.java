@@ -23,8 +23,13 @@ private String epost;
 private HashMap<String, String> mentorLista;
 
     /**
-     * Creates new form LaggTillAnstalld1
+     * Initierar LaggTillAnstalld objekt 
+     * Låter administratör lägga till en ny anställd
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param epost eposten som den inloggande användaren använder
      */
+
     public LaggTillAnstalld(InfDB idb,String epost) {
         this.idb=idb;
         mentorLista = new HashMap<>();
@@ -39,6 +44,10 @@ private HashMap<String, String> mentorLista;
         this.epost=epost;
     }
     
+    /**
+     * gömmer alla felmeddelanden
+     */
+    
     private void gomBad(){
         lblDatumBad1.setVisible(false);
         lblEpostBad.setVisible(false);
@@ -50,7 +59,10 @@ private HashMap<String, String> mentorLista;
         lblLosenBad.setVisible(false);
     }
     
-    //gömmer fältet mentor, comboboxen och meddelande som kommer upp efter hand
+    /**
+     * gömmer fältet mentor, comboboxen och meddelande som kommer upp efter hand för admin
+     */
+   
     private void gomFaltAdmin(){
         lblMentor.setVisible(false);
         cbMentor.setVisible(false);    
@@ -61,6 +73,10 @@ private HashMap<String, String> mentorLista;
         cbBehorighet.setVisible(true);
     }
     
+    /**
+     * gömmer fältet mentor, comboboxen och meddelande som kommer upp efter hand
+     */
+    
     private void gomFalt(){
         lblMentor.setVisible(false);
         cbMentor.setVisible(false);    
@@ -70,6 +86,10 @@ private HashMap<String, String> mentorLista;
         lblBehorighet.setVisible(false);
         cbBehorighet.setVisible(false);
     }
+    
+    /**
+     * gömmer fältet mentor, comboboxen och meddelande som kommer upp efter hand för handläggare
+     */
     
     private void gomFaltHandlaggare(){
         lblMentor.setVisible(true);
