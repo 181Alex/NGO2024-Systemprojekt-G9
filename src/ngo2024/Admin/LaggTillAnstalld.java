@@ -720,9 +720,6 @@ private void fyllCbMentor(){
     
 }
 
-/**
-     * kontrollerar om användare är admin
-     */   
 
 private String getSelectedAid(){
         String selectedMentor = (String) cbMentor.getSelectedItem();
