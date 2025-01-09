@@ -201,7 +201,7 @@ public class AndraProjekt extends javax.swing.JFrame {
             lblFelNamn.setVisible(false);
             return true;
         } else {
-            lblFelNamn.setVisible(false);
+            lblFelNamn.setVisible(true);
             return false;
         }
     }

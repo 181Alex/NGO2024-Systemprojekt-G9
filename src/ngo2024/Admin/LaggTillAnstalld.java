@@ -467,6 +467,12 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att nytt förnamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean fornamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String fornamn = tfFornamn.getText();
@@ -479,6 +485,12 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att nytt efternamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean efternamnKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String efternamn = tfEfternamn.getText();
@@ -491,6 +503,13 @@ private String epost;
         }
     }
     
+    /**
+     * Anropar kontroll av att ny adress är korrekt formaterad
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
@@ -502,7 +521,13 @@ private String epost;
             return false;
         }}
     
-        
+    /**
+     * Anropar kontroll av att nytt telefonnummer är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
@@ -515,14 +540,21 @@ private String epost;
     }
     }
     
+    /**
+     * Anropar kontroll av att ny epost är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean kontroll(InfDB idb){
     Validering valid = new Validering(idb); 
     
     // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
+    String tfepost = tfEpost.getText(); 
     
     // Kontrollera om e-postadressen är giltig
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+    if (valid.checkEpost(tfepost)&& valid.checkStorlek(255, tfepost)) {
         lblEpostBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -530,6 +562,7 @@ private String epost;
         return false;
         
     }}
+
     
     public boolean mentorKontroll(InfDB idb){
     Validering valid = new Validering(idb); 
@@ -548,6 +581,12 @@ private String epost;
     }
     }}
     
+    /**
+     * Kontrollerar att Ansvarighets Område label fylls med accepterade tecken 
+     * samt inte överskrider visst antal tecken
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean AnsvarKontroll(InfDB idb){
             Validering valid = new Validering(idb); 
           // Hämta text från textfältet
@@ -559,7 +598,14 @@ private String epost;
     } else {
         return false;
         
-    }}                                  
+    }}  
+    
+    /**
+     * Skapar nytt aid till ny användare. 
+     * Tilldelar nummer som är +1 efter högsta nuvarande aid
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public int hogstaAid(InfDB idb){
         int hogsta=0;
         String sqlFraga="Select MAX(aid) FROM anstalld";
@@ -574,6 +620,10 @@ private String epost;
         return hogsta+1;
     }
     
+    /**
+     * Hämtar vilken avdelning användaren ska tilldelas
+     * hämtas från combo box vald avdelning
+     */
 private int getAvdelning(){
     int avdelning=0;
     String val=cbAvdelning.getSelectedItem().toString();
@@ -593,7 +643,9 @@ private int getAvdelning(){
    return avdelning;
 }
 
-
+/**
+     * Genererar slumpat lösenord 
+     */
     public String randomPassword(){
         String losen="";
         for(int i=0; i<11; i++){
@@ -604,6 +656,10 @@ private int getAvdelning(){
         return losen;
     }
     
+    
+/**
+     * kontrollerar om användare är mentor
+     */
     private boolean arMentor(String mentor){
         int mentors=Integer.parseInt(mentor);
         String sqlFraga="SELECT mentor FROM handlaggare WHERE aid=" + mentors;
@@ -622,6 +678,7 @@ private int getAvdelning(){
         }
     }
 
+ 
 public int getMentor(){
     String st=tfMentor.getText();
     int it=0;
