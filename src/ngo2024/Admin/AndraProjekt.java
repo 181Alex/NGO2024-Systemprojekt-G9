@@ -193,8 +193,15 @@ private String getLid(String pid){
 private void taBortProjekt(String pid){
     
         String sqlFraga = "DELETE FROM projekt WHERE pid = " + pid;
+        String sqlAnsProj="DELETE FROM ans_proj WHERE pid= " + pid;
+        String sqlProjHall="DELETE FROM proj_hallbarhet WHERE pid= " + pid;
+        String sqlProjPart="DELETE FROM projekt_partner WHERE pid= " + pid;
         try{
+            idb.delete(sqlAnsProj);
+            idb.delete(sqlProjHall);
+            idb.delete(sqlProjPart);
             idb.delete(sqlFraga);
+
             lblMeddelande.setText(cbxProjekt.getSelectedIndex()+ "är borttagen");
             lblMeddelande.setVisible(true);
             
