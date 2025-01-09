@@ -647,6 +647,14 @@ private HashMap<String, String> mentorLista;
         return false;
         
     }}
+    
+    /**
+     * Anropar kontroll av att ny lösenord är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
 public boolean losenKontroll() {
         Validering valid = new Validering(idb);
 
