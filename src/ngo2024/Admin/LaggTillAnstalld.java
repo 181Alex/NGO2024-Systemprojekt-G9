@@ -627,7 +627,7 @@ private HashMap<String, String> mentorLista;
     
     // Hämta text från textfältet
     String telefon = tfTelefon.getText(); 
-    if(valid.checkInteSammaTelefonAnstalld(telefon)){
+    if(valid.checkInteSammaTelefon(telefon)){
       lblTelefonBad.setVisible(false); // Göm varning
         return true;
     } else {
@@ -667,7 +667,7 @@ private HashMap<String, String> mentorLista;
     
     // Hämta text från textfältet
     String epost = tfEpost.getText(); 
-    if(valid.checkInteSammaEpostAnstalld(epost)){
+    if(valid.checkInteSammaEpost(epost)){
       lblEpostBad.setVisible(false); // Göm varning
         return true;
     } else {

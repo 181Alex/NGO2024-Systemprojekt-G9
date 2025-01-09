@@ -149,7 +149,12 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     } else if (!epostKontroll(idb)) {  
         totOk = false;
         lblEpostBad.setVisible(true);
+    }else if(!sammaEpostKontroll()){
+        totOk=false;
+    }else if(!sammaTelefonKontroll()){
+        totOk=false;
     }
+
 
     kontrollOk = totOk;
 }
@@ -205,6 +210,48 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         return false;
         
     }}
+    
+    /**
+     * Anropar kontroll av att ny telefonNr inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaTelefonKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String telefon = tfTelefon.getText(); 
+    if(valid.checkInteSammaTelefon(telefon)){
+      lblTelefonBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblTelefonBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
+    
+    /**
+     * Anropar kontroll av att ny epost inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaEpostKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = tfEpost.getText(); 
+    if(valid.checkInteSammaEpost(epost)){
+      lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblEpostBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
     
     /**
      *  kontrollerar namn för att se att det är valid
