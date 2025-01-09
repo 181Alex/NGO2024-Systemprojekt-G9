@@ -23,6 +23,8 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> stadLista;
     private HashMap<String, String> avdLista;
+    private String ogTelefon;
+    private String ogEpost;
     
     /**
      * Initierar AndraAvdelning objekt 
@@ -46,6 +48,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
         gomBad();
+        
     }
     
     /**
@@ -416,6 +419,8 @@ public class AndraAvdelning extends javax.swing.JFrame {
         tfAdress.setText(adress);
         tfEpost.setText(epost);
         tfTelefon.setText(telefon);
+        ogTelefon=tfTelefon.getText();
+        ogEpost=tfEpost.getText();
         if (stad != null) {
             cbStad.setSelectedItem(stad);
         } else {
@@ -548,6 +553,57 @@ public class AndraAvdelning extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
 
+    /**
+     * Anropar kontroll av att ny telefonNr inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaTelefonKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String telefon = tfTelefon.getText(); 
+    // om man ej ändrar telfon nr så behövs ingen validering göras.
+    if(ogTelefon.equals(telefon)){
+        lblTelefonBad.setVisible(false); // Göm varning
+        return true;
+    }
+    
+    else if(valid.checkInteSammaTelefon(telefon)){
+      lblTelefonBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblTelefonBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
+    
+    /**
+     * Anropar kontroll av att ny epost inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaEpostKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = tfEpost.getText(); 
+    if(ogEpost.equals(epost)){
+        lblTelefonBad.setVisible(false); // Göm varning
+        return true;
+    }
+    else if(valid.checkInteSammaEpost(epost)){
+      lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblEpostBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
     
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
