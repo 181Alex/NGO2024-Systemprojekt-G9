@@ -54,7 +54,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }
 
     /**
-     * Ställer in hur tabellen med anställdas information ska formateras
+     * Bestämmer hur tabellen med anställdas information ska formateras
      */
     private void tabellDesign() {
         tblAnstallda.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -118,6 +118,9 @@ public class AvdAnstallda extends javax.swing.JFrame {
         mentorLista.add(mentor);
     }
 
+    /**
+     * Används för att lägga till rad i tabell
+     */
     private void laggTillNyRad(String namn, String epost, String telefon, String mentor) {
         model.addRow(new Object[]{namn, epost, telefon, mentor});
     }
@@ -272,6 +275,10 @@ public class AvdAnstallda extends javax.swing.JFrame {
     }//GEN-LAST:event_tfSokrutaActionPerformed
 
     private void btSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSokActionPerformed
+        //Söker anställda efter epost om epost är iklickad
+        //söker utefter namn om namn är iklickad
+        //ger felmeddelande i annat fall
+        
         String sokOrd = tfSokruta.getText().toLowerCase();
         lblFelmeddelande.setVisible(false);
 

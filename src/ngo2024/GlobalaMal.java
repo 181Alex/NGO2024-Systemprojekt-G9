@@ -68,11 +68,17 @@ public class GlobalaMal extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Används för att lägga till rad i tabell
+     */
     private void laggTillNyRad(String mal, String malnummer,
             String beskrivning, String prioritet) {
         model.addRow(new Object[]{mal, malnummer, beskrivning, prioritet});
     }
 
+    /**
+     * sparar information om globalt mål. Lägger till i tabellen
+     */
     private void malTabell() {
 
         try {

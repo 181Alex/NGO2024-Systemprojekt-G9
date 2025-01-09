@@ -103,10 +103,10 @@ public class AndraProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
     /**
      *  Fyller i combo box med alla prioriteringsvärden från databasen
      */
-
     private void setCbxPrio() {
 
         cbxPrioritet.removeAllItems();
@@ -129,7 +129,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Fyller sidan med information från databasen
+     * Fyller sidan med information om valt projekt från databasen
      */
     private void setStartInfo() {
         setCbxLand();
@@ -189,8 +189,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering för kontroll så projektnamn enbart kan inehålla vissa tecken
-     * triggar felmeddelande om validering ger false
+     * anropar validering för kontroll så nytt projektnamn enbart innehåller vissa tecken,
+     * ger felmeddelande om validering blir false
      */
     private boolean namnKontroll() {
         Validering valid = new Validering(idb);
@@ -207,7 +207,7 @@ public class AndraProjekt extends javax.swing.JFrame {
 
     /**
      * kontroll så att nytt projektnamn inte är identiskt ett redan existerande
-     * projektnamn triggar felmeddelande om validering ger false
+     * projektnamn, ger felmeddelande om validering ger false
      */
     private boolean ingaDubletterNamnKontroll() {
         boolean inteSamma = true;
@@ -247,8 +247,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering för kontroll av beskrivnings inmatad ändring triggar
-     * felmeddelande om validering ger false
+     * anropar validering för kontroll av beskrivnings inmatad ändring, 
+     * ger felmeddelande om validering blir false
      */
     private boolean beskrivningKontroll() {
         Validering valid = new Validering(idb);
@@ -264,8 +264,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering av kontroll start datum inmatad ändring triggar
-     * felmeddelande om validering ger false
+     * anropar validering av kontroll start datum inmatad ändring,
+     * ger felmeddelande om validering blir false
      */
     private boolean stDatumKontroll() {
         Validering valid = new Validering(idb);
@@ -360,8 +360,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar kontroll för att se att slut datum är senare i tid än start datum
-     * triggar felmeddelande om validering ger false
+     * hämtar valt land från combo box
+     * ger return String med valt lands ID
      */
     private String getSelectedLid() {
         String selectedLand = (String) cbxLand.getSelectedItem();
@@ -375,11 +375,17 @@ public class AndraProjekt extends javax.swing.JFrame {
         return lid;
     }
 
-    private void visaLid() {
+    /**
+     * sätter valt lands LID i specificerad label
+     */
+    private void setLid() {
 
         lblLid.setText(getSelectedLid());
     }
 
+    /**
+     * Lägger till ny inmatad data i rätt projekt i databasen
+     */
     private void doAndring() {
 
         String namnS = tfProjektnamn.getText();
@@ -780,7 +786,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btPartnerActionPerformed
 
     private void cbxLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLandActionPerformed
-        visaLid();
+        setLid();
     }//GEN-LAST:event_cbxLandActionPerformed
 
     private void btHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHandlaggareActionPerformed
@@ -800,6 +806,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_tfKostnadActionPerformed
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
+
         if (totalKontroll() == true) {
             doAndring();
             setStartInfo();
