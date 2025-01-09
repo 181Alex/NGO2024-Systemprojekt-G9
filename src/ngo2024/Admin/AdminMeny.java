@@ -11,6 +11,7 @@ import ngo2024.MinAvdelning;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 import ngo2024.Inloggning;
+
 /**
  *
  * @author alexanderabboud
@@ -20,18 +21,19 @@ public class AdminMeny extends javax.swing.JFrame {
     private InfDB idb;
     private String epost;
     private String aid;
-    
+
     /**
      * Initierar AdminMeny objekt 
-     * AdminMeny låter en administratör att hantera anställda, avdelningar, projekt, globala mål, länder och städer
+     * AdminMeny låter en administratör att hantera anställda, 
+     * avdelningar, projekt, globala mål, länder och städer
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten för personen som är inloggad
      * @param aid den inloggade användares ID
      */
     public AdminMeny(InfDB idb, String epost, String aid) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
         lblEpost.setText(epost);
         this.aid = aid;
@@ -278,11 +280,11 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
     private void btnLaggTillAnstalldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAnstalldActionPerformed
-       new LaggTillAnstalld(idb, epost).setVisible(true);
+        new LaggTillAnstalld(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAnstalldActionPerformed
 
     private void btnLaggTillLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillLandActionPerformed
-       new LaggTillLand(idb, epost).setVisible(true);
+        new LaggTillLand(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillLandActionPerformed
 
     private void btnAndraLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraLandActionPerformed
@@ -290,7 +292,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAndraLandActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      new AndraProjekt(idb, epost).setVisible(true);
+        new AndraProjekt(idb, epost).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnLaggTillPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillPartnerActionPerformed
@@ -298,7 +300,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLaggTillPartnerActionPerformed
 
     private void btnStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStadActionPerformed
-       new StadForandring(idb, epost).setVisible(true);
+        new StadForandring(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnStadActionPerformed
 
     private void btnLaggTillProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillProjektActionPerformed
@@ -322,25 +324,18 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaBortPartnerActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       this.dispose();
-       new Inloggning(idb).setVisible(true);
+        this.dispose();
+        new Inloggning(idb).setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnLaggTillAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillAvdelningActionPerformed
-       new LaggTillAvdelning(idb, epost).setVisible(true);
+        new LaggTillAvdelning(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnLaggTillAvdelningActionPerformed
 
     private void btnAndraAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraAvdelningActionPerformed
-       new AndraAvdelning(idb, epost).setVisible(true);
+        new AndraAvdelning(idb, epost).setVisible(true);
     }//GEN-LAST:event_btnAndraAvdelningActionPerformed
 
-    
-    
-    
-    
-    
-    
-    
     /**
      * @param args the command line arguments
      */

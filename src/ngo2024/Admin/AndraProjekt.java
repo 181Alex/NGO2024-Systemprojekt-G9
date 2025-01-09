@@ -14,9 +14,8 @@ import ngo2024.Validering;
  *
  * @author linneagottling
  */
-
 public class AndraProjekt extends javax.swing.JFrame {
-    
+
     private InfDB idb;
     private String epost;
     private HashMap<String, String> anstalldLista;
@@ -24,7 +23,8 @@ public class AndraProjekt extends javax.swing.JFrame {
 
     /**
      * Initierar AndraProjekt objekt 
-     * Används av administratören för att göra ändringar i ett specifikt projekt
+     * Används av administratören för att göra
+     * ändringar i ett specifikt projekt
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten till den inloggade användaren
@@ -39,39 +39,36 @@ public class AndraProjekt extends javax.swing.JFrame {
         fyllCbProjekt();
         gomAlla();
 
-        
     }
-    
-     /**
+
+    /**
      * Fyller i combo box med namn på projekt
      */
-    
-private void fyllCbProjekt(){
+    private void fyllCbProjekt() {
         cbxProjekt.removeAllItems();
         String sqlFraga = "SELECT projektnamn FROM projekt";
-        
+
         ArrayList<String> namnLista = new ArrayList<>();
-        
-        try{
+
+        try {
             namnLista = idb.fetchColumn(sqlFraga);
-            
-            for(String namn : namnLista){
+
+            for (String namn : namnLista) {
                 cbxProjekt.addItem(namn);
             }
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
-            
+
         }
-        
+
     }
 
     /**
      * gömmer allt innan man har klickat i ett alternativ
      */
+    private void gomAlla() {
 
-private void gomAlla(){
-        
         btAndra.setVisible(false);
         btTaBort.setVisible(false);
         btValj.setVisible(false);
@@ -101,7 +98,7 @@ private void gomAlla(){
         tfKostnad.setVisible(false);
         tfProjektnamn.setVisible(false);
         tfSlutdatum.setVisible(false);
-        tfStartdatum.setVisible(false);  
+        tfStartdatum.setVisible(false);
         lblProjektpartner.setVisible(false);
         lblHallbarhet.setVisible(false);
         btHallbarhet.setVisible(false);
@@ -121,676 +118,627 @@ private void gomAlla(){
         lblNLid.setVisible(false);
         lblHandlaggare.setVisible(false);
         btHandlaggare.setVisible(false);
-    }   
+    }
 
     /**
      * hämtar projekt ID
      */
+    private String getPid() {
+        String pid = " ";
 
-private String getPid(){
-    String pid = " ";
-    
-    try{
-     
-        String sqlFraga = "SELECT pid FROM projekt WHERE projektnamn = '" + cbxProjekt.getSelectedItem() + "'";
-        pid = idb.fetchSingle(sqlFraga);
+        try {
+
+            String sqlFraga = "SELECT pid FROM projekt WHERE projektnamn = '" + cbxProjekt.getSelectedItem() + "'";
+            pid = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return pid;
     }
-    catch(InfException ex) {
-        System.out.println(ex.getMessage());
-    }
-    return pid;
-}
 
     /**
-     *  Ger projektchefens anställds ID
+     * Ger projektchefens anställds ID
+     *
      * @param pid projektets ID
      */
+    private String getChefAid(String pid) {
+        String aid = " ";
 
-private String getChefAid(String pid){
-    String aid = " ";
-    
-    try{
-     
-        String sqlFraga = "SELECT aid FROM anstalld "
-                           + "JOIN projekt ON aid = projektchef "
-                           + "WHERE pid = "+ pid;
-        
-        aid = idb.fetchSingle(sqlFraga);
+        try {
+
+            String sqlFraga = "SELECT aid FROM anstalld "
+                    + "JOIN projekt ON aid = projektchef "
+                    + "WHERE pid = " + pid;
+
+            aid = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return aid;
     }
-    catch(InfException ex) {
-        System.out.println(ex.getMessage());
-    }
-    return aid;
-}
 
     /**
-     *  ger landets ID
+     * ger landets ID
+     *
      * @param pid projektets ID
      */
+    private String getLid(String pid) {
+        String lid = " ";
 
-private String getLid(String pid){
-    String lid = " ";
-    
-    try{
-     
-        String sqlFraga = "SELECT lid FROM land "
-                        + "JOIN projekt ON lid = land "
-                        + "WHERE pid = " + pid;
-        
-        lid = idb.fetchSingle(sqlFraga);
-    }
-    catch(InfException ex) {
-        System.out.println(ex.getMessage());
-    }
-    return lid;
-}
+        try {
 
-/**
-     *  tar bort ett projekt
+            String sqlFraga = "SELECT lid FROM land "
+                    + "JOIN projekt ON lid = land "
+                    + "WHERE pid = " + pid;
+
+            lid = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return lid;
+    }
+
+    /**
+     * tar bort ett projekt
+     *
      * @param pid projektets ID
      */
+    private void taBortProjekt(String pid) {
 
-private void taBortProjekt(String pid){
-    
         String sqlFraga = "DELETE FROM projekt WHERE pid = " + pid;
-        String sqlAnsProj="DELETE FROM ans_proj WHERE pid= " + pid;
-        String sqlProjHall="DELETE FROM proj_hallbarhet WHERE pid= " + pid;
-        String sqlProjPart="DELETE FROM projekt_partner WHERE pid= " + pid;
-        try{
+        String sqlAnsProj = "DELETE FROM ans_proj WHERE pid= " + pid;
+        String sqlProjHall = "DELETE FROM proj_hallbarhet WHERE pid= " + pid;
+        String sqlProjPart = "DELETE FROM projekt_partner WHERE pid= " + pid;
+        try {
             idb.delete(sqlAnsProj);
             idb.delete(sqlProjHall);
             idb.delete(sqlProjPart);
             idb.delete(sqlFraga);
 
-            lblMeddelande.setText(cbxProjekt.getSelectedIndex()+ "är borttagen");
+            lblMeddelande.setText(cbxProjekt.getSelectedIndex() + "är borttagen");
             lblMeddelande.setVisible(true);
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-} 
+    }
+
     /**
      * Fyller i combo box med namn på länder
      */
 
-private void fyllCbLand(){
-       
-        cbxLand.removeAllItems();
-        
-        String sqlLand = "SELECT namn FROM land ";
-        
-        try{
+    private void fyllCbLand() {
 
-        ArrayList<String> allaLanderLista =  idb.fetchColumn(sqlLand);
-                                             
-            for(String landNamn : allaLanderLista){
-               String sqlLid = "SELECT lid FROM land WHERE "
-                       + "namn = '" + landNamn + "'";
-               String i = idb.fetchSingle(sqlLid);
-               cbxLand.addItem(landNamn);
-               landLista.put(i, landNamn);
+        cbxLand.removeAllItems();
+
+        String sqlLand = "SELECT namn FROM land ";
+
+        try {
+
+            ArrayList<String> allaLanderLista = idb.fetchColumn(sqlLand);
+
+            for (String landNamn : allaLanderLista) {
+                String sqlLid = "SELECT lid FROM land WHERE "
+                        + "namn = '" + landNamn + "'";
+                String i = idb.fetchSingle(sqlLid);
+                cbxLand.addItem(landNamn);
+                landLista.put(i, landNamn);
             }
-                      
-            
-        } catch (InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-}
-    
+    }
+
     /**
-     *  Fyller i combo box med projektchefer
+     * Fyller i combo box med projektchefer
      */
+    private void fyllCbProjektchef() {
+        cbxProjektchef.removeAllItems();
 
-private void fyllCbProjektchef(){
-    cbxProjektchef.removeAllItems();
+        String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld"
+                + " WHERE aid in (SELECT aid FROM handlaggare)";
 
-    String sqlPerson = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld"
-                        + " WHERE aid in (SELECT aid FROM handlaggare)";
-      
-    try {
-        ArrayList<String> personLista = idb.fetchColumn(sqlPerson);
-                    
-            for(String anstNamn : personLista){
+        try {
+            ArrayList<String> personLista = idb.fetchColumn(sqlPerson);
+
+            for (String anstNamn : personLista) {
                 String sqlAid = "SELECT aid from anstalld WHERE "
                         + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
                 String i = idb.fetchSingle(sqlAid);
                 cbxProjektchef.addItem(anstNamn);
                 anstalldLista.put(i, anstNamn);
-                
+
             }
-        
-        
-    } catch (InfException ex){
-        System.out.println(ex.getMessage());
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
-    
-            
-}
 
     /**
-     *  Fyller i combo box med prioriteringsnivåer
+     * Fyller i combo box med prioriteringsnivåer
      */
+    private void fyllCbPrio() {
 
-private void fyllCbPrio(){
-    
-    cbxPrioritet.removeAllItems();
-            
-    cbxPrioritet.addItem("Hög");
-    cbxPrioritet.addItem("Låg");
-    cbxPrioritet.addItem("Medel");
-}
+        cbxPrioritet.removeAllItems();
+
+        cbxPrioritet.addItem("Hög");
+        cbxPrioritet.addItem("Låg");
+        cbxPrioritet.addItem("Medel");
+    }
 
     /**
-     *  Fyller i combo box med statusnivå
+     * Fyller i combo box med statusnivå
      */
+    private void fyllCbStatus() {
+        cbxStatus.removeAllItems();
 
-private void fyllCbStatus(){
-    cbxStatus.removeAllItems();
-    
-            
-    cbxStatus.addItem("Planerat");
-    cbxStatus.addItem("Pågående");
-    cbxStatus.addItem("Avslutat");
-    cbxStatus.addItem("Pausad");
-}
+        cbxStatus.addItem("Planerat");
+        cbxStatus.addItem("Pågående");
+        cbxStatus.addItem("Avslutat");
+        cbxStatus.addItem("Pausad");
+    }
 
     /**
-     *  Fyller i tabellen för att administratören ska kunna ändra
+     * Fyller i tabellen för att administratören ska kunna ändra
      */
+    private void fyllTabellAndra() {
+        fyllCbLand();
+        fyllCbPrio();
+        fyllCbStatus();
+        fyllCbProjektchef();
 
-private void fyllTabellAndra(){
-    fyllCbLand();
-    fyllCbPrio();
-    fyllCbStatus();
-    fyllCbProjektchef();
-    
-    
-    String pid=getPid();
-    String pAid = getChefAid(pid);
-    String pLid = getLid(pid);
-        
-        String namn=" ";
-        String beskrivning=" ";
-        String startdatum=" ";
-        String slutdatum=" ";
-        String kostnad=" ";
-        String nLand=" ";
+        String pid = getPid();
+        String pAid = getChefAid(pid);
+        String pLid = getLid(pid);
+
+        String namn = " ";
+        String beskrivning = " ";
+        String startdatum = " ";
+        String slutdatum = " ";
+        String kostnad = " ";
+        String nLand = " ";
         String nPrio = " ";
         String nStatus = " ";
         String nChef = " ";
         String nAid = " ";
         String nLid = " ";
 
-        try{
+        try {
             namn = idb.fetchSingle("SELECT projektnamn FROM projekt WHERE pid = " + pid);
             beskrivning = idb.fetchSingle("SELECT beskrivning FROM projekt WHERE pid = " + pid);
             startdatum = idb.fetchSingle("SELECT startdatum FROM projekt WHERE pid = " + pid);
             slutdatum = idb.fetchSingle("SELECT slutdatum FROM projekt WHERE pid = " + pid);
             kostnad = idb.fetchSingle("SELECT kostnad FROM projekt WHERE pid = " + pid);
 
-            
             //hämtar ut nuvarande 
             nPrio = idb.fetchSingle("SELECT prioritet FROM projekt WHERE pid = " + pid);
             nStatus = idb.fetchSingle("SELECT status FROM projekt WHERE pid = " + pid);
             nChef = idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) "
-                                 + "FROM anstalld WHERE aid = " + pAid);
+                    + "FROM anstalld WHERE aid = " + pAid);
             nLand = idb.fetchSingle("SELECT namn FROM land WHERE lid = "
-                                + "(SELECT land FROM projekt WHERE pid = " + pid + ")");
-            
+                    + "(SELECT land FROM projekt WHERE pid = " + pid + ")");
+
             nAid = pAid;
             nLid = pLid;
-            
-        }
-        catch(InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        } 
-            tfProjektnamn.setText(namn);
-            tfBeskrivning.setText(beskrivning);
-            tfStartdatum.setText(startdatum);
-            tfSlutdatum.setText(slutdatum);
-            tfKostnad.setText(kostnad);
-            tfNLand.setText(nLand);
-            
-            
-            //skriver ut nuvarande
-            tfNprio.setText(nPrio);
-            tfNstatus.setText(nStatus);
-            tfNprojektchef.setText(nChef);
-            lblNaid.setText(nAid);  
-            lblNLid.setText(nLid);
-            
-            //sätter rätt värden i checkboxen
-            cbxPrioritet.setSelectedItem(nPrio);
-            cbxLand.setSelectedItem(nLand);
-            cbxStatus.setSelectedItem(nStatus);
-            cbxProjektchef.setSelectedItem(nChef);
-                    
-}
- 
-    /**
-     *  Visa allt om Ändra
-     */
+        }
+        tfProjektnamn.setText(namn);
+        tfBeskrivning.setText(beskrivning);
+        tfStartdatum.setText(startdatum);
+        tfSlutdatum.setText(slutdatum);
+        tfKostnad.setText(kostnad);
+        tfNLand.setText(nLand);
 
-private void gomTaBort(){
-   
-    btAndra.setVisible(true);
-    btValj.setVisible(true);
-    cbxPrioritet.setVisible(true);
-    cbxProjekt.setVisible(true);
-    cbxStatus.setVisible(true);
-    cbxProjektchef.setVisible(true);
-    lblAid.setVisible(true);
-    lblBeskrivning.setVisible(true);
-    lblKostnad.setVisible(true);
-    lblLand.setVisible(true);
-    lblN1.setVisible(true);
-    lblN2.setVisible(true);
-    lblN3.setVisible(true);
-    lblNaid.setVisible(true);
-    lblPrioritet.setVisible(true);
-    lblProjektchef.setVisible(true);
-    lblProjektnamn.setVisible(true);
-    lblSlutdatum.setVisible(true);
-    lblStartdatum.setVisible(true);
-    lblStatus.setVisible(true);
-    tfKostnad.setVisible(true);
-    tfNprio.setVisible(true);
-    tfNprojektchef.setVisible(true);
-    tfNstatus.setVisible(true);
-    tfProjektnamn.setVisible(true);
-    tfSlutdatum.setVisible(true);
-    tfStartdatum.setVisible(true);
-    tfNLand.setVisible(true);
-    cbxLand.setVisible(true);
-    lblNLand.setVisible(true);
-    lblLid.setVisible(true);
-    lblNLid.setVisible(true);
-    tfBeskrivning.setVisible(true);
-   
-    lblPid.setVisible(false);
-    lblPnamn.setVisible(false);
-    btTaBort.setVisible(false);
-    
-    /**
-     *  göm allt som tillhör ta bort
-     */
+        //skriver ut nuvarande
+        tfNprio.setText(nPrio);
+        tfNstatus.setText(nStatus);
+        tfNprojektchef.setText(nChef);
+        lblNaid.setText(nAid);
+        lblNLid.setText(nLid);
 
-    lblFelBeskrivning.setVisible(false);
-    lblFelKostnad.setVisible(false);
-    lblFelNamn.setVisible(false);
-    lblFelSlutdatum.setVisible(false);
-    lblFelStartdatum.setVisible(false);
-    
-    /**
-     *  gömmer felmeddelande
-     */
-   
-    lblMeddelande.setVisible(false);
-    lblFelmeddelande.setVisible(false);
-    
-    /**
-     *  gömmer meddelanden
-     */
-    
-    btHallbarhet.setVisible(false);
-    btPartner.setVisible(false);
-    lblProjektpartner.setVisible(false);
-    lblHallbarhet.setVisible(false);
-    lblHandlaggare.setVisible(false);
-    btHandlaggare.setVisible(false);
-    
-    /**
-     *  gömmer hållbarhet och partner tills man klickar på välj
-     */
-    
-}
+        //sätter rätt värden i checkboxen
+        cbxPrioritet.setSelectedItem(nPrio);
+        cbxLand.setSelectedItem(nLand);
+        cbxStatus.setSelectedItem(nStatus);
+        cbxProjektchef.setSelectedItem(nChef);
+
+    }
 
     /**
-     *  Gömmer allt om Ändra
+     * Visa allt om Ändra
      */
+    private void gomTaBort() {
 
-private void gomAndra(){
-    btAndra.setVisible(false);
-    btHallbarhet.setVisible(false);
-    lblHandlaggare.setVisible(false);
-    btHandlaggare.setVisible(false);
-    btPartner.setVisible(false);
-    cbxPrioritet.setVisible(false);  
-    cbxStatus.setVisible(false);
-    cbxProjektchef.setVisible(false);
-    lblAid.setVisible(false);
-    lblBeskrivning.setVisible(false);
-    lblHallbarhet.setVisible(false);
-    lblKostnad.setVisible(false);
-    lblLand.setVisible(false);
-    lblN1.setVisible(false);
-    lblN2.setVisible(false);
-    lblN3.setVisible(false);
-    lblNaid.setVisible(false);
-    lblPrioritet.setVisible(false);
-    lblProjektchef.setVisible(false);
-    lblProjektnamn.setVisible(false);
-    lblProjektpartner.setVisible(false);
-    lblSlutdatum.setVisible(false);
-    lblStartdatum.setVisible(false);
-    lblStatus.setVisible(false);
-    tfKostnad.setVisible(false);
-    tfNprio.setVisible(false);
-    tfNprojektchef.setVisible(false);
-    tfNstatus.setVisible(false);
-    tfProjektnamn.setVisible(false);
-    tfSlutdatum.setVisible(false);
-    tfStartdatum.setVisible(false);
-    tfBeskrivning.setVisible(false);
-    tfNLand.setVisible(false);
-    cbxLand.setVisible(false);
-    lblNLand.setVisible(false);
-    lblLid.setVisible(false);
-    lblNLid.setVisible(false);
-    
-    /**
-     *  gömmer allt om Ändra
-     */
+        btAndra.setVisible(true);
+        btValj.setVisible(true);
+        cbxPrioritet.setVisible(true);
+        cbxProjekt.setVisible(true);
+        cbxStatus.setVisible(true);
+        cbxProjektchef.setVisible(true);
+        lblAid.setVisible(true);
+        lblBeskrivning.setVisible(true);
+        lblKostnad.setVisible(true);
+        lblLand.setVisible(true);
+        lblN1.setVisible(true);
+        lblN2.setVisible(true);
+        lblN3.setVisible(true);
+        lblNaid.setVisible(true);
+        lblPrioritet.setVisible(true);
+        lblProjektchef.setVisible(true);
+        lblProjektnamn.setVisible(true);
+        lblSlutdatum.setVisible(true);
+        lblStartdatum.setVisible(true);
+        lblStatus.setVisible(true);
+        tfKostnad.setVisible(true);
+        tfNprio.setVisible(true);
+        tfNprojektchef.setVisible(true);
+        tfNstatus.setVisible(true);
+        tfProjektnamn.setVisible(true);
+        tfSlutdatum.setVisible(true);
+        tfStartdatum.setVisible(true);
+        tfNLand.setVisible(true);
+        cbxLand.setVisible(true);
+        lblNLand.setVisible(true);
+        lblLid.setVisible(true);
+        lblNLid.setVisible(true);
+        tfBeskrivning.setVisible(true);
 
-    lblPid.setVisible(true);
-    lblPnamn.setVisible(true);
-    btTaBort.setVisible(true);
-    btValj.setVisible(true);
-    cbxProjekt.setVisible(true);
-    
-     /**
-     *  Visa det som tillhör ta bort
-     */
+        lblPid.setVisible(false);
+        lblPnamn.setVisible(false);
+        btTaBort.setVisible(false);
 
-    lblFelBeskrivning.setVisible(false);
-    lblFelKostnad.setVisible(false);
-    lblFelNamn.setVisible(false);
-    lblFelSlutdatum.setVisible(false);
-    lblFelStartdatum.setVisible(false);
-    
-    /**
-     *  gömma felmeddelanden
-     */
+        /**
+         * göm allt som tillhör ta bort
+         */
+        lblFelBeskrivning.setVisible(false);
+        lblFelKostnad.setVisible(false);
+        lblFelNamn.setVisible(false);
+        lblFelSlutdatum.setVisible(false);
+        lblFelStartdatum.setVisible(false);
 
-    lblMeddelande.setVisible(false);
-    lblFelmeddelande.setVisible(false);
-    
-    /**
-     *  gömma meddelanden
-     */
+        /**
+         * gömmer felmeddelande
+         */
+        lblMeddelande.setVisible(false);
+        lblFelmeddelande.setVisible(false);
 
-}
+        /**
+         * gömmer meddelanden
+         */
+        btHallbarhet.setVisible(false);
+        btPartner.setVisible(false);
+        lblProjektpartner.setVisible(false);
+        lblHallbarhet.setVisible(false);
+        lblHandlaggare.setVisible(false);
+        btHandlaggare.setVisible(false);
+
+        /**
+         * gömmer hållbarhet och partner tills man klickar på välj
+         */
+    }
 
     /**
-     *  gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
+     * Gömmer allt om Ändra
      */
+    private void gomAndra() {
+        btAndra.setVisible(false);
+        btHallbarhet.setVisible(false);
+        lblHandlaggare.setVisible(false);
+        btHandlaggare.setVisible(false);
+        btPartner.setVisible(false);
+        cbxPrioritet.setVisible(false);
+        cbxStatus.setVisible(false);
+        cbxProjektchef.setVisible(false);
+        lblAid.setVisible(false);
+        lblBeskrivning.setVisible(false);
+        lblHallbarhet.setVisible(false);
+        lblKostnad.setVisible(false);
+        lblLand.setVisible(false);
+        lblN1.setVisible(false);
+        lblN2.setVisible(false);
+        lblN3.setVisible(false);
+        lblNaid.setVisible(false);
+        lblPrioritet.setVisible(false);
+        lblProjektchef.setVisible(false);
+        lblProjektnamn.setVisible(false);
+        lblProjektpartner.setVisible(false);
+        lblSlutdatum.setVisible(false);
+        lblStartdatum.setVisible(false);
+        lblStatus.setVisible(false);
+        tfKostnad.setVisible(false);
+        tfNprio.setVisible(false);
+        tfNprojektchef.setVisible(false);
+        tfNstatus.setVisible(false);
+        tfProjektnamn.setVisible(false);
+        tfSlutdatum.setVisible(false);
+        tfStartdatum.setVisible(false);
+        tfBeskrivning.setVisible(false);
+        tfNLand.setVisible(false);
+        cbxLand.setVisible(false);
+        lblNLand.setVisible(false);
+        lblLid.setVisible(false);
+        lblNLid.setVisible(false);
 
-private void gomBad(){
-    lblFelNamn.setVisible(false);
-    lblFelBeskrivning.setVisible(false);
-    lblFelKostnad.setVisible(false);
-    lblFelSlutdatum.setVisible(false);
-    lblFelStartdatum.setVisible(false);
-    lblFelmeddelande.setVisible(false);
-} 
+        /**
+         * gömmer allt om Ändra
+         */
+        lblPid.setVisible(true);
+        lblPnamn.setVisible(true);
+        btTaBort.setVisible(true);
+        btValj.setVisible(true);
+        cbxProjekt.setVisible(true);
+
+        /**
+         * Visa det som tillhör ta bort
+         */
+        lblFelBeskrivning.setVisible(false);
+        lblFelKostnad.setVisible(false);
+        lblFelNamn.setVisible(false);
+        lblFelSlutdatum.setVisible(false);
+        lblFelStartdatum.setVisible(false);
+
+        /**
+         * gömma felmeddelanden
+         */
+        lblMeddelande.setVisible(false);
+        lblFelmeddelande.setVisible(false);
+
+        /**
+         * gömma meddelanden
+         */
+    }
 
     /**
-     *  kontrollerar att förnamn är valid
+     * gömmer alla felmeddelanden, används innan ett specifkt fel ska upplysas
      */
+    private void gomBad() {
+        lblFelNamn.setVisible(false);
+        lblFelBeskrivning.setVisible(false);
+        lblFelKostnad.setVisible(false);
+        lblFelSlutdatum.setVisible(false);
+        lblFelStartdatum.setVisible(false);
+        lblFelmeddelande.setVisible(false);
+    }
 
-private boolean namnKontroll(){
+    /**
+     * kontrollerar att förnamn är valid
+     */
+    private boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfProjektnamn.getText();
-    if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(255, namn)) {
+        if (valid.checkMeningOSiffra(namn) && valid.checkStorlek(255, namn)) {
             lblFelNamn.setVisible(false);
             return true;
-    } else {
-        lblFelNamn.setVisible(false);
+        } else {
+            lblFelNamn.setVisible(false);
             return false;
+        }
     }
-}
 
     /**
-     *  Kollar så att inte samma projektnamn används för olika projekt
+     * Kollar så att inte samma projektnamn används för olika projekt
      */
-
-private boolean inteSammaNamnKontroll(){
-        boolean inteSamma=true;
-        boolean sInteSamma=false;
-        boolean retur=true;
-        ArrayList<String> namnLista=new ArrayList<>();
-        String sqlFraga="SELECT projektnamn FROM projekt";
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-        } catch(InfException ex){
+    private boolean inteSammaNamnKontroll() {
+        boolean inteSamma = true;
+        boolean sInteSamma = false;
+        boolean retur = true;
+        ArrayList<String> namnLista = new ArrayList<>();
+        String sqlFraga = "SELECT projektnamn FROM projekt";
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         String selectedProjekt = (String) cbxProjekt.getSelectedItem();
         selectedProjekt = selectedProjekt.trim();
-                
-       
-        if(tfProjektnamn.getText().equalsIgnoreCase(selectedProjekt)){
-            sInteSamma=true;
+
+        if (tfProjektnamn.getText().equalsIgnoreCase(selectedProjekt)) {
+            sInteSamma = true;
         }
-        
-        
-        for(String namn:namnLista){
+
+        for (String namn : namnLista) {
             namn = namn.trim();
-            if(namn.equalsIgnoreCase(tfProjektnamn.getText())){
-                
-                inteSamma=false;
+            if (namn.equalsIgnoreCase(tfProjektnamn.getText())) {
+
+                inteSamma = false;
             }
         }
-        if(sInteSamma==true){
-            retur=sInteSamma;
+        if (sInteSamma == true) {
+            retur = sInteSamma;
             lblFelNamn.setVisible(false);
 
-        }
-        else if (inteSamma==false){
+        } else if (inteSamma == false) {
             lblFelNamn.setVisible(true);
-            retur=inteSamma;
-        } 
-        
+            retur = inteSamma;
+        }
+
         return retur;
-}
+    }
 
     /**
-     *  kontrollerar att beskrivningen är rätt
+     * kontrollerar att beskrivningen är rätt
      */
-
-private boolean beskrivningKontroll(){
+    private boolean beskrivningKontroll() {
         Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
-    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
+        if (valid.checkBeskrivning(besk) && valid.checkStorlek(255, besk)) {
             lblFelBeskrivning.setVisible(false);
             return true;
-    } else {
+        } else {
             lblFelBeskrivning.setVisible(true);
             return false;
-    }
+        }
     }
 
     /**
-     *  kontrollerar att stardatum är rätt annars visas ett felmeddelande
+     * kontrollerar att stardatum är rätt annars visas ett felmeddelande
      */
+    private boolean stDatumKontroll() {
+        Validering valid = new Validering(idb);
 
-private boolean stDatumKontroll(){
-Validering valid = new Validering(idb); 
-    
-    String datum = tfStartdatum.getText(); 
-    
-    if (valid.checkDatum(datum)) {
-        lblFelStartdatum.setVisible(false); 
-        return true;
-    } else {
-        lblFelStartdatum.setVisible(true);
-        return false;
+        String datum = tfStartdatum.getText();
+
+        if (valid.checkDatum(datum)) {
+            lblFelStartdatum.setVisible(false);
+            return true;
+        } else {
+            lblFelStartdatum.setVisible(true);
+            return false;
+        }
     }
-}
 
     /**
-     *  kontrollerar att slutdatum är rätt annars visas ett felmeddelande
-     */  
-
-private boolean slDatumKontroll(){
-Validering valid = new Validering(idb); 
-
-    String datum = tfSlutdatum.getText(); 
-    
-    if (valid.checkDatum(datum)) {
-        lblFelSlutdatum.setVisible(false); 
-        return true;
-    } else {
-        lblFelSlutdatum.setVisible(true); 
-        return false;
-    }
-}
-
-    /**
-     *  kontrollerar att kostnaden stämmer
+     * kontrollerar att slutdatum är rätt annars visas ett felmeddelande
      */
+    private boolean slDatumKontroll() {
+        Validering valid = new Validering(idb);
 
-private boolean kostnadKontroll(){
-    Validering enValidering = new Validering(idb);
-    String kostnad = tfKostnad.getText();
-    if(enValidering.checkKostnad(kostnad)){
-        lblFelKostnad.setVisible(false);
-        return true;
-    } else {
-        lblFelKostnad.setVisible(true);
-        return false;
+        String datum = tfSlutdatum.getText();
 
+        if (valid.checkDatum(datum)) {
+            lblFelSlutdatum.setVisible(false);
+            return true;
+        } else {
+            lblFelSlutdatum.setVisible(true);
+            return false;
+        }
     }
-}
 
     /**
-     *  kontrollerar mellan datum
+     * kontrollerar att kostnaden stämmer
      */
+    private boolean kostnadKontroll() {
+        Validering enValidering = new Validering(idb);
+        String kostnad = tfKostnad.getText();
+        if (enValidering.checkKostnad(kostnad)) {
+            lblFelKostnad.setVisible(false);
+            return true;
+        } else {
+            lblFelKostnad.setVisible(true);
+            return false;
 
+        }
+    }
 
-private boolean mellanDatum(){
+    /**
+     * kontrollerar mellan datum
+     */
+    private boolean mellanDatum() {
         Validering valid = new Validering(idb);
         String start = tfStartdatum.getText();
-        String slut=tfSlutdatum.getText();
+        String slut = tfSlutdatum.getText();
         // kontrollerar namn format
-    if (valid.checkDatumSkillnad(start, slut)) {
+        if (valid.checkDatumSkillnad(start, slut)) {
             lblFelStartdatum.setVisible(false);
             lblFelSlutdatum.setVisible(false);
             return true;
-    } else {
+        } else {
             lblFelStartdatum.setVisible(true);
             lblFelSlutdatum.setVisible(true);
             return false;
+        }
     }
-}
-
-     /**
-     *  kontrollerar så att allt stämmer
-     */
-
-private boolean totalKontroll(){
-    boolean ok;
-    
-    if(namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
-            && slDatumKontroll() && kostnadKontroll() && mellanDatum()){
-        ok = true;
-        gomBad();
-        lblFelmeddelande.setVisible(false);
-    } else {
-        lblMeddelande.setVisible(false);
-        ok = false;
-    }
-    return ok;
-}
-   
- /**
-     *  visa anställda ID
-     */
-
-private void visaAid(){
-        
-    lblAid.setText(getSelectedAid());
-}
 
     /**
-     *  ger en valds persons anställd ID
+     * kontrollerar så att allt stämmer
      */
+    private boolean totalKontroll() {
+        boolean ok;
 
-private String getSelectedAid(){
-    String selectedPerson = (String) cbxProjektchef.getSelectedItem();
+        if (namnKontroll() && inteSammaNamnKontroll() && beskrivningKontroll() && stDatumKontroll()
+                && slDatumKontroll() && kostnadKontroll() && mellanDatum()) {
+            ok = true;
+            gomBad();
+            lblFelmeddelande.setVisible(false);
+        } else {
+            lblMeddelande.setVisible(false);
+            ok = false;
+        }
+        return ok;
+    }
+
+    /**
+     * visa anställda ID
+     */
+    private void visaAid() {
+
+        lblAid.setText(getSelectedAid());
+    }
+
+    /**
+     * ger en valds persons anställd ID
+     */
+    private String getSelectedAid() {
+        String selectedPerson = (String) cbxProjektchef.getSelectedItem();
         String aid = " ";
-        for(String id : anstalldLista.keySet()){
+        for (String id : anstalldLista.keySet()) {
             String namn = anstalldLista.get(id);
-            if(selectedPerson != null && selectedPerson.equals(namn)){
-                aid = id;               
+            if (selectedPerson != null && selectedPerson.equals(namn)) {
+                aid = id;
             }
-        } 
+        }
         return aid;
-}
+    }
 
     /**
-     *  visa land ID
-     */ 
-
-private void visaLid(){
-   
-        lblLid.setText(getSelectedLid());
-}
-
-    /**
-     *  ger ett valt lands ID
+     * visa land ID
      */
+    private void visaLid() {
 
+        lblLid.setText(getSelectedLid());
+    }
 
-private String getSelectedLid(){
+    /**
+     * ger ett valt lands ID
+     */
+    private String getSelectedLid() {
         String selectedLand = (String) cbxLand.getSelectedItem();
         String lid = " ";
-        for(String id : landLista.keySet()){
+        for (String id : landLista.keySet()) {
             String namn = landLista.get(id);
-            if(selectedLand != null && selectedLand.equals(namn)){
-                lid = id;               
+            if (selectedLand != null && selectedLand.equals(namn)) {
+                lid = id;
             }
         }
         return lid;
-}
+    }
 
-     /**
-     *  uppdaterar med ändringarna
+    /**
+     * uppdaterar med ändringarna
      */
+    private void gorAndring() {
+        String pid = getPid();
 
-private void gorAndring(){
-    String pid=getPid();
-        
         String namnS = tfProjektnamn.getText();
         String beskrivningS = tfBeskrivning.getText();
         String startdatumS = tfStartdatum.getText();
         String slutdatumS = tfSlutdatum.getText();
         String kostnadS = tfKostnad.getText();
-        
+
         String landIdS = getSelectedLid();
         String statusS = (String) cbxStatus.getSelectedItem();
         String prioritetS = (String) cbxPrioritet.getSelectedItem();
-        String chefIdS = getSelectedAid();              
-        
-        String sqlUpdate="UPDATE projekt SET projektnamn='" + namnS + "', beskrivning= '" 
+        String chefIdS = getSelectedAid();
+
+        String sqlUpdate = "UPDATE projekt SET projektnamn='" + namnS + "', beskrivning= '"
                 + beskrivningS + "', kostnad = " + kostnadS
-                + ", startdatum= '" + startdatumS + "', slutdatum= '" + slutdatumS + "', land = " 
-                + landIdS + ", status = '" 
-                + statusS + "', prioritet = '" + prioritetS 
-                + "', projektchef = " + chefIdS 
+                + ", startdatum= '" + startdatumS + "', slutdatum= '" + slutdatumS + "', land = "
+                + landIdS + ", status = '"
+                + statusS + "', prioritet = '" + prioritetS
+                + "', projektchef = " + chefIdS
                 + " WHERE pid = " + pid;
-        try{
+        try {
             idb.update(sqlUpdate);
             System.out.println(sqlUpdate);
-        }
-        
-        catch(InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        } 
-}
-
-
-
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1267,32 +1215,31 @@ private void gorAndring(){
     }//GEN-LAST:event_tfBeskrivningActionPerformed
 
     private void btValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btValjActionPerformed
-        if(chbTaBort.isSelected()){
-         lblPid.setText(getPid());
-          int i=cbxProjekt.getSelectedIndex();
-          lblPnamn.setText(cbxProjekt.getItemAt(i));
-      }else if(chbAndra.isSelected()){ 
-           fyllTabellAndra();
-           visaAid();
-           visaLid();
-           btHallbarhet.setVisible(true);
-           btPartner.setVisible(true);
-           lblProjektpartner.setVisible(true);
-           lblHallbarhet.setVisible(true);
-           lblHandlaggare.setVisible(true);
-           btHandlaggare.setVisible(true);
-    
-           
-       }
-        
+        if (chbTaBort.isSelected()) {
+            lblPid.setText(getPid());
+            int i = cbxProjekt.getSelectedIndex();
+            lblPnamn.setText(cbxProjekt.getItemAt(i));
+        } else if (chbAndra.isSelected()) {
+            fyllTabellAndra();
+            visaAid();
+            visaLid();
+            btHallbarhet.setVisible(true);
+            btPartner.setVisible(true);
+            lblProjektpartner.setVisible(true);
+            lblHallbarhet.setVisible(true);
+            lblHandlaggare.setVisible(true);
+            btHandlaggare.setVisible(true);
+
+        }
+
     }//GEN-LAST:event_btValjActionPerformed
 
     private void btHallbarhetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHallbarhetActionPerformed
-    new ProjektHallbarhet(idb, getPid()).setVisible(true);
+        new ProjektHallbarhet(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btHallbarhetActionPerformed
 
     private void btPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPartnerActionPerformed
-       new ProjektPartner(idb, getPid()).setVisible(true);
+        new ProjektPartner(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btPartnerActionPerformed
 
     private void cbxProjektchefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProjektchefActionPerformed
@@ -1300,82 +1247,82 @@ private void gorAndring(){
     }//GEN-LAST:event_cbxProjektchefActionPerformed
 
     private void chbAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAndraActionPerformed
-        if(chbAndra.isSelected()){
+        if (chbAndra.isSelected()) {
             chbTaBort.setSelected(false);
             gomTaBort();
         }
     }//GEN-LAST:event_chbAndraActionPerformed
 
     private void chbTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbTaBortActionPerformed
-        if(chbTaBort.isSelected()){
-           chbAndra.setSelected(false);
-           gomAndra();
-       }
+        if (chbTaBort.isSelected()) {
+            chbAndra.setSelected(false);
+            gomAndra();
+        }
     }//GEN-LAST:event_chbTaBortActionPerformed
 
     private void btTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTaBortActionPerformed
-    String pid=lblPid.getText();
-    taBortProjekt(pid);
-    fyllCbProjekt();
-    lblMeddelande.setText("Borttagen");
-    lblMeddelande.setVisible(true);
+        String pid = lblPid.getText();
+        taBortProjekt(pid);
+        fyllCbProjekt();
+        lblMeddelande.setText("Borttagen");
+        lblMeddelande.setVisible(true);
     }//GEN-LAST:event_btTaBortActionPerformed
 
     private void cbxLandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLandActionPerformed
-       visaLid();
+        visaLid();
     }//GEN-LAST:event_cbxLandActionPerformed
 
     private void btAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAndraActionPerformed
-    if(totalKontroll() == true){
-           gorAndring();
-           fyllTabellAndra();
-           lblMeddelande.setText("Lyckades!");
-           lblMeddelande.setVisible(true);
-           fyllCbProjekt();
-       } else {
-           lblFelmeddelande.setText("Något gick fel");
-           lblFelmeddelande.setVisible(true);
-       }
+        if (totalKontroll() == true) {
+            gorAndring();
+            fyllTabellAndra();
+            lblMeddelande.setText("Lyckades!");
+            lblMeddelande.setVisible(true);
+            fyllCbProjekt();
+        } else {
+            lblFelmeddelande.setText("Något gick fel");
+            lblFelmeddelande.setVisible(true);
+        }
     }//GEN-LAST:event_btAndraActionPerformed
 
     private void btHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHandlaggareActionPerformed
-       new ProjektHandlaggare(idb, getPid()).setVisible(true);
+        new ProjektHandlaggare(idb, getPid()).setVisible(true);
     }//GEN-LAST:event_btHandlaggareActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(AndraProjekt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            //new AndraProjekt().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                //new AndraProjekt().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAndra;

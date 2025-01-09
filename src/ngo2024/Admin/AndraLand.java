@@ -14,24 +14,23 @@ import oru.inf.InfException;
  * @author alexanderabboud
  */
 public class AndraLand extends javax.swing.JFrame {
-    
+
     private InfDB idb;
-    private String epost; 
+    private String epost;
     private boolean kontrollOk;
-    
-     /**
+
+    /**
      * Initierar AndraLand objekt 
      * låter administratör ändra information om ett land
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten för den inloggade användaren
      */
-
     public AndraLand(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
-        kontrollOk=true;
-        
+        this.idb = idb;
+        this.epost = epost;
+        kontrollOk = true;
+
         initComponents();
         fyllCb();
         gomAlla();
@@ -40,34 +39,31 @@ public class AndraLand extends javax.swing.JFrame {
         lblError.setVisible(false);
 
     }
-    
+
     /**
      * fyller i combo box med namn på länder
      */
-
-    public void fyllCb(){
+    public void fyllCb() {
         cbValjLand.removeAllItems();
-        String sqlFraga="SELECT namn FROM land";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT namn FROM land";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbValjLand.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * gömmer allt som har med valen att göra
      */
-
-    public void gomAlla(){
+    public void gomAlla() {
         lblEkonomiBad.setVisible(false);
         lblNamnBad.setVisible(false);
         lblPolitikBad.setVisible(false);
@@ -87,288 +83,266 @@ public class AndraLand extends javax.swing.JFrame {
         jLabel5.setVisible(false);
         jLabel6.setVisible(false);
         btnAndra.setVisible(false);
-       
+
         lblLid.setVisible(false);
         lblNamn.setVisible(false);
         lblBorttagen.setVisible(false);
         btnTaBort.setVisible(false);
-        
+
         cbValjLand.setVisible(false);
     }
-    
+
     /**
      * hämtar ut land ID
      */
-    
-    public String selectLid(){
-        String lid="111";
-        try{
-            String sqlFraga="SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
-            lid=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
+    public String selectLid() {
+        String lid = "111";
+        try {
+            String sqlFraga = "SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
+            lid = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return lid;
-        }
-   
+    }
+
     /**
-     *  tar bort ett land
+     * tar bort ett land
+     *
      * @param lid Land ID
      */
+    public void taBortLand(int lid) {
 
-    public void taBortLand(int lid){
-        
-        String sqlFraga="DELETE FROM land WHERE lid=" + lid;
-        try{
+        String sqlFraga = "DELETE FROM land WHERE lid=" + lid;
+        try {
             idb.delete(sqlFraga);
             lblBorttagen.setVisible(true);
-            
-        }
-        catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller i fälten som en användaren sla ändra med det valda landet
      */
+    public void fyllTabellAndra() {
+        String sLid = selectLid();
+        int lidL = Integer.parseInt(sLid);
+        String namnS = " ";
+        String sprakS = " ";
+        String valutaS = " ";
+        String politikS = " ";
+        String ekonomiS = " ";
+        String tidzonS = " ";
 
-    public void fyllTabellAndra(){
-        String sLid=selectLid();
-        int lidL=Integer.parseInt(sLid);
-        String namnS=" ";
-        String sprakS=" ";
-        String valutaS=" ";
-        String politikS=" ";
-        String ekonomiS=" ";
-        String tidzonS=" ";
-
-        try{
+        try {
             namnS = idb.fetchSingle("SELECT namn FROM land WHERE lid = " + lidL);
             sprakS = idb.fetchSingle("SELECT sprak FROM land WHERE lid = " + lidL);
             valutaS = idb.fetchSingle("SELECT valuta FROM land WHERE lid = " + lidL);
             politikS = idb.fetchSingle("SELECT politisk_struktur FROM land WHERE lid = " + lidL);
             ekonomiS = idb.fetchSingle("SELECT ekonomi FROM land WHERE lid = " + lidL);
-            tidzonS = idb.fetchSingle("SELECT tidszon FROM land WHERE lid = " + lidL);      
-            
-            
-        }
-        catch(Exception ex){
+            tidzonS = idb.fetchSingle("SELECT tidszon FROM land WHERE lid = " + lidL);
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        } 
-            tfNamn.setText(namnS);
-            tfSprak.setText(sprakS);
-            tfValuta.setText(valutaS);
-            tfPolitik.setText(politikS);
-            tfEkonomi.setText(ekonomiS);
-            tfTidzon.setText(tidzonS);
-                    
+        }
+        tfNamn.setText(namnS);
+        tfSprak.setText(sprakS);
+        tfValuta.setText(valutaS);
+        tfPolitik.setText(politikS);
+        tfEkonomi.setText(ekonomiS);
+        tfTidzon.setText(tidzonS);
+
     }
-    
+
     /**
      * låter användaren göra ändringar på land
      */
-
-    public void gorAndring(){
-        String sLid=selectLid();
-        int lidL=Integer.parseInt(sLid);
+    public void gorAndring() {
+        String sLid = selectLid();
+        int lidL = Integer.parseInt(sLid);
         String namnS = tfNamn.getText();
         String sprakS = tfSprak.getText();
         String valutaS = tfValuta.getText();
         String politikS = tfPolitik.getText();
         String ekonomiS = tfEkonomi.getText();
         String tidzonS = tfTidzon.getText();
-        String sqlUpdate="UPDATE land SET namn='" + namnS + "', sprak= '" + sprakS + "', valuta= " + valutaS
+        String sqlUpdate = "UPDATE land SET namn='" + namnS + "', sprak= '" + sprakS + "', valuta= " + valutaS
                 + ", tidszon= '" + tidzonS + "', politisk_struktur= '" + politikS + "', ekonomi= '"
                 + ekonomiS + "' where lid=" + lidL;
-        try{
+        try {
             idb.update(sqlUpdate);
             System.out.println(sqlUpdate);
-        }
-        
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        } 
+        }
     }
-    
+
     /**
      * gömmer alla felmeddelanden
      */
-
-public void gomBad(){
-    lblEkonomiBad.setVisible(false);
+    public void gomBad() {
+        lblEkonomiBad.setVisible(false);
         lblNamnBad.setVisible(false);
         lblPolitikBad.setVisible(false);
         lblSprakBad.setVisible(false);
         lblTidzonBad.setVisible(false);
         lblValutaBad.setVisible(false);
-}    
+    }
 
     /**
      * kontrollerar allt
      */
+    public void totalKontroll() {
+        Boolean totOk = true;
 
-public void totalKontroll() {
-    Boolean totOk = true;
-
-    if (!valutaKontroll()) {
-        totOk = false;
-    } else if (!namnKontroll()) {
-        totOk = false;
-    } else if (!sprakKontroll()) {
-        totOk = false;
-        lblSprakBad.setVisible(true);
-    } else if (!politikKontroll()) {
-        totOk = false;
-        lblPolitikBad.setVisible(true);
-    } else if (!ekonomiKontroll()) {
-        totOk = false;
-        lblEkonomiBad.setVisible(true);
-    } else if (!tidzonKontroll()) {
-        totOk = false;
-        lblTidzonBad.setVisible(true);
-    }else if (sammaNamnKontroll()) {
-        totOk = false;
+        if (!valutaKontroll()) {
+            totOk = false;
+        } else if (!namnKontroll()) {
+            totOk = false;
+        } else if (!sprakKontroll()) {
+            totOk = false;
+            lblSprakBad.setVisible(true);
+        } else if (!politikKontroll()) {
+            totOk = false;
+            lblPolitikBad.setVisible(true);
+        } else if (!ekonomiKontroll()) {
+            totOk = false;
+            lblEkonomiBad.setVisible(true);
+        } else if (!tidzonKontroll()) {
+            totOk = false;
+            lblTidzonBad.setVisible(true);
+        } else if (sammaNamnKontroll()) {
+            totOk = false;
+        }
+        kontrollOk = totOk;
     }
-    kontrollOk = totOk;}
 
     /**
      * kontrollerar namn
      */
-
-    public boolean namnKontroll(){
+    public boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-    if (valid.checkMeningOSiffra(namn)&& valid.checkStorlek(100, namn)) {
+        if (valid.checkMeningOSiffra(namn) && valid.checkStorlek(100, namn)) {
             lblNamnBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblNamnBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollera ???
      */
-
-    public boolean sammaNamnKontroll(){
-        boolean samma=false;
-        boolean sSamma=true;
-        boolean retur=false;
-        ArrayList<String> namnLista=new ArrayList<>();
-        String sqlFraga="SELECT namn FROM land";
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-        } catch(Exception ex){
+    public boolean sammaNamnKontroll() {
+        boolean samma = false;
+        boolean sSamma = true;
+        boolean retur = false;
+        ArrayList<String> namnLista = new ArrayList<>();
+        String sqlFraga = "SELECT namn FROM land";
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        String valtLand= (String) cbValjLand.getSelectedItem();
-        
-        if(tfNamn.getText().equals(valtLand)){
-                sSamma=false;
-            }
-        
-        
-        for(String namn:namnLista){
-            if(namn.equals(tfNamn.getText())){
-                samma=true;
+        String valtLand = (String) cbValjLand.getSelectedItem();
+
+        if (tfNamn.getText().equals(valtLand)) {
+            sSamma = false;
+        }
+
+        for (String namn : namnLista) {
+            if (namn.equals(tfNamn.getText())) {
+                samma = true;
             }
         }
-        if(sSamma==false){
-            retur=sSamma;
-        }
-        else if (samma==true){
+        if (sSamma == false) {
+            retur = sSamma;
+        } else if (samma == true) {
             lblNamnBad.setVisible(true);
-            retur=samma;
+            retur = samma;
         }
         return retur;
     }
-    
+
     /**
      * kontrollera språket i ett land
      */
-
-    public boolean sprakKontroll(){
+    public boolean sprakKontroll() {
         Validering valid = new Validering(idb);
         String sprak = tfSprak.getText();
-    if (valid.checkMeningOSiffra(sprak)&& valid.checkStorlek(100, sprak)) {
+        if (valid.checkMeningOSiffra(sprak) && valid.checkStorlek(100, sprak)) {
             lblSprakBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblSprakBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar politik???
      */
-
-    public boolean politikKontroll(){
+    public boolean politikKontroll() {
         Validering valid = new Validering(idb);
         String politik = tfPolitik.getText();
-    if (valid.checkMeningOSiffra(politik)&& valid.checkStorlek(255, politik)) {
+        if (valid.checkMeningOSiffra(politik) && valid.checkStorlek(255, politik)) {
             lblPolitikBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblPolitikBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar ett lands ekonomiska status
      */
-
-    public boolean ekonomiKontroll(){
+    public boolean ekonomiKontroll() {
         Validering valid = new Validering(idb);
         String ekonomi = tfEkonomi.getText();
-    if (valid.checkMeningOSiffra(ekonomi)&& valid.checkStorlek(255, ekonomi)) {
+        if (valid.checkMeningOSiffra(ekonomi) && valid.checkStorlek(255, ekonomi)) {
             lblEkonomiBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblEkonomiBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar vilken tidzon ett land ligger i
      */
-
-    public boolean tidzonKontroll(){
+    public boolean tidzonKontroll() {
         Validering valid = new Validering(idb);
         String tidzon = tfTidzon.getText();
-    if (valid.checkMeningOSiffra(tidzon)&& valid.checkStorlek(20, tidzon)) {
+        if (valid.checkMeningOSiffra(tidzon) && valid.checkStorlek(20, tidzon)) {
             lblTidzonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTidzonBad.setVisible(true);
             return false;
-    }
+        }
     }
 
     /**
      * kontrollerar vilken valuta ett land har
      */
-
-    public boolean valutaKontroll(){
+    public boolean valutaKontroll() {
         Validering valid = new Validering(idb);
         String valuta = tfValuta.getText();
-    if (valid.checkValuta(valuta)) {
+        if (valid.checkValuta(valuta)) {
             lblValutaBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblValutaBad.setVisible(true);
             return false;
-            
-    }
-    }
 
-
-    
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -655,11 +629,11 @@ public void totalKontroll() {
     }//GEN-LAST:event_tfNamnActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-    String stringInt=lblLid.getText();
-    int iInt=Integer.parseInt(stringInt);
-    taBortLand(iInt);
-    fyllCb();
-    
+        String stringInt = lblLid.getText();
+        int iInt = Integer.parseInt(stringInt);
+        taBortLand(iInt);
+        fyllCb();
+
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
@@ -667,13 +641,13 @@ public void totalKontroll() {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void cbhTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhTaBortActionPerformed
-       if(cbhTaBort.isSelected()){
-           cbhAndra.setSelected(false);
-           gomAndra();
-       }
+        if (cbhTaBort.isSelected()) {
+            cbhAndra.setSelected(false);
+            gomAndra();
+        }
     }//GEN-LAST:event_cbhTaBortActionPerformed
-    public void gomAndra(){
-        
+    public void gomAndra() {
+
         //göm allt om Ändra
         lblEkonomiBad.setVisible(false);
         lblNamnBad.setVisible(false);
@@ -694,58 +668,57 @@ public void totalKontroll() {
         jLabel5.setVisible(false);
         jLabel6.setVisible(false);
         btnAndra.setVisible(false);
-        
+
         // så att man kan se de som tillhör ta bort
         lblLid.setVisible(true);
         lblNamn.setVisible(true);
         btnTaBort.setVisible(true);
         cbValjLand.setVisible(true);
     }
-    
+
     public void gomTaBort() {
-    // Visa allt om Ändra
+        // Visa allt om Ändra
 
-    tfEkonomi.setVisible(true);
-    tfNamn.setVisible(true);
-    tfPolitik.setVisible(true);
-    tfSprak.setVisible(true);
-    tfTidzon.setVisible(true);
-    tfValuta.setVisible(true);
-    jLabel1.setVisible(true);
-    jLabel2.setVisible(true);
-    jLabel3.setVisible(true);
-    jLabel4.setVisible(true);
-    jLabel5.setVisible(true);
-    jLabel6.setVisible(true);
-    btnAndra.setVisible(true);
-    cbValjLand.setVisible(true);
+        tfEkonomi.setVisible(true);
+        tfNamn.setVisible(true);
+        tfPolitik.setVisible(true);
+        tfSprak.setVisible(true);
+        tfTidzon.setVisible(true);
+        tfValuta.setVisible(true);
+        jLabel1.setVisible(true);
+        jLabel2.setVisible(true);
+        jLabel3.setVisible(true);
+        jLabel4.setVisible(true);
+        jLabel5.setVisible(true);
+        jLabel6.setVisible(true);
+        btnAndra.setVisible(true);
+        cbValjLand.setVisible(true);
 
-    // Göm det som tillhör ta bort
-    lblLid.setVisible(false);
-    lblNamn.setVisible(false);
-    lblBorttagen.setVisible(false);
-    btnTaBort.setVisible(false);
-}
-    
-    
-    
+        // Göm det som tillhör ta bort
+        lblLid.setVisible(false);
+        lblNamn.setVisible(false);
+        lblBorttagen.setVisible(false);
+        btnTaBort.setVisible(false);
+    }
+
+
     private void cbhAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhAndraActionPerformed
-        if(cbhAndra.isSelected()){
+        if (cbhAndra.isSelected()) {
             cbhTaBort.setSelected(false);
             gomTaBort();
         }
     }//GEN-LAST:event_cbhAndraActionPerformed
 
     private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
-      if(cbhTaBort.isSelected()){
-          lblLid.setText(selectLid());
-          int i=cbValjLand.getSelectedIndex();
-          lblNamn.setText(cbValjLand.getItemAt(i));
-      }else if(cbhAndra.isSelected()){
-           fyllTabellAndra();
-       }
-        
-      
+        if (cbhTaBort.isSelected()) {
+            lblLid.setText(selectLid());
+            int i = cbValjLand.getSelectedIndex();
+            lblNamn.setText(cbValjLand.getItemAt(i));
+        } else if (cbhAndra.isSelected()) {
+            fyllTabellAndra();
+        }
+
+
     }//GEN-LAST:event_btnValjActionPerformed
 
     private void tfEkonomiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEkonomiActionPerformed
@@ -753,18 +726,18 @@ public void totalKontroll() {
     }//GEN-LAST:event_tfEkonomiActionPerformed
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
-            totalKontroll();
-            if(kontrollOk==true){
-                gorAndring();
-                lblLyckades.setVisible(true);
-                lblError.setVisible(false);
-                fyllCb();
-            }
-            else{
-                lblError.setVisible(true);
-                lblLyckades.setVisible(false);}
+        totalKontroll();
+        if (kontrollOk == true) {
+            gorAndring();
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+            fyllCb();
+        } else {
+            lblError.setVisible(true);
+            lblLyckades.setVisible(false);
+        }
 
-        
+
     }//GEN-LAST:event_btnAndraActionPerformed
 
     /**
@@ -797,7 +770,7 @@ public void totalKontroll() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new AndraLand().setVisible(true);
+                // new AndraLand().setVisible(true);
             }
         });
     }

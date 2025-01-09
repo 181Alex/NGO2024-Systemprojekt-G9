@@ -14,180 +14,166 @@ import java.util.ArrayList;
  * @author alexanderabboud
  */
 public class StadForandring extends javax.swing.JFrame {
+
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
-    
-     /**
-     * Initierar StadForandring objekt 
-     * administratör kan lägga till och ändra information om städer
+
+    /**
+     * Initierar StadForandring objekt administratör kan lägga till och ändra
+     * information om städer
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten för den inloggade användaren
      */
-
     public StadForandring(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
         fyllValjLand();
         fyllValjStad();
         gomAlla();
-        kontrollOk=false;
+        kontrollOk = false;
     }
-    
+
     /**
      * fyller i combo box med namn på städer
      */
-    
-    public void fyllValjStad(){
+    public void fyllValjStad() {
         cbValjStad.removeAllItems();
-        String sqlFraga="SELECT namn FROM stad";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT namn FROM stad";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbValjStad.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller combo box med namn på länder
      */
-
-    public void fyllValjLand(){
+    public void fyllValjLand() {
         cbValjLand.removeAllItems();
-        String sqlFraga="SELECT namn FROM land";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT namn FROM land";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbValjLand.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    /**
-     * kontrollerar  so att namn på städer är valid
-     */
 
-    public boolean kontrollStadText(){
-        boolean ok=false;
-         Validering valid = new Validering(idb);
+    /**
+     * kontrollerar so att namn på städer är valid
+     */
+    public boolean kontrollStadText() {
+        boolean ok = false;
+        Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-    if (valid.checkStad(namn)&& valid.checkStorlek(255, namn)) {
+        if (valid.checkStad(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
-            ok=true;
-        
-    } else {
+            ok = true;
+
+        } else {
             lblNamnBad.setVisible(true);
-            ok=false;
+            ok = false;
+        }
+        return ok;
     }
-    return ok;
-    }
-    
+
     /**
      * hämtar namn på ett land
      */
-    
-    public String selectLand(){
-      String sqlFraga="SELECT namn FROM land where lid= (Select land from stad where namn='" 
-              + cbValjStad.getSelectedItem() + "')";
-      String namn=" ";
-      try{
-          namn=idb.fetchSingle(sqlFraga);
-          System.out.println(sqlFraga);
-      }catch(Exception ex){
+    public String selectLand() {
+        String sqlFraga = "SELECT namn FROM land where lid= (Select land from stad where namn='"
+                + cbValjStad.getSelectedItem() + "')";
+        String namn = " ";
+        try {
+            namn = idb.fetchSingle(sqlFraga);
+            System.out.println(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-      
-      return namn;
-      
+
+        return namn;
+
     }
-    
+
     /**
      * kontrollerar allt
      */
-    
     public void totalKontroll() {
-    Boolean totOk = true;
-    
-     if(!kontrollStadText()){
-        totOk=false;
+        Boolean totOk = true;
+
+        if (!kontrollStadText()) {
+            totOk = false;
         }
-    kontrollOk=totOk;
+        kontrollOk = totOk;
     }
-    
+
     /**
      * hämtar ut land ID
      */
-
-    public int selectLid(){
-        String slid="111";
-        try{
-            String sqlFraga="SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
-            slid=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
+    public int selectLid() {
+        String slid = "111";
+        try {
+            String sqlFraga = "SELECT lid FROM land where namn='" + cbValjLand.getSelectedItem() + "'";
+            slid = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        int lid=Integer.parseInt(slid);
+        int lid = Integer.parseInt(slid);
         return lid;
-        }
-        
+    }
+
     /**
      * hämtar högsta land id
      */
-
-    public int hogstaSid(){
-        int hogsta=0;
-        String sqlFraga="Select MAX(sid) FROM stad";
-        try{
-            String max=idb.fetchSingle(sqlFraga);
-            hogsta=Integer.parseInt(max);
-        }
-        catch(Exception ex){
+    public int hogstaSid() {
+        int hogsta = 0;
+        String sqlFraga = "Select MAX(sid) FROM stad";
+        try {
+            String max = idb.fetchSingle(sqlFraga);
+            hogsta = Integer.parseInt(max);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println(hogsta);
-        return hogsta+1;
+        return hogsta + 1;
     }
-    
+
     /**
      * hämtar ut stads ID
      */
-
-    public int selectSid(){
-        String sSid="111";
-        try{
-            String sqlFraga="SELECT sid FROM stad where namn='" + cbValjStad.getSelectedItem() + "'";
-            sSid=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
+    public int selectSid() {
+        String sSid = "111";
+        try {
+            String sqlFraga = "SELECT sid FROM stad where namn='" + cbValjStad.getSelectedItem() + "'";
+            sSid = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        int sid=Integer.parseInt(sSid);
+        int sid = Integer.parseInt(sSid);
         return sid;
-        }
-    
+    }
+
     /**
      * gömmer allt
      */
-
-    public void gomAlla(){
+    public void gomAlla() {
         btnAndra.setVisible(false);
         btnTaBort.setVisible(false);
         btnLaggTill.setVisible(false);
@@ -202,9 +188,9 @@ public class StadForandring extends javax.swing.JFrame {
         lblNuLand.setVisible(false);
         btnValj.setVisible(false);
     }
-    
-    public void visaLaggTill(){
-        if(cbhLaggTill.isSelected()){
+
+    public void visaLaggTill() {
+        if (cbhLaggTill.isSelected()) {
             cbhTaBort.setSelected(false);
             cbhAndra.setSelected(false);
             lblStadNamn.setVisible(true);
@@ -219,13 +205,12 @@ public class StadForandring extends javax.swing.JFrame {
             lblNuLand.setVisible(false);
         }
     }
-    
+
     /**
      * visa ändra
      */
-
-    public void visaAndra(){
-        if(cbhAndra.isSelected()){
+    public void visaAndra() {
+        if (cbhAndra.isSelected()) {
             cbhTaBort.setSelected(false);
             cbhLaggTill.setSelected(false);
             cbValjStad.setVisible(true);
@@ -240,13 +225,12 @@ public class StadForandring extends javax.swing.JFrame {
             btnValj.setVisible(true);
         }
     }
-    
+
     /**
      * Visar allt för att ta bort
      */
-
-    public void visaTaBort(){
-        if(cbhTaBort.isSelected()){
+    public void visaTaBort() {
+        if (cbhTaBort.isSelected()) {
             cbhAndra.setSelected(false);
             cbhLaggTill.setSelected(false);
             cbValjStad.setVisible(true);
@@ -259,11 +243,9 @@ public class StadForandring extends javax.swing.JFrame {
             btnLaggTill.setVisible(false);
             btnAndra.setVisible(true);
             lblNuLand.setVisible(true);
-            
+
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -493,84 +475,77 @@ public class StadForandring extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
-       String sqlFraga="INSERT INTO stad VALUES(" + hogstaSid() + ", '" + tfNamn.getText() + "', " + selectLid() + ")";
+        String sqlFraga = "INSERT INTO stad VALUES(" + hogstaSid() + ", '" + tfNamn.getText() + "', " + selectLid() + ")";
         //Lägger till staden
         totalKontroll();
-       if(kontrollOk){
-            try{
-          System.out.println(sqlFraga);;
-          idb.insert(sqlFraga);
+        if (kontrollOk) {
+            try {
+                System.out.println(sqlFraga);;
+                idb.insert(sqlFraga);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
-            catch(Exception ex){
-            System.out.println(ex.getMessage());
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+        } else {
+            lblLyckades.setVisible(false);
+            lblError.setVisible(true);
         }
-          lblLyckades.setVisible(true);
-          lblError.setVisible(false);
-       }
-       else{
-           lblLyckades.setVisible(false);
-          lblError.setVisible(true);
-       }
     }//GEN-LAST:event_btnLaggTillActionPerformed
 
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
-        String sqlFraga="UPDATE stad SET namn= '"+ tfNamn.getText() + "' WHERE sid= " + selectSid() ;
+        String sqlFraga = "UPDATE stad SET namn= '" + tfNamn.getText() + "' WHERE sid= " + selectSid();
         //uppdaterar staden
         totalKontroll();
-       if(kontrollOk){
-            try{
-          System.out.println(sqlFraga);;
-          idb.update(sqlFraga);
+        if (kontrollOk) {
+            try {
+                System.out.println(sqlFraga);;
+                idb.update(sqlFraga);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
-            catch(Exception ex){
-            System.out.println(ex.getMessage());
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+        } else {
+            lblLyckades.setVisible(false);
+            lblError.setVisible(true);
         }
-          lblLyckades.setVisible(true);
-          lblError.setVisible(false);
-       }
-       else{
-           lblLyckades.setVisible(false);
-          lblError.setVisible(true);
-       }
     }//GEN-LAST:event_btnAndraActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-     String sqlFraga="DELETE FROM stad WHERE sid=" + selectSid();
-    
+        String sqlFraga = "DELETE FROM stad WHERE sid=" + selectSid();
+
         totalKontroll();
         //tar bort den valda staden
-       if(kontrollOk){
-            try{
-          System.out.println(sqlFraga);;
-          idb.delete(sqlFraga);
+        if (kontrollOk) {
+            try {
+                System.out.println(sqlFraga);;
+                idb.delete(sqlFraga);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
-            catch(Exception ex){
-            System.out.println(ex.getMessage());
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+        } else {
+            lblLyckades.setVisible(false);
+            lblError.setVisible(true);
         }
-          lblLyckades.setVisible(true);
-          lblError.setVisible(false);
-       }
-       else{
-           lblLyckades.setVisible(false);
-          lblError.setVisible(true);
-       }
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
 
-       // fyller ut vilket land det är
-       if(cbhAndra.isSelected()){
-       int i=cbValjStad.getSelectedIndex();
-       tfNamn.setText(cbValjStad.getItemAt(i));
-       lblNuLand.setVisible(true);
-       lblNuLand.setText(selectLand());
-       }
-       else if(cbhTaBort.isSelected()){
-        int i=cbValjStad.getSelectedIndex();
-        tfNamn.setText(cbValjStad.getItemAt(i));
-        lblNuLand.setVisible(true);
-        lblNuLand.setText(selectLand());
-       }
+        // fyller ut vilket land det är
+        if (cbhAndra.isSelected()) {
+            int i = cbValjStad.getSelectedIndex();
+            tfNamn.setText(cbValjStad.getItemAt(i));
+            lblNuLand.setVisible(true);
+            lblNuLand.setText(selectLand());
+        } else if (cbhTaBort.isSelected()) {
+            int i = cbValjStad.getSelectedIndex();
+            tfNamn.setText(cbValjStad.getItemAt(i));
+            lblNuLand.setVisible(true);
+            lblNuLand.setText(selectLand());
+        }
     }//GEN-LAST:event_btnValjActionPerformed
 
     /**
@@ -603,7 +578,7 @@ public class StadForandring extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new StadForandring().setVisible(true);
+                // new StadForandring().setVisible(true);
             }
         });
     }

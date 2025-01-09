@@ -17,286 +17,276 @@ import oru.inf.InfException;
 public class LaggTillAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> stadLista;
-    
-     /**
+
+    /**
      * Initierar LaggTillAvdelning objekt 
      * Låter administratör lägga till en ny avdelning
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten som den inloggande användaren använder
      */
-
-    
     public LaggTillAvdelning(InfDB idb, String epos) {
-        this.idb=idb;
-        this.epost=epost;
-        kontrollOk=false;
+        this.idb = idb;
+        this.epost = epost;
+        kontrollOk = false;
         initComponents();
         anstalldLista = new HashMap<>();
         stadLista = new HashMap<>();
         instansering();
         gomBad();
     }
-    
-     /**
+
+    /**
      * ger projektchef och stad
      */
-    
-    private void instansering(){
+    private void instansering() {
         fyllProjektChef();
         fyllStad();
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
     }
-    
+
     /**
      * fyller i combo box för projektchefer
      */
-    
-    private void fyllProjektChef(){
+    private void fyllProjektChef() {
         cbChef.removeAllItems();
-        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
-        
-        try{
-            ArrayList<String> chefLista=idb.fetchColumn(sqlFraga);
-            
-            for(String anstNamn : chefLista){
+        String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
+
+        try {
+            ArrayList<String> chefLista = idb.fetchColumn(sqlFraga);
+
+            for (String anstNamn : chefLista) {
                 String sqlAid = "SELECT aid from anstalld WHERE "
                         + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
                 String i = idb.fetchSingle(sqlAid);
                 cbChef.addItem(anstNamn);
                 anstalldLista.put(i, anstNamn);
-                
-            }
-            
-        }catch(InfException ex){
-            System.out.println(ex.getMessage());
-        }}
-    
-    /**
-     * fyller i combo box för städer
-     */
-    
-    private void fyllStad(){
-        cbStad.removeAllItems();
-        //fyller stads listan
-        String sqlLand = "SELECT namn FROM stad ";
-        
-        try{
 
-        ArrayList<String> allaStaderLista =  idb.fetchColumn(sqlLand);
-                                             
-            for(String stadNamn : allaStaderLista){
-               String sqlLid = "SELECT sid FROM stad WHERE "
-                       + "namn = '" + stadNamn + "'";
-               String i = idb.fetchSingle(sqlLid);
-               cbStad.addItem(stadNamn);
-               stadLista.put(i, stadNamn);
             }
-        }catch(InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    public void gomBad(){
+
+    /**
+     * fyller i combo box för städer
+     */
+    private void fyllStad() {
+        cbStad.removeAllItems();
+        //fyller stads listan
+        String sqlLand = "SELECT namn FROM stad ";
+
+        try {
+
+            ArrayList<String> allaStaderLista = idb.fetchColumn(sqlLand);
+
+            for (String stadNamn : allaStaderLista) {
+                String sqlLid = "SELECT sid FROM stad WHERE "
+                        + "namn = '" + stadNamn + "'";
+                String i = idb.fetchSingle(sqlLid);
+                cbStad.addItem(stadNamn);
+                stadLista.put(i, stadNamn);
+            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void gomBad() {
         lblNamnBad.setVisible(false);
         lblBeskrivningBad.setVisible(false);
         lblAdressBad.setVisible(false);
         lblEpostBad.setVisible(false);
         lblTelefonBad.setVisible(false);
     }
-    
+
     /**
      * hämtar högsta avdelnings ID
      */
-    
-    private int hogstaAvdid(){
-        int hogsta=0;
-        String sqlFraga="Select MAX(avdid) FROM avdelning";
-        try{
-            String max=idb.fetchSingle(sqlFraga);
-            hogsta=Integer.parseInt(max);
-        }
-        catch(Exception ex){
+    private int hogstaAvdid() {
+        int hogsta = 0;
+        String sqlFraga = "Select MAX(avdid) FROM avdelning";
+        try {
+            String max = idb.fetchSingle(sqlFraga);
+            hogsta = Integer.parseInt(max);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println(hogsta);
-        return hogsta+1;
-}
-    
+        return hogsta + 1;
+    }
+
     /**
      * kontrollerar så att allt är valid
      */
-    
     private void totalKontroll() {
-    Boolean totOk = true;
+        Boolean totOk = true;
 
-    if (!namnKontroll()) {
-        totOk = false;
-        lblNamnBad.setVisible(true);
-    } else if (!beskrivningKontroll()) {  
-        totOk = false;
-        lblBeskrivningBad.setVisible(true);
-    } else if (!adressKontroll(idb)) {  
-        totOk = false;
-        lblAdressBad.setVisible(true);
-    } else if (!telefonKontroll(idb)) {  
-        totOk = false;
-        lblTelefonBad.setVisible(true);
-    } else if (!epostKontroll(idb)) {  
-        totOk = false;
-        lblEpostBad.setVisible(true);
-    }else if(!sammaEpostKontroll()){
-        totOk=false;
+        if (!namnKontroll()) {
+            totOk = false;
+            lblNamnBad.setVisible(true);
+        } else if (!beskrivningKontroll()) {
+            totOk = false;
+            lblBeskrivningBad.setVisible(true);
+        } else if (!adressKontroll(idb)) {
+            totOk = false;
+            lblAdressBad.setVisible(true);
+        } else if (!telefonKontroll(idb)) {
+            totOk = false;
+            lblTelefonBad.setVisible(true);
+        } else if (!epostKontroll(idb)) {
+            totOk = false;
+            lblEpostBad.setVisible(true);
+        } else if (!sammaEpostKontroll()) {
+            totOk = false;
+        }
+
+        kontrollOk = totOk;
     }
 
-    kontrollOk = totOk;
-}
-
     /**
-     *  kontrollerar adress för att se att det är valid
+     * kontrollerar adress för att se att det är valid
+     *
      * @param idb initierar fält för att interagera med databasen
      */
-    
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAdress(adress) && valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
         } else {
             lblAdressBad.setVisible(true);
             return false;
-        }}
-    
+        }
+    }
+
     /**
-     *  kontrollerar telefon nummer för att se att det är valid
+     * kontrollerar telefon nummer för att se att det är valid
+     *
      * @param idb initierar fält för att interagera med databasen
      */
-    
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+        if (valid.checkTelefon(telefon) && valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTelefonBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
-     *  kontrollerar eposten för att se att det är valid
+     * kontrollerar eposten för att se att det är valid
+     *
      * @param idb initierar fält för att interagera med databasen
      */
-    
-    public boolean epostKontroll(InfDB idb){
-    Validering valid = new Validering(idb); 
-    
-    String epost = tfEpost.getText(); 
+    public boolean epostKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
 
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
-        lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
-    }}
-    
+        String epost = tfEpost.getText();
 
-    
+        if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
+    }
+
     /**
-     * Anropar kontroll av att ny epost inte är som någon annans
-     * Ger false om valideringen visar att fel uppstått
-     * 
+     * Anropar kontroll av att ny epost inte är som någon annans Ger false om
+     * valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
-    private boolean sammaEpostKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
-    if(valid.checkInteSammaEpost(epost)){
-      lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
+    private boolean sammaEpostKontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = tfEpost.getText();
+        if (valid.checkInteSammaEpost(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
     }
-    }
-    
+
     /**
-     *  kontrollerar namn för att se att det är valid
+     * kontrollerar namn för att se att det är valid
      */
-    
-    private boolean namnKontroll(){
+    private boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // kontrollerar namn format
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblNamnBad.setVisible(true);
             return false;
+        }
     }
-}
-    
+
     /**
-     *  kontrollerar beskrivningen för att se att det är valid
+     * kontrollerar beskrivningen för att se att det är valid
      */
-    
-   private boolean beskrivningKontroll(){
-           Validering valid = new Validering(idb);
+    private boolean beskrivningKontroll() {
+        Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
+        if (valid.checkBeskrivning(besk) && valid.checkStorlek(255, besk)) {
             lblBeskrivningBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblBeskrivningBad.setVisible(true);
             return false;
+        }
     }
-} 
-   
+
     /**
-     *  Ger anställds ID till den valda projektchefen
+     * Ger anställds ID till den valda projektchefen
      */
-    
-   private String getPChef(){
+    private String getPChef() {
         String selectedPerson = (String) cbChef.getSelectedItem();
         String aid = " ";
-        for(String id : anstalldLista.keySet()){
+        for (String id : anstalldLista.keySet()) {
             String namn = anstalldLista.get(id);
-            if(selectedPerson != null && selectedPerson.equals(namn)){
-                aid = id;               
+            if (selectedPerson != null && selectedPerson.equals(namn)) {
+                aid = id;
             }
-        } 
+        }
         return aid;
     }
-   
+
     /**
-     *  Ger stads ID
+     * Ger stads ID
      */
-   
-   private String getStad(){
-       String namn= (String) cbStad.getSelectedItem();
+    private String getStad() {
+        String namn = (String) cbStad.getSelectedItem();
         String sid = " ";
-        for(String id : stadLista.keySet()){
+        for (String id : stadLista.keySet()) {
             String ssStad = stadLista.get(id);
-            if(namn != null && namn.equals(ssStad)){
-                sid = id;               
+            if (namn != null && namn.equals(ssStad)) {
+                sid = id;
             }
-        } 
+        }
         return sid;
-   }
-   
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -527,24 +517,23 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
         totalKontroll();
-        int hogsta=hogstaAvdid();
-        String sqlFraga="INSERT INTO avdelning VALUES(" + hogstaAvdid() + ", '" + tfNamn.getText() + "', '" + tfBeskrivning.getText()
+        int hogsta = hogstaAvdid();
+        String sqlFraga = "INSERT INTO avdelning VALUES(" + hogstaAvdid() + ", '" + tfNamn.getText() + "', '" + tfBeskrivning.getText()
                 + "', '" + tfAdress.getText() + "', '" + tfEpost.getText() + "', '" + tfTelefon.getText()
                 + "', " + getStad() + ", " + getPChef() + ")";
         System.out.println(sqlFraga);
-        if(kontrollOk==true){
-            try{
+        if (kontrollOk == true) {
+            try {
 
                 idb.insert(sqlFraga);
                 System.out.println(sqlFraga);
 
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
             lblError.setVisible(false);
             lblSkapad.setVisible(true);
-        }
-        else{
+        } else {
             lblError.setVisible(true);
         }
     }//GEN-LAST:event_btnSkapaActionPerformed

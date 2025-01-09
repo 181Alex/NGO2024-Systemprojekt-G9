@@ -8,24 +8,24 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+
 /**
  *
  * @author linneagottling
  */
-public class ProjektPartner extends javax.swing.JFrame {  
-    
+public class ProjektPartner extends javax.swing.JFrame {
+
     private InfDB idb;
     private String pid;
-        private HashMap<String, String> partnerLista;
+    private HashMap<String, String> partnerLista;
 
     /**
-     * Initierar ProjektPartner objekt 
-     * låter administratören lägga till och ta bort partner för ett projekt
+     * Initierar ProjektPartner objekt låter administratören lägga till och ta
+     * bort partner för ett projekt
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid partner ID
      */
-        
     public ProjektPartner(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -40,31 +40,30 @@ public class ProjektPartner extends javax.swing.JFrame {
         lblFelmeddelande.setVisible(false);
         fyllHashMap();
     }
-    
+
     /**
      * ger projektnamn på ett visst projekt namn
+     *
      * @param pid projekt ID
      */
-    
-        private void setProjektnamn(String pid){
-        try{
+    private void setProjektnamn(String pid) {
+        try {
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
             String projektnamn = idb.fetchSingle(sqlFraga);
             lblProjektnamn.setText(projektnamn);
-            
-        } catch (InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-        
+
     /**
      * fyller i Hash Map med alla partners namn
      */
-        
-        private void fyllHashMap(){
-            
-            try{
-             String sqlFraga = "SELECT namn FROM partner";
+    private void fyllHashMap() {
+
+        try {
+            String sqlFraga = "SELECT namn FROM partner";
 
             ArrayList<String> allaPartners = idb.fetchColumn(sqlFraga);
 
@@ -74,16 +73,15 @@ public class ProjektPartner extends javax.swing.JFrame {
                 String paid = idb.fetchSingle(sqlPid);
                 partnerLista.put(paid, pNamn);
             }
-            } catch (InfException ex) {
-                System.out.println(ex.getMessage());
-            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
-            
+    }
+
     /**
      * fyller i combo box med alla partners namn
-     */   
-        
-          private void fyllCbLaggTill() {
+     */
+    private void fyllCbLaggTill() {
         cbPartners.removeAllItems();
 
         try {
@@ -103,12 +101,11 @@ public class ProjektPartner extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-          
-     /**
+
+    /**
      * fyller i combo box för att ta bort
-     */   
-          
-          private void fyllCbTaBort() {
+     */
+    private void fyllCbTaBort() {
         cbPartners.removeAllItems();
 
         try {
@@ -126,12 +123,11 @@ public class ProjektPartner extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * hämtar vald partner ID
-     */   
-          
-            private String getSelectedPaid() {
+     */
+    private String getSelectedPaid() {
         String selectedMal = (String) cbPartners.getSelectedItem();
         String paid = " ";
         for (String id : partnerLista.keySet()) {
@@ -142,77 +138,73 @@ public class ProjektPartner extends javax.swing.JFrame {
         }
         return paid;
     }
-            
+
     /**
      * lägg till partner till ett projekt
      */
-            
-                private void laggTill(){
+    private void laggTill() {
         String paid = getSelectedPaid();
         String sPid = lblPid.getText();
-        
+
         String sqlLaggTill = "INSERT INTO projekt_partner VALUES( " + sPid
                 + ", " + paid + ")";
-        
+
         try {
-            if(kontrollInteSamma(paid)){
-            idb.insert(sqlLaggTill);
-            lblFelmeddelande.setVisible(false);
-            lblMeddelande.setText("Tillagd");
-            lblMeddelande.setVisible(true);
+            if (kontrollInteSamma(paid)) {
+                idb.insert(sqlLaggTill);
+                lblFelmeddelande.setVisible(false);
+                lblMeddelande.setText("Tillagd");
+                lblMeddelande.setVisible(true);
             } else {
                 lblFelmeddelande.setText("Denna partner finns redan för detta projekt");
                 lblFelmeddelande.setVisible(true);
                 lblMeddelande.setVisible(false);
             }
-            
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }     
-        
-    }
-                
-    /**
-     * tar bort partner från ett projekt
-     */
-                
-                    private void taBort(){
-        String paid = getSelectedPaid();
-        String sPid = lblPid.getText();
-        
-        String sqlTaBort = "DELETE FROM projekt_partner WHERE pid = " + sPid + " AND partner_pid = " + paid;
-        
-        try{
-            idb.delete(sqlTaBort);
-            lblMeddelande.setText("Borttagen från projekt");
-            lblMeddelande.setVisible(true);       
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
-                    
+
+    /**
+     * tar bort partner från ett projekt
+     */
+    private void taBort() {
+        String paid = getSelectedPaid();
+        String sPid = lblPid.getText();
+
+        String sqlTaBort = "DELETE FROM projekt_partner WHERE pid = " + sPid + " AND partner_pid = " + paid;
+
+        try {
+            idb.delete(sqlTaBort);
+            lblMeddelande.setText("Borttagen från projekt");
+            lblMeddelande.setVisible(true);
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
     /**
      * kontrollerar så att det finns inga dubletter av partner ID finns
      */
-                    
-                        private boolean kontrollInteSamma(String paid){
+    private boolean kontrollInteSamma(String paid) {
         boolean finnsEj = true;
         String sPid = lblPid.getText();
-        
+
         String sqlFraga = "SELECT COUNT(*) AS Antal "
                 + "FROM projekt_partner "
                 + "WHERE pid = " + sPid + " AND partner_pid = " + paid;
-        
-        try{
-           String sqlAntal = idb.fetchSingle(sqlFraga);
-           int antal = Integer.parseInt(sqlAntal);
-           
-           if(antal> 0){
-               finnsEj = false;
-           }
+
+        try {
+            String sqlAntal = idb.fetchSingle(sqlFraga);
+            int antal = Integer.parseInt(sqlAntal);
+
+            if (antal > 0) {
+                finnsEj = false;
+            }
 
         } catch (InfException ex) {
             System.out.println(ex.getMessage());

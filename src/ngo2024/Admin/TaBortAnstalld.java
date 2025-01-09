@@ -18,7 +18,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
 
     private InfDB idb;
     private String epost;
-    
+
     /**
      * Initierar TaBortAnstalld objekt 
      * Låter administratör ta bort anställda
@@ -26,42 +26,39 @@ public class TaBortAnstalld extends javax.swing.JFrame {
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten till den inloggade användaren
      */
-
     public TaBortAnstalld(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
         lblBorttagen.setVisible(false);
         fyllCb();
     }
-    
+
     /**
      * fyller i combo box med för och efternamn på anställda
      */
-    
-    public void fyllCb(){
+    public void fyllCb() {
         cbValjAnstalld.removeAllItems();
-        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) AS namn FROM anstalld";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) AS namn FROM anstalld";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbValjAnstalld.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
-     *  Hämtar ut förnamn
+     * Hämtar ut förnamn
+     *
      * @param fullName hämtar ut hela namnet
      */
-
     public String getFirstName(String fullName) {
         String[] nameParts = fullName.split(" ");
         if (nameParts.length > 0) {
@@ -72,10 +69,10 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     }
 
     /**
-     *  hämtar ut efternamn
+     * hämtar ut efternamn
+     *
      * @param fullName hämtar ut hela namnet
      */
-
     public String getLastName(String fullName) {
         String[] nameParts = fullName.split(" ");
         if (nameParts.length > 1) {
@@ -84,99 +81,86 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             return "";
         }
     }
-    
+
     /**
-     *  hämtar ut anställdas ID
+     * hämtar ut anställdas ID
+     *
      * @param namn den anställdas namn
      */
-
-    public String selectAid(String namn){
-        String fNamn=getFirstName(namn);
-        String eNamn=getLastName(namn);
-        String sAid="111";
-        try{
-            String sqlFraga="SELECT aid FROM anstalld where fornamn='" + fNamn + "' AND efternamn ='" + eNamn + "'";
-            sAid=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
+    public String selectAid(String namn) {
+        String fNamn = getFirstName(namn);
+        String eNamn = getLastName(namn);
+        String sAid = "111";
+        try {
+            String sqlFraga = "SELECT aid FROM anstalld where fornamn='" + fNamn + "' AND efternamn ='" + eNamn + "'";
+            sAid = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return sAid;
     }
-    
+
     /**
      * hämtar ut en anställds epost
      */
+    public String getEpost() {
+        String namn = cbValjAnstalld.getSelectedItem().toString();
+        String sAid = selectAid(namn);
+        String epost = " ";
 
-    public String getEpost(){
-       String namn=cbValjAnstalld.getSelectedItem().toString();
-       String sAid=selectAid(namn);
-       String epost=" ";
-       
-       int aid=Integer.parseInt(sAid);
-       String sqlFraga="SELECT epost FROM anstalld WHERE aid=" + aid;
-       try{
-           epost=idb.fetchSingle(sqlFraga);
-       }
-       catch(Exception ex){
+        int aid = Integer.parseInt(sAid);
+        String sqlFraga = "SELECT epost FROM anstalld WHERE aid=" + aid;
+        try {
+            epost = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-       return epost;
+        return epost;
     }
-    
+
     /**
      * hämtar ut vilken behörighet en anställd har
      */
-    
-    public String vilkenBehorighet(){
-         Validering valid = new Validering(idb);
-         boolean arAdmin=valid.isAdmin(getEpost());
-         String behorighet=" ";
-         if(arAdmin==true){
-            behorighet="admin";
-         }
-         else{
-             behorighet="hlr"; //hlr=handläggare
-         }
-         return behorighet;
-        
+    public String vilkenBehorighet() {
+        Validering valid = new Validering(idb);
+        boolean arAdmin = valid.isAdmin(getEpost());
+        String behorighet = " ";
+        if (arAdmin == true) {
+            behorighet = "admin";
+        } else {
+            behorighet = "hlr"; //hlr=handläggare
+        }
+        return behorighet;
+
     }
-    
+
     /**
      * tar bort en administratör
      */
+    public void taBortAdmin(int aid) {
 
-    public void taBortAdmin(int aid){
-        
-        String sqlFraga="DELETE FROM admin WHERE aid=" + aid;
-        try{
+        String sqlFraga = "DELETE FROM admin WHERE aid=" + aid;
+        try {
             idb.delete(sqlFraga);
-            
-        }
-        catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * tar bort en handläggare
      */
+    public void taBortHandlaggare(int aid) {
 
-    public void taBortHandlaggare(int aid){
-        
-        String sqlFraga="DELETE FROM handlaggare WHERE aid=" + aid;
-        try{
+        String sqlFraga = "DELETE FROM handlaggare WHERE aid=" + aid;
+        try {
             idb.delete(sqlFraga);
-            
-        }
-        catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -288,38 +272,36 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
-       String namn=cbValjAnstalld.getSelectedItem().toString();
-       
-       lblNamn.setText(namn);
-       lblAid.setText(selectAid(namn));   
-       
+        String namn = cbValjAnstalld.getSelectedItem().toString();
+
+        lblNamn.setText(namn);
+        lblAid.setText(selectAid(namn));
+
     }//GEN-LAST:event_btnValjActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-       String namn=cbValjAnstalld.getSelectedItem().toString();
-       String sAid=selectAid(namn);
-       int aid=Integer.parseInt(sAid);
-       String val=vilkenBehorighet();
-       // tar bort behöriogheterna innan personen tas bort, går annars ej att ta bort person.
-       if(val.equals("admin")){
-           taBortAdmin(aid);
-       }
-       else{
-           taBortHandlaggare(aid);
-       }
-       
-       //tar bort själva personen
-       String sql="DELETE FROM anstalld WHERE aid=" + aid;
-       
-       try{
-           idb.delete(sql);
-       }
-       catch(Exception ex){
+        String namn = cbValjAnstalld.getSelectedItem().toString();
+        String sAid = selectAid(namn);
+        int aid = Integer.parseInt(sAid);
+        String val = vilkenBehorighet();
+        // tar bort behöriogheterna innan personen tas bort, går annars ej att ta bort person.
+        if (val.equals("admin")) {
+            taBortAdmin(aid);
+        } else {
+            taBortHandlaggare(aid);
+        }
+
+        //tar bort själva personen
+        String sql = "DELETE FROM anstalld WHERE aid=" + aid;
+
+        try {
+            idb.delete(sql);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-       lblBorttagen.setVisible(true);
-       fyllCb();
-       
+        lblBorttagen.setVisible(true);
+        fyllCb();
+
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
@@ -356,7 +338,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new TaBortAnstalld().setVisible(true);
+                // new TaBortAnstalld().setVisible(true);
             }
         });
     }

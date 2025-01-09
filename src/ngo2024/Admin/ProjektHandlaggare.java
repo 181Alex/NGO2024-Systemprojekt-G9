@@ -13,20 +13,19 @@ import java.util.HashMap;
  *
  * @author linneagottling
  */
-public class ProjektHandlaggare extends javax.swing.JFrame {   
-    
+public class ProjektHandlaggare extends javax.swing.JFrame {
+
     private InfDB idb;
     private String pid;
     private HashMap<String, String> handlaggarLista;
 
     /**
-     * Initierar ProjektHandlaggare objekt 
-     * låter administratören lägga till och ta bort handläggare för ett projekt
+     * Initierar ProjektHandlaggare objekt låter administratören lägga till och
+     * ta bort handläggare för ett projekt
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid projekt ID
      */
-    
     public ProjektHandlaggare(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -41,16 +40,15 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         lblFelmeddelande.setVisible(false);
         fyllHashMap();
     }
-    
+
     /**
      * fyller i Hash Map med alla namn och anställd ID för alla handläggare
      */
-    
-        private void fyllHashMap(){
-            
-            try{
-             String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn"
-                     + " FROM anstalld WHERE aid IN(SELECT aid FROM handlaggare)";
+    private void fyllHashMap() {
+
+        try {
+            String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn"
+                    + " FROM anstalld WHERE aid IN(SELECT aid FROM handlaggare)";
 
             ArrayList<String> allaHandlaggare = idb.fetchColumn(sqlFraga);
 
@@ -61,17 +59,17 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 String aid = idb.fetchSingle(sqlAid);
                 handlaggarLista.put(aid, hNamn);
             }
-            } catch (InfException ex) {
-                System.out.println(ex.getMessage());
-            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
-        
-     /**
+    }
+
+    /**
      * ger projektnamn på ett visst projekt namn
+     *
      * @param pid projekt ID
      */
-
-        private void setProjektnamn(String pid) {
+    private void setProjektnamn(String pid) {
         try {
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
             String projektnamn = idb.fetchSingle(sqlFraga);
@@ -81,17 +79,16 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
-     /**
+
+    /**
      * fyller i combo box med alla namn och anställd ID för alla handläggare
-     */   
-  
-            private void fyllCbLaggTill() {
+     */
+    private void fyllCbLaggTill() {
         cbHandlaggare.removeAllItems();
 
         try {
             String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn"
-                     + " FROM anstalld WHERE aid IN (SELECT aid FROM handlaggare)";
+                    + " FROM anstalld WHERE aid IN (SELECT aid FROM handlaggare)";
 
             ArrayList<String> allaHandlaggare = idb.fetchColumn(sqlFraga);
 
@@ -104,12 +101,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller i combo box för ta bort
      */
-            
-                private void fyllCbTaBort() {
+    private void fyllCbTaBort() {
         cbHandlaggare.removeAllItems();
 
         try {
@@ -127,12 +123,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-                
+
     /**
      * ger valda anställd ID
      */
-                
-private String getSelectedAid() {
+    private String getSelectedAid() {
         String selectedPerson = (String) cbHandlaggare.getSelectedItem();
         String hid = " ";
         for (String id : handlaggarLista.keySet()) {
@@ -147,82 +142,76 @@ private String getSelectedAid() {
     /**
      * lägg till handläggare till ett projekt
      */
-            
-    private void laggTill(){
+    private void laggTill() {
         String aid = getSelectedAid();
         String sPid = lblPid.getText();
-        
+
         String sqlLaggTill = "INSERT INTO ans_proj VALUES( " + sPid
                 + ", " + aid + ")";
-        
+
         try {
-            if(kontrollInteSamma(aid)){
-            idb.insert(sqlLaggTill);
-            lblFelmeddelande.setVisible(false);
-            lblMeddelande.setText("Tillagd");
-            lblMeddelande.setVisible(true);
+            if (kontrollInteSamma(aid)) {
+                idb.insert(sqlLaggTill);
+                lblFelmeddelande.setVisible(false);
+                lblMeddelande.setText("Tillagd");
+                lblMeddelande.setVisible(true);
             } else {
                 lblFelmeddelande.setText("Denna handläggare finns redan för detta projekt");
                 lblFelmeddelande.setVisible(true);
                 lblMeddelande.setVisible(false);
             }
-            
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }     
-        
-    }
-    
-    /**
-     * tar bort handläggare från ett projekt
-     */
-    
-        private void taBort(){
-        String aid = getSelectedAid();
-        String sPid = lblPid.getText();
-        
-        String sqlTaBort = "DELETE FROM ans_proj WHERE pid = " + sPid + " AND aid = " + aid;
-        
-        try{
-            idb.delete(sqlTaBort);
-            lblMeddelande.setText("Borttagen från projekt");
-            lblMeddelande.setVisible(true);       
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
-       
+
+    /**
+     * tar bort handläggare från ett projekt
+     */
+    private void taBort() {
+        String aid = getSelectedAid();
+        String sPid = lblPid.getText();
+
+        String sqlTaBort = "DELETE FROM ans_proj WHERE pid = " + sPid + " AND aid = " + aid;
+
+        try {
+            idb.delete(sqlTaBort);
+            lblMeddelande.setText("Borttagen från projekt");
+            lblMeddelande.setVisible(true);
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
     /**
      * kontrollerar så att det finns inga dubletter av anställnings ID finns
      */
-            
-    private boolean kontrollInteSamma(String aid){
+    private boolean kontrollInteSamma(String aid) {
         boolean finnsEj = true;
         String sPid = lblPid.getText();
-        
+
         String sqlFraga = "SELECT COUNT(*) AS Antal "
                 + "FROM ans_proj "
                 + "WHERE pid = " + sPid + " AND aid = " + aid;
-        
-        try{
-           String sqlAntal = idb.fetchSingle(sqlFraga);
-           int antal = Integer.parseInt(sqlAntal);
-           
-           if(antal> 0){
-               finnsEj = false;
-           }
+
+        try {
+            String sqlAntal = idb.fetchSingle(sqlFraga);
+            int antal = Integer.parseInt(sqlAntal);
+
+            if (antal > 0) {
+                finnsEj = false;
+            }
 
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         return finnsEj;
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

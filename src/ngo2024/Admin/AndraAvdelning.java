@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 package ngo2024.Admin;
 
 import java.util.ArrayList;
@@ -18,25 +17,24 @@ import oru.inf.InfException;
 public class AndraAvdelning extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> stadLista;
     private HashMap<String, String> avdLista;
     private String ogEpost;
-    
+
     /**
-     * Initierar AndraAvdelning objekt 
+     * Initierar AndraAvdelning objekt
      * låter en administratör ändra en avdelning
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten till den inloggade användaren
      */
-
     public AndraAvdelning(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
-        kontrollOk=false;
+        this.idb = idb;
+        this.epost = epost;
+        kontrollOk = false;
         initComponents();
         anstalldLista = new HashMap<>();
         stadLista = new HashMap<>();
@@ -47,97 +45,93 @@ public class AndraAvdelning extends javax.swing.JFrame {
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
         gomBad();
-        
+
     }
-    
+
     /**
      * fyller i combo box med hela namn på projektchefer
      */
-
-     private void fyllProjektChef(){
+    private void fyllProjektChef() {
         cbChef.removeAllItems();
-        String sqlFraga="SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
-        
-        try{
-            ArrayList<String> chefLista=idb.fetchColumn(sqlFraga);
-            
-            for(String anstNamn : chefLista){
+        String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid in (SELECT aid FROM handlaggare)";
+
+        try {
+            ArrayList<String> chefLista = idb.fetchColumn(sqlFraga);
+
+            for (String anstNamn : chefLista) {
                 String sqlAid = "SELECT aid from anstalld WHERE "
                         + "CONCAT(fornamn, ' ', efternamn) = '" + anstNamn + "'";
                 String i = idb.fetchSingle(sqlAid);
                 cbChef.addItem(anstNamn);
                 anstalldLista.put(i, anstNamn);
-                
+
             }
-            
-        }catch(InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
-        }}
-    
-     /**
+        }
+    }
+
+    /**
      * fyller i combo box med namn på städer
      */
-
-    private void fyllStad(){
+    private void fyllStad() {
         cbStad.removeAllItems();
         //fyller stads listan
         String sqlLand = "SELECT namn FROM stad ";
-        
-        try{
 
-        ArrayList<String> allaStaderLista =  idb.fetchColumn(sqlLand);
-                                             
-            for(String stadNamn : allaStaderLista){
-               String sqlLid = "SELECT sid FROM stad WHERE "
-                       + "namn = '" + stadNamn + "'";
-               String i = idb.fetchSingle(sqlLid);
-               cbStad.addItem(stadNamn);
-               stadLista.put(i, stadNamn);
+        try {
+
+            ArrayList<String> allaStaderLista = idb.fetchColumn(sqlLand);
+
+            for (String stadNamn : allaStaderLista) {
+                String sqlLid = "SELECT sid FROM stad WHERE "
+                        + "namn = '" + stadNamn + "'";
+                String i = idb.fetchSingle(sqlLid);
+                cbStad.addItem(stadNamn);
+                stadLista.put(i, stadNamn);
             }
-        }catch(InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller i combo box med namn på avdelningar
      */
-
-    private void fyllAvdelning(){
+    private void fyllAvdelning() {
         cbAvdelning.removeAllItems();
         //fyller stads listan
         String sqlLand = "SELECT namn FROM avdelning ";
-        
-        try{
 
-        ArrayList<String> avdeLista =  idb.fetchColumn(sqlLand);
-                                             
-            for(String avdNamn : avdeLista){
-               String sqlLid = "SELECT avdid FROM avdelning WHERE "
-                       + "namn = '" + avdNamn + "'";
-               String i = idb.fetchSingle(sqlLid);
-               cbAvdelning.addItem(avdNamn);
-               avdLista.put(i, avdNamn);
+        try {
+
+            ArrayList<String> avdeLista = idb.fetchColumn(sqlLand);
+
+            for (String avdNamn : avdeLista) {
+                String sqlLid = "SELECT avdid FROM avdelning WHERE "
+                        + "namn = '" + avdNamn + "'";
+                String i = idb.fetchSingle(sqlLid);
+                cbAvdelning.addItem(avdNamn);
+                avdLista.put(i, avdNamn);
             }
-        }catch(InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    public void gomBad(){
+
+    public void gomBad() {
         lblNamnBad.setVisible(false);
         lblBeskrivningBad.setVisible(false);
         lblAdressBad.setVisible(false);
         lblEpostBad.setVisible(false);
         lblTelefonBad.setVisible(false);
     }
-    
-    
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -388,289 +382,272 @@ public class AndraAvdelning extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tfEpostActionPerformed
 
-    private void valjAvdelning(){
-        String avdNamn= (String) cbAvdelning.getSelectedItem();
-        String beskrivning=" ";
-        String adress=" ";
-        String epost=" ";
-        String telefon=" ";
-        String stad=" ";
-        String nChef=" ";
-        
-        
-        
-        try{
-            beskrivning=idb.fetchSingle("SELECT beskrivning FROM avdelning WHERE namn= '" + avdNamn + "'");
-            adress=idb.fetchSingle("SELECT adress FROM avdelning WHERE namn= '" + avdNamn + "'");
-            epost=idb.fetchSingle("SELECT epost FROM avdelning WHERE namn= '" + avdNamn + "'");
-            telefon=idb.fetchSingle("SELECT telefon FROM avdelning WHERE namn= '" + avdNamn + "'");
-            nChef = idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) "
-                                 + "FROM anstalld WHERE aid = (SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "')");
-            stad=idb.fetchSingle("SELECT namn "
-                                 + "FROM stad WHERE sid = (SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "')");
+    private void valjAvdelning() {
+        String avdNamn = (String) cbAvdelning.getSelectedItem();
+        String beskrivning = " ";
+        String adress = " ";
+        String epost = " ";
+        String telefon = " ";
+        String stad = " ";
+        String nChef = " ";
 
-            
-        }catch(InfException ex){
+        try {
+            beskrivning = idb.fetchSingle("SELECT beskrivning FROM avdelning WHERE namn= '" + avdNamn + "'");
+            adress = idb.fetchSingle("SELECT adress FROM avdelning WHERE namn= '" + avdNamn + "'");
+            epost = idb.fetchSingle("SELECT epost FROM avdelning WHERE namn= '" + avdNamn + "'");
+            telefon = idb.fetchSingle("SELECT telefon FROM avdelning WHERE namn= '" + avdNamn + "'");
+            nChef = idb.fetchSingle("SELECT CONCAT(fornamn, ' ', efternamn) "
+                    + "FROM anstalld WHERE aid = (SELECT chef FROM avdelning WHERE namn= '" + avdNamn + "')");
+            stad = idb.fetchSingle("SELECT namn "
+                    + "FROM stad WHERE sid = (SELECT stad FROM avdelning WHERE namn= '" + avdNamn + "')");
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
-}
+        }
         tfNamn.setText(avdNamn);
         tfBeskrivning.setText(beskrivning);
         tfAdress.setText(adress);
         tfEpost.setText(epost);
         tfTelefon.setText(telefon);
-        ogEpost=tfEpost.getText();
+        ogEpost = tfEpost.getText();
         if (stad != null) {
             cbStad.setSelectedItem(stad);
         } else {
-            cbStad.setSelectedIndex(-1); 
+            cbStad.setSelectedIndex(-1);
         }
 
         if (nChef != null) {
             cbChef.setSelectedItem(nChef);
         } else {
-            cbChef.setSelectedIndex(-1); 
+            cbChef.setSelectedIndex(-1);
         }
-       
+
     }
-    
-    
-   public String getAvdid(){
-       String avdNamn= (String) cbAvdelning.getSelectedItem();
-       String avddd=" ";
-       String sqlFraga="SELECT avdid FROM avdelning WHERE namn= '" + avdNamn + "'";
-       try{
-           avddd=idb.fetchSingle(sqlFraga);
-       }
-       catch(InfException ex){
+
+    public String getAvdid() {
+        String avdNamn = (String) cbAvdelning.getSelectedItem();
+        String avddd = " ";
+        String sqlFraga = "SELECT avdid FROM avdelning WHERE namn= '" + avdNamn + "'";
+        try {
+            avddd = idb.fetchSingle(sqlFraga);
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-       return avddd;
-   }
-    
-    
-    
-    
-    
-    
-    
+        return avddd;
+    }
+
+
     private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
-       valjAvdelning();
+        valjAvdelning();
     }//GEN-LAST:event_btnValjActionPerformed
 
-    private String getChef(){
-        String nChef=(String) cbChef.getSelectedItem();
-        String sqlFraga="SELECT aid FROM anstalld WHERE CONCAT(fornamn, ' ', efternamn)= '" + nChef + "'";
-        String aid=" ";
-        try{
-            aid=idb.fetchSingle(sqlFraga);
-            
-        }catch(InfException ex){
+    private String getChef() {
+        String nChef = (String) cbChef.getSelectedItem();
+        String sqlFraga = "SELECT aid FROM anstalld WHERE CONCAT(fornamn, ' ', efternamn)= '" + nChef + "'";
+        String aid = " ";
+        try {
+            aid = idb.fetchSingle(sqlFraga);
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         return aid;
     }
-    
-    private String getStadSid(){
-        String stad=(String) cbStad.getSelectedItem();
-        String sqlFraga="SELECT sid FROM stad WHERE namn= '" + stad + "'";
-        String sid=" ";
-        try{
-            sid=idb.fetchSingle(sqlFraga);
-            
-        }catch(InfException ex){
+
+    private String getStadSid() {
+        String stad = (String) cbStad.getSelectedItem();
+        String sqlFraga = "SELECT sid FROM stad WHERE namn= '" + stad + "'";
+        String sid = " ";
+        try {
+            sid = idb.fetchSingle(sqlFraga);
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         return sid;
     }
-    
-    
-    
-    public void gorAndring(){
-        int avdid=Integer.parseInt(getAvdid());
-        String avdNamn= tfNamn.getText();
-        String beskrivning=tfBeskrivning.getText();
-        String adress=tfAdress.getText();
-        String epost=tfEpost.getText();
-        String telefon=tfTelefon.getText();
-        String stad= getStadSid();
-        String nChef=getChef();
-        
-        String sqlFraga="UPDATE avdelning SET namn = '" + avdNamn + "', beskrivning= '" + beskrivning
+
+    public void gorAndring() {
+        int avdid = Integer.parseInt(getAvdid());
+        String avdNamn = tfNamn.getText();
+        String beskrivning = tfBeskrivning.getText();
+        String adress = tfAdress.getText();
+        String epost = tfEpost.getText();
+        String telefon = tfTelefon.getText();
+        String stad = getStadSid();
+        String nChef = getChef();
+
+        String sqlFraga = "UPDATE avdelning SET namn = '" + avdNamn + "', beskrivning= '" + beskrivning
                 + "', adress= '" + adress + "', epost= '" + epost + "', telefon = '" + telefon
                 + "', stad= " + stad + ", chef= " + nChef + " where avdid =" + avdid;
-        
-        try{
+
+        try {
             idb.update(sqlFraga);
-        }catch(InfException ex){
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
-    
-    
-    
+
+
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
         totalKontroll();
-            if(kontrollOk==true){
-                gorAndring();
-                lblLyckades.setVisible(true);
-                lblError.setVisible(false);
-                fyllAvdelning();
-            }
-            else{
-                lblError.setVisible(true);
-                lblLyckades.setVisible(false);}
+        if (kontrollOk == true) {
+            gorAndring();
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+            fyllAvdelning();
+        } else {
+            lblError.setVisible(true);
+            lblLyckades.setVisible(false);
+        }
     }//GEN-LAST:event_btnAndraActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-        //kontroller kommer här
-    
+    //kontroller kommer här
     private void totalKontroll() {
-    Boolean totOk = true;
+        Boolean totOk = true;
 
-    if (!namnKontroll()) {
-        totOk = false;
-        lblNamnBad.setVisible(true);
-    } else if (!beskrivningKontroll()) {  
-        totOk = false;
-        lblBeskrivningBad.setVisible(true);
-    } else if (!adressKontroll(idb)) {  
-        totOk = false;
-        lblAdressBad.setVisible(true);
-    } else if (!telefonKontroll(idb)) {  
-        totOk = false;
-        lblTelefonBad.setVisible(true);
-    } else if (!epostKontroll(idb)) {  
-        totOk = false;
-        lblEpostBad.setVisible(true);
-    }else if(!sammaEpostKontroll()){
-    totOk=false;
+        if (!namnKontroll()) {
+            totOk = false;
+            lblNamnBad.setVisible(true);
+        } else if (!beskrivningKontroll()) {
+            totOk = false;
+            lblBeskrivningBad.setVisible(true);
+        } else if (!adressKontroll(idb)) {
+            totOk = false;
+            lblAdressBad.setVisible(true);
+        } else if (!telefonKontroll(idb)) {
+            totOk = false;
+            lblTelefonBad.setVisible(true);
+        } else if (!epostKontroll(idb)) {
+            totOk = false;
+            lblEpostBad.setVisible(true);
+        } else if (!sammaEpostKontroll()) {
+            totOk = false;
+        }
+
+        kontrollOk = totOk;
     }
 
-    kontrollOk = totOk;
-}
-
-    
     /**
-     * Anropar kontroll av att ny epost inte är som någon annans
-     * Ger false om valideringen visar att fel uppstått
-     * 
+     * Anropar kontroll av att ny epost inte är som någon annans Ger false om
+     * valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
-    private boolean sammaEpostKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
-    if(ogEpost.equals(epost)){
-        lblEpostBad.setVisible(false); // Göm varning
-        return true;
+    private boolean sammaEpostKontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = tfEpost.getText();
+        if (ogEpost.equals(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else if (valid.checkInteSammaEpost(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
     }
-    else if(valid.checkInteSammaEpost(epost)){
-      lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
-    }
-    }
-    
+
     public boolean adressKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        if (valid.checkAvdAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAvdAdress(adress) && valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
         } else {
             lblAdressBad.setVisible(true);
             return false;
-        }}
-    
+        }
+    }
+
     public boolean telefonKontroll(InfDB idb) {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkAvdTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+        if (valid.checkAvdTelefon(telefon) && valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTelefonBad.setVisible(true);
             return false;
+        }
     }
+
+    public boolean epostKontroll(InfDB idb) {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = tfEpost.getText();
+
+        // Kontrollera om e-postadressen är giltig
+        if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
     }
-    
-    public boolean epostKontroll(InfDB idb){
-    Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
-    
-    // Kontrollera om e-postadressen är giltig
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
-        lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
-    }}
-    
-    private boolean namnKontroll(){
+
+    private boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // kontrollerar namn format
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblNamnBad.setVisible(true);
             return false;
+        }
     }
-}
-    
-   private boolean beskrivningKontroll(){
-           Validering valid = new Validering(idb);
+
+    private boolean beskrivningKontroll() {
+        Validering valid = new Validering(idb);
         String besk = tfBeskrivning.getText();
         // samma som alla andra kontroller men använder förnamns valideringen då de gör samma sak
-    if (valid.checkBeskrivning(besk)&& valid.checkStorlek(255, besk)) {
+        if (valid.checkBeskrivning(besk) && valid.checkStorlek(255, besk)) {
             lblBeskrivningBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblBeskrivningBad.setVisible(true);
             return false;
+        }
     }
-} 
-    
-   private String getPChef(){
+
+    private String getPChef() {
         String selectedPerson = (String) cbChef.getSelectedItem();
         String aid = " ";
-        for(String id : anstalldLista.keySet()){
+        for (String id : anstalldLista.keySet()) {
             String namn = anstalldLista.get(id);
-            if(selectedPerson != null && selectedPerson.equals(namn)){
-                aid = id;               
+            if (selectedPerson != null && selectedPerson.equals(namn)) {
+                aid = id;
             }
-        } 
+        }
         return aid;
     }
-   
-   private String getStad(){
-       String namn= (String) cbStad.getSelectedItem();
+
+    private String getStad() {
+        String namn = (String) cbStad.getSelectedItem();
         String sid = " ";
-        for(String id : stadLista.keySet()){
+        for (String id : stadLista.keySet()) {
             String ssStad = stadLista.get(id);
-            if(namn != null && namn.equals(ssStad)){
-                sid = id;               
+            if (namn != null && namn.equals(ssStad)) {
+                sid = id;
             }
-        } 
+        }
         return sid;
-   }
-    
-    
-    
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -701,7 +678,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new AndraAvdelning().setVisible(true);
+                // new AndraAvdelning().setVisible(true);
             }
         });
     }

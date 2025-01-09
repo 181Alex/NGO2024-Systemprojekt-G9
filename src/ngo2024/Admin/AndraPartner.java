@@ -9,7 +9,6 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author alexanderabboud
@@ -17,11 +16,11 @@ import java.util.ArrayList;
 public class AndraPartner extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
     private String ogEpost;
     private String ogTelefon;
-   
+
     /**
      * Initierar AndraPartner objekt 
      * låter administratör ändra information om en partner
@@ -29,83 +28,75 @@ public class AndraPartner extends javax.swing.JFrame {
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten för den inloggade användaren
      */
-    
     public AndraPartner(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
-        kontrollOk=false;
+        kontrollOk = false;
         fyllStad();
         fyllPartner();
         gomAlla();
     }
-    
+
     /**
      * fyller i combo box med namn på städer
      */
-    
-    private void fyllStad(){
-         cbStad.removeAllItems();
-        String sqlFraga="SELECT namn FROM stad";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+    private void fyllStad() {
+        cbStad.removeAllItems();
+        String sqlFraga = "SELECT namn FROM stad";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbStad.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller i combo box med namn på partners
      */
-    
-    private void fyllPartner(){
+    private void fyllPartner() {
         cbValjPartner.removeAllItems();
-        String sqlFraga="SELECT namn FROM partner";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT namn FROM partner";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbValjPartner.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * hämtar ut partner ID
      */
-    
-    public String selectPid(){
-        String pid="111";
-        String vald= (String) cbValjPartner.getSelectedItem();
-        try{
-            String sqlFraga="SELECT pid FROM partner where namn='" + vald + "'";
-            pid=idb.fetchSingle(sqlFraga);
-        }
-        catch(Exception ex){
+    public String selectPid() {
+        String pid = "111";
+        String vald = (String) cbValjPartner.getSelectedItem();
+        try {
+            String sqlFraga = "SELECT pid FROM partner where namn='" + vald + "'";
+            pid = idb.fetchSingle(sqlFraga);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return pid;
-        }
-    
+    }
+
     /**
      * gömmer allt
      */
-    
-    private void gomAlla(){
+    private void gomAlla() {
         tfTelefon.setVisible(false);
         tfNamn.setVisible(false);
         tfKPerson.setVisible(false);
@@ -136,160 +127,151 @@ public class AndraPartner extends javax.swing.JFrame {
         lblPid.setVisible(false);
         cbValjPartner.setVisible(false);
         btnValj.setVisible(false);
-        
+
     }
-    
+
     /**
      * kontrollerar allt
      */
-    
-     public void totalKontroll() {
-    Boolean totOk = true;
+    public void totalKontroll() {
+        Boolean totOk = true;
 
-    if (!kPersonKontroll()) {
-        totOk = false;
-        lblKPersonBad.setVisible(true);
+        if (!kPersonKontroll()) {
+            totOk = false;
+            lblKPersonBad.setVisible(true);
 
-    } else if (!namnKontroll()) {
-        totOk = false;
-        lblNamnBad.setVisible(true);
+        } else if (!namnKontroll()) {
+            totOk = false;
+            lblNamnBad.setVisible(true);
 
-    } else if (!epostKontroll()) {
-        totOk = false;
-        lblEpostBad.setVisible(true);
-    } else if (!telefonKontroll()) {
-        totOk = false;
-        lblTelefonBad.setVisible(true);
-    } else if (!adressKontroll()) {
-        totOk = false;
-        lblAdressBad.setVisible(true);
-    } else if (!branschKontroll()) {
-        totOk = false;
-        lblBranschBad.setVisible(true);
-    }else if(!sammaEpostKontroll()){
-        totOk=false;
+        } else if (!epostKontroll()) {
+            totOk = false;
+            lblEpostBad.setVisible(true);
+        } else if (!telefonKontroll()) {
+            totOk = false;
+            lblTelefonBad.setVisible(true);
+        } else if (!adressKontroll()) {
+            totOk = false;
+            lblAdressBad.setVisible(true);
+        } else if (!branschKontroll()) {
+            totOk = false;
+            lblBranschBad.setVisible(true);
+        } else if (!sammaEpostKontroll()) {
+            totOk = false;
+        }
+
+        kontrollOk = totOk;
     }
 
-    kontrollOk = totOk;
-}
-     
-     private boolean sammaEpostKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
-    if(ogEpost.equals(epost)){
-        lblEpostBad.setVisible(false); // Göm varning
-        return true;
+    private boolean sammaEpostKontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = tfEpost.getText();
+        if (ogEpost.equals(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else if (valid.checkInteSammaEpost(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
     }
-    else if(valid.checkInteSammaEpost(epost)){
-      lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
-    }
-    }
-     
-     /**
+
+    /**
      * kontrollerar att kontaktpersones namn är valid
      */
-     
-       public boolean kPersonKontroll(){
+    public boolean kPersonKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfKPerson.getText();
         // kontrollerar kPerson vilekt är ett namn
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblKPersonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblKPersonBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar namn formatet
      */
-       
-    public boolean namnKontroll(){
+    public boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblNamnBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar att epost är valid
      */
-    
-    public boolean epostKontroll(){
+    public boolean epostKontroll() {
         Validering valid = new Validering(idb);
         String epost = tfEpost.getText();
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+        if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
             lblEpostBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblEpostBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar att telefonnummer är valid
      */
-    
-    public boolean telefonKontroll(){
+    public boolean telefonKontroll() {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+        if (valid.checkTelefon(telefon) && valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTelefonBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar att adressen är valid
      */
-    
-    public boolean adressKontroll(){
+    public boolean adressKontroll() {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
         // kontrolelrar adress format
-    if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAdress(adress) && valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblAdressBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar att bransch namn är valid
      */
-    
-    public boolean branschKontroll(){
+    public boolean branschKontroll() {
         Validering valid = new Validering(idb);
         String bransch = tfBransch.getText();
-    if (valid.checkFornamn(bransch)&& valid.checkStorlek(255, bransch)) {
+        if (valid.checkFornamn(bransch) && valid.checkStorlek(255, bransch)) {
             lblBranschBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblBranschBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -586,13 +568,13 @@ public class AndraPartner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbhTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhTaBortActionPerformed
-        if(cbhTaBort.isSelected()){
-           cbhAndra.setSelected(false);
-           gomAndra();
-       }
+        if (cbhTaBort.isSelected()) {
+            cbhAndra.setSelected(false);
+            gomAndra();
+        }
     }//GEN-LAST:event_cbhTaBortActionPerformed
-    
-    private void gomAndra(){
+
+    private void gomAndra() {
         // tar bort allt som tillhör ändra och visar ta bort fälten
         tfTelefon.setVisible(false);
         tfNamn.setVisible(false);
@@ -625,109 +607,103 @@ public class AndraPartner extends javax.swing.JFrame {
         cbValjPartner.setVisible(true);
         btnValj.setVisible(true);
     }
-    
-    
+
+
     private void cbhAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhAndraActionPerformed
-        if(cbhAndra.isSelected()){
+        if (cbhAndra.isSelected()) {
             cbhTaBort.setSelected(false);
             gomTaBort();
         }
     }//GEN-LAST:event_cbhAndraActionPerformed
 
-    private void gomTaBort(){
+    private void gomTaBort() {
         // tar bort allt som tillhör tabort
-    tfTelefon.setVisible(true);
-    tfNamn.setVisible(true);
-    tfKPerson.setVisible(true);
-    tfEpost.setVisible(true);
-    tfBransch.setVisible(true);
-    tfAdress.setVisible(true);
-    lblTelefon.setVisible(true);
-    lblNamn.setVisible(true);
-    lblKPerson.setVisible(true);
-    lblNamnTf.setVisible(true);
-    lblBransch.setVisible(true);
-    lblAdress.setVisible(true);
-    lblStad.setVisible(true);
-    cbStad.setVisible(true);
-    lblTelefonBad.setVisible(false);
-    lblNamnBad.setVisible(false);
-    lblKPersonBad.setVisible(false);
-    lblAdressBad.setVisible(false);
-    lblBranschBad.setVisible(false);
-    lblEpostBad.setVisible(false);
-    lblEpost.setVisible(true);
-    lblLyckades.setVisible(false);
-    lblError.setVisible(false);
-    lblBorttagen.setVisible(false);
-    btnAndra.setVisible(true);
-    btnTaBort.setVisible(false);
-    lblNamn.setVisible(false);
-    lblPid.setVisible(false);
-    cbValjPartner.setVisible(true);
-    btnValj.setVisible(true);
+        tfTelefon.setVisible(true);
+        tfNamn.setVisible(true);
+        tfKPerson.setVisible(true);
+        tfEpost.setVisible(true);
+        tfBransch.setVisible(true);
+        tfAdress.setVisible(true);
+        lblTelefon.setVisible(true);
+        lblNamn.setVisible(true);
+        lblKPerson.setVisible(true);
+        lblNamnTf.setVisible(true);
+        lblBransch.setVisible(true);
+        lblAdress.setVisible(true);
+        lblStad.setVisible(true);
+        cbStad.setVisible(true);
+        lblTelefonBad.setVisible(false);
+        lblNamnBad.setVisible(false);
+        lblKPersonBad.setVisible(false);
+        lblAdressBad.setVisible(false);
+        lblBranschBad.setVisible(false);
+        lblEpostBad.setVisible(false);
+        lblEpost.setVisible(true);
+        lblLyckades.setVisible(false);
+        lblError.setVisible(false);
+        lblBorttagen.setVisible(false);
+        btnAndra.setVisible(true);
+        btnTaBort.setVisible(false);
+        lblNamn.setVisible(false);
+        lblPid.setVisible(false);
+        cbValjPartner.setVisible(true);
+        btnValj.setVisible(true);
     }
-    
-    
+
+
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-        String sqlFraga= "DELETE FROM partner WHERE pid=" + lblPid.getText();
-        try{
+        String sqlFraga = "DELETE FROM partner WHERE pid=" + lblPid.getText();
+        try {
             idb.delete(sqlFraga);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         lblBorttagen.setVisible(true);
         fyllPartner();
     }//GEN-LAST:event_btnTaBortActionPerformed
 
-    public void setAndra(){
-         // fyller fälten som användaren ska ändra med det valda landet.
-        String pidL=selectPid();
-        String namnS=" ";
-        String kPS=" ";
-        String telefonS=" ";
-        String adressS=" ";
-        String branschS=" ";
-        String ePostS=" ";
-        String stad=" ";
+    public void setAndra() {
+        // fyller fälten som användaren ska ändra med det valda landet.
+        String pidL = selectPid();
+        String namnS = " ";
+        String kPS = " ";
+        String telefonS = " ";
+        String adressS = " ";
+        String branschS = " ";
+        String ePostS = " ";
+        String stad = " ";
 
-        try{
+        try {
             namnS = idb.fetchSingle("SELECT namn FROM partner WHERE pid = " + pidL);
             kPS = idb.fetchSingle("SELECT kontaktperson FROM partner WHERE pid = " + pidL);
             telefonS = idb.fetchSingle("SELECT telefon FROM partner WHERE pid = " + pidL);
             adressS = idb.fetchSingle("SELECT adress FROM partner WHERE pid = " + pidL);
             branschS = idb.fetchSingle("SELECT branch FROM partner WHERE pid = " + pidL);
             ePostS = idb.fetchSingle("SELECT kontaktepost FROM partner WHERE pid = " + pidL);
-            stad=idb.fetchSingle("SELECT stad from partner where pid= " +pidL);
-            
-            
-        }
-        catch(Exception ex){
+            stad = idb.fetchSingle("SELECT stad from partner where pid= " + pidL);
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        } 
-        int stadS=Integer.parseInt(stad);
-            tfNamn.setText(namnS);
-            tfKPerson.setText(kPS);
-            tfTelefon.setText(telefonS);
-            tfAdress.setText(adressS);
-            tfBransch.setText(branschS);
-            tfEpost.setText(ePostS);
-            cbStad.setSelectedIndex(stadS);
-            ogEpost=tfEpost.getText();
-            ogTelefon=tfTelefon.getText();
-    }
-    
-    
-    
-    
-    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
-        if(cbhAndra.isSelected()){
-            setAndra();
         }
-        else if(cbhTaBort.isSelected()){
+        int stadS = Integer.parseInt(stad);
+        tfNamn.setText(namnS);
+        tfKPerson.setText(kPS);
+        tfTelefon.setText(telefonS);
+        tfAdress.setText(adressS);
+        tfBransch.setText(branschS);
+        tfEpost.setText(ePostS);
+        cbStad.setSelectedIndex(stadS);
+        ogEpost = tfEpost.getText();
+        ogTelefon = tfTelefon.getText();
+    }
+
+
+    private void btnValjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValjActionPerformed
+        if (cbhAndra.isSelected()) {
+            setAndra();
+        } else if (cbhTaBort.isSelected()) {
             lblPid.setText(selectPid());
-            String namn= (String) cbValjPartner.getSelectedItem();
+            String namn = (String) cbValjPartner.getSelectedItem();
             lblNamn.setText(namn);
         }
     }//GEN-LAST:event_btnValjActionPerformed
@@ -740,58 +716,54 @@ public class AndraPartner extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btCloseActionPerformed
 
-
-        public String getStad(){
-        int i=cbStad.getSelectedIndex();
-        String aid="";
-        String sql="SELECT sid FROM stad WHERE namn='" + cbStad.getItemAt(i) + "'";
+    public String getStad() {
+        int i = cbStad.getSelectedIndex();
+        String aid = "";
+        String sql = "SELECT sid FROM stad WHERE namn='" + cbStad.getItemAt(i) + "'";
         System.out.println(sql);
-        try{
-            String sAid=idb.fetchSingle(sql);
-            aid=sAid;
-        }catch(Exception ex){
+        try {
+            String sAid = idb.fetchSingle(sql);
+            aid = sAid;
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return aid;
     }
-    
-    
-    
-    public void gorAndring(){
+
+    public void gorAndring() {
         //hämta vilket objekt som ska ändras
-        String pidL=selectPid();
-        String stad=getStad();
-        
-        String namn=tfNamn.getText();
-        String kp=tfKPerson.getText();
-        String epost=tfEpost.getText();
-        String telefon=tfTelefon.getText();
-        String adress=tfAdress.getText();
-        String branch=tfBransch.getText();
-        String sqlFraga="UPDATE partner SET namn = '" + namn + "', kontaktperson= '" + kp 
-                + "', kontaktepost = '" + epost + "' , telefon= '" + telefon + "', adress= '" 
-                + adress + "', branch= '"  + branch + "', stad= " + stad + " WHERE pid= " + pidL;
+        String pidL = selectPid();
+        String stad = getStad();
+
+        String namn = tfNamn.getText();
+        String kp = tfKPerson.getText();
+        String epost = tfEpost.getText();
+        String telefon = tfTelefon.getText();
+        String adress = tfAdress.getText();
+        String branch = tfBransch.getText();
+        String sqlFraga = "UPDATE partner SET namn = '" + namn + "', kontaktperson= '" + kp
+                + "', kontaktepost = '" + epost + "' , telefon= '" + telefon + "', adress= '"
+                + adress + "', branch= '" + branch + "', stad= " + stad + " WHERE pid= " + pidL;
         System.out.println(sqlFraga);
-        try{
+        try {
             idb.update(sqlFraga);
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-                
+
     }
-    
+
     private void btnAndraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAndraActionPerformed
         totalKontroll();
-            if(kontrollOk==true){
-                gorAndring();
-                lblLyckades.setVisible(true);
-                lblError.setVisible(false);
-                fyllPartner();
-            }
-            else{
-                lblError.setVisible(true);
-                lblLyckades.setVisible(false);}
+        if (kontrollOk == true) {
+            gorAndring();
+            lblLyckades.setVisible(true);
+            lblError.setVisible(false);
+            fyllPartner();
+        } else {
+            lblError.setVisible(true);
+            lblLyckades.setVisible(false);
+        }
 
     }//GEN-LAST:event_btnAndraActionPerformed
 
@@ -825,7 +797,7 @@ public class AndraPartner extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new AndraPartner().setVisible(true);
+                // new AndraPartner().setVisible(true);
             }
         });
     }

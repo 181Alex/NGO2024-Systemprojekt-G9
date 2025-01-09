@@ -21,12 +21,12 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
 
     /**
      * Initierar ProjektHallbarhet objekt 
-     * låter administratören lägga till och ta bort hållbarhetsmål för ett projekt
+     * låter administratören lägga till och
+     * ta bort hållbarhetsmål för ett projekt
      *
      * @param idb initierar fält för att interagera med databasen
      * @param pid projekt ID
      */
-    
     public ProjektHallbarhet(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -45,11 +45,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     /**
      * fyller i Hash Map med alla mål
      */
-    
-    private void fyllHashMap(){
-            
-            try{
-             String sqlFraga = "SELECT namn FROM hallbarhetsmal";
+    private void fyllHashMap() {
+
+        try {
+            String sqlFraga = "SELECT namn FROM hallbarhetsmal";
 
             ArrayList<String> allaMal = idb.fetchColumn(sqlFraga);
 
@@ -59,16 +58,16 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
                 String paid = idb.fetchSingle(sqlHid);
                 malLista.put(paid, malNamn);
             }
-            } catch (InfException ex) {
-                System.out.println(ex.getMessage());
-            }
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
         }
-            
+    }
+
     /**
      * ger projektnamn på ett viss projekt
+     *
      * @param pid projekt ID
      */
-    
     private void setProjektnamn(String pid) {
         try {
             String sqlFraga = "SELECT projektnamn FROM projekt WHERE pid =" + pid;
@@ -79,11 +78,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * fyller i combo box med alla mål
      */
-
     private void fyllCbLaggTill() {
         cbHallbarhetsMal.removeAllItems();
 
@@ -104,7 +102,6 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
     /**
      * fyller på combo box för ta bort
      */
-    
     private void fyllCbTaBort() {
         cbHallbarhetsMal.removeAllItems();
 
@@ -123,11 +120,10 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * hämtar hållbarhetsmål ID
      */
-
     private String getSelectedHid() {
         String selectedMal = (String) cbHallbarhetsMal.getSelectedItem();
         String hid = " ";
@@ -139,77 +135,73 @@ public class ProjektHallbarhet extends javax.swing.JFrame {
         }
         return hid;
     }
-    
+
     /**
      * lägger till hållbarhetsmål för ett projekt
      */
-    
-    private void laggTill(){
+    private void laggTill() {
         String hid = getSelectedHid();
         String sPid = lblPid.getText();
-        
+
         String sqlLaggTill = "INSERT INTO proj_hallbarhet VALUES( " + sPid
                 + ", " + hid + ")";
-        
+
         try {
-            if(kontrollInteSamma(hid)){
-            idb.insert(sqlLaggTill);
-            lblFelmeddelande.setVisible(false);
-            lblMeddelande.setText("Tillagd");
-            lblMeddelande.setVisible(true);
+            if (kontrollInteSamma(hid)) {
+                idb.insert(sqlLaggTill);
+                lblFelmeddelande.setVisible(false);
+                lblMeddelande.setText("Tillagd");
+                lblMeddelande.setVisible(true);
             } else {
                 lblFelmeddelande.setText("Detta mål finns redan för detta projekt");
                 lblFelmeddelande.setVisible(true);
                 lblMeddelande.setVisible(false);
             }
-            
-            
-        } catch (InfException ex){
-            System.out.println(ex.getMessage());
-        }     
-        
-    }
-    
-    /**
-     * Tar bort hållbarhetsmål från ett projekt
-     */
-    
-    private void taBort(){
-        String hid = getSelectedHid();
-        String sPid = lblPid.getText();
-        
-        String sqlTaBort = "DELETE FROM proj_hallbarhet WHERE pid = " + sPid + " AND hid = " + hid;
-        
-        try{
-            idb.delete(sqlTaBort);
-            lblMeddelande.setText("Borttagen från projekt");
-            lblMeddelande.setVisible(true);       
-            
+
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
     }
-    
+
+    /**
+     * Tar bort hållbarhetsmål från ett projekt
+     */
+    private void taBort() {
+        String hid = getSelectedHid();
+        String sPid = lblPid.getText();
+
+        String sqlTaBort = "DELETE FROM proj_hallbarhet WHERE pid = " + sPid + " AND hid = " + hid;
+
+        try {
+            idb.delete(sqlTaBort);
+            lblMeddelande.setText("Borttagen från projekt");
+            lblMeddelande.setVisible(true);
+
+        } catch (InfException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
     /**
      * kontrollerar så det inte finns dubletter av hållbarhetsmål
      */
-    
-    private boolean kontrollInteSamma(String hid){
+    private boolean kontrollInteSamma(String hid) {
         boolean finnsEj = true;
         String sPid = lblPid.getText();
-        
+
         String sqlFraga = "SELECT COUNT(*) AS Antal "
                 + "FROM proj_hallbarhet "
                 + "WHERE pid = " + sPid + " AND hid = " + hid;
-        
-        try{
-           String sqlAntal = idb.fetchSingle(sqlFraga);
-           int antal = Integer.parseInt(sqlAntal);
-           
-           if(antal> 0){
-               finnsEj = false;
-           }
+
+        try {
+            String sqlAntal = idb.fetchSingle(sqlFraga);
+            int antal = Integer.parseInt(sqlAntal);
+
+            if (antal > 0) {
+                finnsEj = false;
+            }
 
         } catch (InfException ex) {
             System.out.println(ex.getMessage());

@@ -16,22 +16,22 @@ import java.util.ArrayList;
 public class LaggTillPartner extends javax.swing.JFrame {
 
     private InfDB idb;
-    private String epost;  
+    private String epost;
     boolean kontrollOk;
-    
-   /**
+
+    /**
      * Initierar LaggTillPartner objekt 
-     * låter administratören lägga till en ny partner
+     * låter administratören lägga till en ny
+     * partner
      *
      * @param idb initierar fält för att interagera med databasen
      * @param epost eposten till den inloggade användaren
      */
-
     public LaggTillPartner(InfDB idb, String epost) {
-        this.idb=idb;
-        this.epost=epost;
+        this.idb = idb;
+        this.epost = epost;
         initComponents();
-        kontrollOk=false;
+        kontrollOk = false;
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
         lblNamn.setVisible(true);
@@ -44,31 +44,29 @@ public class LaggTillPartner extends javax.swing.JFrame {
         gomBad();
 
     }
-    
+
     /**
      * fyller i combo box med namn på städer
      */
-    
-    public void fyllCb(){
-        
+    public void fyllCb() {
+
         cbStad.removeAllItems();
-        String sqlFraga="SELECT namn FROM stad";
-        
-        ArrayList<String> namnLista=new ArrayList<>();
-        
-        try{
-            namnLista=idb.fetchColumn(sqlFraga);
-            
-            for(String namn:namnLista){
+        String sqlFraga = "SELECT namn FROM stad";
+
+        ArrayList<String> namnLista = new ArrayList<>();
+
+        try {
+            namnLista = idb.fetchColumn(sqlFraga);
+
+            for (String namn : namnLista) {
                 cbStad.addItem(namn);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    public void gomBad(){
+
+    public void gomBad() {
         lblNamnBad.setVisible(false);
         lblKPersonBad.setVisible(false);
         lblEpostBad.setVisible(false);
@@ -76,8 +74,6 @@ public class LaggTillPartner extends javax.swing.JFrame {
         lblAdressBad.setVisible(false);
         lblBranschBad.setVisible(false);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,223 +295,202 @@ public class LaggTillPartner extends javax.swing.JFrame {
     /**
      * kontrollerar så att allt är valid
      */
-    
     public void totalKontroll() {
-    Boolean totOk = true;
+        Boolean totOk = true;
 
-    if (!kPersonKontroll()) {
-        totOk = false;
-        lblKPersonBad.setVisible(true);
+        if (!kPersonKontroll()) {
+            totOk = false;
+            lblKPersonBad.setVisible(true);
 
-    } else if (!namnKontroll()) {
-        totOk = false;
-        lblNamnBad.setVisible(true);
+        } else if (!namnKontroll()) {
+            totOk = false;
+            lblNamnBad.setVisible(true);
 
-    } else if (!epostKontroll()) {
-        totOk = false;
-        lblEpostBad.setVisible(true);
-    } else if (!telefonKontroll()) {
-        totOk = false;
-        lblTelefonBad.setVisible(true);
-    } else if (!adressKontroll()) {
-        totOk = false;
-        lblAdressBad.setVisible(true);
-    } else if (!branschKontroll()) {
-        totOk = false;
-        lblBranschBad.setVisible(true);
-    }else if(!sammaEpostKontroll()){
-        totOk=false;
+        } else if (!epostKontroll()) {
+            totOk = false;
+            lblEpostBad.setVisible(true);
+        } else if (!telefonKontroll()) {
+            totOk = false;
+            lblTelefonBad.setVisible(true);
+        } else if (!adressKontroll()) {
+            totOk = false;
+            lblAdressBad.setVisible(true);
+        } else if (!branschKontroll()) {
+            totOk = false;
+            lblBranschBad.setVisible(true);
+        } else if (!sammaEpostKontroll()) {
+            totOk = false;
+        }
+
+        kontrollOk = totOk;
     }
-        
 
-    kontrollOk = totOk;
-}
-    
     /**
      * hämtar ut högsta partner ID
      */
-
-    
-public int hogstaPid(){
-        int hogsta=0;
-        String sqlFraga="Select MAX(pid) FROM partner";
-        try{
-            String max=idb.fetchSingle(sqlFraga);
-            hogsta=Integer.parseInt(max);
-        }
-        catch(Exception ex){
+    public int hogstaPid() {
+        int hogsta = 0;
+        String sqlFraga = "Select MAX(pid) FROM partner";
+        try {
+            String max = idb.fetchSingle(sqlFraga);
+            hogsta = Integer.parseInt(max);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         System.out.println(hogsta);
-        return hogsta+1;
+        return hogsta + 1;
     }
 
-    
     /**
-     * Anropar kontroll av att ny epost inte är som någon annans
-     * Ger false om valideringen visar att fel uppstått
-     * 
+     * Anropar kontroll av att ny epost inte är som någon annans Ger false om
+     * valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
-    private boolean sammaEpostKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String epost = tfEpost.getText(); 
-    if(valid.checkInteSammaEpost(epost)){
-      lblEpostBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblEpostBad.setVisible(true); // Visa varning
-        return false;
-        
-    }
+    private boolean sammaEpostKontroll() {
+        Validering valid = new Validering(idb);
+
+        // Hämta text från textfältet
+        String epost = tfEpost.getText();
+        if (valid.checkInteSammaEpost(epost)) {
+            lblEpostBad.setVisible(false); // Göm varning
+            return true;
+        } else {
+            lblEpostBad.setVisible(true); // Visa varning
+            return false;
+
+        }
     }
 
     /**
      * kontrollerar kontaktperson
      */
-    
-    public boolean kPersonKontroll(){
+    public boolean kPersonKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfKPerson.getText();
         // kontrollerar kPerson vilekt är ett namn
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblKPersonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblKPersonBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar namn för att se till att det är valid
      */
-    
-    public boolean namnKontroll(){
+    public boolean namnKontroll() {
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
         // kontrollerar namn format
-    if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
+        if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblNamnBad.setVisible(true);
             return false;
-    }
+        }
     }
 
     /**
      * kontrollerar så att eposten är valid
      */
-    
-    public boolean epostKontroll(){
+    public boolean epostKontroll() {
         Validering valid = new Validering(idb);
         String epost = tfEpost.getText();
-    if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
+        if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
             lblEpostBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblEpostBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar så att telefon nummer är valid
      */
-    
-    public boolean telefonKontroll(){
+    public boolean telefonKontroll() {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+        if (valid.checkTelefon(telefon) && valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTelefonBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
-    
 
     /**
      * kontrollerar så att adress är valid
      */
-
-    
-    public boolean adressKontroll(){
+    public boolean adressKontroll() {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-    if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAdress(adress) && valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblAdressBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * kontrollerar så att bransch är valid
      */
-    
-    public boolean branschKontroll(){
+    public boolean branschKontroll() {
         Validering valid = new Validering(idb);
         String bransch = tfBransch.getText();
-    if (valid.checkFornamn(bransch)&& valid.checkStorlek(255, bransch)) {
+        if (valid.checkFornamn(bransch) && valid.checkStorlek(255, bransch)) {
             lblBranschBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblBranschBad.setVisible(true);
             return false;
+        }
     }
-    }
-    
+
     /**
      * hämtar ut stads id
      */
-    
-    public int getStad(){
-        int i=cbStad.getSelectedIndex();
-        int sid=0;
-        String sql="SELECT sid FROM stad WHERE namn='" + cbStad.getItemAt(i) + "'";
+    public int getStad() {
+        int i = cbStad.getSelectedIndex();
+        int sid = 0;
+        String sql = "SELECT sid FROM stad WHERE namn='" + cbStad.getItemAt(i) + "'";
         System.out.println(sql);
-        try{
-            String sSid=idb.fetchSingle(sql);
-            sid=Integer.parseInt(sSid);
-        }catch(Exception ex){
+        try {
+            String sSid = idb.fetchSingle(sql);
+            sid = Integer.parseInt(sSid);
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return sid;
     }
-    
-    
-    
-    
-    
-    
+
+
     private void btnSkapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkapaActionPerformed
         totalKontroll();
-        int hogsta=hogstaPid();
-        String sqlFraga="INSERT INTO partner VALUES(" + hogsta + ",'" + tfNamn.getText() + "','"
-        + tfKPerson.getText() + "','" + tfEpost.getText() + "', '" + tfTelefon.getText() + "','"
-        + tfAdress.getText() + "','" + tfBransch.getText() + "', " + getStad() + ")";
+        int hogsta = hogstaPid();
+        String sqlFraga = "INSERT INTO partner VALUES(" + hogsta + ",'" + tfNamn.getText() + "','"
+                + tfKPerson.getText() + "','" + tfEpost.getText() + "', '" + tfTelefon.getText() + "','"
+                + tfAdress.getText() + "','" + tfBransch.getText() + "', " + getStad() + ")";
         System.out.println(sqlFraga);
-        if(kontrollOk==true){
-            try{
+        if (kontrollOk == true) {
+            try {
 
                 idb.insert(sqlFraga);
                 System.out.println(sqlFraga);
 
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
             lblError.setVisible(false);
             lblSkapad.setVisible(true);
-        }
-        else{
+        } else {
             lblError.setVisible(true);
         }
     }//GEN-LAST:event_btnSkapaActionPerformed
