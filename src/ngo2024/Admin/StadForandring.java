@@ -23,12 +23,12 @@ public class StadForandring extends javax.swing.JFrame {
      * administratör kan lägga till och ändra information om städer
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten för den inloggade användaren
+     * @param epost eposten för den inloggade användaren
      */
 
-    public StadForandring(InfDB idb, String inloggadAnvandare) {
+    public StadForandring(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
         fyllValjLand();
         fyllValjStad();

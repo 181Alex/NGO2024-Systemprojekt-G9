@@ -27,13 +27,13 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
      * Låter administratör lägga till en ny avdelning
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten som den inloggande användaren använder
+     * @param epost eposten som den inloggande användaren använder
      */
 
     
-    public LaggTillAvdelning(InfDB idb, String inloggadAnvandare) {
+    public LaggTillAvdelning(InfDB idb, String epos) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         kontrollOk=false;
         initComponents();
         anstalldLista = new HashMap<>();
@@ -233,7 +233,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 } 
    
     /**
-     *  Ger projektchefen???
+     *  Ger anställds ID till den valda projektchefen
      */
     
    private String getPChef(){

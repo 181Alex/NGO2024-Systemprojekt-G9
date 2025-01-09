@@ -24,12 +24,12 @@ public class AndraLand extends javax.swing.JFrame {
      * låter administratör ändra information om ett land
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten för den inloggade användaren
+     * @param epost eposten för den inloggade användaren
      */
 
-    public AndraLand(InfDB idb, String inloggadAnvandare) {
+    public AndraLand(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         kontrollOk=true;
         
         initComponents();

@@ -20,13 +20,17 @@ public class AndraPartner extends javax.swing.JFrame {
     private String epost;  
     boolean kontrollOk;
    
-    
     /**
-     * Creates new form AndraPartner
+     * Initierar AndraPartner objekt 
+     * låter administratör ändra information om en partner
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param epost eposten för den inloggade användaren
      */
-    public AndraPartner(InfDB idb, String inloggadAnvandare) {
+    
+    public AndraPartner(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
         kontrollOk=false;
         fyllStad();
@@ -34,6 +38,9 @@ public class AndraPartner extends javax.swing.JFrame {
         gomAlla();
     }
     
+    /**
+     * fyller i combo box med namn på städer
+     */
     
     private void fyllStad(){
          cbStad.removeAllItems();
@@ -53,6 +60,10 @@ public class AndraPartner extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * fyller i combo box med namn på partners
+     */
+    
     private void fyllPartner(){
         cbValjPartner.removeAllItems();
         String sqlFraga="SELECT namn FROM partner";
@@ -71,6 +82,10 @@ public class AndraPartner extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * hämtar ut partner ID
+     */
+    
     public String selectPid(){
         String pid="111";
         String vald= (String) cbValjPartner.getSelectedItem();
@@ -84,6 +99,9 @@ public class AndraPartner extends javax.swing.JFrame {
         return pid;
         }
     
+    /**
+     * gömmer allt
+     */
     
     private void gomAlla(){
         tfTelefon.setVisible(false);
@@ -119,6 +137,10 @@ public class AndraPartner extends javax.swing.JFrame {
         
     }
     
+    /**
+     * kontrollerar allt
+     */
+    
      public void totalKontroll() {
     Boolean totOk = true;
 
@@ -147,6 +169,10 @@ public class AndraPartner extends javax.swing.JFrame {
     kontrollOk = totOk;
 }
      
+     /**
+     * kontrollerar att kontaktpersones namn är valid
+     */
+     
        public boolean kPersonKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfKPerson.getText();
@@ -160,11 +186,13 @@ public class AndraPartner extends javax.swing.JFrame {
     }
     }
     
-    
+    /**
+     * kontrollerar namn formatet
+     */
+       
     public boolean namnKontroll(){
         Validering valid = new Validering(idb);
         String namn = tfNamn.getText();
-        // kontrollerar namn format
     if (valid.checkNamn(namn) && valid.checkStorlek(255, namn)) {
             lblNamnBad.setVisible(false);
             return true;
@@ -174,11 +202,13 @@ public class AndraPartner extends javax.swing.JFrame {
     }
     }
     
+    /**
+     * kontrollerar att epost är valid
+     */
     
     public boolean epostKontroll(){
         Validering valid = new Validering(idb);
         String epost = tfEpost.getText();
-        // kontrollerar epost format
     if (valid.checkEpost(epost)&& valid.checkStorlek(255, epost)) {
             lblEpostBad.setVisible(false);
             return true;
@@ -188,10 +218,13 @@ public class AndraPartner extends javax.swing.JFrame {
     }
     }
     
+    /**
+     * kontrollerar att telefonnummer är valid
+     */
+    
     public boolean telefonKontroll(){
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-        // kontrollerar telefon format
     if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
@@ -200,6 +233,10 @@ public class AndraPartner extends javax.swing.JFrame {
             return false;
     }
     }
+    
+    /**
+     * kontrollerar att adressen är valid
+     */
     
     public boolean adressKontroll(){
         Validering valid = new Validering(idb);
@@ -214,10 +251,13 @@ public class AndraPartner extends javax.swing.JFrame {
     }
     }
     
+    /**
+     * kontrollerar att bransch namn är valid
+     */
+    
     public boolean branschKontroll(){
         Validering valid = new Validering(idb);
         String bransch = tfBransch.getText();
-        // liknande fornamn, då endast bokstäver
     if (valid.checkFornamn(bransch)&& valid.checkStorlek(255, bransch)) {
             lblBranschBad.setVisible(false);
             return true;

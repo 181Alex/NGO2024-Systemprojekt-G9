@@ -26,14 +26,14 @@ public class AdminMeny extends javax.swing.JFrame {
      * AdminMeny låter en administratör att hantera anställda, avdelningar, projekt, globala mål, länder och städer
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten för personen som är inloggad
+     * @param epost eposten för personen som är inloggad
      * @param aid den inloggade användares ID
      */
-    public AdminMeny(InfDB idb, String inloggadAnvandare, String aid) {
+    public AdminMeny(InfDB idb, String epost, String aid) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         initComponents();
-        lblEpost.setText(inloggadAnvandare);
+        lblEpost.setText(epost);
         this.aid = aid;
     }
 

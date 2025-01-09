@@ -20,8 +20,13 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
     private HashMap<String, String> handlaggarLista;
 
     /**
-     * Creates new form ProjektHandlaggare
+     * Initierar ProjektHandlaggare objekt 
+     * låter administratören lägga till och ta bort handläggare för ett projekt
+     *
+     * @param idb initierar fält för att interagera med databasen
+     * @param pid projekt ID
      */
+    
     public ProjektHandlaggare(InfDB idb, String pid) {
         this.idb = idb;
         this.pid = pid;
@@ -36,6 +41,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         lblFelmeddelande.setVisible(false);
         fyllHashMap();
     }
+    
+    /**
+     * fyller i Hash Map med alla namn och anställd ID för alla handläggare
+     */
     
         private void fyllHashMap(){
             
@@ -56,6 +65,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
                 System.out.println(ex.getMessage());
             }
         }
+        
+     /**
+     * ger projektnamn på ett visst projekt namn
+     * @param pid projekt ID
+     */
 
         private void setProjektnamn(String pid) {
         try {
@@ -67,7 +81,11 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-        
+    
+     /**
+     * fyller i combo box med alla namn och anställd ID för alla handläggare
+     */   
+  
             private void fyllCbLaggTill() {
         cbHandlaggare.removeAllItems();
 
@@ -86,6 +104,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
+    
+    /**
+     * ???
+     */
             
                 private void fyllCbTaBort() {
         cbHandlaggare.removeAllItems();
@@ -106,6 +128,10 @@ public class ProjektHandlaggare extends javax.swing.JFrame {
         }
     }
                 
+    /**
+     * ger valda anställd ID???
+     */
+                
 private String getSelectedAid() {
         String selectedPerson = (String) cbHandlaggare.getSelectedItem();
         String hid = " ";
@@ -117,6 +143,10 @@ private String getSelectedAid() {
         }
         return hid;
     }
+
+    /**
+     * lägg till handläggare till ett projekt
+     */
             
     private void laggTill(){
         String aid = getSelectedAid();
@@ -143,7 +173,11 @@ private String getSelectedAid() {
         }     
         
     }
-        
+    
+    /**
+     * tar bort handläggare från ett projekt
+     */
+    
         private void taBort(){
         String aid = getSelectedAid();
         String sPid = lblPid.getText();
@@ -160,7 +194,10 @@ private String getSelectedAid() {
         }
         
     }
-        
+       
+    /**
+     * kontrollerar så att det finns inga dubletter av anställnings ID finns
+     */
             
     private boolean kontrollInteSamma(String aid){
         boolean finnsEj = true;

@@ -29,12 +29,12 @@ public class LaggTillPorjekt extends javax.swing.JFrame {
      * låter administratören lägga till projekt
      *
      * @param idb initierar fält för att interagera med databasen
-     * @param inloggadAnvandare eposten till den inloggade användaren
+     * @param epost eposten till den inloggade användaren
      */
 
-    public LaggTillPorjekt(InfDB idb, String inloggadAnvandare) {
+    public LaggTillPorjekt(InfDB idb, String epost) {
         this.idb=idb;
-        this.epost=inloggadAnvandare;
+        this.epost=epost;
         anstalldLista = new HashMap<>();
         landLista = new HashMap<>();
         initComponents();
@@ -338,7 +338,7 @@ private String getPChef(){
     }
 
     /**
-     * ???
+     * skapar ett projekt
      */
 
 
