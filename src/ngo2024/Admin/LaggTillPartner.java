@@ -325,9 +325,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
         lblBranschBad.setVisible(true);
     }else if(!sammaEpostKontroll()){
         totOk=false;
-    }else if(!sammaTelefonKontroll()){
-        totOk=false;
     }
+        
 
     kontrollOk = totOk;
 }
@@ -351,26 +350,6 @@ public int hogstaPid(){
         return hogsta+1;
     }
 
-/**
-     * Anropar kontroll av att ny telefonNr inte är som någon annans
-     * Ger false om valideringen visar att fel uppstått
-     * 
-     * @param idb databasen som används för validering
-     */
-    private boolean sammaTelefonKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String telefon = tfTelefon.getText(); 
-    if(valid.checkInteSammaTelefon(telefon)){
-      lblTelefonBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblTelefonBad.setVisible(true); // Visa varning
-        return false;
-        
-    }
-    }
     
     /**
      * Anropar kontroll av att ny epost inte är som någon annans

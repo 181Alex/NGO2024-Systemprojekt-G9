@@ -23,7 +23,6 @@ public class AndraAvdelning extends javax.swing.JFrame {
     private HashMap<String, String> anstalldLista;
     private HashMap<String, String> stadLista;
     private HashMap<String, String> avdLista;
-    private String ogTelefon;
     private String ogEpost;
     
     /**
@@ -419,7 +418,6 @@ public class AndraAvdelning extends javax.swing.JFrame {
         tfAdress.setText(adress);
         tfEpost.setText(epost);
         tfTelefon.setText(telefon);
-        ogTelefon=tfTelefon.getText();
         ogEpost=tfEpost.getText();
         if (stad != null) {
             cbStad.setSelectedItem(stad);
@@ -568,7 +566,7 @@ public class AndraAvdelning extends javax.swing.JFrame {
     // Hämta text från textfältet
     String epost = tfEpost.getText(); 
     if(ogEpost.equals(epost)){
-        lblTelefonBad.setVisible(false); // Göm varning
+        lblEpostBad.setVisible(false); // Göm varning
         return true;
     }
     else if(valid.checkInteSammaEpost(epost)){

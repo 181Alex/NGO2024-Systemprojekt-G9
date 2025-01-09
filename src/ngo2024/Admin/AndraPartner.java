@@ -19,6 +19,8 @@ public class AndraPartner extends javax.swing.JFrame {
     private InfDB idb;
     private String epost;  
     boolean kontrollOk;
+    private String ogEpost;
+    private String ogTelefon;
    
     /**
      * Initierar AndraPartner objekt 
@@ -164,10 +166,31 @@ public class AndraPartner extends javax.swing.JFrame {
     } else if (!branschKontroll()) {
         totOk = false;
         lblBranschBad.setVisible(true);
+    }else if(!sammaEpostKontroll()){
+        totOk=false;
     }
 
     kontrollOk = totOk;
 }
+     
+     private boolean sammaEpostKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = tfEpost.getText(); 
+    if(ogEpost.equals(epost)){
+        lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    }
+    else if(valid.checkInteSammaEpost(epost)){
+      lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblEpostBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
      
      /**
      * kontrollerar att kontaktpersones namn är valid
@@ -691,6 +714,8 @@ public class AndraPartner extends javax.swing.JFrame {
             tfBransch.setText(branschS);
             tfEpost.setText(ePostS);
             cbStad.setSelectedIndex(stadS);
+            ogEpost=tfEpost.getText();
+            ogTelefon=tfTelefon.getText();
     }
     
     
