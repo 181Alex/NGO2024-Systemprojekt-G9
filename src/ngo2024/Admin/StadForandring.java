@@ -253,6 +253,7 @@ public class StadForandring extends javax.swing.JFrame {
             btnAndra.setVisible(false);
             btnTaBort.setVisible(true);
             btnLaggTill.setVisible(false);
+            btnAndra.setVisible(true);
             lblNuLand.setVisible(true);
             
         }
