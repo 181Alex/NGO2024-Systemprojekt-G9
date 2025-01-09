@@ -548,37 +548,13 @@ public class AndraAvdelning extends javax.swing.JFrame {
     } else if (!epostKontroll(idb)) {  
         totOk = false;
         lblEpostBad.setVisible(true);
+    }else if(!sammaEpostKontroll()){
+    totOk=false;
     }
 
     kontrollOk = totOk;
 }
 
-    /**
-     * Anropar kontroll av att ny telefonNr inte är som någon annans
-     * Ger false om valideringen visar att fel uppstått
-     * 
-     * @param idb databasen som används för validering
-     */
-    private boolean sammaTelefonKontroll(){
-        Validering valid = new Validering(idb); 
-    
-    // Hämta text från textfältet
-    String telefon = tfTelefon.getText(); 
-    // om man ej ändrar telfon nr så behövs ingen validering göras.
-    if(ogTelefon.equals(telefon)){
-        lblTelefonBad.setVisible(false); // Göm varning
-        return true;
-    }
-    
-    else if(valid.checkInteSammaTelefon(telefon)){
-      lblTelefonBad.setVisible(false); // Göm varning
-        return true;
-    } else {
-        lblTelefonBad.setVisible(true); // Visa varning
-        return false;
-        
-    }
-    }
     
     /**
      * Anropar kontroll av att ny epost inte är som någon annans
