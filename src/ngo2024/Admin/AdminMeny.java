@@ -314,7 +314,7 @@ public class AdminMeny extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinAvdelningActionPerformed
 
     private void brnMinaProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnMinaProjektActionPerformed
-        new MinaProjekt(idb, epost).setVisible(true);
+        new MinaProjekt(idb, aid).setVisible(true);
     }//GEN-LAST:event_brnMinaProjektActionPerformed
 
     private void btnTaBortPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortPartnerActionPerformed

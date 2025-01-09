@@ -205,7 +205,12 @@ public class MinProfil extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
     }
 
-    // kontroller
+   /**
+     * Anropar kontroll av att nytt förnamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som kallas för validering
+     */
     public boolean fornamnKontroll() {
         Validering valid = new Validering(idb);
         String fornamn = txtFirstName.getText();
@@ -217,7 +222,12 @@ public class MinProfil extends javax.swing.JFrame {
             return false;
         }
     }
-
+/**
+     * Anropar kontroll av att nytt efternamn innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean efternamnKontroll() {
         Validering valid = new Validering(idb);
         String efternamn = txtLastName.getText();
@@ -229,7 +239,13 @@ public class MinProfil extends javax.swing.JFrame {
             return false;
         }
     }
-
+/**
+     * Anropar kontroll av att ny epost är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean kontroll() {
         Validering valid = new Validering(idb);
 
@@ -246,6 +262,13 @@ public class MinProfil extends javax.swing.JFrame {
         }
     }
     
+     /**
+     * Anropar kontroll av att ny lösenord är korrekt formaterad,
+     * samt innehåller accepterade tecken 
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
     public boolean losenKontroll() {
         Validering valid = new Validering(idb);
 
