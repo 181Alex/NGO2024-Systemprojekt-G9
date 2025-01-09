@@ -115,7 +115,7 @@ public class Validering {
     public boolean checkLosenord(String losen){
         boolean matches = false;
         // Minst 8 tecken, måste innehålla minst en bokstav. Siffror och specialtecken är valfria.
-        String checker = "^(?=.*[A-Za-z]).{8,}$\"";
+        String checker = "^(\\d{8,}|(?=.*[A-Za-z]).{8,})$";
         if (losen.matches(checker)) {
             matches = true;
         }
