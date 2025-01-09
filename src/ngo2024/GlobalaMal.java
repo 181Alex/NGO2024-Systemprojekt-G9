@@ -49,7 +49,7 @@ public class GlobalaMal extends javax.swing.JFrame {
     private void tabellDesign() {
         //fixar tabellens bredd
         tblGlobalaMal.getColumnModel().getColumn(0).setPreferredWidth(138);  // För kort text
-        tblGlobalaMal.getColumnModel().getColumn(1).setPreferredWidth(138); 
+        tblGlobalaMal.getColumnModel().getColumn(1).setPreferredWidth(138);
         tblGlobalaMal.getColumnModel().getColumn(2).setPreferredWidth(300); // För längre text
         tblGlobalaMal.getColumnModel().getColumn(3).setPreferredWidth(138);
 

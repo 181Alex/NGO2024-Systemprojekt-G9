@@ -18,7 +18,8 @@ public class Inloggning extends javax.swing.JFrame {
 
     /**
      * Initierar Inloggnings objekt 
-     * Skapar fönster för inloggning. Tar emot användarens Epost och Lösenord för inlogg
+     * Skapar fönster för inloggning. 
+     * Tar emot användarens Epost och Lösenord för inlogg
      *
      * @param idb initierar fält för att interagera med databasen
      */

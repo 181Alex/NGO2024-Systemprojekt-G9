@@ -25,7 +25,7 @@ public class MinProfil extends javax.swing.JFrame {
     private String adress;
     private boolean isEditing = false;
 
-     /**
+    /**
      * Initierar MinProfil objekt 
      * Fönster med inloggad användares information
      * Möjlighet att redigera användar information
@@ -41,9 +41,8 @@ public class MinProfil extends javax.swing.JFrame {
         this.firstname = getfirstname(aid);
         this.lastname = getlastname(aid);
         this.department = getdepartment(aid);
-        this.adress=getAdress(aid);
-        this.telefon=getTelefon(aid);
-        
+        this.adress = getAdress(aid);
+        this.telefon = getTelefon(aid);
 
         String password = getPassword(aid);
         initComponents();
@@ -63,8 +62,8 @@ public class MinProfil extends javax.swing.JFrame {
     public MinProfil(InfDB idb) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    private void gomBad(){
+
+    private void gomBad() {
         lblFornamnBad1.setVisible(false);
         lblEfternamnBad.setVisible(false);
         lblTelefonBad.setVisible(false);
@@ -94,7 +93,7 @@ public class MinProfil extends javax.swing.JFrame {
         }
         return txtLastName;
     }
-    
+
     private String getAdress(String aid) {
         String txtAdress = "";
         try {
@@ -105,7 +104,7 @@ public class MinProfil extends javax.swing.JFrame {
         }
         return txtAdress;
     }
-    
+
     private String getTelefon(String aid) {
         String txtTelefon = "";
         try {
@@ -188,8 +187,8 @@ public class MinProfil extends javax.swing.JFrame {
         firstname = txtFirstName.getText();
         lastname = txtLastName.getText();
         epost = txtEmail.getText();
-        telefon=tfTelefon.getText();
-        adress=tfAdress.getText();
+        telefon = tfTelefon.getText();
+        adress = tfAdress.getText();
 
         txtFirstName.setEditable(false);
         txtLastName.setEditable(false);
@@ -205,10 +204,10 @@ public class MinProfil extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Ändringar Sparade!");
     }
 
-   /**
-     * Anropar kontroll av att nytt förnamn innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+    /**
+     * Anropar kontroll av att nytt förnamn innehåller accepterade tecken Ger
+     * false om valideringen visar att fel uppstått
+     *
      * @param idb databasen som kallas för validering
      */
     public boolean fornamnKontroll() {
@@ -222,10 +221,11 @@ public class MinProfil extends javax.swing.JFrame {
             return false;
         }
     }
-/**
-     * Anropar kontroll av att nytt efternamn innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+
+    /**
+     * Anropar kontroll av att nytt efternamn innehåller accepterade tecken Ger
+     * false om valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
     public boolean efternamnKontroll() {
@@ -239,11 +239,11 @@ public class MinProfil extends javax.swing.JFrame {
             return false;
         }
     }
-/**
-     * Anropar kontroll av att ny epost är korrekt formaterad,
-     * samt innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+
+    /**
+     * Anropar kontroll av att ny epost är korrekt formaterad, samt innehåller
+     * accepterade tecken Ger false om valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
     public boolean kontroll() {
@@ -254,19 +254,19 @@ public class MinProfil extends javax.swing.JFrame {
 
         // Kontrollera om e-postadressen är giltig
         if (valid.checkEpost(epost) && valid.checkStorlek(255, epost)) {
-          lblEpostBad.setVisible(false);
+            lblEpostBad.setVisible(false);
             return true;
         } else {
             lblEpostBad.setVisible(true);
             return false;
         }
     }
-    
-     /**
-     * Anropar kontroll av att ny lösenord är korrekt formaterad,
-     * samt innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+
+    /**
+     * Anropar kontroll av att ny lösenord är korrekt formaterad, samt
+     * innehåller accepterade tecken Ger false om valideringen visar att fel
+     * uppstått
+     *
      * @param idb databasen som används för validering
      */
     public boolean losenKontroll() {
@@ -277,50 +277,49 @@ public class MinProfil extends javax.swing.JFrame {
 
         // Kontrollera om e-postadressen är giltig
         if (valid.checkLosenord(losen) && valid.checkStorlek(255, losen)) {
-          lblLosenBad.setVisible(false);
+            lblLosenBad.setVisible(false);
             return true;
         } else {
             lblLosenBad.setVisible(true);
             return false;
         }
     }
-    
-    
-      /**
-     * Anropar kontroll av att ny adress är korrekt formaterad
-     * samt innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+
+    /**
+     * Anropar kontroll av att ny adress är korrekt formaterad samt innehåller
+     * accepterade tecken Ger false om valideringen visar att fel uppstått
+     *
      * @param idb databasen som används för validering
      */
     public boolean adressKontroll() {
         Validering valid = new Validering(idb);
         String adress = tfAdress.getText();
-        if (valid.checkAdress(adress)&& valid.checkStorlek(255, adress)) {
+        if (valid.checkAdress(adress) && valid.checkStorlek(255, adress)) {
             lblAdressBad.setVisible(false);
             return true;
         } else {
             lblAdressBad.setVisible(true);
             return false;
-        }}
-    
+        }
+    }
+
     /**
-     * Anropar kontroll av att nytt telefonnummer är korrekt formaterad,
-     * samt innehåller accepterade tecken 
-     * Ger false om valideringen visar att fel uppstått
-     * 
+     * Anropar kontroll av att nytt telefonnummer är korrekt formaterad, samt
+     * innehåller accepterade tecken Ger false om valideringen visar att fel
+     * uppstått
+     *
      * @param idb databasen som används för validering
      */
     public boolean telefonKontroll() {
         Validering valid = new Validering(idb);
         String telefon = tfTelefon.getText();
-    if (valid.checkTelefon(telefon)&& valid.checkStorlek(20, telefon)) {
+        if (valid.checkTelefon(telefon) && valid.checkStorlek(20, telefon)) {
             lblTelefonBad.setVisible(false);
             return true;
-    } else {
+        } else {
             lblTelefonBad.setVisible(true);
             return false;
-    }
+        }
     }
 
     public boolean totalKontroll() {
@@ -332,13 +331,12 @@ public class MinProfil extends javax.swing.JFrame {
             totOk = false;
         } else if (!efternamnKontroll()) {
             totOk = false;
-        } else if(!telefonKontroll()){
-            totOk=false;
-        }
-        else if(!adressKontroll()){
-            totOk=false;
-        }else if(!losenKontroll()){
-            totOk=false;
+        } else if (!telefonKontroll()) {
+            totOk = false;
+        } else if (!adressKontroll()) {
+            totOk = false;
+        } else if (!losenKontroll()) {
+            totOk = false;
         }
         return totOk;
     }
@@ -617,8 +615,8 @@ public class MinProfil extends javax.swing.JFrame {
             lblFelInmatning.setVisible(false);
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
-            adress=tfAdress.getText();
-            telefon=tfTelefon.getText();
+            adress = tfAdress.getText();
+            telefon = tfTelefon.getText();
             String newEmail = txtEmail.getText();
             String newPassword = new String(txtPassword.getPassword());
 
@@ -628,7 +626,7 @@ public class MinProfil extends javax.swing.JFrame {
             }
 
             try {
-                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '" 
+                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '"
                         + newPassword + "', telefon= '" + telefon + "', adress= '" + adress + "' WHERE anstalld.epost = '" + this.epost + "'";
                 idb.update(updateQuery);
 
@@ -654,11 +652,11 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setFocusable(false);
             txtPassword.setEnabled(false);
             txtPassword.setEchoChar('*');
-            
+
             tfAdress.setEditable(false);
             tfAdress.setFocusable(false);
             tfAdress.setEnabled(false);
-            
+
             tfTelefon.setEditable(false);
             tfTelefon.setFocusable(false);
             tfTelefon.setEnabled(false);
@@ -690,11 +688,11 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setFocusable(true);
             txtPassword.setEnabled(true);
             txtPassword.setEchoChar('\u0000');
-            
+
             tfAdress.setEditable(true);
             tfAdress.setFocusable(true);
             tfAdress.setEnabled(true);
-            
+
             tfTelefon.setEditable(true);
             tfTelefon.setFocusable(true);
             tfTelefon.setEnabled(true);

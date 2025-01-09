@@ -12,7 +12,7 @@ public class Validering {
 
     private InfDB idb;
 
-     /**
+    /**
      * Initierar Validering objekt 
      * Validerings klass för validering av behörighet och inmatade Strings
      *
@@ -39,7 +39,7 @@ public class Validering {
 
     /**
      * Kontrollerar om inloggad användare är chef över ett eller fler projekt
-     * 
+     *
      * @param ePost inloggad användares epost som validering sker utifrån
      */
     public boolean isChef(String ePost) {
@@ -58,7 +58,7 @@ public class Validering {
 
     /**
      * Kontrolerar om användaren är projektledare för ett specifikt projekt
-     * 
+     *
      * @param aid inloggad användares ID
      * @param projektId ID på projekt som uppgift ska kontrolleras mot
      */
@@ -77,9 +77,10 @@ public class Validering {
         }
         return isProjektetsChef;
     }
+
     /**
      * Kontrollerar att String är korrekt formaterad som epost
-     * 
+     *
      * @param ePost epost String som ska kontrolleras
      */
     public boolean checkEpost(String ePost) {
@@ -91,35 +92,33 @@ public class Validering {
         }
         return matches;
     }
-    
-    
+
     //kontrollerar så att man inte kan ha samma epost som någon annan anställd, avdelning eller partner
-     public boolean checkInteSammaEpost(String epost){
+    public boolean checkInteSammaEpost(String epost) {
         String sqlFraga = "SELECT epost FROM anstalld "
                 + "UNION SELECT epost FROM avdelning "
                 + "UNION SELECT kontaktepost FROM partner";
         boolean ok = true;
-        
+
         try {
             ArrayList<String> epostLista = idb.fetchColumn(sqlFraga);
-            
-            for(String aEpost: epostLista){
-                if(epost.equalsIgnoreCase(aEpost)){
+
+            for (String aEpost : epostLista) {
+                if (epost.equalsIgnoreCase(aEpost)) {
                     ok = false;
-               }                   
+                }
             }
-            
-        } catch (InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex.getMessage());
         }
         return ok;
-        
+
     }
-       
 
     /**
      * Kontrollerar att datum String är korrekt formaterad
-     * 
+     *
      * @param datum datum String som ska kontrolleras
      */
     public boolean checkDatum(String datum) {
@@ -131,14 +130,14 @@ public class Validering {
         }
         return matches;
     }
-    
+
     /**
- * Kontrollerar att ett lösenord är korrekt formaterat.
- * 
- * @param losenord Lösenordet som ska kontrolleras.
- * @return true om lösenordet uppfyller kriterierna, annars false.
- */
-    public boolean checkLosenord(String losen){
+     * Kontrollerar att ett lösenord är korrekt formaterat.
+     *
+     * @param losenord Lösenordet som ska kontrolleras.
+     * @return true om lösenordet uppfyller kriterierna, annars false.
+     */
+    public boolean checkLosenord(String losen) {
         boolean matches = false;
         // Minst 8 tecken, måste innehålla minst en bokstav. Siffror och specialtecken är valfria.
         String checker = "^(\\d{8,}|(?=.*[A-Za-z]).{8,})$";
@@ -150,7 +149,7 @@ public class Validering {
 
     /**
      * Kontrollerar att adress String är korrekt formaterad
-     * 
+     *
      * @param adress adress String som ska kontrolleras
      */
     public boolean checkAdress(String adress) {
@@ -162,27 +161,28 @@ public class Validering {
         }
         return matches;
     }
+
     /**
-     * kontrollerar så att adress antingen skrivs "123 Gatunamn, Stad" eller "gatu-namn 123"
+     * kontrollerar så att adress antingen skrivs "123 Gatunamn, Stad" eller
+     * "gatu-namn 123"
+     *
      * @param adress
-     * 
+     *
      */
     public boolean checkAvdAdress(String adress) {
         boolean matches = false;
         // Adress: "123 Gatunamn, Stad" (tre siffror, gatunamn, kommatecken, stad).
         String checker = "^\\d{1,4}\\s[A-Za-zåäöÅÄÖ]+,\\s[A-Za-zåäöÅÄÖ]+$";
-        String checkers="^[a-zA-ZåäöÅÄÖ-]+ [1-9][0-9]{0,2}$";
+        String checkers = "^[a-zA-ZåäöÅÄÖ-]+ [1-9][0-9]{0,2}$";
         if (adress.matches(checker) || adress.matches(checkers)) {
             matches = true;
         }
         return matches;
     }
-    
-    
 
     /**
      * Kontrollerar att efternamn String är korrekt formaterad
-     * 
+     *
      * @param efternamn String som ska kontrolleras
      */
     public boolean checkEfternamn(String efternamn) {
@@ -197,7 +197,7 @@ public class Validering {
 
     /**
      * Kontrollerar att namn på stad String är korrekt formaterad
-     * 
+     *
      * @param namn String av namn på stad som ska kontrolleras
      */
     public boolean checkStad(String namn) {
@@ -213,7 +213,7 @@ public class Validering {
 
     /**
      * Kontrollerar att namn String är korrekt formaterad
-     * 
+     *
      * @param namn String som ska kontrolleras
      */
     public boolean checkNamn(String namn) {
@@ -233,7 +233,7 @@ public class Validering {
 
     /**
      * Kontrollerar att String enbart innehåller bokstäver
-     * 
+     *
      * @param ansvar String som kontrolleras
      */
     public boolean checkAnsvar(String ansvar) {
@@ -247,8 +247,9 @@ public class Validering {
     }
 
     /**
-     * Kontrollerar om mentor finns samt om parameter String enbart innehåller siffror
-     * 
+     * Kontrollerar om mentor finns samt om parameter String enbart innehåller
+     * siffror
+     *
      * @param mentor String som kontrolleras
      */
     public boolean checkMentor(String mentor) {
@@ -268,7 +269,7 @@ public class Validering {
 
     /**
      * Kontrollerar att String för telefonnummer är korrekt formaterad
-     * 
+     *
      * @param telefon String som kontrolleras
      */
     public boolean checkTelefon(String telefon) {
@@ -280,24 +281,28 @@ public class Validering {
         }
         return matches;
     }
+
     /**
-     * Kontrollerar så att det inmatningen antingen är 123-123-1234 eller max 20 valfria siffror
+     * Kontrollerar så att det inmatningen antingen är 123-123-1234 eller max 20
+     * valfria siffror
+     *
      * @param telefon
      */
-    
-    public boolean checkAvdTelefon(String telefon){
-        boolean matches=false;
-        String checker="^\\d{0,20}$";
-        String checkers="^\\d{3}-\\d{3}-\\d{4}$";
-        if(telefon.matches(checker) || telefon.matches(checkers)){
-            matches=true;
+
+    public boolean checkAvdTelefon(String telefon) {
+        boolean matches = false;
+        String checker = "^\\d{0,20}$";
+        String checkers = "^\\d{3}-\\d{3}-\\d{4}$";
+        if (telefon.matches(checker) || telefon.matches(checkers)) {
+            matches = true;
         }
         return matches;
     }
 
     /**
-     * Kontrollerar att String med förnamn är korrekt formaterad (bara bokstäver)
-     * 
+     * Kontrollerar att String med förnamn är korrekt formaterad (bara
+     * bokstäver)
+     *
      * @param fornamn String med förnamn som kontrolleras
      */
     public boolean checkFornamn(String fornamn) {
@@ -312,7 +317,7 @@ public class Validering {
 
     /**
      * Kontrollerar om en anställd tillhör en viss avdelning
-     * 
+     *
      * @param avdNummer ID (avdid) nummer för avdelningen som ska kontrolleras
      * @param aid ID för användare för kontroll om användare tillhör avdelning
      */
@@ -338,7 +343,7 @@ public class Validering {
 
     /**
      * Kontrollerar att valuta String är korrekt formaterad
-     * 
+     *
      * @param valuta String som ska kontrolleras
      */
     public boolean checkValuta(String valuta) {
@@ -353,7 +358,7 @@ public class Validering {
 
     /**
      * Kontrollerar att kostnad String är korrekt formaterad
-     * 
+     *
      * @param kostnad String som ska kontrolleras
      */
     public boolean checkKostnad(String kostnad) {
@@ -367,8 +372,9 @@ public class Validering {
     }
 
     /**
-     * Kontrollerar att String är korrekt formaterad. Kan ta in flera ord, siffra, etc.
-     * 
+     * Kontrollerar att String är korrekt formaterad. Kan ta in flera ord,
+     * siffra, etc.
+     *
      * @param mening String som ska kontrolleras
      */
     public boolean checkMeningOSiffra(String mening) {
@@ -383,7 +389,7 @@ public class Validering {
 
     /**
      * Kontrollerar att beskrivning String är korrekt formaterad
-     * 
+     *
      * @param beskrivning String som ska kontrolleras
      */
     public boolean checkBeskrivning(String beskrivning) {
@@ -398,7 +404,7 @@ public class Validering {
 
     /**
      * Kontrollerar att start datum är före slutdatum
-     * 
+     *
      * @param franDatum Startdatum String som ska kontrolleras
      * @param tillDatum Slutdatum String som ska kontrolleras
      */
@@ -415,8 +421,8 @@ public class Validering {
 
     /**
      * Kontrollerar att start datum är före slutdatum
-     * 
-     * @param franDatum Startdatum String  för projekt
+     *
+     * @param franDatum Startdatum String för projekt
      * @param tillDatum Slutdatum String för projekt
      * @param franSok Söker från och med datum String
      * @param tillSok Söker till och med datum String
@@ -443,7 +449,7 @@ public class Validering {
 
     /**
      * Kontrollerar om projekt är avslutat
-     * 
+     *
      * @param status String som vill kontrolleras
      */
     public boolean checkAvslutad(String status) {
@@ -456,7 +462,7 @@ public class Validering {
 
     /**
      * Kontrollerar om projekt är planerat
-     * 
+     *
      * @param status String som vill kontrolleras
      */
     public boolean checkPlanerade(String status) {
@@ -469,7 +475,7 @@ public class Validering {
 
     /**
      * Kontrollerar om projekt är pågående
-     * 
+     *
      * @param status String som vill kontrolleras
      */
     public boolean checkPagaende(String status) {
@@ -482,7 +488,7 @@ public class Validering {
 
     /**
      * Kontrollerar om projekt är pausat
-     * 
+     *
      * @param status String som vill kontrolleras
      */
     public boolean checkPausad(String status) {
@@ -495,7 +501,7 @@ public class Validering {
 
     /**
      * Kontrollerar om projekt är aktivt
-     * 
+     *
      * @param status String som vill kontrolleras
      */
     public boolean checkAktiv(String status) {
@@ -508,7 +514,7 @@ public class Validering {
 
     /**
      * Kontrollerar att String inte överskridet tecken antal
-     * 
+     *
      * @param max int med max antal tecken
      * @param inmatning String som kontrolleras
      */

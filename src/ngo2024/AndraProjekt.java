@@ -44,8 +44,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * Döljer alla felmeddelande vid objektets initiering. 
-     * Används vid initialisering innan specefikt fel kan komma upplysas
+     * Döljer alla felmeddelande vid objektets initiering. Används vid
+     * initialisering innan specefikt fel kan komma upplysas
      */
     private void setFelmeddelandeFalse() {
         lblFelNamn.setVisible(false);
@@ -77,9 +77,10 @@ public class AndraProjekt extends javax.swing.JFrame {
         }
         return lid;
     }
-    
+
     /**
      * Fyller i combo box med alla länder från databasen
+     *
      * @param pid ID för projekt som eftersöks
      */
     private void setCbxLand() {
@@ -104,9 +105,9 @@ public class AndraProjekt extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
-     *  Fyller i combo box med alla prioriteringsvärden från databasen
+     * Fyller i combo box med alla prioriteringsvärden från databasen
      */
     private void setCbxPrio() {
 
@@ -190,8 +191,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering för kontroll så nytt projektnamn enbart innehåller vissa tecken,
-     * ger felmeddelande om validering blir false
+     * anropar validering för kontroll så nytt projektnamn enbart innehåller
+     * vissa tecken, ger felmeddelande om validering blir false
      */
     private boolean namnKontroll() {
         Validering valid = new Validering(idb);
@@ -248,8 +249,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering för kontroll av beskrivnings inmatad ändring, 
-     * ger felmeddelande om validering blir false
+     * anropar validering för kontroll av beskrivnings inmatad ändring, ger
+     * felmeddelande om validering blir false
      */
     private boolean beskrivningKontroll() {
         Validering valid = new Validering(idb);
@@ -265,8 +266,8 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * anropar validering av kontroll start datum inmatad ändring,
-     * ger felmeddelande om validering blir false
+     * anropar validering av kontroll start datum inmatad ändring, ger
+     * felmeddelande om validering blir false
      */
     private boolean stDatumKontroll() {
         Validering valid = new Validering(idb);
@@ -361,8 +362,7 @@ public class AndraProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * hämtar valt land från combo box
-     * ger return String med valt lands ID
+     * hämtar valt land från combo box ger return String med valt lands ID
      */
     private String getSelectedLid() {
         String selectedLand = (String) cbxLand.getSelectedItem();

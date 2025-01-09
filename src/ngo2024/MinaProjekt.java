@@ -22,10 +22,10 @@ public class MinaProjekt extends javax.swing.JFrame {
     private ArrayList<String> projNamnLista;
 
     /**
-     * Initierar MinaProjekt objekt
-     * Visar lista över projekt perosn är med i eller leder
+     * Initierar MinaProjekt objekt 
+     * Visar lista över projekt perosn är med i eller leder 
      * Användare kan välja projekt att se mer information om
-     * 
+     *
      * @param idb initierar fält för att interagera med databasen
      * @param aid inloggad användar ID
      */
@@ -41,20 +41,20 @@ public class MinaProjekt extends javax.swing.JFrame {
     }
 
     /**
-     * sätter rätt information i rätt text fält
-     * Kontrollerar knapp som inte ska synas (anropar validerings metod)
+     * sätter rätt information i rätt text fält Kontrollerar knapp som inte ska
+     * synas (anropar validerings metod)
      */
     private void setInfo() {
         txtAreaProj.setEnabled(false);
         txtAreaChefsProj.setEditable(false);
         txtAreaProj.setText(String.join("\n", getProjekt()));
         txtAreaChefsProj.setText(String.join("\n", getChefsProjekt()));
-        setCbxProjekt(); 
+        setCbxProjekt();
     }
 
     /**
-     * hämtar vilka projekt användare medverkar i
-     * lägger till dessa i en combo box med projekt lista
+     * hämtar vilka projekt användare medverkar i lägger till dessa i en combo
+     * box med projekt lista
      */
     public void setCbxProjekt() {
         cbxValjProj.removeAllItems();
@@ -64,7 +64,7 @@ public class MinaProjekt extends javax.swing.JFrame {
                 + "WHERE projektchef = '" + aid + "' "
                 + "OR ans_proj.aid = '" + aid + "' "
                 + "GROUP BY projekt.projektnamn";
-        
+
         //använder sql fråga samt lägger till kolumnen som hämtas i cbxValjProj
         try {
             projNamnLista = idb.fetchColumn(sqlFraga);
@@ -77,7 +77,7 @@ public class MinaProjekt extends javax.swing.JFrame {
 
         cbxValjProj.setVisible(true);
         lblValjProj.setVisible(true);
-        
+
         //action listener hämtar pid från valt projekt samt öppnar ny 'OmProjekt' för mer info om valt projekt
         cbxValjProj.addActionListener(e -> {
             String valtProjekt = (String) cbxValjProj.getSelectedItem();
@@ -99,14 +99,13 @@ public class MinaProjekt extends javax.swing.JFrame {
         });
     }
 
-    
     /**
      * hämtar namn och status från projekt användare medverkar i (icke leder)
      */
     private ArrayList getProjekt() {
         ArrayList<String> pidLista = new ArrayList<>();
         ArrayList<String> projektnamnLista = new ArrayList<>();
-        
+
         //sparar pid från alla projekt användare arbetar med (inte leder!) till arrayList
         try {
             String sqlFragaPid = "SELECT projekt.pid "
@@ -134,7 +133,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     private ArrayList getChefsProjekt() {
         ArrayList<String> pidLista = new ArrayList<>();
         ArrayList<String> chefProjektLista = new ArrayList<>();
-        
+
         //sparar pid från alla projekt användare arbetar med (inte leder!) till arrayList
         try {
             String sqlFragaPid = "SELECT projekt.pid FROM projekt "
@@ -153,7 +152,7 @@ public class MinaProjekt extends javax.swing.JFrame {
         return chefProjektLista;
 
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

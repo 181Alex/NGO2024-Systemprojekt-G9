@@ -17,9 +17,9 @@ public class MinAvdelning extends javax.swing.JFrame {
     private int avdNmr;
 
     /**
-     * Initierar MinAvdelning objekt 
-     * 
-     * Klass visar fönster som leder vidare till användarens avdelnings projekt och anställda
+     * Initierar MinAvdelning objekt
+     * Klass visar fönster som leder vidare till användarens avdelnings projekt
+     * och anställda
      *
      * @param idb initierar fält för att interagera med databasen
      * @param ePost inloggad användar epost

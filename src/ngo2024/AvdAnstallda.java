@@ -278,7 +278,7 @@ public class AvdAnstallda extends javax.swing.JFrame {
         //Söker anställda efter epost om epost är iklickad
         //söker utefter namn om namn är iklickad
         //ger felmeddelande i annat fall
-        
+
         String sokOrd = tfSokruta.getText().toLowerCase();
         lblFelmeddelande.setVisible(false);
 
