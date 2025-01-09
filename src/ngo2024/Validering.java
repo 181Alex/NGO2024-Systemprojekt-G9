@@ -91,8 +91,7 @@ public class Validering {
         }
         return matches;
     }
-    
-    public boolean checkInteSammaEpostAnstalld(String epost){
+     public boolean checkInteSammaEpostAnstalld(String epost){
         String sqlFraga = "SELECT epost FROM anstalld";
         boolean ok = true;
         
@@ -111,10 +110,48 @@ public class Validering {
         return ok;
         
     }
-    
-    
+     
+    public boolean checkInteSammaEpostAvdelning(String epost){
+        String sqlFraga = "SELECT epost FROM avdelning";
+        boolean ok = true;
+        
+        try {
+            ArrayList<String> epostLista = idb.fetchColumn(sqlFraga);
+            
+            for(String aEpost: epostLista){
+                if(epost.equalsIgnoreCase(aEpost)){
+                    ok = false;
+               }                   
+            }
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return ok;
+        
+    }
+       
 public boolean checkInteSammaTelefonAnstalld(String telefon){
            String sqlFraga = "SELECT telefon FROM anstalld";
+        boolean ok = true;
+        
+        try {
+            ArrayList<String> telefonLista = idb.fetchColumn(sqlFraga);
+            
+            for(String tel: telefonLista){
+                if(telefon.equalsIgnoreCase(tel)){
+                    ok = false;
+               }                   
+            }
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return ok;
+        
+    }
+public boolean checkInteSammaTelefonAvdelning(String telefon){
+           String sqlFraga = "SELECT telefon FROM avdelning";
         boolean ok = true;
         
         try {
