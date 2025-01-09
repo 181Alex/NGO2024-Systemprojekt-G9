@@ -1,5 +1,6 @@
 package ngo2024;
 
+import java.util.ArrayList;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -89,6 +90,47 @@ public class Validering {
             matches = true;
         }
         return matches;
+    }
+    
+    public boolean checkInteSammaEpostAnstalld(String epost){
+        String sqlFraga = "SELECT epost FROM anstalld";
+        boolean ok = true;
+        
+        try {
+            ArrayList<String> epostLista = idb.fetchColumn(sqlFraga);
+            
+            for(String aEpost: epostLista){
+                if(epost.equalsIgnoreCase(aEpost)){
+                    ok = false;
+               }                   
+            }
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return ok;
+        
+    }
+    
+    
+public boolean checkInteSammaTelefonAnstalld(String telefon){
+           String sqlFraga = "SELECT telefon FROM anstalld";
+        boolean ok = true;
+        
+        try {
+            ArrayList<String> telefonLista = idb.fetchColumn(sqlFraga);
+            
+            for(String tel: telefonLista){
+                if(telefon.equalsIgnoreCase(tel)){
+                    ok = false;
+               }                   
+            }
+            
+        } catch (InfException ex){
+            System.out.println(ex.getMessage());
+        }
+        return ok;
+        
     }
 
     /**
