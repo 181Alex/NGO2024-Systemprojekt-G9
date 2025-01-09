@@ -50,20 +50,34 @@ private HashMap<String, String> mentorLista;
     }
     
     //gömmer fältet mentor, comboboxen och meddelande som kommer upp efter hand
+    private void gomFaltAdmin(){
+        lblMentor.setVisible(false);
+        cbMentor.setVisible(false);    
+        cbIngenMentor.setVisible(false);
+        lblAid.setVisible(false);
+        tfAnsvarighetsOmrade.setVisible(false);
+        lblBehorighet.setVisible(true);
+        cbBehorighet.setVisible(true);
+    }
+    
     private void gomFalt(){
         lblMentor.setVisible(false);
         cbMentor.setVisible(false);    
         cbIngenMentor.setVisible(false);
         lblAid.setVisible(false);
         tfAnsvarighetsOmrade.setVisible(false);
+        lblBehorighet.setVisible(false);
+        cbBehorighet.setVisible(false);
     }
     
-    private void visaFalt(){
+    private void gomFaltHandlaggare(){
         lblMentor.setVisible(true);
         cbMentor.setVisible(true);    
         cbIngenMentor.setVisible(true);
         lblAid.setVisible(true);
         tfAnsvarighetsOmrade.setVisible(true);
+        lblBehorighet.setVisible(false);
+        cbBehorighet.setVisible(false);
     }
     
 //
@@ -112,6 +126,8 @@ private HashMap<String, String> mentorLista;
         btnTillbaka = new javax.swing.JButton();
         lblAdress = new javax.swing.JLabel();
         lblFornamnBad = new javax.swing.JLabel();
+        lblBehorighet = new javax.swing.JLabel();
+        cbBehorighet = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,6 +264,8 @@ private HashMap<String, String> mentorLista;
         lblFornamnBad.setForeground(new java.awt.Color(255, 0, 51));
         lblFornamnBad.setText("!");
 
+        lblBehorighet.setText("Behörighetsnivå");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -287,7 +305,8 @@ private HashMap<String, String> mentorLista;
                                     .addComponent(lblFornamn)
                                     .addComponent(lblLosenord)
                                     .addComponent(lblMentor)
-                                    .addComponent(lblAvdelning))
+                                    .addComponent(lblAvdelning)
+                                    .addComponent(lblBehorighet))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -317,7 +336,8 @@ private HashMap<String, String> mentorLista;
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(lblAid)
                                         .addGap(18, 18, 18)
-                                        .addComponent(cbIngenMentor)))))
+                                        .addComponent(cbIngenMentor))
+                                    .addComponent(cbBehorighet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -381,13 +401,17 @@ private HashMap<String, String> mentorLista;
                     .addComponent(cbMentor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbIngenMentor)
                     .addComponent(lblAid))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBehorighet)
+                    .addComponent(cbBehorighet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chbAdmin)
                     .addComponent(chbHandlaggare)
                     .addComponent(tfAnsvarighetsOmrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAnsvarBad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSkapa)
                     .addComponent(lblLyckades)
@@ -765,7 +789,7 @@ public boolean alltMed(){
     private void chbHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbHandlaggareActionPerformed
         if(chbHandlaggare.isSelected()){
             chbAdmin.setSelected(false);
-            visaFalt();
+            gomFaltHandlaggare();
             fyllCbMentor();
         }
     }//GEN-LAST:event_chbHandlaggareActionPerformed
@@ -773,7 +797,7 @@ public boolean alltMed(){
     private void chbAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAdminActionPerformed
         if(chbAdmin.isSelected()){
             chbHandlaggare.setSelected(false);
-            gomFalt();
+            gomFaltAdmin();
         }
     }//GEN-LAST:event_chbAdminActionPerformed
 
@@ -824,6 +848,7 @@ public boolean alltMed(){
     private javax.swing.JButton btnSkapa;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> cbAvdelning;
+    private javax.swing.JComboBox<String> cbBehorighet;
     private javax.swing.JCheckBox cbIngenMentor;
     private javax.swing.JComboBox<String> cbMentor;
     private javax.swing.JCheckBox chbAdmin;
@@ -834,6 +859,7 @@ public boolean alltMed(){
     private javax.swing.JLabel lblAnstallDatum;
     private javax.swing.JLabel lblAnsvarBad;
     private javax.swing.JLabel lblAvdelning;
+    private javax.swing.JLabel lblBehorighet;
     private javax.swing.JLabel lblDatumBad1;
     private javax.swing.JLabel lblEfternamn;
     private javax.swing.JLabel lblEfternamnBad;
