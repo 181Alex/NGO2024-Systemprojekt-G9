@@ -512,6 +512,9 @@ private HashMap<String, String> mentorLista;
         if(epostKontroll(idb)==false){
             totOk=false;
         }
+        else if(!sammaEpostKontroll()){
+            totOk=false;
+        }
         else if(!datumKontroll(idb)){
             totOk=false;
         }
@@ -527,12 +530,16 @@ private HashMap<String, String> mentorLista;
         else if(!telefonKontroll(idb)) {
         totOk = false;
         }
+        else if(!sammaTelefonKontroll()){
+            totOk=false;
+        }
         else if(!AnsvarKontroll(idb)){
             totOk=false;
         }
         else if(!losenKontroll()){
             totOk=false;
         }
+        
         
         kontrollOk=totOk;
     }
@@ -608,6 +615,28 @@ private HashMap<String, String> mentorLista;
             return false;
         }}
     
+     
+    /**
+     * Anropar kontroll av att ny telefonNr inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaTelefonKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String telefon = tfTelefon.getText(); 
+    if(valid.checkInteSammaTelefonAnstalld(telefon)){
+      lblTelefonBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblTelefonBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
+    
     /**
      * Anropar kontroll av att nytt telefonnummer är korrekt formaterad,
      * samt innehåller accepterade tecken 
@@ -626,6 +655,29 @@ private HashMap<String, String> mentorLista;
             return false;
     }
     }
+    
+    /**
+     * Anropar kontroll av att ny epost inte är som någon annans
+     * Ger false om valideringen visar att fel uppstått
+     * 
+     * @param idb databasen som används för validering
+     */
+    private boolean sammaEpostKontroll(){
+        Validering valid = new Validering(idb); 
+    
+    // Hämta text från textfältet
+    String epost = tfEpost.getText(); 
+    if(valid.checkInteSammaEpostAnstalld(epost)){
+      lblEpostBad.setVisible(false); // Göm varning
+        return true;
+    } else {
+        lblEpostBad.setVisible(true); // Visa varning
+        return false;
+        
+    }
+    }
+    
+    
     
     /**
      * Anropar kontroll av att ny epost är korrekt formaterad,
