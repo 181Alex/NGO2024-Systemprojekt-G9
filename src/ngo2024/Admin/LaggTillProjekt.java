@@ -104,9 +104,9 @@ private void fyllProjektChef(){
 private void fyllPrioritet(){
         cbPrioritet.removeAllItems();
         
-        cbPrioritet.addItem("låg");
+        cbPrioritet.addItem("Låg");
         cbPrioritet.addItem("Medel");
-        cbPrioritet.addItem("hög");
+        cbPrioritet.addItem("Hög");
     }
 
     /**
