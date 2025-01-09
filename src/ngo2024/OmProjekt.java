@@ -124,6 +124,9 @@ public class OmProjekt extends javax.swing.JFrame {
         return projNamn;
     }
 
+    /**
+     * Samma som projNamn fast med beskrivning
+     */
     private String projBeskrivning() {
         String projBeskrivning = "beskrivning";
         return projBeskrivning;
