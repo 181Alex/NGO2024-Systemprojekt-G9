@@ -194,11 +194,11 @@ public class Validering {
      * 
      * @param ansvar String som kontrolleras
      */
-    public boolean checkAnsvar(String ansvar) {
+    public boolean checkAnsvar(String Ansvar) {
         boolean matches = false;
         //alla bokstäver ok inga siffror
         String checker = "^[A-Za-zåäöÅÄÖ]+$";
-        if (ansvar.matches(checker)) {
+        if (Ansvar.matches(checker)) {
             matches = true;
         }
         return matches;
