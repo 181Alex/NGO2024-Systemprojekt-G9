@@ -693,7 +693,9 @@ public int getMentor(){
 } return it;
 }
 
-    
+/**
+     * kontrollerar om användare är admin
+     */   
 public boolean isAdmin(){
     boolean svar=false;
     if(chbHandlaggare.isSelected()){
@@ -707,7 +709,7 @@ public boolean isAdmin(){
     }
     return svar;
 }
-    
+  
 public boolean alltMed(){
     boolean alltMed=false;
     // kontrollerar behörigheter är valda
