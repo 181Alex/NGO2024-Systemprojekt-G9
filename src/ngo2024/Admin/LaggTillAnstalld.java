@@ -33,16 +33,19 @@ private String epost;
         kontrollOk=false;
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
-        lblDatumBad1.setVisible(false);
+        gomBad();
+        randomizer=new Random();
+        this.epost=epost;
+    }
+    
+    private void gomBad(){
+         lblDatumBad1.setVisible(false);
         lblEpostBad.setVisible(false);
         lblTelefonBad.setVisible(false);
         lblAdressBad.setVisible(false);
         lblEfternamnBad.setVisible(false);
         lblFornamnBad.setVisible(false);
-        randomizer=new Random();
-        this.epost=epost;
     }
-    
     
 
     /**
