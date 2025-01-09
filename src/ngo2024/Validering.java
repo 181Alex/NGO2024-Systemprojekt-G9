@@ -92,6 +92,8 @@ public class Validering {
         return matches;
     }
     
+    
+    //kontrollerar så att man inte kan ha samma epost som någon annan anställd, avdelning eller partner
      public boolean checkInteSammaEpost(String epost){
         String sqlFraga = "SELECT epost FROM anstalld "
                 + "UNION SELECT epost FROM avdelning "
@@ -114,6 +116,7 @@ public class Validering {
         
     }
        
+      //kontrollerar så att man inte kan ha samma telefon som någon annan anställd, avdelning eller partner
 public boolean checkInteSammaTelefon(String telefon){
            String sqlFraga = "SELECT telefon FROM anstalld                                                                "
                    + "UNION SELECT telefon FROM avdelning "
