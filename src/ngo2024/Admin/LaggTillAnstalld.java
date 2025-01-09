@@ -604,39 +604,7 @@ private HashMap<String, String> mentorLista;
         return false;
         
     }}
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of b0e1161 (djdjd)
 
-    
-    public boolean mentorKontroll(InfDB idb){
-    Validering valid = new Validering(idb); 
-    if(chbAdmin.isSelected()==true){
-        return true;
-    }
-    else{
-    // Hämta text från textfältet
-    String mentor = tfMentor.getText(); 
-    
-    // Kontrollera om Mentor är giltig
-    if (valid.checkMentor(mentor)) {
-        return true;
-    } else {
-        return false;
-    }
-    }}
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of b0e1161 (djdjd)
-=======
->>>>>>> Stashed changes
     
     /**
      * Kontrollerar att Ansvarighets Område label fylls med accepterade tecken 
@@ -700,31 +668,11 @@ private int getAvdelning(){
    return avdelning;
 }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of b0e1161 (djdjd)
 /**
      * Genererar slumpat lösenord 
      */
-    public String randomPassword(){
-<<<<<<< HEAD
-=======
 
     private String randomPassword(){
->>>>>>> Stashed changes
-=======
-
-    private String randomPassword(){
->>>>>>> Stashed changes
-=======
->>>>>>> parent of b0e1161 (djdjd)
-=======
-
-    private String randomPassword(){
->>>>>>> Stashed changes
         String losen="";
         for(int i=0; i<11; i++){
             int ny=randomizer.nextInt(9);
@@ -733,12 +681,6 @@ private int getAvdelning(){
         }
         return losen;
     }
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of b0e1161 (djdjd)
     
     
 /**
@@ -762,24 +704,6 @@ private int getAvdelning(){
         }
     }
 
- 
-public int getMentor(){
-    String st=tfMentor.getText();
-    int it=0;
-    if(st.isBlank()){
-        it=0;
-<<<<<<< HEAD
-=======
-   
-
-=======
-   
-
->>>>>>> Stashed changes
-=======
-   
-
->>>>>>> Stashed changes
 private void fyllCbMentor(){
     String sqlFraga = "SELECT CONCAT(fornamn, ' ', efternamn) as namn FROM anstalld WHERE aid IN "
             + "(SELECT aid FROM handlaggare)";
@@ -793,15 +717,6 @@ private void fyllCbMentor(){
         String aid = idb.fetchSingle(sqlAid);
         cbMentor.addItem(namn);
         mentorLista.put(aid, namn);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of b0e1161 (djdjd)
-=======
->>>>>>> Stashed changes
     }
     
     } catch (InfException ex){
@@ -810,22 +725,10 @@ private void fyllCbMentor(){
     
 }
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of b0e1161 (djdjd)
 /**
      * kontrollerar om användare är admin
      */   
-public boolean isAdmin(){
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 private String getSelectedAid(){
         String selectedMentor = (String) cbMentor.getSelectedItem();
         String aid = " ";
@@ -840,15 +743,7 @@ private String getSelectedAid(){
 }
     
 private boolean isAdmin(){
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> parent of b0e1161 (djdjd)
-=======
->>>>>>> Stashed changes
+
     boolean svar=false;
     if(chbHandlaggare.isSelected()){
         svar=false;
@@ -927,22 +822,6 @@ public boolean alltMed(){
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LaggTillAnstalld.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
 
         /* Create and display the form */
