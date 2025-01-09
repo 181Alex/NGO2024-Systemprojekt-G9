@@ -33,6 +33,7 @@ public class LaggTillLand extends javax.swing.JFrame {
         kontrollOk=false;
         lblError.setVisible(false);
         lblSkapad.setVisible(false);
+        gomBad();
     }
     
     /**
@@ -215,6 +216,17 @@ public class LaggTillLand extends javax.swing.JFrame {
             lblTidzonBad.setVisible(true);
             return false;
     }
+    }
+    
+    /* gömmer alla felmeddelande*/
+    
+    public void gomBad(){
+        lblNamnBad.setVisible(false);
+        lblPolitikBad.setVisible(false);
+        lblSprakBad.setVisible(false);
+        lblTidzonBad.setVisible(false);
+        lblValutaBad.setVisible(false);
+        lblEkonomiBad.setVisible(false);    
     }
     
     

@@ -35,6 +35,7 @@ public class AndraLand extends javax.swing.JFrame {
         initComponents();
         fyllCb();
         gomAlla();
+        gomBad();
         lblLyckades.setVisible(false);
         lblError.setVisible(false);
 
@@ -243,7 +244,6 @@ public void totalKontroll() {
             lblNamnBad.setVisible(false);
             return true;
     } else {
-        gomBad();
             lblNamnBad.setVisible(true);
             return false;
     }
@@ -280,7 +280,6 @@ public void totalKontroll() {
             retur=sSamma;
         }
         else if (samma==true){
-            gomBad();
             lblNamnBad.setVisible(true);
             retur=samma;
         }
@@ -298,7 +297,6 @@ public void totalKontroll() {
             lblSprakBad.setVisible(false);
             return true;
     } else {
-        gomBad();
             lblSprakBad.setVisible(true);
             return false;
     }
@@ -315,7 +313,6 @@ public void totalKontroll() {
             lblPolitikBad.setVisible(false);
             return true;
     } else {
-        gomBad();
             lblPolitikBad.setVisible(true);
             return false;
     }
@@ -332,8 +329,6 @@ public void totalKontroll() {
             lblEkonomiBad.setVisible(false);
             return true;
     } else {
-        gomBad();
-
             lblEkonomiBad.setVisible(true);
             return false;
     }
@@ -350,7 +345,6 @@ public void totalKontroll() {
             lblTidzonBad.setVisible(false);
             return true;
     } else {
-            gomBad();
             lblTidzonBad.setVisible(true);
             return false;
     }
@@ -367,7 +361,6 @@ public void totalKontroll() {
             lblValutaBad.setVisible(false);
             return true;
     } else {
-            gomBad();
             lblValutaBad.setVisible(true);
             return false;
             
@@ -711,12 +704,7 @@ public void totalKontroll() {
     
     public void gomTaBort() {
     // Visa allt om Ändra
-    lblEkonomiBad.setVisible(true);
-    lblNamnBad.setVisible(true);
-    lblPolitikBad.setVisible(true);
-    lblSprakBad.setVisible(true);
-    lblTidzonBad.setVisible(true);
-    lblValutaBad.setVisible(true);
+
     tfEkonomi.setVisible(true);
     tfNamn.setVisible(true);
     tfPolitik.setVisible(true);
