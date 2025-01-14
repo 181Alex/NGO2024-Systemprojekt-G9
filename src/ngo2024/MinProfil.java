@@ -108,7 +108,7 @@ public class MinProfil extends javax.swing.JFrame {
     private String getTelefon(String aid) {
         String txtTelefon = "";
         try {
-            String sqlQuery = "SELECT efternamn FROM anstalld WHERE aid = '" + aid + "'";
+            String sqlQuery = "SELECT telefon FROM anstalld WHERE aid = '" + aid + "'";
             txtTelefon = idb.fetchSingle(sqlQuery);
         } catch (InfException ex) {
             System.out.println(ex.getMessage());
@@ -116,9 +116,9 @@ public class MinProfil extends javax.swing.JFrame {
         return txtTelefon;
     }
 
-    private boolean isEmailTaken(String aid) {
+    private boolean isEmailTaken(String email) {
         try {
-            String sqlQuery = "SELECT epost FROM anstalld WHERE aid = '" + aid + "'";
+            String sqlQuery = "SELECT epost FROM anstalld WHERE epost = '" + email + "'";
             String result = idb.fetchSingle(sqlQuery);
             return result != null;
         } catch (InfException ex) {
@@ -610,9 +610,47 @@ public class MinProfil extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDepartmentActionPerformed
 
     private void ChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeActionPerformed
-        boolean ok = totalKontroll();
-        if (isEditing && ok == true) {
-            lblFelInmatning.setVisible(false);
+        
+        if (!isEditing) {
+            
+            txtFirstName.setEditable(true);
+            txtFirstName.setFocusable(true);
+            txtFirstName.setEnabled(true);
+
+            txtLastName.setEditable(true);
+            txtLastName.setFocusable(true);
+            txtLastName.setEnabled(true);
+
+            txtEmail.setEditable(true);
+            txtEmail.setFocusable(true);
+            txtEmail.setEnabled(true);
+
+            txtPassword.setEditable(true);
+            txtPassword.setFocusable(true);
+            txtPassword.setEnabled(true);
+            
+            String currentPassword =getPassword(aid);
+            txtPassword.setText(currentPassword);
+            txtPassword.setEchoChar('\u0000');
+            
+            tfAdress.setEditable(false);
+            tfAdress.setFocusable(false);
+            tfAdress.setEnabled(false);
+
+            tfTelefon.setEditable(false);
+            tfTelefon.setFocusable(false);
+            tfTelefon.setEnabled(false);
+            
+            Change.setText("Spara");
+            
+            isEditing = true;
+           }
+           else {
+            boolean ok = totalKontroll();
+            
+            if (ok) {
+                lblFelInmatning.setVisible(false);
+            
             firstname = txtFirstName.getText();
             lastname = txtLastName.getText();
             adress = tfAdress.getText();
@@ -626,16 +664,23 @@ public class MinProfil extends javax.swing.JFrame {
             }
 
             try {
-                String updateQuery = "UPDATE anstalld SET fornamn = '" + firstname + "', efternamn = '" + lastname + "', epost = '" + newEmail + "', losenord = '"
-                        + newPassword + "', telefon= '" + telefon + "', adress= '" + adress + "' WHERE anstalld.epost = '" + this.epost + "'";
+                String updateQuery = "UPDATE anstalld"
+                        + "SET fornamn = '" + firstname
+                        +"', efternamn = '" + lastname
+                        +"', epost = '" + newEmail
+                        +"', losenord = '" + newPassword
+                        +"', telefon = '" + telefon
+                        +"', adress = '" + adress
+                        + "' WHERE anstalld.epost = '" +this.epost + "'";
+                                
                 idb.update(updateQuery);
-
+                
                 this.epost = newEmail;
-            } catch (InfException ex) {
+               }catch (InfException ex) {
                 JOptionPane.showMessageDialog(this, "Fel vid uppdatering av databasen:", "Fel", JOptionPane.ERROR_MESSAGE);
                 return;
-            }
-
+               } 
+               
             txtFirstName.setEditable(false);
             txtFirstName.setFocusable(false);
             txtFirstName.setEnabled(false);
@@ -662,44 +707,12 @@ public class MinProfil extends javax.swing.JFrame {
             tfTelefon.setEnabled(false);
 
             Change.setText("Ändra");
-
+            isEditing=false;
+                
             JOptionPane.showMessageDialog(this, "Ändringar sparade!");
-            isEditing = false;
-        } else if (!ok) {
+          }else {
             lblFelInmatning.setVisible(true);
-        } else {
-
-            String currentPassword = getPassword(aid);
-            txtPassword.setText(currentPassword);
-
-            txtFirstName.setEditable(true);
-            txtFirstName.setFocusable(true);
-            txtFirstName.setEnabled(true);
-
-            txtLastName.setEditable(true);
-            txtLastName.setFocusable(true);
-            txtLastName.setEnabled(true);
-
-            txtEmail.setEditable(true);
-            txtEmail.setFocusable(true);
-            txtEmail.setEnabled(true);
-
-            txtPassword.setEditable(true);
-            txtPassword.setFocusable(true);
-            txtPassword.setEnabled(true);
-            txtPassword.setEchoChar('\u0000');
-
-            tfAdress.setEditable(true);
-            tfAdress.setFocusable(true);
-            tfAdress.setEnabled(true);
-
-            tfTelefon.setEditable(true);
-            tfTelefon.setFocusable(true);
-            tfTelefon.setEnabled(true);
-
-            Change.setText("Spara");
-
-            isEditing = true;
+            }  
         }
     }//GEN-LAST:event_ChangeActionPerformed
 
