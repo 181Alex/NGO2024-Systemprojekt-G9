@@ -633,13 +633,13 @@ public class MinProfil extends javax.swing.JFrame {
             txtPassword.setText(currentPassword);
             txtPassword.setEchoChar('\u0000');
             
-            tfAdress.setEditable(false);
-            tfAdress.setFocusable(false);
-            tfAdress.setEnabled(false);
+            tfAdress.setEditable(true);
+            tfAdress.setFocusable(true);
+            tfAdress.setEnabled(true);
 
-            tfTelefon.setEditable(false);
-            tfTelefon.setFocusable(false);
-            tfTelefon.setEnabled(false);
+            tfTelefon.setEditable(true);
+            tfTelefon.setFocusable(true);
+            tfTelefon.setEnabled(true);
             
             Change.setText("Spara");
             
@@ -665,14 +665,14 @@ public class MinProfil extends javax.swing.JFrame {
 
             try {
                 String updateQuery = "UPDATE anstalld"
-                        + "SET fornamn = '" + firstname
+                        + " SET fornamn = '" + firstname
                         +"', efternamn = '" + lastname
                         +"', epost = '" + newEmail
                         +"', losenord = '" + newPassword
                         +"', telefon = '" + telefon
                         +"', adress = '" + adress
                         + "' WHERE anstalld.epost = '" +this.epost + "'";
-                                
+                            System.out.println(updateQuery);    
                 idb.update(updateQuery);
                 
                 this.epost = newEmail;
